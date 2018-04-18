@@ -6,7 +6,7 @@ import { GET_LINE_ITEMS, CREATE_LINE_ITEM, UPDATE_LINE_ITEM, DELETE_LINE_ITEM } 
 const getLineItems = (items) => ({ type: GET_LINE_ITEMS, items });
 const createLineItem = (item) => ({ type: CREATE_LINE_ITEM, item });
 const updateLineItem = (item) => ({ type: UPDATE_LINE_ITEM, item });
-const deleteLineItem = (id) => ({ type: DELETE_LINE_ITEM, id })
+const deleteLineItem = (id) => ({ type: DELETE_LINE_ITEM, id });
 
 /*********** THUNKS ***********/
 export const getLineItemsFromServer = () => {
@@ -15,8 +15,8 @@ export const getLineItemsFromServer = () => {
       .then( res => res.data)
       .then( items => dispatch(getLineItems(items)))
     // .catch(err) placeholder for error handling
-  }
-}
+  };
+};
 
 export const deleteLineItemFromServer = (id) => {
   return (dispatch) => {
@@ -24,8 +24,8 @@ export const deleteLineItemFromServer = (id) => {
       .then(() => dispatch(deleteLineItem(id)))
       .then(() => location.hash = '/lineitems')
     // .catch(err) placeholder for error handling
-  }
-}
+  };
+};
 
 export const updateLineItemOnServer = (item) => {
   const { id } = item;
@@ -38,8 +38,8 @@ export const updateLineItemOnServer = (item) => {
       .then( lineItem => dispatch(action(lineItem)))
       .then(() => location.hash = '/lineitems' )
       // .catch(err) placeholder for error handling
-  }
-}
+  };
+};
 
 /*********** LINE ITEM REDUCER ***********/
 const lineItemsReducer = (state = [], action) => {
@@ -58,11 +58,11 @@ const lineItemsReducer = (state = [], action) => {
       break;
 
     case UPDATE_LINE_ITEM:
-      const items = state.filter(item => item.id !== action.id * 1)
+      const items = state.filter(item => item.id !== action.item.id * 1)
       state = [...items, action.item]
       break;
-  }
-  return state
-}
+  };
+  return state;
+};
 
 export default lineItemsReducer;

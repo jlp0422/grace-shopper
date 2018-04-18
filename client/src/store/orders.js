@@ -15,17 +15,17 @@ export const getOrdersFromServer = () => {
       .then(res => res.data)
       .then(orders => dispatch(getOrders(orders)))
     // .catch(err) placeholder for error handling
-  }
-}
+  };
+};
 
 export const deleteOrderFromServer = (id) => {
   return (dispatch) => {
     return axios.delete(`/api/orders/${id}`)
       .then(() => dispatch(deleteOrder(id)))
-      .then(() => location.hash = '/')
+      .then(() => location.hash = '/orders')
     // .catch(err) placeholder for error handling
-  }
-}
+  };
+};
 
 export const updateOrderOnServer = (order) => {
   const { id } = order;
@@ -58,10 +58,10 @@ const ordersReducer = (state = [], action) => {
       break;
 
     case UPDATE_ORDER:
-      const orders = state.filter(order => order.id !== action.id * 1)
+      const orders = state.filter(order => order.id !== action.order.id * 1)
       state = [...orders, action.order]
       break;
-  }
+  };
   return state;
 };
 

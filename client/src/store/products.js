@@ -15,14 +15,14 @@ export const getProductsFromServer = () => {
       .then( res => res.data)
       .then( products => dispatch(getProducts(products)))
       // .catch(err) placeholder for error handling
-  }
-}
+  };
+};
 
 export const deleteProductFromServer = (id) => {
   return (dispatch) => {
     return axios.delete(`/api/products/${id}`)
       .then(() => dispatch(deleteProduct(id)))
-      .then(() => location.hash = '/')
+      .then(() => location.hash = '/products')
       // .catch(err) placeholder for error handling
   }
 }
@@ -58,10 +58,10 @@ const productsReducer = (state = [], action) => {
       break;
 
     case UPDATE_PRODUCT:
-      const products = state.filter(product => product.id !== action.id * 1)
+      const products = state.filter(product => product.id !== action.product.id * 1)
       state = [...products, action.product ]
       break;
-  }
+  };
   return state;
 };
 

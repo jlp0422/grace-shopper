@@ -15,8 +15,8 @@ export const getUsersFromServer = () => {
       .then( res => res.data)
       .then( users => dispatch(getUsers(users)))
       // .catch(err) placeholder for error handling
-  }
-}
+  };
+};
 
 export const deleteUserOnServer = (id) => {
   return (dispatch) => {
@@ -24,8 +24,8 @@ export const deleteUserOnServer = (id) => {
       .then(() => dispatch(deleteUser(id)))
       .then(() => location.hash = '/users')
       // .catch(err) placeholder for error handling
-  }
-}
+  };
+};
 
 export const updateUserOnServer = (user) => {
   const { id } = user;
@@ -38,8 +38,8 @@ export const updateUserOnServer = (user) => {
       .then( u => dispatch(action(u)))
       .then(() => location.hash = '/users')
       // .catch(err) placeholder for error handling
-  }
-}
+  };
+};
 
 /*********** USERS CREATORS ***********/
 const usersReducer = (state = [], action) => {
@@ -58,11 +58,11 @@ const usersReducer = (state = [], action) => {
       break;
 
     case UPDATE_USER:
-      const users = state.filter(user => user.id !== action.id * 1)
+      const users = state.filter(user => user.id !== action.user.id * 1)
       state = [...users, action.user]
       break;
-    }
+    };
     return state;
-}
+};
 
 export default usersReducer;

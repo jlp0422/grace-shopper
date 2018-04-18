@@ -6,7 +6,7 @@ import { GET_CATEGORIES, CREATE_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY } fro
 const getCategories = (categories) => ({ type: GET_CATEGORIES, categories });
 const createCategory = (category) => ({ type: CREATE_CATEGORY, category });
 const updateCategory = (category) => ({ type: UPDATE_CATEGORY, category });
-const deleteCategory = (id) => ({ type: DELETE_CATEGORY, id })
+const deleteCategory = (id) => ({ type: DELETE_CATEGORY, id });
 
 /*********** THUNKS ***********/
 export const getCategoriesFromServer = () => {
@@ -15,8 +15,8 @@ export const getCategoriesFromServer = () => {
       .then( res => res.data)
       .then( categories => dispatch(getCategories(categories)))
       // .catch(err) placeholder for error handling
-  }
-}
+  };
+};
 
 export const deleteCategoryOnServer = (id) => {
   return (dispatch) => {
@@ -24,8 +24,8 @@ export const deleteCategoryOnServer = (id) => {
       .then(() => dispatch(deleteCategory(id)))
       .then(() => location.hash = '/categories')
       // .catch(err) placeholder for error handling
-  }
-}
+  };
+};
 
 export const updateCategoryOnServer = (category) => {
   const { id } = category;
@@ -38,8 +38,8 @@ export const updateCategoryOnServer = (category) => {
       .then( cat => dispatch(action(cat)))
       .then(() => location.hash = '/categories' )
       // .catch(err) placeholder for error handling
-  }
-}
+  };
+};
 
 /*********** CATEGORIES REDUCER ***********/
 const categoriesReducer = (state = [], action) => {
@@ -58,11 +58,11 @@ const categoriesReducer = (state = [], action) => {
       break;
 
     case UPDATE_CATEGORY:
-      const categories = state.filter(category => category.id !== action.id * 1)
+      const categories = state.filter(category => category.id !== action.category.id * 1)
       state = [...categories, action.category]
       break;
-  }
-  return state
-}
+  };
+  return state;
+};
 
 export default categoriesReducer;
