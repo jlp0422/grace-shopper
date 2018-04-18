@@ -1,36 +1,40 @@
 # Grace Shopper
 
+## TO DO
+#### Jeremy P: Store
+#### Jeremy G: Models/Seed
+#### Alice/Alex: Routes
 
 ### Components
-[] Nav
-[] Footer
+##### Nav
+##### Footer
 
 #### Product
-[] Products
-[] ProductCard
-[] ProductInfo
-[] ProductForm
+##### Products
+##### ProductCard
+##### ProductInfo
+##### ProductForm
 * Admin only - buttons for only Admins
 * Add/update info
 
 #### Category
-[] Categories
-[] CategoryCard
-[] CategoryInfo
-[] CategoryForm
+##### Categories
+##### CategoryCard
+##### CategoryInfo
+##### CategoryForm
 * Admin only - buttons for only Admins
 * Add/update info
 
 #### User
-[] Log In
-[] UserInfo
+##### Log In
+##### UserInfo
 * Admin access - buttons for only Admins
-[] UserForm
+##### UserForm
 * Add/update info
 
 #### Order
-[] Orders
-* [] UserOrder
+##### Orders
+* ##### UserOrder
   * Active order
   * Past orders
-[] LineItemCard
+##### LineItemCard
