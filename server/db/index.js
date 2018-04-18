@@ -1,0 +1,14 @@
+/*
+
+Category has many Product
+Product belongs to Category
+
+Product belongs to LineItem
+
+Order has many LineItem
+LineItem belongs to Order
+
+User has many Order
+Order belongs to User
+
+*/
