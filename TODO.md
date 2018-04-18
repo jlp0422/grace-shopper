@@ -5,36 +5,38 @@
 #### Jeremy G: Models/Seed
 #### Alice/Alex: Routes
 
-### Components
-##### Nav
-##### Footer
 
-#### Product
-##### Products
-##### ProductCard
-##### ProductInfo
-##### ProductForm
+# Components
+## General
+### Nav
+### Footer
+
+## Product
+### Products
+### ProductCard
+### ProductInfo
+### ProductForm
 * Admin only - buttons for only Admins
 * Add/update info
 
-#### Category
-##### Categories
-##### CategoryCard
-##### CategoryInfo
-##### CategoryForm
+## Category
+### Categories
+### CategoryCard
+### CategoryInfo
+### CategoryForm
 * Admin only - buttons for only Admins
 * Add/update info
 
-#### User
-##### Log In
-##### UserInfo
+## User
+### Log In
+### UserInfo
 * Admin access - buttons for only Admins
-##### UserForm
+### UserForm
 * Add/update info
 
-#### Order
-##### Orders
-* ##### UserOrder
+## Order
+### Orders
+* #### UserOrder
   * Active order
   * Past orders
-##### LineItemCard
+### LineItemCard
