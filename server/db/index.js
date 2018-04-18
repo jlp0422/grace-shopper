@@ -13,7 +13,10 @@ const sync = () => {
 
 Category.hasMany(Product)
 Product.belongsTo(Category)
-Product.belongsTo(LineItem)
+
+// Product.belongsTo(LineItem)
+LineItem.belongsTo(Product)
+
 Order.hasMany(LineItem)
 LineItem.belongsTo(Order)
 User.hasMany(Order)
