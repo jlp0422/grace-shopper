@@ -1,4 +1,6 @@
 /* eslint-disable */
+const { conn, Sequelize } = require('../conn')
+
 const Product = conn.define('product', {
   name: {
     type: Sequelize.STRING
@@ -13,3 +15,5 @@ const Product = conn.define('product', {
   // size
   // gender???
 })
+
+module.exports = Product;

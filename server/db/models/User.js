@@ -1,3 +1,5 @@
+const { conn, Sequelize } = require('../conn')
+
 const User = conn.define('user', {
   firstName: {
     type: Sequelize.STRING
@@ -18,16 +20,18 @@ const User = conn.define('user', {
   email: {
     type: Sequelize.STRING
   },
-  billingStreet: {
-    type: Sequelize.STRING
+  street: {
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   },
-  billingCity: {
-    type: Sequelize.STRING
+  city: {
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   },
-  billingState: {
-    type: Sequelize.STRING
+  state: {
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   },
-  billingZip: {
-    type: Sequelize.STRING
+  zip: {
+    type: Sequelize.ARRAY(Sequelize.TEXT)
   }
 })
+
+module.exports = User;
