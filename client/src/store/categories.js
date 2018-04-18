@@ -5,7 +5,7 @@ import { GET_CATEGORIES, CREATE_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY } fro
 /*********** ACTION CREATORS ***********/
 const getCategories = (categories) => ({ type: GET_CATEGORIES, categories });
 const createCategory = (category) => ({ type: CREATE_CATEGORY, category });
-const updateCateogry = (category) => ({ type: UPDATE_CATEGORY, category });
+const updateCategory = (category) => ({ type: UPDATE_CATEGORY, category });
 const deleteCategory = (id) => ({ type: DELETE_CATEGORY, id })
 
 /*********** THUNKS ***********/
@@ -18,16 +18,30 @@ export const getCategoriesFromServer = () => {
   }
 }
 
-export const deleteCampusOnServer = (id) => {
+export const deleteCategoryOnServer = (id) => {
   return (dispatch) => {
     return axios.delete(`/api/categories/${id}`)
       .then(() => dispatch(deleteCategory(id)))
-      .then(() => location.has = '/categories')
+      .then(() => location.hash = '/categories')
       // .catch(err) placeholder for error handling
   }
 }
 
-/*********** CATEGORY REDUCER ***********/
+export const updateCategoryOnServer = (category) => {
+  const { id } = category;
+  const method = id ? 'put' : 'post';
+  const url = id ? `/api/categories/${id}` : '/api/categories';
+  const action = id ? updateCategory : createCategory
+  return (dispatch) => {
+    return axios[method](url, category)
+      .then( res => res.data)
+      .then( cat => dispatch(action(cat)))
+      .then(() => location.hash = '/categories' )
+      // .catch(err) placeholder for error handling
+  }
+}
+
+/*********** CATEGORIES REDUCER ***********/
 const categoriesReducer = (state = [], action) => {
   switch(action.type) {
 

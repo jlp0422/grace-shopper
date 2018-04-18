@@ -1,0 +1,68 @@
+/* eslint-disable */
+import axios from 'axios';
+import { GET_USERS, CREATE_USER, UPDATE_USER, DELETE_USER } from './actionConstants';
+
+/*********** ACTION CREATORS ***********/
+const getUsers = (users) => ({ type: GET_USERS, users });
+const createUser = (user) => ({ type: CREATE_USER, user });
+const updateUser = (user) => ({ type: UPDATE_USER, user });
+const deleteUser = (id) => ({ type: DELETE_USER, id });
+
+/*********** THUNKS ***********/
+export const getUsersFromServer = () => {
+  return (dispatch) => {
+    return axios.get('/api/users')
+      .then( res => res.data)
+      .then( users => dispatch(getUsers(users)))
+      // .catch(err) placeholder for error handling
+  }
+}
+
+export const deleteUserOnServer = (id) => {
+  return (dispatch) => {
+    return axios.delete(`/api/users/${id}`)
+      .then(() => dispatch(deleteUser(id)))
+      .then(() => location.hash = '/users')
+      // .catch(err) placeholder for error handling
+  }
+}
+
+export const updateUserOnServer = (user) => {
+  const { id } = user;
+  const method = id ? 'put' : 'post';
+  const url = id ? `/api/users/${id}` : '/api/users';
+  const action = id ? updateUser : createUser
+  return (dispatch) => {
+    return axios[method](url, user)
+      .then( res => res.data)
+      .then( u => dispatch(action(u)))
+      .then(() => location.hash = '/users')
+      // .catch(err) placeholder for error handling
+  }
+}
+
+/*********** USERS CREATORS ***********/
+const usersReducer = (state = [], action) => {
+  switch(action.type) {
+
+    case GET_USERS:
+      state = action.users
+      break;
+
+    case CREATE_USER:
+      state = [...state, action.user]
+      break;
+
+    case DELETE_USER:
+      state = state.filter(user => user.id !== action.id * 1)
+      break;
+
+    case UPDATE_USER:
+      const users = state.filter(user => user.id !== action.id * 1)
+      state = [...users, action.user]
+      break;
+    }
+    return state;
+}
+
+export default usersReducer;

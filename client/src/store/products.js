@@ -27,6 +27,20 @@ export const deleteProductFromServer = (id) => {
   }
 }
 
+export const updateProductOnServer = (product) => {
+  const { id } = product;
+  const method = id ? 'put' : 'post';
+  const url = id ? `/api/products/${id}` : '/api/products';
+  const action = id ? updateProduct : createProduct
+  return (dispatch) => {
+    return axios[method](url, product)
+      .then(res => res.data)
+      .then(prod => dispatch(action(prod)))
+      .then(() => location.hash = '/products')
+    // .catch(err) placeholder for error handling
+  }
+}
+
 /*********** PRODUCT REDUCER ***********/
 const productsReducer = (state = [], action) => {
   switch(action.type) {
