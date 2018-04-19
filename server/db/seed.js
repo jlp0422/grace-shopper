@@ -44,13 +44,15 @@ const createProduct = () => {
 }
 
 const createUser = () => {
+  const firstName = faker.name.firstName();
+  const lastName = faker.name.lastName();
   return User.create({
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
+    firstName: firstName,
+    lastName: lastName,
     isAdmin: false,
-    username: faker.internet.userName(),
+    username: `${firstName.slice(0, 1)}${lastName}`,
     password: faker.internet.password(),
-    email: faker.internet.email(),
+    email: `${firstName}.${lastName}@gmail.com`,
     street: [ faker.address.streetAddress() ],
     city: [ faker.address.city() ],
     state: [ faker.address.state() ],
