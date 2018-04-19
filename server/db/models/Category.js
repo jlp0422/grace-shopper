@@ -1,5 +1,5 @@
 /* eslint-disable */
-const { conn, Sequelize } = require('../conn')
+const { conn, Sequelize } = require('../conn');
 
 const Category = conn.define('category', {
   name: {
@@ -9,6 +9,8 @@ const Category = conn.define('category', {
       notEmpty: true
     }
   }
+}, {
+  timestamps: false
 })
 
-module.exports = Category
+module.exports = Category;
