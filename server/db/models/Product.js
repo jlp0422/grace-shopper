@@ -1,5 +1,5 @@
 /* eslint-disable */
-const { conn, Sequelize } = require('../conn')
+const { conn, Sequelize } = require('../conn');
 
 const Product = conn.define('product', {
   name: {
@@ -14,6 +14,8 @@ const Product = conn.define('product', {
   // color
   // size
   // gender???
+}, {
+  timestamps: false
 })
 
 module.exports = Product;

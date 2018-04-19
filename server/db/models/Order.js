@@ -1,4 +1,4 @@
-const { conn, Sequelize } = require('../conn')
+const { conn, Sequelize } = require('../conn');
 
 const Order = conn.define('order', {
   isActive: {
@@ -8,6 +8,8 @@ const Order = conn.define('order', {
   date: {
     type: Sequelize.DATE,
   }
+}, {
+  timestamps: false
 })
 
 module.exports = Order;

@@ -1,5 +1,5 @@
 const { conn } = require('./conn');
-const { models } = require('./index')
+const { models } = require('./index');
 const { Category, LineItem, Order, Product, User } = models;
 
 const faker = require('faker');
