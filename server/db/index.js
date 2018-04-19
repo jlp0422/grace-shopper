@@ -16,7 +16,7 @@ Order.belongsTo(User);
 
 const sync = () => {
   return conn.sync({ force: true });
-}
+};
 
 module.exports = {
   sync,
@@ -27,4 +27,4 @@ module.exports = {
     Product,
     User
   }
-}
+};

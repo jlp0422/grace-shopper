@@ -61,9 +61,10 @@ const createUser = () => {
 }
 
 const createOrder = () => {
+  const activeStatus = !!Math.round(Math.random());
   return Order.create({
-    isActive: !!Math.round(Math.random()),
-    date: this.isActive ? null : faker.date.past(),
+    isActive: activeStatus,
+    date: activeStatus ? null : faker.date.past(),
     userId: Math.ceil(Math.random() * userCount)
   });
 }
