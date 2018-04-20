@@ -28,6 +28,7 @@ export const deleteProductFromServer = (id) => {
 }
 
 export const updateProductOnServer = (product) => {
+  console.log('thunk:', product)
   const { id } = product;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/products/${id}` : '/api/products';

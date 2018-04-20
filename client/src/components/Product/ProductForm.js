@@ -5,12 +5,13 @@ import { updateProductOnServer } from '../../store';
 class ProductForm extends Component {
   constructor(props) {
     super(props);
-    // const { name, price, quantity, categoryId } = props;
+    const { product } = props;
     this.state = {
-      name: '',
-      price: '',
-      quantity: '',
-      categoryId: null
+      id: product ? product.id : null,
+      name: product ? product.name : '',
+      price: product ? product.price : '',
+      quantity: product ? product.quantity : '',
+      categoryId: product ? product.categoryId : null,
     }
     this.handleChange = this.handleChange.bind(this);
     this.onSave = this.onSave.bind(this);
@@ -26,6 +27,7 @@ class ProductForm extends Component {
   onSave(ev) {
     ev.preventDefault();
     this.props.updateProduct(this.state);
+    this.setState({ name: '', price: '', quantity: '' });
   }
 
   render() {
