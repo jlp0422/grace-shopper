@@ -14,7 +14,7 @@ const ProductInfo = (props) => {
     <div>
       <h3>{product.name}</h3>
       <ProductForm product={product} />
-      <button onClick={() => deleteProduct(product.id)}>Delete Product</button>
+      <button onClick={() => deleteProduct(product.id)} className='btn btn-danger'>Delete Product</button>
     </div>
   );
 }

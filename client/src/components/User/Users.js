@@ -19,9 +19,9 @@ const Users = (props) => {
   );
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ users }) => {
   return {
-    users: state.users
+    users
   }
 }
 

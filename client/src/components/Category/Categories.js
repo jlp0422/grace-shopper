@@ -17,12 +17,12 @@ const Categories = (props) => {
       </ul>
     </div>
   );
-}
+};
 
-const mapStateToProps = (state) => {
+const mapState = ({ categories }) => {
   return {
-    categories: state.categories
-  }
-}
+    categories
+  };
+};
 
-export default connect(mapStateToProps)(Categories);
+export default connect(mapState)(Categories);

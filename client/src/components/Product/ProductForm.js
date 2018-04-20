@@ -31,7 +31,6 @@ class ProductForm extends Component {
   }
 
   render() {
-    console.log(this.state);
     const { name, price, quantity } = this.state;
     const { categories } = this.props;
     const { handleChange, onSave } = this;
@@ -59,7 +58,11 @@ class ProductForm extends Component {
             value={quantity}
             onChange={handleChange}
           />
-          <select onChange={handleChange} name='categoryId'>
+          <select
+            onChange={handleChange}
+            name='categoryId'
+            className='form-control'
+          >
             <option value='null'>Select Category</option>
             {
               categories.map(category => (
@@ -69,7 +72,7 @@ class ProductForm extends Component {
               ))
             }
           </select>
-          <button>Submit</button>
+          <button className='btn btn-primary'>Submit</button>
         </form>
       </div>
     );
@@ -79,13 +82,13 @@ class ProductForm extends Component {
 const mapState = ({ categories }) => {
   return {
     categories
-  }
-}
+  };
+};
 
 const mapDispatch = (dispatch) => {
   return {
     updateProduct: (product) => dispatch(updateProductOnServer(product))
-  }
-}
+  };
+};
 
 export default connect(mapState, mapDispatch)(ProductForm);

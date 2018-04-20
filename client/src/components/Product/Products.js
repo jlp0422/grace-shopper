@@ -23,10 +23,10 @@ const Products = (props) => {
   );
 }
 
-const mapStateToProps = ({ products}) => {
+const mapState = ({ products }) => {
   return {
     products
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(Products);
+export default connect(mapState)(Products);

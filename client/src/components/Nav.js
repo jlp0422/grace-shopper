@@ -6,21 +6,21 @@ import { Link } from 'react-router-dom';
 
 class NavBar extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       isOpen: false
     }
-    this.toggle = this.toggle.bind(this)
+    this.toggle = this.toggle.bind(this);
   }
 
   toggle() {
-    this.setState({ isOpen: !this.state.isOpen })
+    this.setState({ isOpen: !this.state.isOpen });
   }
 
   render() {
-    const { categories, products, users, orders } = this.props
-    const { toggle } = this
-    const { isOpen } = this.state
+    const { categories, products, users, orders } = this.props;
+    const { toggle } = this;
+    const { isOpen } = this.state;
     return (
       <div>
         <Navbar color="light" light expand="sm">
@@ -55,7 +55,7 @@ class NavBar extends React.Component {
 }
 
 const mapState = ({ categories, products, users, orders}) => {
-  return { categories, products, users, orders }
-}
+  return { categories, products, users, orders };
+};
 
 export default connect(mapState)(NavBar);

@@ -3,7 +3,9 @@ import React from 'react';
 import { HashRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
 import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer } from '../store';
+
 import Home from './Home';
+import Nav from './Nav';
 import Categories from './Category/Categories';
 import Products from './Product/Products';
 import ProductInfo from './Product/ProductInfo';
@@ -11,18 +13,18 @@ import Users from './User/Users';
 
 class App extends React.Component {
   componentDidMount() {
-    const { getCategories, getProducts, getUsers, getOrders } = this.props
-    getCategories()
-    getProducts()
-    getUsers()
-    getOrders()
+    const { getCategories, getProducts, getUsers, getOrders } = this.props;
+    getCategories();
+    getProducts();
+    getUsers();
+    getOrders();
   }
 
   render() {
     return (
       <Router>
         <div>
-          <Route path='/' component={ NavBar } />
+          <Route path='/' component={Nav} />
           <div className="container">
           <Switch>
             <Route exact path='/' component={Home} />
@@ -43,7 +45,7 @@ const mapDispatch = (dispatch) => {
     getCategories: () => dispatch(getCategoriesFromServer()),
     getProducts: () => dispatch(getProductsFromServer()),
     getUsers: () => dispatch(getUsersFromServer()),
-    getOrders: () => dispatch(getOrdersFromServer()),
+    getOrders: () => dispatch(getOrdersFromServer())
   }
 }
 
