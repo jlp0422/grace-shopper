@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 import { updateCategoryOnServer } from '../../store';
 
 class CategoryForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { category } = props;
     this.state = {
-      name: ''
+      id: category ? category.id : '',
+      name: category ? category.name : ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.onSave = this.onSave.bind(this);
@@ -22,6 +24,7 @@ class CategoryForm extends Component {
   onSave(ev) {
     ev.preventDefault();
     this.props.updateCategory(this.state);
+    this.setState({ name: '' })
   }
 
   render() {

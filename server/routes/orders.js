@@ -1,34 +1,32 @@
-const app = require('express').Router()
+const app = require('express').Router();
 module.exports = app;
-const { Order } = require('../db').models
+const { Order } = require('../db').models;
 
 app.get('/', (req, res, next) => {
-    Order.findAll()
-        .then(orders => res.send(orders))
-        .catch(next);
-})
+  Order.findAll()
+    .then(orders => res.send(orders))
+    .catch(next);
+});
 
 app.post('/', (req, res, next) => {
-    Order.create(req.body)
-        .then(order => res.send(order))
-        .catch(next);
-})
+  Order.create(req.body)
+    .then(order => res.send(order))
+    .catch(next);
+});
 
 app.put('/:id', (req, res, next) => {
-    Order.findById(req.params.id)
-        .then(order => {
-            Object.assign(order, req.body)
-            return order.save();
-        })
-        .then(order => res.send(order))
-        .catch(next);
-})
+  Order.findById(req.params.id)
+    .then(order => {
+      Object.assign(order, req.body)
+      return order.save();
+    })
+    .then(order => res.send(order))
+    .catch(next);
+});
 
 app.delete('/:id', (req, res, next) => {
-    Order.findById(req.params.id)
-        .then(order => {
-            return order.destroy()
-        })
-        .then(() => res.sendStatus(204))
-        .catch(next);
-})
+  Order.findById(req.params.id)
+    .then(order => order.destroy())
+    .then(() => res.sendStatus(204))
+    .catch(next);
+});

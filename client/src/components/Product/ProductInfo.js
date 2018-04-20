@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { deleteProductFromServer } from '../../store';
 
 import ProductForm from './ProductForm';
@@ -18,7 +17,6 @@ const ProductInfo = (props) => {
     </div>
   );
 }
-
 
 const mapState = ({ products }, { match }) => {
   const id = match.params.id * 1;
