@@ -15,7 +15,7 @@ const reducer = combineReducers({
   users: usersReducer
 });
 
-const store = createStore(reducer, applyMiddleware(thunk, logger));
+const store = createStore(reducer, applyMiddleware(thunk)) //logger));
 
 export default store;
 
