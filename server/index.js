@@ -13,5 +13,3 @@ app.get('/', (req, res, next) => res.sendFile(path.join(__dirname, '../client/pu
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`port of call: ${port}`))
-
-db.sync()
