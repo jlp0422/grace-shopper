@@ -3,13 +3,9 @@ import React from 'react';
 import { HashRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
 import { getCategoriesFromServer, getProductsFromServer, getUsersFromServer, getOrdersFromServer } from '../store';
-import Nav from './Nav';
+import NavBar from './Nav';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   componentDidMount() {
     const { getCategories, getProducts, getUsers, getOrders } = this.props
     getCategories()
@@ -22,7 +18,9 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-        <Route path='/' component={ Nav } />
+          <Route path='/' component={ NavBar } />
+          <div className="container">
+          </div>
         </div>
       </Router>
     )
