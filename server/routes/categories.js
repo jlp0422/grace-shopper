@@ -1,9 +1,10 @@
 const app = require('express').Router()
 module.exports = app;
+const { Category } = require('../db').models
 
-app.get('/', (res, res, next) => {
+app.get('/', (req, res, next) => {
     Category.findAll()
-        .then (categories => res.send(categories))
+        .then(categories => res.send(categories))
         .catch(next);
 })
 
@@ -26,7 +27,7 @@ app.put('/:id', (req, res, next) => {
 app.delete('/:id', (req, res, next) => {
     Category.findbyId(req.params.id)
         .then(category => {
-            return category.destroy()    
+            return category.destroy()
         })
         .then(() => res.sendStatus(204))
         .catch(next);

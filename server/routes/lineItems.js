@@ -1,5 +1,6 @@
 const app = require('express').Router()
 module.exports = app;
+const { LineItem } = require('../db').models
 
 app.get('/', (req, res, next) => {
     LineItem.findAll()
@@ -18,7 +19,7 @@ app.put('/:id', (req, res, next) => {
         .then(lineItem => {
             Object.assign(lineItem, req.body)
             return lineItem.save();
-            
+
         })
         .then(lineItem => res.send(lineItem))
         .catch(next);

@@ -1,5 +1,6 @@
 const app = require('express').Router()
 module.exports = app;
+const { Product } = require('../db').models
 
 app.get('/', (req, res, next) => {
     Product.findAll()
@@ -19,7 +20,7 @@ app.put('/:id', (req, res, next) => {
             Object.assign(product, req.body)
             return product.save()
         })
-        .then (product => res.send(product))
+        .then(product => res.send(product))
         .catch(next);
 })
 
@@ -28,6 +29,6 @@ app.delete('/:id', (req, res, next) => {
         .then(product => {
             return product.destroy()
         })
-        .then (() => res.sendStatus(204))
+        .then(() => res.sendStatus(204))
         .catch(next);
 })

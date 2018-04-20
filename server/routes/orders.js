@@ -1,5 +1,6 @@
 const app = require('express').Router()
 module.exports = app;
+const { Order } = require('../db').models
 
 app.get('/', (req, res, next) => {
     Order.findAll()
@@ -28,6 +29,6 @@ app.delete('/:id', (req, res, next) => {
         .then(order => {
             return order.destroy()
         })
-        .then (() => res.sendStatus(204))
+        .then(() => res.sendStatus(204))
         .catch(next);
 })
