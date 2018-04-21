@@ -29,9 +29,20 @@ class NavBar extends React.Component {
           <NavbarToggler onClick={ toggle } />
           <Collapse isOpen={ isOpen } navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href='#/categories'>Categories</NavLink>
-              </NavItem>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Categories
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                  {
+                    categories.map(category => (
+                      <DropdownItem href={`#/categories/${category.id}`}>{category.name}</DropdownItem>
+                    ))
+                  }
+                    <DropdownItem divider />
+                    <DropdownItem href='#/categories'>All Categories</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
               <NavItem>
                 <NavLink href='#/products'>Products</NavLink>
               </NavItem>
