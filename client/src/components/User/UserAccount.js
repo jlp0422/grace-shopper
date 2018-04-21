@@ -24,7 +24,7 @@ class UserAccount extends React.Component {
     return (
       <div>
         <h1>My Account</h1>
-        <h4>{user.firstName} {user.lastName}</h4>
+        <h2>{user.firstName} {user.lastName}</h2>
         <h4>Total orders: {userOrders.length}</h4>
         <Nav style={{margin: '15px 0px'}} tabs>
           <NavItem>

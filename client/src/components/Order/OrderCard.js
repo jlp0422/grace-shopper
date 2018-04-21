@@ -5,18 +5,18 @@ const OrderCard = ({ orderItems, order, totalPrice }) => {
   return (
     <div style={{backgroundColor: '#f0f3f8'}}>
       {
-        order.date ? (<h4>Order date: {order.date}</h4>) : null
+        order.date ? (<p>Order date: {order.date}</p>) : null
       }
       {
         orderItems.map(item => (
           <div key={item.id}>
-            <h4>{item.product.name}</h4>
-            <h5>Quantity: {item.quantity}</h5>
-            <h5>Price: ${item.product.price}</h5>
+            <p className="font-weight-bold">Product: {item.product.name}</p>
+            <p>Quantity: {item.quantity}</p>
+            <p>Price: ${item.product.price}</p>
           </div>
         ))
       }
-      <h5>Total Price: ${ totalPrice }</h5>
+      <p>Total Price: ${ totalPrice }</p>
     </div>
   )
 }
