@@ -11,18 +11,19 @@ import CategoryInfo from './Category/CategoryInfo';
 import Products from './Product/Products';
 import ProductInfo from './Product/ProductInfo';
 import Users from './User/Users';
-import UserInfo from './User/UserInfo';
+import UserAccount from './User/UserAccount';
 import LoginForm from './User/LoginForm';
 import SignupForm from './User/SignupForm';
 
 class App extends React.Component {
   componentDidMount() {
-    const { getCategories, getProducts, getUsers, getOrders, getUser } = this.props;
+    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems } = this.props;
     getCategories();
     getProducts();
     getUsers();
     getOrders();
     getUser();
+    getLineItems();
   }
 
   render() {
@@ -38,7 +39,7 @@ class App extends React.Component {
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' component={ProductInfo} />
             <Route exact path='/users' component={Users} />
-            <Route exact path='/users/:id' component={UserInfo} />
+            <Route exact path='/users/:id' component={UserAccount} />
             <Route exact path='/login' component={LoginForm} />
             <Route exact path='/signup' component={SignupForm} />
           </Switch>
@@ -55,6 +56,7 @@ const mapDispatch = (dispatch) => {
     getProducts: () => dispatch(getProductsFromServer()),
     getUsers: () => dispatch(getUsersFromServer()),
     getOrders: () => dispatch(getOrdersFromServer()),
+    getLineItems: () => dispatch(getLineItemsFromServer()),
     getUser: () => {
       if (window.localStorage.getItem('token')) {
         dispatch(getUserFromToken(window.localStorage.getItem('token')))

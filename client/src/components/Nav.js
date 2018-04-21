@@ -19,7 +19,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { categories, user, loggedIn, logout } = this.props;
+    const { categories, user, loggedIn, logout, activeOrder } = this.props;
     const { toggle } = this;
     const { isOpen } = this.state;
     return (
@@ -54,8 +54,8 @@ class NavBar extends React.Component {
                       Hello {user.firstName}
                     </DropdownToggle>
                     <DropdownMenu right>
-                      <DropdownItem>My Account</DropdownItem>
-                      <DropdownItem>My Cart (1)</DropdownItem>
+                      <DropdownItem href={`#/users/${user.id}`}>My Account</DropdownItem>
+                      <DropdownItem>My Cart ({activeOrder.length})</DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem onClick={logout}>Log out</DropdownItem>
                     </DropdownMenu>
@@ -75,9 +75,10 @@ class NavBar extends React.Component {
   }
 }
 
-const mapState = ({ categories, user }) => {
+const mapState = ({ categories, user, orders }) => {
+  const activeOrder = orders.filter(order => order.userId === user.id && order.isActive)
   const loggedIn = !!user.id
-  return { categories, user, loggedIn };
+  return { categories, user, loggedIn, activeOrder };
 };
 
 const mapDispatch = (dispatch) => {
