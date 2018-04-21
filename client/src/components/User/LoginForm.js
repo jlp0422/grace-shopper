@@ -25,6 +25,7 @@ class LoginForm extends React.Component {
     const { username, password } = this.state
     const { attemptLogin } = this.props
     attemptLogin({ username, password })
+    this.setState({ username: '', password: '' })
   }
 
   render() {
@@ -32,22 +33,24 @@ class LoginForm extends React.Component {
     const { username, password } = this.state
     return (
       <form onSubmit={ onLogin }>
-        <label>Username</label>
+        <label className="font-weight-bold">Username</label>
         <input
           name="username"
+          className="form-control"
           onChange={ onChange }
           value={ username }
         />
 
-        <label>Password</label>
+        <label className="font-weight-bold">Password</label>
         <input
           name="password"
+          className="form-control"
           onChange={ onChange }
           value={ password }
           type="password"
         />
 
-        <button>Login</button>
+        <button style={{marginTop: '15px'}} className="btn btn-success">Login</button>
       </form>
     )
   }
