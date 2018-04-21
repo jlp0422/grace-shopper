@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import PastOrders from '../Order/PastOrders';
+import ActiveOrder from '../Order/ActiveOrder';
 
 class UserAccount extends React.Component {
   constructor(props) {
@@ -61,7 +62,7 @@ class UserAccount extends React.Component {
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
-            <h4>My Cart</h4>
+            <ActiveOrder />
           </TabPane>
           <TabPane tabId="2">
             <PastOrders />
