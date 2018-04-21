@@ -19,7 +19,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { categories, users, user, loggedIn, logout } = this.props;
+    const { categories, user, loggedIn, logout } = this.props;
     const { toggle } = this;
     const { isOpen } = this.state;
     return (
@@ -48,21 +48,24 @@ class NavBar extends React.Component {
                 <NavLink href='#/products'>Products</NavLink>
               </NavItem>
               {
-                /* Make ternary for logged in
-                If logged in, show hello and dropdown
-                If not logged in, show login link */
+                loggedIn ? (
+                  <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                      Hello {user.firstName}
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem>My Account</DropdownItem>
+                      <DropdownItem>My Cart (1)</DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem onClick={logout}>Log out</DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                ) : (
+                  <NavItem>
+                    <NavLink href='#/login'>Log in</NavLink>
+                  </NavItem>
+                )
               }
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Hello { user.firstName }
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>My Account</DropdownItem>
-                  <DropdownItem>My Cart (1)</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem onClick={ logout }>Log out</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
             </Nav>
           </Collapse>
           </div>
@@ -72,9 +75,9 @@ class NavBar extends React.Component {
   }
 }
 
-const mapState = ({ categories, products, users, orders, user }) => {
+const mapState = ({ categories, user }) => {
   const loggedIn = !!user.id
-  return { categories, products, users, orders, user, loggedIn };
+  return { categories, user, loggedIn };
 };
 
 const mapDispatch = (dispatch) => {

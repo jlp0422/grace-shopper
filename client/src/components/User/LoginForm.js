@@ -25,8 +25,6 @@ class LoginForm extends React.Component {
     const { username, password } = this.state
     const { attemptLogin } = this.props
     attemptLogin({ username, password })
-    // console.log('username: ', username)
-    // console.log('password: ', password)
   }
 
   render() {
@@ -46,6 +44,7 @@ class LoginForm extends React.Component {
           name="password"
           onChange={ onChange }
           value={ password }
+          type="password"
         />
 
         <button>Login</button>

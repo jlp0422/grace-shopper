@@ -1,6 +1,6 @@
 /* eslint-disable */
 import axios from 'axios';
-import { SET_USER, CLEAR_USER } from './actionConstants';
+import { SET_USER } from './actionConstants';
 
 const setUser = (user) => ({ type: SET_USER, user })
 
