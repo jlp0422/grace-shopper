@@ -16,7 +16,6 @@ const ActiveOrder = ({ activeOrder }) => {
 
 const mapState = ({ orders, user }) => {
   const activeOrder = orders.filter(order => order.userId === user.id && order.isActive)
-  console.log(activeOrder)
   return { activeOrder }
 }
 

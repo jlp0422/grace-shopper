@@ -67,6 +67,12 @@ class UserAccount extends React.Component {
           <TabPane tabId="2">
             <PastOrders />
           </TabPane>
+          <TabPane tabId="3">
+            <h4>Address form will go here</h4>
+          </TabPane>
+          <TabPane tabId="4">
+            <h4>Edit Account form will go here</h4>
+          </TabPane>
         </TabContent>
       </div>
 
