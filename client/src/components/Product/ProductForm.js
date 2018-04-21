@@ -44,6 +44,7 @@ class ProductForm extends Component {
             name='name'
             value={name}
             onChange={handleChange}
+            style={{marginBottom: '10px'}}
           />
           <input
             className='form-control'
@@ -51,6 +52,7 @@ class ProductForm extends Component {
             name='price'
             value={price}
             onChange={handleChange}
+            style={{ marginBottom: '10px' }}
           />
           <input
             className='form-control'
@@ -58,6 +60,7 @@ class ProductForm extends Component {
             name='quantity'
             value={quantity}
             onChange={handleChange}
+            style={{ marginBottom: '10px' }}
           />
           <input
             className='form-control'
@@ -65,6 +68,7 @@ class ProductForm extends Component {
             name='imageUrl'
             value={imageUrl}
             onChange={handleChange}
+            style={{ marginBottom: '10px' }}
           />
           <textarea
             className='form-control'
@@ -72,11 +76,13 @@ class ProductForm extends Component {
             name='description'
             value={description}
             onChange={handleChange}
+            style={{ marginBottom: '10px' }}
           />
           <select
             onChange={handleChange}
             name='categoryId'
             className='form-control'
+            style={{ marginBottom: '10px' }}
           >
             <option value='null'>Select Category</option>
             {
@@ -87,7 +93,7 @@ class ProductForm extends Component {
               ))
             }
           </select>
-          <button className='btn btn-primary'>Submit</button>
+          <button style={{ marginBottom: '10px' }} className='btn btn-primary'>Submit</button>
         </form>
       </div>
     );
