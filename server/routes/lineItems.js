@@ -1,9 +1,11 @@
 const app = require('express').Router();
 module.exports = app;
-const { LineItem } = require('../db').models;
+const { LineItem, Product } = require('../db').models;
 
 app.get('/', (req, res, next) => {
-  LineItem.findAll()
+  LineItem.findAll({
+    include: [ Product ]
+  })
     .then(lineItems => res.send(lineItems))
     .catch(next);
 });

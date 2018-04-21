@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { logout } from '../store'
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -18,14 +19,14 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { categories, products, users, orders } = this.props;
+    const { categories, user, loggedIn, logout, activeOrder } = this.props;
     const { toggle } = this;
     const { isOpen } = this.state;
     return (
       <div>
         <Navbar color="light" light expand="sm">
         <div className="container">
-          <NavbarBrand>Our Company</NavbarBrand>
+          <NavbarBrand href='#/'>J2A2</NavbarBrand>
           <NavbarToggler onClick={ toggle } />
           <Collapse isOpen={ isOpen } navbar>
             <Nav className="ml-auto" navbar>
@@ -36,7 +37,7 @@ class NavBar extends React.Component {
                   <DropdownMenu right>
                   {
                     categories.map(category => (
-                      <DropdownItem href={`#/categories/${category.id}`}>{category.name}</DropdownItem>
+                      <DropdownItem key={category.id} href={`#/categories/${category.id}`}>{category.name}</DropdownItem>
                     ))
                   }
                     <DropdownItem divider />
@@ -46,16 +47,25 @@ class NavBar extends React.Component {
               <NavItem>
                 <NavLink href='#/products'>Products</NavLink>
               </NavItem>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  Hello user
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>My Account</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>Log out</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              {
+                loggedIn ? (
+                  <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                      Hello {user.firstName}
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem href={`#/users/${user.id}`}>My Account</DropdownItem>
+                      <DropdownItem>My Cart ({activeOrder.length})</DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem onClick={logout}>Log out</DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+                ) : (
+                  <NavItem>
+                    <NavLink href='#/login'>Log in</NavLink>
+                  </NavItem>
+                )
+              }
             </Nav>
           </Collapse>
           </div>
@@ -65,8 +75,16 @@ class NavBar extends React.Component {
   }
 }
 
-const mapState = ({ categories, products, users, orders}) => {
-  return { categories, products, users, orders };
+const mapState = ({ categories, user, orders }) => {
+  const activeOrder = orders.filter(order => order.userId === user.id && order.isActive)
+  const loggedIn = !!user.id
+  return { categories, user, loggedIn, activeOrder };
 };
 
-export default connect(mapState)(NavBar);
+const mapDispatch = (dispatch) => {
+  return {
+    logout: () => dispatch(logout())
+  }
+}
+
+export default connect(mapState, mapDispatch)(NavBar);

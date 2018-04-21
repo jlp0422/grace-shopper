@@ -9,8 +9,8 @@ const faker = require('faker');
 const categoryCount = 3;
 const productCount = 10;
 const userCount = 5;
-const orderCount = 5;
-const lineItemCount = 3;
+const orderCount = 15;
+const lineItemCount = 25;
 
 /*------------------ARRAYS-TO-POPULATE------------------*/
 
@@ -113,7 +113,19 @@ const seed = () => {
     ...products,
     ...users,
     ...orders,
-    ...lineItems
+    ...lineItems,
+    User.create({
+      firstName: 'Jeremy',
+      lastName: 'Philipson',
+      isAdmin: false,
+      username: 'jphilipson',
+      password: 'JEREMY',
+      email: 'jeremy@gmail.com',
+      street: [faker.address.streetAddress()],
+      city: [faker.address.city()],
+      state: [faker.address.state()],
+      zip: [faker.address.zipCode()],
+    }),
   ]);
 }
 

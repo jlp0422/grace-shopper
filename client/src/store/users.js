@@ -41,7 +41,7 @@ export const updateUserOnServer = (user) => {
   };
 };
 
-/*********** USERS CREATORS ***********/
+/*********** USERS REDUCER ***********/
 const usersReducer = (state = [], action) => {
   switch(action.type) {
 

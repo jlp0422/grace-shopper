@@ -8,10 +8,16 @@ app.use('/vendor', express.static(path.join(__dirname, '../node_modules')));
 app.use('/vendor', express.static(path.join(__dirname, '../client/public')));
 
 app.use(require('body-parser').json());
+app.use(require('body-parser').urlencoded({ extended: true }));
 
 app.use('/api', require('./routes'));
 
 app.get('/', (req, res, next) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
+
+app.use((err, req, res, next) => {
+  console.log(err)
+  res.status(err.status || 500).send(err)
+})
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`port of call: ${port}`))

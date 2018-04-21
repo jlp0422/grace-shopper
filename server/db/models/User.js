@@ -33,38 +33,38 @@ const User = conn.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false,
+   /* allowNull: false,
     validate: {
       notEmpty: true
-    }
+    } */
   },
   street: {
     type: Sequelize.ARRAY(Sequelize.TEXT),
-    allowNull: false,
+    /* allowNull: false,
     validate: {
       notEmpty: true
-    }
+    } */
   },
   city: {
     type: Sequelize.ARRAY(Sequelize.TEXT),
-    allowNull: false,
+    /* allowNull: false,
     validate: {
       notEmpty: true
-    }
+    } */
   },
   state: {
     type: Sequelize.ARRAY(Sequelize.TEXT),
-    allowNull: false,
+    /* allowNull: false,
     validate: {
       notEmpty: true
-    }
+    } */
   },
   zip: {
     type: Sequelize.ARRAY(Sequelize.TEXT),
-    allowNull: false,
+    /* allowNull: false,
     validate: {
       notEmpty: true
-    }
+    } */
   }
 }, {
   timestamps: false
