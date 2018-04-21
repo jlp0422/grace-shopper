@@ -1,0 +1,12 @@
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.jumbotron {
+  text-align: center;
+}
+
+.cardThumbnail {
+  height: 100px;
+  width: auto;
+}

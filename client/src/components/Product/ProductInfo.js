@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import { deleteProductFromServer } from '../../store';
 
 import ProductForm from './ProductForm';
@@ -12,13 +11,20 @@ const ProductInfo = (props) => {
   }
   return (
     <div>
-      <h3>{product.name}</h3>
+    <div className='row'>
+      <div className='col'>
+        <h3>{product.name}</h3>
+      </div>
+      <div className='col'>
+        {product.imageUrl}
+        <p>{product.description}</p>
+      </div>
+    </div>
       <ProductForm product={product} />
       <button onClick={() => deleteProduct(product.id)} className='btn btn-danger'>Delete Product</button>
     </div>
   );
 }
-
 
 const mapState = ({ products }, { match }) => {
   const id = match.params.id * 1;

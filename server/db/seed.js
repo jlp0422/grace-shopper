@@ -39,6 +39,7 @@ const createProduct = () => {
     name: faker.commerce.productName(),
     price: faker.commerce.price(),
     quantity: Math.round(Math.random() * 100),
+    description: faker.lorem.paragraph(),
     categoryId: Math.ceil(Math.random() * categoryCount)
   });
 }

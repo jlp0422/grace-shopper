@@ -11,6 +11,7 @@ class ProductForm extends Component {
       name: product ? product.name : '',
       price: product ? product.price : '',
       quantity: product ? product.quantity : '',
+      description: product ? product.description : '',
       categoryId: product ? product.categoryId : null,
     }
     this.handleChange = this.handleChange.bind(this);
@@ -27,11 +28,11 @@ class ProductForm extends Component {
   onSave(ev) {
     ev.preventDefault();
     this.props.updateProduct(this.state);
-    this.setState({ name: '', price: '', quantity: '' });
+    this.setState({ name: '', price: '', quantity: '', description: '' });
   }
 
   render() {
-    const { name, price, quantity } = this.state;
+    const { name, price, quantity, /*categoryId, */description, imageUrl } = this.state;
     const { categories } = this.props;
     const { handleChange, onSave } = this;
     return (
@@ -58,6 +59,20 @@ class ProductForm extends Component {
             value={quantity}
             onChange={handleChange}
           />
+          <input
+            className='form-control'
+            placeholder='Add Image URL'
+            name='imageUrl'
+            value={imageUrl}
+            onChange={handleChange}
+          />
+          <textarea
+            className='form-control'
+            placeholder='Description'
+            name='description'
+            value={description}
+            onChange={handleChange}
+          />
           <select
             onChange={handleChange}
             name='categoryId'
@@ -66,7 +81,7 @@ class ProductForm extends Component {
             <option value='null'>Select Category</option>
             {
               categories.map(category => (
-                <option key={category.id} value={category.id}>
+                <option key={category.id} value={category.id}/* selected={category.id === categoryId}*/>
                   {category.name}
                 </option>
               ))

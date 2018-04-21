@@ -23,7 +23,7 @@ export const deleteCategoryOnServer = (id) => {
     return axios.delete(`/api/categories/${id}`)
       .then(() => dispatch(deleteCategory(id)))
       .then(() => location.hash = '/categories')
-      // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   };
 };
 

@@ -7,6 +7,7 @@ import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, g
 import Home from './Home';
 import Nav from './Nav';
 import Categories from './Category/Categories';
+import CategoryInfo from './Category/CategoryInfo';
 import Products from './Product/Products';
 import ProductInfo from './Product/ProductInfo';
 import Users from './User/Users';
@@ -29,6 +30,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/categories' component={Categories} />
+            <Route exact path='/categories/:id' component={CategoryInfo} />
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' component={ProductInfo} />
             <Route exact path='/users' component={Users} />
