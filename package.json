@@ -8,7 +8,7 @@
     "postinstall": "npm run webpack",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "npm run webpack -- -w & nodemon server --ignore dist/ --ignore src/"
+    "start:dev": "npm run webpack -- -w & nodemon server --ignore dist/ --ignore client/"
   },
   "keywords": [],
   "author": "",
