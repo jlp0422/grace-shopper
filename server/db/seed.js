@@ -113,7 +113,19 @@ const seed = () => {
     ...products,
     ...users,
     ...orders,
-    ...lineItems
+    ...lineItems,
+    User.create({
+      firstName: 'Jeremy',
+      lastName: 'Philipson',
+      isAdmin: false,
+      username: 'jeremyphilipson',
+      password: 'JEREMY',
+      email: 'jeremy@gmail.com',
+      street: [faker.address.streetAddress()],
+      city: [faker.address.city()],
+      state: [faker.address.state()],
+      zip: [faker.address.zipCode()],
+    })
   ]);
 }
 
