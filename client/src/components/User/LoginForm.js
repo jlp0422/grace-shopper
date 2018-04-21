@@ -32,26 +32,29 @@ class LoginForm extends React.Component {
     const { onChange, onLogin } = this
     const { username, password } = this.state
     return (
-      <form onSubmit={ onLogin }>
-        <label className="font-weight-bold">Username</label>
-        <input
-          name="username"
-          className="form-control"
-          onChange={ onChange }
-          value={ username }
-        />
+      <div>
+        <form onSubmit={ onLogin }>
+          <label className="font-weight-bold">Username</label>
+          <input
+            name="username"
+            className="form-control"
+            onChange={ onChange }
+            value={ username }
+          />
 
-        <label className="font-weight-bold">Password</label>
-        <input
-          name="password"
-          className="form-control"
-          onChange={ onChange }
-          value={ password }
-          type="password"
-        />
+          <label className="font-weight-bold">Password</label>
+          <input
+            name="password"
+            className="form-control"
+            onChange={ onChange }
+            value={ password }
+            type="password"
+          />
 
-        <button style={{marginTop: '15px'}} className="btn btn-success">Login</button>
-      </form>
+          <button style={{marginTop: '15px'}} className="btn btn-success">Login</button>
+        </form>
+        <h4>Don't have an account? <a href='#/signup'>Create one now</a></h4>
+      </div>
     )
   }
 }

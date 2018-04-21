@@ -13,6 +13,7 @@ import ProductInfo from './Product/ProductInfo';
 import Users from './User/Users';
 import UserInfo from './User/UserInfo';
 import LoginForm from './User/LoginForm';
+import SignupForm from './User/SignupForm';
 
 class App extends React.Component {
   componentDidMount() {
@@ -39,6 +40,7 @@ class App extends React.Component {
             <Route exact path='/users' component={Users} />
             <Route exact path='/users/:id' component={UserInfo} />
             <Route exact path='/login' component={LoginForm} />
+            <Route exact path='/signup' component={SignupForm} />
           </Switch>
           </div>
         </div>
