@@ -1,15 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import OrderCard from './OrderCard';
 
 const PastOrders = ({ pastOrders }) => {
   return (
-    <hr />
+    <div>
+      {
+        pastOrders.map(order => (
+          <OrderCard key={order.id} order={order} />
+        ))
+      }
+    </div>
   )
 }
 
-const mapState = ({ orders, user, lineItems }) => {
+const mapState = ({ orders, user }) => {
   const pastOrders = orders.filter(order => order.userId === user.id && !order.isActive)
-  return { pastOrders, lineItems }
+  return { pastOrders }
 }
 
 export default connect(mapState)(PastOrders)

@@ -25,10 +25,10 @@ class UserAccount extends React.Component {
         <h1>My Account</h1>
         <h4>{user.firstName} {user.lastName}</h4>
         <h4>Total orders: {userOrders.length}</h4>
-        <Nav tabs>
+        <Nav style={{margin: '15px 0px'}} tabs>
           <NavItem>
             <NavLink
-              className={ activeTab === '1' ? 'active' : null }
+              className={activeTab === '1' ? 'active font-weight-bold' : null }
               onClick={() => { toggle('1'); }}
             >
               My Cart
@@ -36,10 +36,26 @@ class UserAccount extends React.Component {
           </NavItem>
           <NavItem>
             <NavLink
-              className={ activeTab === '2' ? 'active' : null }
+              className={activeTab === '2' ? 'active font-weight-bold' : null }
               onClick={() => { toggle('2'); }}
             >
               Past Orders
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={activeTab === '3' ? 'active font-weight-bold' : null}
+              onClick={() => { toggle('3'); }}
+            >
+              My Addresses
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={activeTab === '4' ? 'active font-weight-bold' : null}
+              onClick={() => { toggle('4'); }}
+            >
+              Edit Account
             </NavLink>
           </NavItem>
         </Nav>
