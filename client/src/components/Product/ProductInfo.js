@@ -11,7 +11,15 @@ const ProductInfo = (props) => {
   }
   return (
     <div>
-      <h3>{product.name}</h3>
+    <div className='row'>
+      <div className='col'>
+        <h3>{product.name}</h3>
+      </div>
+      <div className='col'>
+        {product.imageUrl}
+        <p>{product.description}</p>
+      </div>
+    </div>
       <ProductForm product={product} />
       <button onClick={() => deleteProduct(product.id)} className='btn btn-danger'>Delete Product</button>
     </div>
