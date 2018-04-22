@@ -15,10 +15,10 @@ class UserForm extends Component {
       username: user ? user.username : '',
       password: user ? user.password : '',
       email: user ? user.email : '',
-      street: user ? user.street : '',
-      city: user ? user.city : '',
-      state: user ? user.state : '',
-      zip: user ? user.zip : '',
+      // street: user ? user.street : '',
+      // city: user ? user.city : '',
+      // state: user ? user.state : '',
+      // zip: user ? user.zip : '',
       // inputError: [],
       // inputEdited: {}
     }
@@ -49,10 +49,10 @@ class UserForm extends Component {
       username: user ? user.username : '',
       password: user ? user.password : '',
       email: user ? user.email : '',
-      street: user ? user.street : '',
-      city: user ? user.city : '',
-      state: user ? user.state : '',
-      zip: user ? user.zip : '',
+      // street: user ? user.street : '',
+      // city: user ? user.city : '',
+      // state: user ? user.state : '',
+      // zip: user ? user.zip : '',
     });
   }
 
@@ -95,17 +95,21 @@ class UserForm extends Component {
     // const { users/*, user*/ } = this.props;
     const { handleChange, onSave } = this;
     const fields = {
-      firstName: 'First Name', lastName: 'Last Name', username: 'Username',
-      password: 'Password', email: 'email',
-      street: 'Street', city: 'City', state: 'State', zip: 'Zip Code'
+      firstName: 'First Name',
+      lastName: 'Last Name',
+      username: 'Username',
+      password: 'Password',
+      email: 'email',
+      /*street: 'Street', city: 'City', state: 'State', zip: 'Zip Code'*/
     }
     return (
       <div>
         <form onSubmit={onSave}>
           {
             Object.keys(fields).map(field => (
-              <div key={field} className=''>
+              // <div key={field} className=''>
                 <input
+                  key={field}
                   className='form-control'
                   placeholder={`${fields[field]}`}
                   name={field}
@@ -113,7 +117,7 @@ class UserForm extends Component {
                   onChange={handleChange}
                   style={{ marginBottom: '10px' }}
                 />
-              </div>
+              // </div>
             ))
           }
           <button className='btn btn-primary'>Submit</button>

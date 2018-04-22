@@ -5,11 +5,11 @@ import ProductCard from './ProductCard';
 import ProductForm from './ProductForm';
 
 const Products = (props) => {
-  const { products } = props;
+  const { products, loggedIn, isAdmin } = props;
   return (
     <div>
       <h2>Products</h2>
-      <ProductForm />
+      { loggedIn && isAdmin ? <ProductForm /> : null }
       <ul className='list-group'>
         {
           products.map(product => (
@@ -23,9 +23,14 @@ const Products = (props) => {
   );
 }
 
-const mapState = ({ products }) => {
+const mapState = ({ products, user }) => {
+  const { isAdmin } = user;
+  const loggedIn = !!Object.keys(user).length;
+  // console.log()
   return {
-    products
+    products,
+    isAdmin,
+    loggedIn,
   };
 };
 

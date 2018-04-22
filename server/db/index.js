@@ -5,9 +5,13 @@ const LineItem = require('./models/LineItem');
 const Order = require('./models/Order');
 const Product = require('./models/Product');
 const User = require('./models/User');
+const ProductCategory = require('./models/ProductCategory');
 
-Category.hasMany(Product);
-Product.belongsTo(Category);
+Product.belongsToMany(Category, { through: ProductCategory });
+Category.belongsToMany(Product, { through: ProductCategory });
+
+// Category.hasMany(Product);
+// Product.belongsTo(Category);
 LineItem.belongsTo(Product);
 Order.hasMany(LineItem);
 LineItem.belongsTo(Order);

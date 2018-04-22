@@ -126,6 +126,18 @@ const seed = () => {
       state: [faker.address.state()],
       zip: [faker.address.zipCode()],
     }),
+    User.create({
+      firstName: 'Jeremy',
+      lastName: 'Grubard',
+      isAdmin: true,
+      username: 'jgrubard',
+      password: 'JEREMY',
+      email: 'jgrubard@gmail.com',
+      street: [faker.address.streetAddress()],
+      city: [faker.address.city()],
+      state: [faker.address.state()],
+      zip: [faker.address.zipCode()],
+    }),
   ]);
 }
 
