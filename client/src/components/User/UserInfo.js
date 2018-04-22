@@ -1,35 +1,37 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { deleteUserOnServer } from '../../store';
+/*This file can probably be deleted*/
 
-import UserForm from './UserForm';
+// import React from 'react';
+// import { connect } from 'react-redux';
+// import { deleteUserOnServer } from '../../store';
 
-const UserInfo = (props) => {
-  const { user, deleteUser } = props;
-  if (!user) {
-    return null;
-  }
-  return (
-    <div>
-      <h3>User: {user.username}</h3>
-      <UserForm user={user} />
-      <button onClick={() => deleteUser(user.id)} className='btn btn-danger'>Delete user</button>
-    </div>
-  );
-}
+// import UserForm from './UserForm';
 
-const mapState = ({ users }, { match }) => {
-  const id = match.params.id * 1;
-  const user = users.find(_user => _user.id === id);
-  return {
-    user
-  }
-}
+// const UserInfo = (props) => {
+//   const { user, deleteUser } = props;
+//   if (!user) {
+//     return null;
+//   }
+//   return (
+//     <div>
+//       <h3>User: {user.username}</h3>
+//       <UserForm user={user} />
+//       <button onClick={() => deleteUser(user.id)} className='btn btn-danger'>Delete user</button>
+//     </div>
+//   );
+// }
 
-const mapDispatch = (dispatch) => {
-  return {
-    deleteUser: (userId) => dispatch(deleteUserOnServer(userId))
-  }
-}
+// const mapState = ({ users }, { match }) => {
+//   const id = match.params.id * 1;
+//   const user = users.find(_user => _user.id === id);
+//   return {
+//     user
+//   }
+// }
 
-export default connect(mapState, mapDispatch)(UserInfo);
+// const mapDispatch = (dispatch) => {
+//   return {
+//     deleteUser: (userId) => dispatch(deleteUserOnServer(userId))
+//   }
+// }
+
+// export default connect(mapState, mapDispatch)(UserInfo);
