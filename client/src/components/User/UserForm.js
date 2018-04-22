@@ -127,9 +127,9 @@ class UserForm extends Component {
   }
 }
 
-// const mapState = ({ users, user }) => {
+// const mapState = ({ /*users,*/ user }) => {
 //   return {
-//     users,
+// //     users,
 //     user
 //   }
 // }
