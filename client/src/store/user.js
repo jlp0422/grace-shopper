@@ -1,8 +1,9 @@
 /* eslint-disable */
 import axios from 'axios';
-import { SET_USER } from './actionConstants';
+import { SET_USER, UPDATE_AUTH_USER } from './actionConstants';
 
-const setUser = (user) => ({ type: SET_USER, user })
+const setUser = (user) => ({ type: SET_USER, user });
+const updateAuthUser = (user) => ({ type: UPDATE_AUTH_USER, user });
 
 export const getUserFromToken = (token) => {
   return (dispatch) => {
@@ -23,7 +24,13 @@ export const attemptLogin = (credentials) => {
 export const logout = () => {
   return (dispatch) => {
     window.localStorage.removeItem('token');
-    dispatch(setUser({}))
+    dispatch(setUser({}));
+  }
+}
+
+export const updateLoggedUser = (user) => {
+  return (dispatch) => {
+    dispatch(updateAuthUser(user));
   }
 }
 
@@ -31,6 +38,10 @@ const userReducer = (state = {}, action) => {
   switch(action.type) {
 
     case SET_USER:
+      state = action.user
+      break;
+
+    case UPDATE_AUTH_USER:
       state = action.user
       break;
   };

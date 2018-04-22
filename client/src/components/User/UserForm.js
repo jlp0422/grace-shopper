@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateUserOnServer } from '../../store';
+import { updateUserOnServer, updateLoggedUser } from '../../store';
 
 class UserForm extends Component {
   constructor(props) {
@@ -70,6 +70,7 @@ class UserForm extends Component {
     // const save = { firstName, lastName, isAdmin, username, password, email, street, city, state, zip };
     // this.props.updateUser(save);
     this.props.updateUser(this.state);
+    this.props.updateLoggedUser(this.state);
     // this.setState({
     //   firstName: '',
     //   lastName: '',
@@ -136,7 +137,8 @@ class UserForm extends Component {
 
 const mapDispatch = (dispatch) => {
   return {
-    updateUser: (user) => dispatch(updateUserOnServer(user))
+    updateUser: (user) => dispatch(updateUserOnServer(user)),
+    updateLoggedUser: (user) => dispatch(updateLoggedUser(user))
   };
 };
 
