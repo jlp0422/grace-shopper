@@ -5,7 +5,7 @@ import { updateUserOnServer } from '../../store'
 
 class SignupForm extends React.Component {
   constructor() {
-    super()
+    super();
     this.state = {
       firstName: '',
       lastName: '',
@@ -13,25 +13,25 @@ class SignupForm extends React.Component {
       username: '',
       password: ''
     }
-    this.onChange = this.onChange.bind(this)
-    this.onCreate = this.onCreate.bind(this)
+    this.onChange = this.onChange.bind(this);
+    this.onCreate = this.onCreate.bind(this);
   }
 
   onChange(ev) {
     const change = {}
     change[ev.target.name] = ev.target.value
-    this.setState(change)
+    this.setState(change);
   }
 
   onCreate(ev) {
     ev.preventDefault()
-    const { createUser } = this.props
-    createUser(this.state)
+    const { createUser } = this.props;
+    createUser(this.state);
   }
 
   render() {
-    const { onChange, onCreate } = this
-    const { firstName, lastName, email, username, password } = this.state
+    const { onChange, onCreate } = this;
+    const { firstName, lastName, email, username, password } = this.state;
     return (
       <div>
         <form onSubmit={ onCreate }>
@@ -90,4 +90,4 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatch)(SignupForm)
+export default connect(null, mapDispatch)(SignupForm);

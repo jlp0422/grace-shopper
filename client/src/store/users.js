@@ -36,7 +36,7 @@ export const updateUserOnServer = (user) => {
     return axios[method](url, user)
       .then( res => res.data)
       .then( u => dispatch(action(u)))
-      .then(() => location.hash = '/users')
+      // .then(() => location.hash = '/users')
       // .catch(err) placeholder for error handling
   };
 };

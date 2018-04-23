@@ -6,6 +6,7 @@ import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, g
 
 import Home from './Home';
 import Nav from './Nav';
+import Footer from './Footer';
 import Categories from './Category/Categories';
 import CategoryInfo from './Category/CategoryInfo';
 import Products from './Product/Products';
@@ -43,6 +44,7 @@ class App extends React.Component {
             <Route exact path='/login' component={LoginForm} />
             <Route exact path='/signup' component={SignupForm} />
           </Switch>
+          <Route component={Footer} />
           </div>
         </div>
       </Router>

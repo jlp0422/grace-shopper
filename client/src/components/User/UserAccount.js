@@ -4,23 +4,24 @@ import { connect } from 'react-redux';
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import PastOrders from '../Order/PastOrders';
 import ActiveOrder from '../Order/ActiveOrder';
+import UserForm from './UserForm';
 
 class UserAccount extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = { activeTab: '1' }
     this.toggle = this.toggle.bind(this)
   }
 
   toggle(tab) {
-    const { activeTab } = this.state
+    const { activeTab } = this.state;
     if (activeTab !== tab) this.setState({ activeTab: tab })
   }
 
   render() {
-    const { user, userOrders } = this.props
-    const { activeTab } = this.state
-    const { toggle } = this
+    const { user, userOrders } = this.props;
+    const { activeTab } = this.state;
+    const { toggle } = this;
     return (
       <div>
         <h1>My Account</h1>
@@ -71,7 +72,7 @@ class UserAccount extends React.Component {
             <h4>Address form will go here</h4>
           </TabPane>
           <TabPane tabId="4">
-            <h4>Edit Account form will go here</h4>
+            <UserForm user={user} />
           </TabPane>
         </TabContent>
       </div>
@@ -81,8 +82,8 @@ class UserAccount extends React.Component {
 }
 
 const mapState = ({ user, orders }) => {
-  const userOrders = orders.filter(order => order.userId === user.id)
+  const userOrders = orders.filter(order => order.userId === user.id);
   return { user, userOrders }
 }
 
-export default connect(mapState)(UserAccount)
+export default connect(mapState)(UserAccount);
