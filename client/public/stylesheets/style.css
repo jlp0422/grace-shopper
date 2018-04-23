@@ -10,3 +10,7 @@
   height: 100px;
   width: auto;
 }
+
+.nav-sticky {
+  position: sticky;
+}

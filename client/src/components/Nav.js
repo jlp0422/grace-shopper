@@ -24,7 +24,7 @@ class NavBar extends React.Component {
     const { isOpen } = this.state;
     return (
       <div>
-        <Navbar color="light" light expand="sm">
+        <Navbar className="nav-sticky sticky-top" color="light" light expand="sm">
         <div className="container">
           <NavbarBrand href='#/'>J²A²</NavbarBrand>
           <NavbarToggler onClick={ toggle } />
