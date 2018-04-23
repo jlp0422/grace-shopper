@@ -100,7 +100,7 @@ class UserForm extends Component {
       lastName: 'Last Name',
       username: 'Username',
       password: 'Password',
-      email: 'email',
+      email: 'Email Address',
       /*street: 'Street', city: 'City', state: 'State', zip: 'Zip Code'*/
     }
     return (
@@ -108,7 +108,8 @@ class UserForm extends Component {
         <form onSubmit={onSave}>
           {
             Object.keys(fields).map(field => (
-              // <div key={field} className=''>
+              <div key={field} className=''>
+                <label className="font-weight-bold">{fields[field]}</label>
                 <input
                   key={field}
                   className='form-control'
@@ -118,7 +119,7 @@ class UserForm extends Component {
                   onChange={handleChange}
                   style={{ marginBottom: '10px' }}
                 />
-              // </div>
+              </div>
             ))
           }
           <button className='btn btn-primary'>Submit</button>
