@@ -30,7 +30,7 @@ export const deleteLineItemFromServer = (id) => {
 export const updateLineItemOnServer = (item) => {
   const { id } = item;
   const method = id ? 'put' : 'post';
-  const url = id ? `/api/items/${id}` : '/api/items';
+  const url = id ? `/api/lineitems/${id}` : '/api/lineitems';
   const action = id ? updateLineItem : createLineItem
   return (dispatch) => {
     return axios[method](url, item)
