@@ -30,7 +30,7 @@ const PageFooter = () => {
       </div>
       <div className="footer-copyright text-center">
         <div  className="container-fluid">
-          <div className="footer-text"><p>Copyright: A Division of Fullstack Academy</p></div>
+          <div className="footer-text"><p>&copy; Copyright: A Division of Fullstack Academy</p></div>
         </div>
       </div>
     </div>
