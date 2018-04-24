@@ -15,24 +15,8 @@ class UserForm extends Component {
       username: user ? user.username : '',
       password: user ? user.password : '',
       email: user ? user.email : '',
-      // street: user ? user.street : '',
-      // city: user ? user.city : '',
-      // state: user ? user.state : '',
-      // zip: user ? user.zip : '',
-      // inputError: [],
-      // inputEdited: {}
     }
-    // ---------------------------- VALIDATORS ----------------------------
-    // this.validators = {
-    //   email: value => {
-    //     const emailFormat = /\S+@\S+\.\S+/;
-    //     if (!emailFormat.test(value)) {
-    //       return `e-mail must be valid e-mail format with @`;
-    //     }
-    //   }
-    // };
 
-    // ---------------------------- BIND METHOD ----------------------------
     this.handleChange = this.handleChange.bind(this);
     this.onSave = this.onSave.bind(this);
   }
@@ -41,19 +25,7 @@ class UserForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { user } = nextProps;
-    this.setState({
-      id: user ? user.id : '',
-      firstName: user ? user.firstName : '',
-      lastName: user ? user.lastName : '',
-      isAdmin: user ? user.isAdmin : '',
-      username: user ? user.username : '',
-      password: user ? user.password : '',
-      email: user ? user.email : '',
-      // street: user ? user.street : '',
-      // city: user ? user.city : '',
-      // state: user ? user.state : '',
-      // zip: user ? user.zip : '',
-    });
+    this.setState(user ? user : null);
   }
 
   // ---------------------------- METHODS ----------------------------

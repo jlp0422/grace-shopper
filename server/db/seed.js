@@ -7,10 +7,10 @@ const faker = require('faker');
 /*-------------HOW-MANY-D0-WE-WANT-TO-SEED?-------------*/
 
 const categoryCount = 3;
-const productCount = 10;
+const productCount = 50;
 const userCount = 5;
-const orderCount = 15;
-const lineItemCount = 25;
+const orderCount = 25;
+const lineItemCount = 70;
 
 /*------------------ARRAYS-TO-POPULATE------------------*/
 
@@ -62,10 +62,11 @@ const createUser = () => {
 }
 
 const createOrder = () => {
-  const activeStatus = !!Math.round(Math.random());
+  // const activeStatus = !!Math.round(Math.random());
   return Order.create({
-    isActive: activeStatus,
-    date: activeStatus ? null : faker.date.past(),
+    isActive: false,
+    // date: activeStatus ? null : faker.date.past(),
+    date: faker.date.past(),
     userId: Math.ceil(Math.random() * userCount)
   });
 }
@@ -108,6 +109,32 @@ const seed = () => {
   populateUsers();
   populateOrders();
   populateLineItems();
+
+  // console.log(orders);
+
+  // const userMap = orders.reduce((memo, order) => {
+
+    // console.log(order.id);
+
+    // if(!memo[order.userId]) {
+      // memo[order.userId] = 1;
+    // }
+    // else {
+      // memo[order.userId]++;
+    // }
+    // return memo;
+  // }, {});
+
+  // const _orders = orders.map((order, index, array) => {
+    // const randomIndex = sMath.round(Math.random()) * (array.length - 1);
+    // const active = () => !!Math.round(Math.random())
+    // console.log(randomIndex, active)
+    // console.log(userMap);
+    // return !Object.keys(userMap).includes(order.userId) && active ? (
+      // Object.assign({}, order, { isActive: true, date: null })
+    // ) : order;
+  // });
+
   return Promise.all([
     ...categories,
     ...products,
@@ -174,7 +201,13 @@ const seed = () => {
       state: [faker.address.state()],
       zip: [faker.address.zipCode()],
     }),
-  ]);
+  ]).then((all) => {
+    // console.log(orders[0].id, orders[0].name);
+    return Order.findAll()
+    .then(orders => {
+      console.log(orders)
+    })
+  })
 }
 
 conn.sync({ force: true })
