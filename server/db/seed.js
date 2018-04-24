@@ -12,14 +12,6 @@ const userCount = 5;
 const orderCount = 25;
 const lineItemCount = 70;
 
-/*------------------ARRAYS-TO-POPULATE------------------*/
-
-// const categories = [];
-// const products = [];
-// const users = [];
-// const orders = [];
-// const lineItems = [];
-
 /*---------------HOW-MANY-SHOULD-WE-MAKE?---------------*/
 
 const createThisMany = (count, item) => {
@@ -105,58 +97,22 @@ const populateLineItems = () => {
 
 /*--------------------SEED-DATABASE---------------------*/
 
-let _userOrdersMap;
+// let _users;
 const seed = () => {
-
-  return Promise.all([
-    ...populateCategories(),
-    ...populateProducts(),
-    ...populateUsers(),
-    // ...populateOrders(),
-    // ...populateLineItems(),
-  ])
+  return Promise.all(populateUsers())
+  .then((users) => {
+    users.forEach(user => {
+      Order.create({ isActive: true, date: null, userId: user.id });
+    })
+  })
   .then(() => {
     return Promise.all([
-      ...populateOrders(),
-    ])
-    .then(orders => {
-      _userOrdersMap = orders.reduce((memo, order) => {
-        if(!memo[order.userId]) {
-          memo[order.userId] = 1;
-        } else {
-          memo[order.userId]++;
-        }
-        return memo;
-      }, {});
+    ...populateCategories(),
+    ...populateProducts(),
+        ...populateLineItems(),
+    ...populateOrders(),
 
-      return orders
-    })
-    .then((orders) => {
-      const _orders = orders.map(order => {
-        if(order.userId in _userOrdersMap) {
-          delete _userOrdersMap[order.userId]
-          return Object.assign(order, {
-            isActive: true,
-            date: null
-          });
-        }
-        return order
-      })
-      return _orders;
-    })
-    .then(orders => {
-      orders.forEach(order => {
-        console.log('*User ID:', order.userId, '*Order ID:', order.id, '*Active:', order.isActive, '*Date:', order.date)
-      })
-      return orders;
-    })
-    // .then(() => {
-      // Promise.all([
-        // ...populateCategories(),
-        // ...populateProducts(),
-        // ...populateLineItems(),
-      // ])
-    // })
+    ])
   })
   .catch(err => console.error(err))
 }
