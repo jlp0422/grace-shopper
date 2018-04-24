@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { attemptLogin, updateUserOnServer } from '../../store'
+import { Button } from 'mdbreact'
 
 class LoginForm extends React.Component {
   constructor(props) {

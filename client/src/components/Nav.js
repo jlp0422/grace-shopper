@@ -30,6 +30,9 @@ class NavBar extends React.Component {
           <NavbarToggler onClick={ toggle } />
           <Collapse isOpen={ isOpen } navbar>
             <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <NavLink href='#/'>Home</NavLink>
+                </NavItem>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     Categories
