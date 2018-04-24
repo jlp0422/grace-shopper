@@ -35,14 +35,19 @@ class App extends React.Component {
           <div className="container">
           <Switch>
             <Route exact path='/' component={Home} />
+            {/* CATEGORY ROUTES */}
             <Route exact path='/categories' component={Categories} />
             <Route exact path='/categories/:id' component={CategoryInfo} />
             <Route exact path='/products' component={Products} />
+            {/* PRODUCT ROUTES */}
             <Route exact path='/products/:id' component={ProductInfo} />
+            {/* USER ROUTES */}
             <Route exact path='/users' component={Users} />
             <Route exact path='/users/:id' render={({ match }) => (
               <UserAccount id={ match.params.id } />
             )}/>
+
+            {/* AUTH ROUTES */}
             <Route exact path='/login' component={LoginForm} />
             <Route exact path='/signup' component={LoginForm} />
           </Switch>
