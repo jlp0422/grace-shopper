@@ -7,14 +7,16 @@ import { Input, Button } from 'mdbreact';
 class UserForm extends React.Component {
   constructor(props) {
     super(props);
-    const { user } = props;
+    const { user } = this.props;
     const { id } = user
     this.state = {
+      id: id ? user.id : '',
       firstName: id ? user.firstName : '',
       lastName: id ? user.lastName : '',
       username: id ? user.username : '',
       password: id ? user.password : '',
       email: id ? user.email : '',
+      isEditing: false
     }
     this.onChange = this.onChange.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
@@ -22,7 +24,8 @@ class UserForm extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { user } = nextProps;
-    this.setState(user)
+    const { id, firstName, lastName, username, email, password } = user
+    this.setState({ id, firstName, lastName, username, email, password })
   }
 
   onChange(ev) {
@@ -34,13 +37,15 @@ class UserForm extends React.Component {
   onUpdate(ev) {
     ev.preventDefault()
     const { updateUser, updateLogged } = this.props;
-    updateUser(this.state);
-    updateLogged(this.state);
+    const { id, firstName, lastName, username, email, password } = this.state
+    updateUser({ id, firstName, lastName, username, email, password });
+    updateLogged({ id, firstName, lastName, username, email, password });
+    this.setState({ isEditing: false })
   }
 
   render() {
     const { onChange, onUpdate } = this;
-    const { firstName, lastName, email, username, password } = this.state;
+    const { firstName, lastName, email, username, password, isEditing } = this.state;
     const fields = {
       firstName: 'First name',
       lastName: 'Last name',
@@ -50,14 +55,15 @@ class UserForm extends React.Component {
     }
     return (
       <div>
-        <form onSubmit={ onUpdate }>
+        <form>
           {
             Object.keys(fields).map(field => (
               <div className="" key={field}>
               <label className="font-weight-bold">{fields[field]}</label>
               <input
               name={field}
-              className="form-control"
+              readOnly={isEditing ? false : true}
+              className={`form-control${isEditing ? `` : `-plaintext` }`}
               onChange={onChange}
               value={this.state[field]}
               type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text' }
@@ -65,15 +71,20 @@ class UserForm extends React.Component {
               </div>
             ))
           }
-          <button style={{ marginTop: '15px' }} className="btn btn-primary">Update</button>
         </form>
+        {
+          isEditing ? (
+            <button onClick={ onUpdate } style={{ marginTop: '15px' }} className="btn btn-success">Save</button>
+          ) : (
+            <button onClick={() => this.setState({ isEditing: true })} style={{ marginTop: '15px' }} className="btn btn-outline-success">Edit</button>
+          )
+        }
       </div>
     )
   }
 }
 
 const mapState = ({user}) => {
-  // console.log(user)
   return { user }
 }
 
@@ -84,4 +95,4 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatch)(UserForm);
+export default connect(mapState, mapDispatch)(UserForm);

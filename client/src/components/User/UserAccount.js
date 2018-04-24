@@ -69,7 +69,7 @@ class UserAccount extends React.Component {
             <h4>Address form will go here</h4>
           </TabPane>
           <TabPane tabId="4">
-            <UserForm page={'account'} user={user} />
+            <UserForm user={user} />
           </TabPane>
         </TabContent>
       </div>
