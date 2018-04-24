@@ -31,28 +31,28 @@ class UserAccount extends React.Component {
         <Nav style={{margin: '15px 0px'}} tabs>
           <NavItem>
             <NavLink
-              className={activeTab === '1' ? 'active font-weight-bold' : null }
+              className={activeTab === '1' ? 'active font-weight-bold' : '' }
               onClick={() => { toggle('1'); }}>
               My Cart
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink
-              className={activeTab === '2' ? 'active font-weight-bold' : null }
+              className={activeTab === '2' ? 'active font-weight-bold' : '' }
               onClick={() => { toggle('2'); }}>
               Past Orders
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink
-              className={activeTab === '3' ? 'active font-weight-bold' : null}
+              className={activeTab === '3' ? 'active font-weight-bold' : ''}
               onClick={() => { toggle('3'); }}>
               My Addresses
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink
-              className={activeTab === '4' ? 'active font-weight-bold' : null}
+              className={activeTab === '4' ? 'active font-weight-bold' : ''}
               onClick={() => { toggle('4'); }}>
               Edit Account
             </NavLink>

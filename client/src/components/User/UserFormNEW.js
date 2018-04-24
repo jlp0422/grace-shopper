@@ -1,7 +1,8 @@
 /* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateUserOnServer, updateLoggedUser } from '../../store'
+import { updateUserOnServer, updateLoggedUser } from '../../store';
+import { Input, Button } from 'mdbreact';
 
 class UserForm extends React.Component {
   constructor(props) {
@@ -35,7 +36,6 @@ class UserForm extends React.Component {
     const { updateUser, updateLogged } = this.props;
     updateUser(this.state);
     updateLogged(this.state);
-
   }
 
   render() {
@@ -56,17 +56,15 @@ class UserForm extends React.Component {
               <div key={field}>
                 <label className="font-weight-bold">{fields[field]}</label>
                 <input
+                  label={fields[field]}
                   name={field}
                   className="form-control"
                   onChange={onChange}
                   value={this.state[field]}
-                  type={field === 'password' ? 'password' : field === 'email' ? 'email' : null }
+                  type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text' }
                 />
               </div>
             ))
-          }
-          {
-
           }
           <button style={{ marginTop: '15px' }} className="btn btn-primary">Update</button>
         </form>

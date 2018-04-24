@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { attemptLogin, updateUserOnServer } from '../../store'
-import { Button } from 'mdbreact'
+import { Button, Input } from 'mdbreact'
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -52,28 +52,31 @@ class LoginForm extends React.Component {
           url === '/signup' ? (
             Object.keys(fields).map(field => (
               <div key={field}>
-                <label className="font-weight-bold">{fields[field]}</label>
-                <input
+                {/* <label className="font-weight-bold">{fields[field]}</label> */}
+                <Input
+                  label={fields[field]}
                   name={field}
                   className="form-control"
                   onChange={onChange}
                   value={this.state[field]}
-                  type={field === 'password' ? 'password' : field === 'email' ? 'email' : null}
+                  type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text'}
                 />
               </div>
             ))
           ) : (
             <div>
-              <label className="font-weight-bold">Username</label>
-              <input
+             {/* <label className="font-weight-bold">Username</label> */}
+              <Input
+                label='Username'
                 name="username"
                 className="form-control"
                 onChange={onChange}
                 value={username}
               />
 
-              <label className="font-weight-bold">Password</label>
-              <input
+            {/*  <label className="font-weight-bold">Password</label> */}
+              <Input
+                label='Password'
                 name="password"
                 className="form-control"
                 onChange={onChange}
