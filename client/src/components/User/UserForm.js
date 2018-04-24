@@ -8,13 +8,13 @@ class UserForm extends Component {
     super(props);
     const { user } = props;
     this.state = {
-      id: user ? user.id : '',
-      firstName: user ? user.firstName : '',
-      lastName: user ? user.lastName : '',
-      isAdmin: user ? user.isAdmin : '',
-      username: user ? user.username : '',
-      password: user ? user.password : '',
-      email: user ? user.email : '',
+      id: user.id ? user.id : '',
+      firstName: user.id ? user.firstName : '',
+      lastName: user.id ? user.lastName : '',
+      isAdmin: user.id ? user.isAdmin : '',
+      username: user.id ? user.username : '',
+      password: user.id ? user.password : '',
+      email: user.id ? user.email : '',
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -61,7 +61,7 @@ class UserForm extends Component {
 
   render() {
 
-    console.log(this.state);
+    // console.log(this.state);
 
     // const { firstName, lastName, isAdmin, username, password, email, street, city, state, zip } = this.state;
     // const userProps = { firstName, lastName, isAdmin, username, password, email, street, city, state, zip };
