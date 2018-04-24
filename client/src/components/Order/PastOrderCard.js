@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const OrderCard = ({ orderItems, order, totalPrice }) => {
   return (
-    <div style={{backgroundColor: '#f0f3f8'}}>
+    <div style={{ backgroundColor: '#f0f3f8' }}>
       {
         order.date ? (<p>Order date: {order.date}</p>) : null
       }
@@ -16,7 +16,7 @@ const OrderCard = ({ orderItems, order, totalPrice }) => {
           </div>
         ))
       }
-      <p>Total Price: ${ totalPrice }</p>
+      <p>Total Price: ${totalPrice}</p>
     </div>
   )
 }

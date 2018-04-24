@@ -6,15 +6,17 @@ import { updateUserOnServer, updateLoggedUser } from '../../store';
 class UserForm extends Component {
   constructor(props) {
     super(props);
+    console.log(props)
     const { user } = props;
+    const { id } = user
     this.state = {
-      id: user ? user.id : '',
-      firstName: user ? user.firstName : '',
-      lastName: user ? user.lastName : '',
-      isAdmin: user ? user.isAdmin : '',
-      username: user ? user.username : '',
-      password: user ? user.password : '',
-      email: user ? user.email : '',
+      id: id ? user.id : '',
+      firstName: id ? user.firstName : '',
+      lastName: id ? user.lastName : '',
+      isAdmin: id ? user.isAdmin : '',
+      username: id ? user.username : '',
+      password: id ? user.password : '',
+      email: id ? user.email : '',
       // street: user ? user.street : '',
       // city: user ? user.city : '',
       // state: user ? user.state : '',

@@ -32,53 +32,33 @@ class SignupForm extends React.Component {
   render() {
     const { onChange, onCreate } = this;
     const { firstName, lastName, email, username, password } = this.state;
+    const fields = {
+      firstName: 'First name',
+      lastName: 'Last name',
+      email: 'Email address',
+      username: 'Username',
+      password: 'Password'
+    }
     return (
       <div>
         <form onSubmit={ onCreate }>
-          <label className="font-weight-bold">First name</label>
-          <input
-            name="firstName"
-            className="form-control"
-            onChange={onChange}
-            value={firstName}
-          />
-
-          <label className="font-weight-bold">Last name</label>
-          <input
-            name="lastName"
-            className="form-control"
-            onChange={onChange}
-            value={lastName}
-          />
-
-          <label className="font-weight-bold">Email address</label>
-          <input
-            name="email"
-            className="form-control"
-            onChange={onChange}
-            value={email}
-            type="email"
-          />
-
-          <label className="font-weight-bold">Username</label>
-          <input
-            name="username"
-            className="form-control"
-            onChange={onChange}
-            value={username}
-          />
-
-          <label className="font-weight-bold">Password</label>
-          <input
-            name="password"
-            className="form-control"
-            onChange={onChange}
-            value={password}
-            type="password"
-          />
-
+          {
+            Object.keys(fields).map(field => (
+              <div key={field}>
+                <label className="font-weight-bold">{fields[field]}</label>
+                <input
+                  name={field}
+                  className="form-control"
+                  onChange={onChange}
+                  value={this.state[field]}
+                  type={field === 'password' ? 'password' : field === 'email' ? 'email' : null }
+                />
+              </div>
+            ))
+          }
           <button style={{ marginTop: '15px' }} className="btn btn-primary">Sign up</button>
         </form>
+        <h4>Have an account? <a href='#/login'>Log in now</a></h4>
       </div>
     )
   }
