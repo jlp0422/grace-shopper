@@ -30,6 +30,7 @@ export const logout = () => {
   return (dispatch) => {
     window.localStorage.removeItem('token');
     dispatch(setUser({}));
+    location.hash = '/'
   }
 }
 
