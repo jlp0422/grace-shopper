@@ -205,7 +205,35 @@ const seed = () => {
     // console.log(orders[0].id, orders[0].name);
     return Order.findAll()
     .then(orders => {
-      console.log(orders)
+      // console.log(orders[0])
+      const userOrdersMap = orders.reduce((memo, order) => {
+
+        // console.log(order.id, order.userId);
+        if(!memo[order.userId]) {
+          memo[order.userId] = 1;
+        } else {
+          memo[order.userId]++;
+        }
+        return memo;
+      }, {});
+      console.log(userOrdersMap);
+
+      const _orders = orders.map(order => {
+        if(order.userId in userOrdersMap) {
+          delete userOrdersMap[order.userId]
+          return Object.assign(order, { isActive: true });
+          // console.log(order);
+          // return order.save();
+        }
+        console.log(userOrdersMap)
+        return order
+        // console.log(order.isActive);
+      })
+
+      _orders.forEach(order => {
+        console.log(order.isActive)
+      })
+
     })
   })
 }
