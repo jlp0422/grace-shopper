@@ -53,16 +53,15 @@ class UserForm extends React.Component {
         <form onSubmit={ onUpdate }>
           {
             Object.keys(fields).map(field => (
-              <div key={field}>
-                <label className="font-weight-bold">{fields[field]}</label>
-                <input
-                  label={fields[field]}
-                  name={field}
-                  className="form-control"
-                  onChange={onChange}
-                  value={this.state[field]}
-                  type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text' }
-                />
+              <div className="" key={field}>
+              <label className="font-weight-bold">{fields[field]}</label>
+              <input
+              name={field}
+              className="form-control"
+              onChange={onChange}
+              value={this.state[field]}
+              type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text' }
+              />
               </div>
             ))
           }
