@@ -56,10 +56,8 @@ const createUser = () => {
 }
 
 const createOrder = () => {
-  // const activeStatus = !!Math.round(Math.random());
   return Order.create({
     isActive: false,
-    // date: activeStatus ? null : faker.date.past(),
     date: faker.date.past(),
     userId: Math.ceil(Math.random() * userCount)
   });
@@ -99,7 +97,69 @@ const populateLineItems = () => {
 
 let _orders;
 const seed = () => {
-  return Promise.all(populateUsers())
+  return Promise.all([
+    ...populateUsers(),
+    User.create({
+      firstName: 'Jeremy',
+      lastName: 'Philipson',
+      isAdmin: true,
+      username: 'jphilipson',
+      password: 'JEREMY',
+      email: 'jeremy@gmail.com',
+      street: [faker.address.streetAddress()],
+      city: [faker.address.city()],
+      state: [faker.address.state()],
+      zip: [faker.address.zipCode()],
+    }),
+    User.create({
+      firstName: 'Jeremy',
+      lastName: 'Grubard',
+      isAdmin: true,
+      username: 'jgrubard',
+      password: 'JEREMY',
+      email: 'jgrubard@gmail.com',
+      street: [faker.address.streetAddress()],
+      city: [faker.address.city()],
+      state: [faker.address.state()],
+      zip: [faker.address.zipCode()],
+    }),
+    User.create({
+      firstName: 'Alice',
+      lastName: 'Luong',
+      isAdmin: true,
+      username: 'aluong',
+      password: 'ALICE',
+      email: 'alice@gmail.com',
+      street: [faker.address.streetAddress()],
+      city: [faker.address.city()],
+      state: [faker.address.state()],
+      zip: [faker.address.zipCode()],
+    }),
+    User.create({
+      firstName: 'Alex',
+      lastName: 'Levin',
+      isAdmin: true,
+      username: 'alevin',
+      password: 'ALEX',
+      email: 'alex@gmail.com',
+      street: [faker.address.streetAddress()],
+      city: [faker.address.city()],
+      state: [faker.address.state()],
+      zip: [faker.address.zipCode()],
+    }),
+    User.create({
+      firstName: 'John',
+      lastName: 'Doe',
+      isAdmin: false,
+      username: 'jdoe',
+      password: 'JOHN',
+      email: 'john@gmail.com',
+      street: [faker.address.streetAddress()],
+      city: [faker.address.city()],
+      state: [faker.address.state()],
+      zip: [faker.address.zipCode()],
+    }),
+  ])
   .then((users) => {
     users.forEach(user => {
       Order.create({ isActive: true, date: null, userId: user.id });
@@ -109,42 +169,9 @@ const seed = () => {
     return Promise.all([
     ...populateCategories(),
     ...populateProducts(),
-    // ...populateOrders(),
-    // ...populateLineItems(),
     ])
-      .then(() => Promise.all(populateOrders()))
-  .then(orders => _orders = orders)
-  .then(() => Promise.all(populateLineItems()))
-  .then(lineItems => {
-    console.log('Pre-filter:', _orders.length);
-    const filteredOrders = _orders.filter(order => {
-      const lineItem = lineItems.find(lineItem => order.id === lineItem.orderId);
-      return lineItem;
-    })
-
-    console.log('Post-filter:', filteredOrders.length)
-
-    // filteredOrders.forEach(order => {
-      // console.log(order.id)
-    // })
-    return filteredOrders;
-  })
-  // .then(() => Promise.all(populateOrders()))
-  // .then(orders => _orders = orders)
-  // .then(() => Promise.all(populateLineItems()))
-  // .then(lineItems => {
-  //   console.log('Pre-filter:', _orders.length);
-  //   const filteredOrders = _orders.filter(order => {
-  //     const lineItem = lineItems.find(lineItem => order.id === lineItem.orderId);
-  //     return lineItem;
-  //   })
-
-  //   console.log('Post-filter:', filteredOrders.length)
-
-  //   // filteredOrders.forEach(order => {
-  //     // console.log(order.id)
-  //   // })
-  //   return filteredOrders;
+    .then(() => Promise.all(populateOrders()))
+    .then(() => Promise.all(populateLineItems()))
   })
   .catch(err => console.error(err))
 }
