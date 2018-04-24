@@ -48,7 +48,6 @@ class UserForm extends React.Component {
       username: 'Username',
       password: 'Password'
     }
-    console.log(this)
     return (
       <div>
         <form onSubmit={ onUpdate }>
