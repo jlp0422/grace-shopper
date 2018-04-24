@@ -69,7 +69,7 @@ const createLineItem = () => {
   return LineItem.create({
     quantity: Math.ceil(Math.random() * 10),
     productId: Math.ceil(Math.random() * productCount),
-    orderId: Math.ceil(Math.random() * orderCount)
+    orderId: Math.ceil(Math.random() * orderCount + userCount)
   });
 }
 
@@ -97,7 +97,7 @@ const populateLineItems = () => {
 
 /*--------------------SEED-DATABASE---------------------*/
 
-// let _users;
+let _orders;
 const seed = () => {
   return Promise.all(populateUsers())
   .then((users) => {
@@ -109,163 +109,45 @@ const seed = () => {
     return Promise.all([
     ...populateCategories(),
     ...populateProducts(),
-        ...populateLineItems(),
-    ...populateOrders(),
-
+    // ...populateOrders(),
+    // ...populateLineItems(),
     ])
+      .then(() => Promise.all(populateOrders()))
+  .then(orders => _orders = orders)
+  .then(() => Promise.all(populateLineItems()))
+  .then(lineItems => {
+    console.log('Pre-filter:', _orders.length);
+    const filteredOrders = _orders.filter(order => {
+      const lineItem = lineItems.find(lineItem => order.id === lineItem.orderId);
+      return lineItem;
+    })
+
+    console.log('Post-filter:', filteredOrders.length)
+
+    // filteredOrders.forEach(order => {
+      // console.log(order.id)
+    // })
+    return filteredOrders;
+  })
+  // .then(() => Promise.all(populateOrders()))
+  // .then(orders => _orders = orders)
+  // .then(() => Promise.all(populateLineItems()))
+  // .then(lineItems => {
+  //   console.log('Pre-filter:', _orders.length);
+  //   const filteredOrders = _orders.filter(order => {
+  //     const lineItem = lineItems.find(lineItem => order.id === lineItem.orderId);
+  //     return lineItem;
+  //   })
+
+  //   console.log('Post-filter:', filteredOrders.length)
+
+  //   // filteredOrders.forEach(order => {
+  //     // console.log(order.id)
+  //   // })
+  //   return filteredOrders;
   })
   .catch(err => console.error(err))
 }
-
-
-  // return Promise.all(populateOrders())
-  //   .then((orders) => {
-  //     const userOrdersMap = orders.reduce((memo, order) => {
-  //       if(!memo[order.userId]) {
-  //         memo[order.userId] = 1;
-  //       } else {
-  //         memo[order.userId]++;
-  //       }
-  //       return memo;
-  //     }, {});
-
-  //     const _orders = orders.map(order => {
-  //       if(order.userId in userOrdersMap) {
-  //         delete userOrdersMap[order.userId]
-  //         return Object.assign(order, {
-  //           isActive: true,
-  //           date: null
-  //         });
-  //       }
-  //       return order
-  //     })
-
-  //     _orders.forEach(order => {
-  //       console.log('Status: ', order.isActive, 'Date: ', order.date)
-  //     })
-
-  //     return _orders;
-  //   })
-  //   .then(_orders => {
-  //     return Promise.all([ ...orders ])
-  //   })
-
-
-
-
-    // console.log(orders[0].id, orders[0].name);
-  //   return Order.findAll()
-  //   .then(orders => {
-  //
-  // })
-// }
-
-//   return Promise.all([
-//     ...categories,
-//     ...products,
-//     ...users,
-//     ...orders,
-//     ...lineItems,
-//     User.create({
-//       firstName: 'Jeremy',
-//       lastName: 'Philipson',
-//       isAdmin: true,
-//       username: 'jphilipson',
-//       password: 'JEREMY',
-//       email: 'jeremy@gmail.com',
-//       street: [faker.address.streetAddress()],
-//       city: [faker.address.city()],
-//       state: [faker.address.state()],
-//       zip: [faker.address.zipCode()],
-//     }),
-//     User.create({
-//       firstName: 'Jeremy',
-//       lastName: 'Grubard',
-//       isAdmin: true,
-//       username: 'jgrubard',
-//       password: 'JEREMY',
-//       email: 'jgrubard@gmail.com',
-//       street: [faker.address.streetAddress()],
-//       city: [faker.address.city()],
-//       state: [faker.address.state()],
-//       zip: [faker.address.zipCode()],
-//     }),
-//     User.create({
-//       firstName: 'Alice',
-//       lastName: 'Luong',
-//       isAdmin: true,
-//       username: 'aluong',
-//       password: 'ALICE',
-//       email: 'alice@gmail.com',
-//       street: [faker.address.streetAddress()],
-//       city: [faker.address.city()],
-//       state: [faker.address.state()],
-//       zip: [faker.address.zipCode()],
-//     }),
-//     User.create({
-//       firstName: 'Alex',
-//       lastName: 'Levin',
-//       isAdmin: true,
-//       username: 'alevin',
-//       password: 'ALEX',
-//       email: 'alex@gmail.com',
-//       street: [faker.address.streetAddress()],
-//       city: [faker.address.city()],
-//       state: [faker.address.state()],
-//       zip: [faker.address.zipCode()],
-//     }),
-//     User.create({
-//       firstName: 'John',
-//       lastName: 'Doe',
-//       isAdmin: false,
-//       username: 'jdoe',
-//       password: 'JOHN',
-//       email: 'john@gmail.com',
-//       street: [faker.address.streetAddress()],
-//       city: [faker.address.city()],
-//       state: [faker.address.state()],
-//       zip: [faker.address.zipCode()],
-//     }),
-//   ]).then((all) => {
-//     // console.log(orders[0].id, orders[0].name);
-//     return Order.findAll()
-//     .then(orders => {
-//       // console.log(orders[0])
-//       const userOrdersMap = orders.reduce((memo, order) => {
-
-//         // console.log(order.id, order.userId);
-//         if(!memo[order.userId]) {
-//           memo[order.userId] = 1;
-//         } else {
-//           memo[order.userId]++;
-//         }
-//         return memo;
-//       }, {});
-//       console.log(userOrdersMap);
-
-//       const _orders = orders.map(order => {
-//         if(order.userId in userOrdersMap) {
-//           delete userOrdersMap[order.userId]
-//           return Object.assign(order, { isActive: true });
-//           // console.log(order);
-//           // return order.save();
-//         }
-//         console.log(userOrdersMap)
-//         return order
-//         // console.log(order.isActive);
-//       })
-
-//       // _orders.forEach(order => {
-//       //   console.log(order.isActive)
-//       // })
-
-//       return _orders;
-
-
-//     })
-
-//   })
-// }
 
 conn.sync({ force: true })
   .then(() => {
