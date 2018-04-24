@@ -10,7 +10,7 @@ const UserCard = (props) => {
         <Link to={`/products/${product.id}`}>
           <h4>{product.name}</h4>
         </Link>
-        <div>Price: {product.price}</div>
+        <div>Price: ${product.price}</div>
         <div>Quantity: {product.quantity}</div>
         <div>Category: {category ? category.name : 'No Category'}</div>
       </div>
