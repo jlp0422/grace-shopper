@@ -3,7 +3,7 @@ import axios from 'axios';
 import { SET_USER, UPDATE_AUTH_USER } from './actionConstants';
 
 const setUser = (user) => ({ type: SET_USER, user });
-const updateAuthUser = (user) => ({ type: UPDATE_AUTH_USER, user });
+// const updateAuthUser = (user) => ({ type: UPDATE_AUTH_USER, user });
 
 export const getUserFromToken = (token) => {
   return (dispatch) => {
@@ -30,7 +30,7 @@ export const logout = () => {
 
 export const updateLoggedUser = (user) => {
   return (dispatch) => {
-    dispatch(updateAuthUser(user));
+    dispatch(setUser(user));
   }
 }
 
@@ -41,9 +41,9 @@ const userReducer = (state = {}, action) => {
       state = action.user
       break;
 
-    case UPDATE_AUTH_USER:
-      state = action.user
-      break;
+    // case UPDATE_AUTH_USER:
+    //   state = action.user
+    //   break;
   };
 
   return state;

@@ -14,7 +14,7 @@ import ProductInfo from './Product/ProductInfo';
 import Users from './User/Users';
 import UserAccount from './User/UserAccount';
 import LoginForm from './User/LoginForm';
-import SignupForm from './User/SignupForm';
+// import UserForm from './User/UserFormNEW';
 
 class App extends React.Component {
   componentDidMount() {
@@ -40,9 +40,11 @@ class App extends React.Component {
             <Route exact path='/products' component={Products} />
             <Route exact path='/products/:id' component={ProductInfo} />
             <Route exact path='/users' component={Users} />
-            <Route exact path='/users/:id' component={UserAccount} />
+            <Route exact path='/users/:id' render={({ match }) => (
+              <UserAccount id={ match.params.id } />
+            )}/>
             <Route exact path='/login' component={LoginForm} />
-            <Route exact path='/signup' component={SignupForm} />
+            <Route exact path='/signup' component={LoginForm} />
           </Switch>
           <Route component={Footer} />
           </div>

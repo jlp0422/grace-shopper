@@ -1,20 +1,27 @@
 /* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateUserOnServer } from '../../store'
+import { updateUserOnServer, updateLoggedUser } from '../../store'
 
-class SignupForm extends React.Component {
-  constructor() {
-    super();
+class UserForm extends React.Component {
+  constructor(props) {
+    super(props);
+    const { user } = props;
+    const { id } = user
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      username: '',
-      password: ''
+      firstName: id ? user.firstName : '',
+      lastName: id ? user.lastName : '',
+      username: id ? user.username : '',
+      password: id ? user.password : '',
+      email: id ? user.email : '',
     }
     this.onChange = this.onChange.bind(this);
-    this.onCreate = this.onCreate.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { user } = nextProps;
+    this.setState(user)
   }
 
   onChange(ev) {
@@ -23,14 +30,16 @@ class SignupForm extends React.Component {
     this.setState(change);
   }
 
-  onCreate(ev) {
+  onUpdate(ev) {
     ev.preventDefault()
-    const { createUser } = this.props;
-    createUser(this.state);
+    const { updateUser, updateLogged } = this.props;
+    updateUser(this.state);
+    updateLogged(this.state);
+
   }
 
   render() {
-    const { onChange, onCreate } = this;
+    const { onChange, onUpdate } = this;
     const { firstName, lastName, email, username, password } = this.state;
     const fields = {
       firstName: 'First name',
@@ -39,9 +48,10 @@ class SignupForm extends React.Component {
       username: 'Username',
       password: 'Password'
     }
+    console.log(this)
     return (
       <div>
-        <form onSubmit={ onCreate }>
+        <form onSubmit={ onUpdate }>
           {
             Object.keys(fields).map(field => (
               <div key={field}>
@@ -56,18 +66,26 @@ class SignupForm extends React.Component {
               </div>
             ))
           }
-          <button style={{ marginTop: '15px' }} className="btn btn-primary">Sign up</button>
+          {
+
+          }
+          <button style={{ marginTop: '15px' }} className="btn btn-primary">Update</button>
         </form>
-        <h4>Have an account? <a href='#/login'>Log in now</a></h4>
       </div>
     )
   }
 }
 
+const mapState = ({user}) => {
+  // console.log(user)
+  return { user }
+}
+
 const mapDispatch = (dispatch) => {
   return {
-    createUser: (user) => dispatch(updateUserOnServer(user))
+    updateUser: (user) => dispatch(updateUserOnServer(user)),
+    updateLogged: (user) => dispatch(updateLoggedUser(user))
   }
 }
 
-export default connect(null, mapDispatch)(SignupForm);
+export default connect(null, mapDispatch)(UserForm);
