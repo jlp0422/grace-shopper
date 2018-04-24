@@ -3,17 +3,13 @@ import axios from 'axios';
 import { SET_USER } from './actionConstants';
 
 const setUser = (user) => ({ type: SET_USER, user });
-// const updateAuthUser = (user) => ({ type: UPDATE_AUTH_USER, user });
 
 export const getUserFromToken = (token) => {
   return (dispatch) => {
     return axios.get(`/api/sessions/${token}`)
       .then( res => res.data)
-      .then( user => {
-        dispatch(setUser(user))
-        return user
-      })
-      .then( user => location.hash = `/users/${user.id}`)
+      .then( user => dispatch(setUser(user)))
+      // .then( user => location.hash = `/users/${user.id}`)
 
   }
 }
@@ -23,6 +19,7 @@ export const attemptLogin = (credentials) => {
     return axios.post('/api/sessions', credentials)
       .then( res => window.localStorage.setItem('token', res.data))
       .then( () => dispatch(getUserFromToken(window.localStorage.getItem('token'))))
+      .then(() => location.hash = '/')
   }
 }
 
@@ -47,9 +44,6 @@ const userReducer = (state = {}, action) => {
       state = action.user
       break;
 
-    // case UPDATE_AUTH_USER:
-    //   state = action.user
-    //   break;
   };
 
   return state;
