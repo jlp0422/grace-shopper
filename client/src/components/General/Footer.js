@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { logout } from '../store';
+import { logout } from '../../store';
 import { connect} from 'react-redux';
 
 const PageFooter = ({ user, logout }) => {

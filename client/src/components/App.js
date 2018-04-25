@@ -5,9 +5,9 @@ import { connect} from 'react-redux';
 import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer } from '../store';
 
 import CheckAuth from './CheckAuth';
-import Home from './Home';
-import Nav from './Nav';
-import Footer from './Footer';
+import Home from './General/Home';
+import Nav from './General/Nav';
+import Footer from './General/Footer';
 import Categories from './Category/Categories';
 import CategoryInfo from './Category/CategoryInfo';
 import Products from './Product/Products';

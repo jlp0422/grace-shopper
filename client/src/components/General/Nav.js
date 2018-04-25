@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { logout } from '../store'
+import { logout } from '../../store'
 
 class NavBar extends React.Component {
   constructor(props) {
