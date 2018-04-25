@@ -22,8 +22,9 @@ const Addresses = (props) => {
   );
 }
 
-const mapState = ( state, { userAddresses }) => {
-    return { userAddresses }
+const mapState = ( { addresses }, { id }) => {
+  const userAddresses = addresses.filter(address => address.id === id * 1)
+  return { userAddresses }
 };
 
 export default connect(mapState)(Addresses);

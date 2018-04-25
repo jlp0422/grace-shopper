@@ -5,6 +5,7 @@ import OrderCard from './PastOrderCard';
 const ActiveOrder = ({ activeOrder }) => {
   return (
     <div>
+      <h2>My Cart</h2>
       {
         activeOrder.map(order => (
           <OrderCard key={order.id} order={order} />
