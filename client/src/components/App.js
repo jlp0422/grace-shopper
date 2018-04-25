@@ -2,7 +2,7 @@
 import React from 'react';
 import { HashRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
-import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer } from '../store';
+import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer } from '../store';
 
 import CheckAuth from './CheckAuth';
 import Home from './Home';
@@ -17,6 +17,7 @@ import UserAccount from './User/UserAccount';
 import LoginForm from './User/LoginForm';
 import ActiveOrder from './Order/ActiveOrder';
 import PastOrders from './Order/PastOrders';
+import Reviews from './Review/Reviews';
 import UserForm from './User/UserFormNEW';
 import Addresses from './Address/Addresses'
 
@@ -24,7 +25,7 @@ import Addresses from './Address/Addresses'
 
 class App extends React.Component {
   componentDidMount() {
-    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses } = this.props;
+    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews } = this.props;
     getCategories();
     getProducts();
     getUsers();
@@ -32,44 +33,42 @@ class App extends React.Component {
     getUser();
     getLineItems();
     getAddresses();
+    getReviews();
   }
 
   render() {
     return (
       <Router>
         <div>
-          <Route path='/' component={Nav} />
+          <Route path='/' component={ Nav } />
           <div className="container">
             <div id="body-elements">
               <Route path='/users/:id' render={({ match, history }) => (
-                <UserAccount history={ history } id={match.params.id} />
+                  <UserAccount history={ history } id={ match.params.id * 1 } />
               )} />
               <Switch>
-                <Route exact path='/' component={Home} />
-
+                <Route exact path='/' component={ Home } />
                 {/* CATEGORY ROUTES */}
-                <Route exact path='/categories' component={Categories} />
-                <Route exact path='/categories/:id' component={CategoryInfo} />
-                <Route exact path='/products' component={Products} />
-
+                <Route exact path='/categories' component={ Categories } />
+                <Route exact path='/categories/:id' component={ CategoryInfo } />
+                <Route exact path='/products' component={ Products } />
                 {/* PRODUCT ROUTES */}
-                <Route exact path='/products/:id' component={ProductInfo} />
-
+                <Route exact path='/products/:id' component={ ProductInfo } />
+                <Route exact path='/products/:id/reviews' component={ ({ match }) => <Reviews page='product' id={ match.params.id * 1 } /> } />
                 {/* USER ROUTES */}
-                <Route exact path='/users' component={Users} />
+                <Route exact path='/users' component={ Users } />
                 <Route exact path='/users/:id/cart' component={ ActiveOrder } />
                 <Route exact path='/users/:id/orders' component={ PastOrders } />
-                <Route exact path='/users/:id/addresses' render={({ match }) => (
-                  <Addresses id={ match.params.id }/>
-                )}  />
+                <Route exact path='/users/:id/reviews' component={ ({ match }) => <Reviews page='user' id={ match.params.id * 1 } /> } />
+                {/*<Route exact path='/users/:id/addresses' component={} />*/}
                 <Route exact path='/users/:id/edit' component={ UserForm } />
 
                 {/* AUTH ROUTES */}
-                <Route exact path='/login' component={LoginForm} />
-                <Route exact path='/signup' component={LoginForm} />
+                <Route exact path='/login' component={ LoginForm } />
+                <Route exact path='/signup' component={ LoginForm } />
               </Switch>
             </div>
-            <Route component={Footer} />
+          <Route component={ Footer } />
           </div>
         </div>
       </Router>
@@ -85,6 +84,7 @@ const mapDispatch = (dispatch) => {
     getOrders: () => dispatch(getOrdersFromServer()),
     getLineItems: () => dispatch(getLineItemsFromServer()),
     getAddresses: () => dispatch(getAddressesFromServer()),
+    getReviews: () => dispatch(getReviewsFromServer()),
     getUser: () => {
       if (window.localStorage.getItem('token')) {
         dispatch(getUserFromToken(window.localStorage.getItem('token')))

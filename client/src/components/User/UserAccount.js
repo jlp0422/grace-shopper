@@ -17,6 +17,7 @@ class UserAccount extends React.Component {
     const { user, pastOrders, id } = this.props;
     const url = location.hash.slice(1)
     if (!user) return null
+    // console.log(this)
     return (
       <div>
         <h1>My Account</h1>
@@ -34,6 +35,9 @@ class UserAccount extends React.Component {
           </Link>
           <Link to={`/users/${id}/edit`}>
             Edit Account
+          </Link>
+          <Link to={`/users/${id}/reviews`}>
+            My Reviews
           </Link>
         </div>
       </div>

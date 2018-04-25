@@ -75,3 +75,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1;
 }
+
+#body-elements {
+  margin-bottom: 80px;
+}

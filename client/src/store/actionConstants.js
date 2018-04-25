@@ -16,13 +16,13 @@ export const CREATE_LINE_ITEM = 'CREATE_LINE_ITEM';
 export const UPDATE_LINE_ITEM = 'UPDATE_LINE_ITEM';
 export const DELETE_LINE_ITEM = 'DELETE_LINE_ITEM';
 
-/*********** ORDERS  ***********/
+/*********** ORDERS ***********/
 export const GET_ORDERS = 'GET_ORDERS';
 export const CREATE_ORDER = 'CREATE_ORDER';
 export const UPDATE_ORDER = 'UPDATE_ORDER';
 export const DELETE_ORDER = 'DELETE_ORDER';
 
-/*********** USERS  ***********/
+/*********** USERS ***********/
 export const GET_USERS = 'GET_USERS';
 export const CREATE_USER = 'CREATE_USER';
 export const UPDATE_USER = 'UPDATE_USER';
@@ -30,8 +30,12 @@ export const DELETE_USER = 'DELETE_USER';
 export const SET_USER = 'SET_USER';
 export const UPDATE_AUTH_USER = 'UPDATE_AUTH_USER';
 
-/*********** ADDRESSES  ***********/
+/*********** ADDRESSES ***********/
 export const GET_ADDRESSES = 'GET_ADDRESSES';
 export const CREATE_ADDRESS = 'CREATE_ADDRESS';
 export const UPDATE_ADDRESS = 'UPDATE_ADDRESS';
 export const DELETE_ADDRESS = 'DELETE_ADDRESS';
+
+/*********** REVIEWS ***********/
+export const GET_REVIEWS = 'GET_REVIEWS';
+export const CREATE_REVIEW = 'CREATE_REVIEW';
