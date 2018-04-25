@@ -25,6 +25,7 @@ class AddressForm extends Component {
   //   const { address } = nextProps;
   //   this.setState(nextProps);
   // }
+
 // ---------------------------- METHODS ----------------------------
   handleChange(ev) {
     const change = {};
