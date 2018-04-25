@@ -21,8 +21,6 @@ import Reviews from './Review/Reviews';
 import UserForm from './User/UserFormNEW';
 import Addresses from './Address/Addresses'
 
-// const authAccount = CheckAuth(Nav)
-
 class App extends React.Component {
   componentDidMount() {
     const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews } = this.props;
@@ -37,6 +35,9 @@ class App extends React.Component {
   }
 
   render() {
+    const UserAccountAuth = CheckAuth(UserAccount)
+    const ReviewsAuth = CheckAuth(Reviews)
+    const AddressesAuth = CheckAuth(Addresses)
     return (
       <Router>
         <div>
@@ -44,7 +45,7 @@ class App extends React.Component {
           <div className="container">
             <div id="body-elements">
               <Route path='/users/:id' render={({ match, history }) => (
-                  <UserAccount history={ history } id={ match.params.id * 1 } />
+                <UserAccountAuth history={ history } id={ match.params.id * 1 } />
               )} />
               <Switch>
                 <Route exact path='/' component={ Home } />
@@ -58,16 +59,16 @@ class App extends React.Component {
                   <Reviews page='product' id={ match.params.id * 1 } />
                  )} />
                 {/* USER ROUTES */}
-                <Route exact path='/users' component={ Users } />
-                <Route exact path='/users/:id/cart' component={ ActiveOrder } />
-                <Route exact path='/users/:id/orders' component={ PastOrders } />
+                <Route exact path='/users' component={ CheckAuth(Users) } />
+                <Route exact path='/users/:id/cart' component={ CheckAuth(ActiveOrder) } />
+                <Route exact path='/users/:id/orders' component={ CheckAuth(PastOrders) } />
                 <Route exact path='/users/:id/reviews' component={ ({ match }) => (
-                  <Reviews page='user' id={ match.params.id * 1 } />
+                  <ReviewsAuth page='user' id={ match.params.id * 1 } />
                 )} />
                 <Route exact path='/users/:id/addresses' render={({match}) => (
-                  <Addresses id={ match.params.id } />
+                  <AddressesAuth id={ match.params.id } />
                 )} />
-                <Route exact path='/users/:id/edit' component={ UserForm } />
+                <Route exact path='/users/:id/edit' component={ CheckAuth(UserForm) } />
 
                 {/* AUTH ROUTES */}
                 <Route exact path='/login' component={ LoginForm } />

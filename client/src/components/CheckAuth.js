@@ -1,12 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const CheckAuth = (component) => {
+const CheckAuth = (Component) => {
   class AuthComponent extends React.Component {
-    // constructor(props) {
-    //   super(props)
-    // }
-
     componentDidMount(nextProps) {
       this.checkAuth()
     }
@@ -16,30 +12,26 @@ const CheckAuth = (component) => {
     }
 
     checkAuth() {
-      if (!this.props.isAuthenticated) {
-        location.hash = '/login'
-      }
+      if (!this.props.isAuthenticated) location.hash = '/login'
     }
-
-    // isLogged = () => {
-    //   return this.props
-    // }
 
     render() {
       const { isAuthenticated } = this.props
       return (
         <div>
-          {this.props}
+          {isAuthenticated ? <Component {...this.props} /> : null }
         </div>
       )
     }
   }
+
+  const mapState = ({ user }) => {
+    const isAuthenticated = user.id ? true : false
+    console.log(isAuthenticated)
+    return { isAuthenticated }
+  }
+
+  return connect(mapState)(AuthComponent);
 }
 
-const mapState = ({ user }) => {
-  const isAuthenticated = user.id ? true : false
-  console.log(isAuthenticated)
-  return { user }
-}
-
-export default connect(mapState)(CheckAuth);
+export default CheckAuth;
