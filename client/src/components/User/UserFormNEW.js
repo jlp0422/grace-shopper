@@ -55,6 +55,7 @@ class UserForm extends React.Component {
     }
     return (
       <div>
+        <h2>Edit Account</h2>
         <form>
           {
             Object.keys(fields).map(field => (

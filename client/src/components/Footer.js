@@ -11,8 +11,8 @@ const PageFooter = ({ user, logout }) => {
         user.id ? (
           <div className="footer-4">
             <Link to='/'>Home</Link>
-            <Link to={`/users/${user.id}/orders`}>myOrders</Link>
-            <Link to={`/users/${user.id}/cart`}>myAccount</Link>
+            <Link to={`/users/${user.id}/orders`}>My Orders</Link>
+            <Link to={`/users/${user.id}/cart`}>My Account</Link>
             <span onClick={logout}>Log out</span>
           </div>
         ) : (

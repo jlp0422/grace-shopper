@@ -14,15 +14,14 @@ class UserAccount extends React.Component {
   }
 
   render() {
-    const { user, userOrders, id, userAddresses } = this.props;
+    const { user, pastOrders, id } = this.props;
     const url = location.hash.slice(1)
     if (!user) return null
-    console.log(this)
     return (
       <div>
         <h1>My Account</h1>
         <h2>{user.firstName} {user.lastName}</h2>
-        <h4>Total orders: {userOrders.length}</h4>
+        <h4>Total orders: {pastOrders}</h4>
         <div className="account-nav">
           <Link to={`/users/${id}/cart`}>
             My Cart
@@ -43,9 +42,8 @@ class UserAccount extends React.Component {
 }
 
 const mapState = ({ user, orders, addresses }, { id }) => {
-  const userOrders = orders.filter(order => order.userId === user.id);
-  const userAddresses = addresses.filter(address => address.userId === user.id)
-  return { user, userOrders, id, addresses, userAddresses }
+  const pastOrders = orders.filter(order => order.userId === user.id && !order.isActive).length;
+  return { user, pastOrders, id }
 }
 
 export default connect(mapState)(UserAccount);
