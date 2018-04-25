@@ -12,7 +12,7 @@ class ProductForm extends Component {
       price: product ? product.price : '',
       quantity: product ? product.quantity : '',
       description: product ? product.description : '',
-      categoryId: product ? product.categoryId : null,
+      // categoryId: product ? product.categoryId : null,
     }
     this.handleChange = this.handleChange.bind(this);
     this.onSave = this.onSave.bind(this);
@@ -26,9 +26,6 @@ class ProductForm extends Component {
     } else {
       value = ev.target.value * 1;
     }
-    // change[ev.target.name] = value;
-    // const val = ev.target.value;
-    console.log(value, typeof value)
     change[ev.target.name] = value;
     this.setState(change);
   }
@@ -56,7 +53,6 @@ class ProductForm extends Component {
           />
           <input
             type='number'
-            // step='1'
             className='form-control'
             placeholder='Price'
             name='price'
@@ -65,7 +61,6 @@ class ProductForm extends Component {
           />
           <input
             type='number'
-            // step='1'
             className='form-control'
             placeholder='Quantity'
             name='quantity'
@@ -86,7 +81,16 @@ class ProductForm extends Component {
             value={description}
             onChange={handleChange}
           />
-          <select
+          <h4>Select Categories</h4>
+          {
+            categories.map(category => (
+              <div key={category.id}>
+                <input type='checkbox' value={category.id} name='categoryId' />
+                <label>&nbsp;{category.name}</label>
+              </div>
+            ))
+          }
+          {/*<select
             onChange={handleChange}
             name='categoryId'
             className='form-control margin-b-10'
@@ -94,12 +98,12 @@ class ProductForm extends Component {
             <option value='null'>Select Category</option>
             {
               categories.map(category => (
-                <option key={category.id} value={category.id * 1}/* selected={category.id === categoryId}*/>
+                <option key={category.id} value={category.id * 1}>
                   {category.name}
                 </option>
               ))
             }
-          </select>
+          </select>*/}
           <button className='btn btn-primary margin-b-10'>Create</button>
         </form>
       </div>

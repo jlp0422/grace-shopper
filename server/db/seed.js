@@ -1,6 +1,6 @@
 const { conn } = require('./conn');
 const { models } = require('./index');
-const { Category, LineItem, Order, Product, User, Address } = models;
+const { Category, LineItem, Order, Product, User, Address, Review } = models;
 
 const faker = require('faker');
 
@@ -12,6 +12,7 @@ const userCount = 5;
 const orderCount = 25;
 const lineItemCount = 70;
 const addressCount = (userCount + 5) * 2;
+const reviewCount = 100;
 
 /*---------------HOW-MANY-SHOULD-WE-MAKE?---------------*/
 
@@ -67,7 +68,7 @@ const createOrder = () => {
   return Order.create({
     isActive: false,
     date: faker.date.past(),
-    userId: Math.ceil(Math.random() * userCount)
+    userId: Math.ceil(Math.random() * (userCount + 5))
   });
 }
 
@@ -76,6 +77,15 @@ const createLineItem = () => {
     quantity: Math.ceil(Math.random() * 10),
     productId: Math.ceil(Math.random() * productCount),
     orderId: Math.ceil(Math.random() * orderCount + userCount)
+  });
+}
+
+const createReview = () => {
+  return Review.create({
+    rating: Math.round(Math.random() * 5),
+    productId: Math.ceil(Math.random() * productCount),
+    userId: Math.ceil(Math.random() * (userCount + 5)),
+    description: faker.lorem.paragraph(),
   });
 }
 
@@ -103,6 +113,10 @@ const populateOrders = () => {
 
 const populateLineItems = () => {
   return createThisMany(lineItemCount, createLineItem);
+}
+
+const populateReviews = () => {
+  return createThisMany(reviewCount, createReview);
 }
 
 /*--------------------SEED-DATABASE---------------------*/
@@ -165,6 +179,7 @@ const seed = () => {
     .then(() => Promise.all(populateOrders()))
     .then(() => Promise.all(populateLineItems()))
     .then(() => Promise.all(populateAddresses()))
+    .then(() => Promise.all(populateReviews()))
   })
   .catch(err => console.error(err))
 }

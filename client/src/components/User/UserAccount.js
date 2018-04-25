@@ -17,7 +17,7 @@ class UserAccount extends React.Component {
     const { user, userOrders, id, userAddresses } = this.props;
     const url = location.hash.slice(1)
     if (!user) return null
-    console.log(this)
+    // console.log(this)
     return (
       <div>
         <h1>My Account</h1>
