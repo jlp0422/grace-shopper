@@ -51,8 +51,8 @@ class App extends React.Component {
                 {/* CATEGORY ROUTES */}
                 <Route exact path='/categories' component={ Categories } />
                 <Route exact path='/categories/:id' component={ CategoryInfo } />
-                <Route exact path='/products' component={ Products } />
                 {/* PRODUCT ROUTES */}
+                <Route exact path='/products' component={ Products } />
                 <Route exact path='/products/:id' component={ ProductInfo } />
                 <Route exact path='/products/:id/reviews' component={ ({ match }) => <Reviews page='product' id={ match.params.id * 1 } /> } />
                 {/* USER ROUTES */}

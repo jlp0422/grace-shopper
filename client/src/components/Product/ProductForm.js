@@ -49,11 +49,10 @@ class ProductForm extends Component {
             name='name'
             value={name}
             onChange={handleChange}
-            style={{marginBottom: '10px'}}
           />
           <input
             type='number'
-            className='form-control'
+            className='form-control margin-b-10'
             placeholder='Price'
             name='price'
             value={price}
@@ -61,7 +60,7 @@ class ProductForm extends Component {
           />
           <input
             type='number'
-            className='form-control'
+            className='form-control margin-b-10'
             placeholder='Quantity'
             name='quantity'
             value={quantity}
