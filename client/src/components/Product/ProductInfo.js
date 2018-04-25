@@ -22,7 +22,7 @@ const ProductInfo = (props) => {
         <p>Price: ${product.price}</p>
         <p>Units Available: {product.quantity}</p>
       </div>
-      <LineItemForm productId={product.id} orderId = ''/>
+      <LineItemForm productId={product.id} orderId ='' />
     </div>
       {
         loggedIn && isAdmin ? (
