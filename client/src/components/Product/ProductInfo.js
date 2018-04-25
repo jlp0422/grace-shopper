@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { deleteProductFromServer } from '../../store';
 
 import ProductForm from './ProductForm';
+import LineItemForm from './LineItemForm';
 
 const ProductInfo = (props) => {
   const { product, deleteProduct, loggedIn, isAdmin } = props;
@@ -21,6 +22,7 @@ const ProductInfo = (props) => {
         <p>Price: ${product.price}</p>
         <p>Units Available: {product.quantity}</p>
       </div>
+      <LineItemForm productId={product.id} orderId = ''/>
     </div>
       {
         loggedIn && isAdmin ? (
