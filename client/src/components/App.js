@@ -38,8 +38,8 @@ class App extends React.Component {
         <div>
           <Route path='/' component={Nav} />
           <div className="container">
-            <Route path='/users/:id' render={({ match }) => (
-              <UserAccount id={match.params.id} />
+            <Route path='/users/:id' render={({ match, history }) => (
+              <UserAccount history={history } id={match.params.id} />
             )} />
           <Switch>
             <Route exact path='/' component={Home} />
@@ -53,8 +53,8 @@ class App extends React.Component {
             <Route exact path='/users' component={Users} />
             <Route exact path='/users/:id/cart' component={ ActiveOrder } />
             <Route exact path='/users/:id/orders' component={ PastOrders } />
+            {/*<Route exact path='/users/:id/addresses' component={} />*/}
             <Route exact path='/users/:id/edit' component={ UserForm } />
-
 
             {/* AUTH ROUTES */}
             <Route exact path='/login' component={LoginForm} />

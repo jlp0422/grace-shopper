@@ -10,35 +10,33 @@ import UserForm from './UserFormNEW';
 class UserAccount extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activeTab: '1' }
-    this.toggle = this.toggle.bind(this)
-  }
-
-  toggle(tab) {
-    const { activeTab } = this.state;
-    if (activeTab !== tab) this.setState({ activeTab: tab })
   }
 
   render() {
+    const url = location.hash.slice(1)
     const { user, userOrders, id } = this.props;
-    const { activeTab } = this.state;
-    const { toggle } = this;
     if (!user) return null
+    console.log(this)
     return (
       <div>
         <h1>My Account</h1>
         <h2>{user.firstName} {user.lastName}</h2>
         <h4>Total orders: {userOrders.length}</h4>
-        <Nav style={{margin: '15px 0px'}} tabs>
-          <NavItem>
-            <Link to={`/users/${id}/cart`}>My Cart</Link>&nbsp;
-            <Link to={`/users/${id}/orders`}>Past Orders</Link>&nbsp;
-            <Link to={`/users/${id}/addresses`}>My Addresses</Link>&nbsp;
-            <Link to={`/users/${id}/edit`}>Edit Account</Link>&nbsp;
-          </NavItem>
-        </Nav>
+        <div className="account-nav">
+          <Link to={`/users/${id}/cart`}>
+            My Cart
+          </Link>
+          <Link to={`/users/${id}/orders`}>
+            Past Orders
+          </Link>
+          <Link to={`/users/${id}/addresses`}>
+            My Addresses
+          </Link>
+          <Link to={`/users/${id}/edit`}>
+            Edit Account
+          </Link>
+        </div>
       </div>
-
     )
   }
 }

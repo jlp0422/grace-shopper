@@ -39,7 +39,7 @@ class ProductForm extends Component {
       <div>
         <form onSubmit={onSave}>
           <input
-            className='form-control'
+            className='form-control margin-b-10'
             placeholder='Product Name'
             name='name'
             value={name}
@@ -47,42 +47,37 @@ class ProductForm extends Component {
             style={{marginBottom: '10px'}}
           />
           <input
-            className='form-control'
+            className='form-control margin-b-10'
             placeholder='Price'
             name='price'
             value={price}
             onChange={handleChange}
-            style={{ marginBottom: '10px' }}
           />
           <input
-            className='form-control'
+            className='form-control margin-b-10'
             placeholder='Quantity'
             name='quantity'
             value={quantity}
             onChange={handleChange}
-            style={{ marginBottom: '10px' }}
           />
           <input
-            className='form-control'
+            className='form-control margin-b-10'
             placeholder='Add Image URL'
             name='imageUrl'
             value={imageUrl}
             onChange={handleChange}
-            style={{ marginBottom: '10px' }}
           />
           <textarea
-            className='form-control'
+            className='form-control margin-b-10'
             placeholder='Description'
             name='description'
             value={description}
             onChange={handleChange}
-            style={{ marginBottom: '10px' }}
           />
           <select
             onChange={handleChange}
             name='categoryId'
-            className='form-control'
-            style={{ marginBottom: '10px' }}
+            className='form-control margin-b-10'
           >
             <option value='null'>Select Category</option>
             {
@@ -93,7 +88,7 @@ class ProductForm extends Component {
               ))
             }
           </select>
-          <button style={{ marginBottom: '10px' }} className='btn btn-primary'>Submit</button>
+          <button className='btn btn-primary margin-b-10'>Create</button>
         </form>
       </div>
     );

@@ -2,6 +2,15 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+/* MARGIN STYLES */
+.margin-t-15 {
+  margin-top: 15px;
+}
+
+.margin-b-10 {
+  margin-bottom: 10px;
+}
+
 .jumbotron {
   text-align: center;
 }
@@ -11,6 +20,54 @@
   width: auto;
 }
 
-.nav-sticky {
-  position: sticky;
+/* LOG IN AND SIGNUP FORM */
+.login-form {
+  margin: 0 auto;
+  text-align: center;
+  max-width: 450px;
+}
+
+/* USER ACCOUNT */
+.account-nav {
+  border-bottom:2px solid transparent;
+  text-align: center;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1
+}
+
+.nav-active {
+  font-weight: bold;
+  border-bottom: 2px solid black;
+}
+
+/* FOOTER */
+#footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  padding: 10px 0px;
+  background-color: #ccc;
+  color: black;
+}
+
+#footer a {
+  color: black;
+}
+
+.footer-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1;
+}
+
+.footer-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1;
 }
