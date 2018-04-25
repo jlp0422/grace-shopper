@@ -13,7 +13,7 @@ import CategoryInfo from './Category/CategoryInfo';
 import Products from './Product/Products';
 import ProductInfo from './Product/ProductInfo';
 import Users from './User/Users';
-import UserAccount from './User/UserAccount';
+import UserNav from './User/UserNav';
 import LoginForm from './User/LoginForm';
 import ActiveOrder from './Order/ActiveOrder';
 import PastOrders from './Order/PastOrders';
@@ -35,7 +35,7 @@ class App extends React.Component {
   }
 
   render() {
-    const UserAccountAuth = CheckAuth(UserAccount)
+    const UserNavAuth = CheckAuth(UserNav)
     const ReviewsAuth = CheckAuth(Reviews)
     const AddressesAuth = CheckAuth(Addresses)
     return (
@@ -45,7 +45,7 @@ class App extends React.Component {
           <div className="container">
             <div id="body-elements">
               <Route path='/users/:id' render={({ match, history }) => (
-                <UserAccountAuth history={ history } id={ match.params.id * 1 } />
+                <UserNavAuth history={ history } id={ match.params.id * 1 } />
               )} />
               <Switch>
                 <Route exact path='/' component={ Home } />
