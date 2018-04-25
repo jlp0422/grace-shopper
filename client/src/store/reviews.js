@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { GET_REVIEWS } from './actionConstants';
+import { GET_REVIEWS, CREATE_REVIEW } from './actionConstants';
 
 /*********** ACTION CREATORS ***********/
 const getReviews = (reviews) => ({ type: GET_REVIEWS, reviews });
+const createReview = (review) => ({ type: CREATE_REVIEW, review });
 
 /*********** THUNKS ***********/
 
@@ -15,21 +16,14 @@ export const getReviewsFromServer = () => {
   }
 }
 
-// export const updateProductOnServer = (product) => {
-//   const { id } = product;
-//   const method = id ? 'put' : 'post';
-//   const url = id ? `/api/products/${id}` : '/api/products';
-//   const action = id ? updateProduct : createProduct
-//   return (dispatch) => {
-//     return axios[method](url, product)
-//       .then(res => res.data)
-//       .then(prod => dispatch(action(prod)))
-//       .then(() => location.hash = '/products')
-//     // .catch(err) placeholder for error handling
-//   }
-// }
-
-// export const up
+export const createReviewOnServer = (review) => {
+  return (dispatch) => {
+    return axios.post('/api/reviews', review)
+      .then(res => res.data)
+      .then(review => dispatch(createReview(review)))
+      .catch(err => console.error(err))
+  }
+}
 
 /*********** REVIEWS REDUCER ***********/
 
@@ -38,6 +32,10 @@ const reviewsReducer = (state = [], action) => {
 
     case GET_REVIEWS:
       state = action.reviews;
+      break;
+
+    case CREATE_REVIEW:
+      state = [ ...state, action.review ];
       break;
 
   }

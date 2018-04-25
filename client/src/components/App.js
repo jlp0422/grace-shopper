@@ -17,6 +17,7 @@ import UserAccount from './User/UserAccount';
 import LoginForm from './User/LoginForm';
 import ActiveOrder from './Order/ActiveOrder';
 import PastOrders from './Order/PastOrders';
+import Reviews from './Review/Reviews';
 import UserForm from './User/UserFormNEW';
 
 // const authAccount = CheckAuth(Nav)
@@ -40,28 +41,32 @@ class App extends React.Component {
         <div>
           <Route path='/' component={ Nav } />
           <div className="container">
-            <Route path='/users/:id' render={({ match, history }) => (
-              <UserAccount history={ history } id={ match.params.id * 1 } />
-            )} />
-          <Switch>
-            <Route exact path='/' component={ Home } />
-            {/* CATEGORY ROUTES */}
-            <Route exact path='/categories' component={ Categories } />
-            <Route exact path='/categories/:id' component={ CategoryInfo } />
-            <Route exact path='/products' component={ Products } />
-            {/* PRODUCT ROUTES */}
-            <Route exact path='/products/:id' component={ ProductInfo } />
-            {/* USER ROUTES */}
-            <Route exact path='/users' component={ Users } />
-            <Route exact path='/users/:id/cart' component={ ActiveOrder } />
-            <Route exact path='/users/:id/orders' component={ PastOrders } />
-            {/*<Route exact path='/users/:id/addresses' component={} />*/}
-            <Route exact path='/users/:id/edit' component={ UserForm } />
+            <div id="body-elements">
+              <Route path='/users/:id' render={({ match, history }) => (
+                  <UserAccount history={ history } id={ match.params.id * 1 } />
+              )} />
+              <Switch>
+                <Route exact path='/' component={ Home } />
+                {/* CATEGORY ROUTES */}
+                <Route exact path='/categories' component={ Categories } />
+                <Route exact path='/categories/:id' component={ CategoryInfo } />
+                <Route exact path='/products' component={ Products } />
+                {/* PRODUCT ROUTES */}
+                <Route exact path='/products/:id' component={ ProductInfo } />
+                <Route exact path='/products/:id/reviews' component={ Reviews } />
+                {/* USER ROUTES */}
+                <Route exact path='/users' component={ Users } />
+                <Route exact path='/users/:id/cart' component={ ActiveOrder } />
+                <Route exact path='/users/:id/orders' component={ PastOrders } />
+                <Route exact path='/users/:id/reviews' component={ Reviews } />
+                {/*<Route exact path='/users/:id/addresses' component={} />*/}
+                <Route exact path='/users/:id/edit' component={ UserForm } />
 
-            {/* AUTH ROUTES */}
-            <Route exact path='/login' component={ LoginForm } />
-            <Route exact path='/signup' component={ LoginForm } />
-          </Switch>
+                {/* AUTH ROUTES */}
+                <Route exact path='/login' component={ LoginForm } />
+                <Route exact path='/signup' component={ LoginForm } />
+              </Switch>
+            </div>
           <Route component={ Footer } />
           </div>
         </div>

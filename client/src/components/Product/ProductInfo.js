@@ -31,7 +31,9 @@ const ProductInfo = (props) => {
     </div>
     <h4>Current Rating: {rating}</h4>
     <h5>There {isOrAre} ({reviewers}) review{makeSingular} on this product</h5>
-    <h6>Click here for all reviews (make link)</h6>
+    <Link to={`/products/${product.id}/reviews`}>
+      <h6>Click here for all reviews</h6>
+    </Link>
       {
         loggedIn ? (
           <ReviewForm productId={product.id} />

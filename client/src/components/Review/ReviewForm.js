@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { createReviewOnServer } from '../../store';
+
 class ReviewForm extends Component {
   constructor(props) {
     super(props);
@@ -25,17 +27,17 @@ class ReviewForm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-
+    this.props.onSave(this.state);
+    this.setState({ rating: '', description: '' });
   }
 
 
   render() {
-    console.log(this.state)
     const { handleChange, onSave } = this;
     return (
       <div>
         <h3>Rate this product!</h3>
-        <form>
+        <form onSubmit={onSave}>
           <select className='form-control' name='rating' onChange={handleChange}>
             <option>Select Rating</option>
             {
@@ -52,6 +54,7 @@ class ReviewForm extends Component {
             placeholder='How did you like this product?'
             onChange={handleChange}
           />
+          <button className='btn btn-primary'>Submit Review</button>
         </form>
       </div>
     );
@@ -70,7 +73,7 @@ const mapState = ({user}, ownProps) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    // onSave: () => dispatch()
+    onSave: (review) => dispatch(createReviewOnServer(review))
   }
 }
 

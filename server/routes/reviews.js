@@ -5,5 +5,11 @@ const { Review } = require('../db').models;
 app.get('/', (req, res, next) => {
   Review.findAll()
     .then(reviews => res.send(reviews))
-    .catch(next)
+    .catch(next);
 });
+
+app.post('/', (req, res, next) => {
+  Review.create(req.body)
+    .then(review => res.send(review))
+    .catch(next);
+})
