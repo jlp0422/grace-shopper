@@ -7,7 +7,7 @@ import ProductForm from './ProductForm';
 import ReviewForm from '../Review/ReviewForm';
 
 const ProductInfo = (props) => {
-  const { product, deleteProduct, loggedIn, isAdmin, rating, reviewers, makeSingular } = props;
+  const { product, deleteProduct, loggedIn, isAdmin, rating, reviewCount, makeSingular } = props;
   if (!product) {
     return null;
   }
@@ -27,7 +27,7 @@ const ProductInfo = (props) => {
       </div>
     </div>
     <h4>Current Rating: {rating}</h4>
-    <h5>There {makeSingular[0]} ({reviewers}) review{makeSingular[1]} on this product</h5>
+    <h5>There {makeSingular[0]} ({reviewCount}) review{makeSingular[1]} on this product</h5>
     <Link to={`/products/${product.id}/reviews`}>
       <h6>Click here for all reviews</h6>
     </Link>
@@ -54,8 +54,8 @@ const mapState = ({ products, user, reviews }, { match }) => {
   const loggedIn = !!Object.keys(user).length;
   const { isAdmin } = user;
   const ownReviews = reviews.filter(review => review.productId === id)
-  const reviewers = ownReviews.length;
-  const makeSingular = reviewers === 1 ? [ 'is', '' ] : [ 'are' ,'s' ];
+  const reviewCount = ownReviews.length;
+  const makeSingular = reviewCount === 1 ? [ 'is', '' ] : [ 'are' ,'s' ];
   const rating = ownReviews.reduce((memo, review, index, array) => {
     memo += review.rating;
     if(index === array.length - 1) {
@@ -70,7 +70,7 @@ const mapState = ({ products, user, reviews }, { match }) => {
     loggedIn,
     isAdmin,
     rating,
-    reviewers,
+    reviewCount,
     makeSingular
   }
 }
