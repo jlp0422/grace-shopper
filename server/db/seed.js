@@ -7,25 +7,19 @@ const faker = require('faker');
 /*-------------HOW-MANY-D0-WE-WANT-TO-SEED?-------------*/
 
 const categoryCount = 3;
-const productCount = 10;
+const productCount = 50;
 const userCount = 5;
-const orderCount = 15;
-const lineItemCount = 25;
-
-/*------------------ARRAYS-TO-POPULATE------------------*/
-
-const categories = [];
-const products = [];
-const users = [];
-const orders = [];
-const lineItems = [];
+const orderCount = 25;
+const lineItemCount = 70;
 
 /*---------------HOW-MANY-SHOULD-WE-MAKE?---------------*/
 
-const createThisMany = (arr, count, item) => {
-  while (arr.length < count) {
-    arr.push(item());
+const createThisMany = (count, item) => {
+  const result = []
+  while (result.length < count) {
+    result.push(item());
   }
+  return result;
 }
 
 /*--------------GENERATE-ONE-GENERIC-ITEM---------------*/
@@ -62,10 +56,9 @@ const createUser = () => {
 }
 
 const createOrder = () => {
-  const activeStatus = !!Math.round(Math.random());
   return Order.create({
-    isActive: activeStatus,
-    date: activeStatus ? null : faker.date.past(),
+    isActive: false,
+    date: faker.date.past(),
     userId: Math.ceil(Math.random() * userCount)
   });
 }
@@ -73,47 +66,39 @@ const createOrder = () => {
 const createLineItem = () => {
   return LineItem.create({
     quantity: Math.ceil(Math.random() * 10),
-    productId: Math.ceil(Math.random() * products.length),
-    orderId: Math.ceil(Math.random() * orderCount)
+    productId: Math.ceil(Math.random() * productCount),
+    orderId: Math.ceil(Math.random() * orderCount + userCount)
   });
 }
 
 /*-----------------POPULATE-MANY-ITEMS------------------*/
 
 const populateCategories = () => {
-  return createThisMany(categories, categoryCount, createCategory);
+  return createThisMany(categoryCount, createCategory);
 }
 
 const populateProducts = () => {
-  return createThisMany(products, productCount, createProduct);
+  return createThisMany(productCount, createProduct);
 }
 
 const populateUsers = () => {
-  return createThisMany(users, userCount, createUser);
+  return createThisMany(userCount, createUser);
 }
 
 const populateOrders = () => {
-  return createThisMany(orders, orderCount, createOrder);
+  return createThisMany(orderCount, createOrder);
 }
 
 const populateLineItems = () => {
-  return createThisMany(lineItems, lineItemCount, createLineItem);
+  return createThisMany(lineItemCount, createLineItem);
 }
 
 /*--------------------SEED-DATABASE---------------------*/
 
+let _orders;
 const seed = () => {
-  populateCategories();
-  populateProducts();
-  populateUsers();
-  populateOrders();
-  populateLineItems();
   return Promise.all([
-    ...categories,
-    ...products,
-    ...users,
-    ...orders,
-    ...lineItems,
+    ...populateUsers(),
     User.create({
       firstName: 'Jeremy',
       lastName: 'Philipson',
@@ -174,7 +159,21 @@ const seed = () => {
       state: [faker.address.state()],
       zip: [faker.address.zipCode()],
     }),
-  ]);
+  ])
+  .then((users) => {
+    users.forEach(user => {
+      Order.create({ isActive: true, date: null, userId: user.id });
+    })
+  })
+  .then(() => {
+    return Promise.all([
+    ...populateCategories(),
+    ...populateProducts(),
+    ])
+    .then(() => Promise.all(populateOrders()))
+    .then(() => Promise.all(populateLineItems()))
+  })
+  .catch(err => console.error(err))
 }
 
 conn.sync({ force: true })
