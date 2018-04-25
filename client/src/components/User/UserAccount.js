@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import PastOrders from '../Order/PastOrders';
 import ActiveOrder from '../Order/ActiveOrder';
 import UserForm from './UserFormNEW';
+import Addresses from '../Address/Addresses';
 
 class UserAccount extends React.Component {
   constructor(props) {
@@ -13,8 +14,8 @@ class UserAccount extends React.Component {
   }
 
   render() {
+    const { user, userOrders, id, userAddresses } = this.props;
     const url = location.hash.slice(1)
-    const { user, userOrders, id } = this.props;
     if (!user) return null
     console.log(this)
     return (
@@ -41,9 +42,10 @@ class UserAccount extends React.Component {
   }
 }
 
-const mapState = ({ user, orders }, { id }) => {
+const mapState = ({ user, orders, addresses }, { id }) => {
   const userOrders = orders.filter(order => order.userId === user.id);
-  return { user, userOrders, id }
+  const userAddresses = addresses.filter(address => address.userId === user.id)
+  return { user, userOrders, id, addresses, userAddresses }
 }
 
 export default connect(mapState)(UserAccount);

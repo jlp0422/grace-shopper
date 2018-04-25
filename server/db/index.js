@@ -6,6 +6,7 @@ const Order = require('./models/Order');
 const Product = require('./models/Product');
 const User = require('./models/User');
 const ProductCategory = require('./models/ProductCategory');
+const Address = require('./models/Address');
 
 Product.belongsToMany(Category, { through: ProductCategory });
 Category.belongsToMany(Product, { through: ProductCategory });
@@ -18,6 +19,9 @@ LineItem.belongsTo(Order, { as: 'order' });
 User.hasMany(Order);
 Order.belongsTo(User);
 
+Address.belongsTo(User);
+User.hasMany(Address);
+
 const sync = () => {
   return conn.sync({ force: true });
 };
@@ -29,6 +33,7 @@ module.exports = {
     LineItem,
     Order,
     Product,
-    User
+    User,
+    Address
   }
 };

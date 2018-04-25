@@ -1,6 +1,6 @@
 const { conn } = require('./conn');
 const { models } = require('./index');
-const { Category, LineItem, Order, Product, User } = models;
+const { Category, LineItem, Order, Product, User, Address } = models;
 
 const faker = require('faker');
 
@@ -11,6 +11,7 @@ const productCount = 50;
 const userCount = 5;
 const orderCount = 25;
 const lineItemCount = 70;
+const addressCount = (userCount + 5) * 2;
 
 /*---------------HOW-MANY-SHOULD-WE-MAKE?---------------*/
 
@@ -48,10 +49,17 @@ const createUser = () => {
     username: `${firstName.slice(0, 1).toLowerCase()}${lastName.toLowerCase()}`,
     password: faker.internet.password(),
     email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@gmail.com`,
-    street: [ faker.address.streetAddress() ],
-    city: [ faker.address.city() ],
-    state: [ faker.address.state() ],
-    zip: [ faker.address.zipCode() ],
+  });
+}
+
+const createAddress = () => {
+  return Address.create({
+    isShipping: true,
+    street: faker.address.streetAddress(),
+    city: faker.address.city(),
+    state: faker.address.state(),
+    zip: faker.address.zipCode(),
+    userId: Math.ceil(Math.random() * userCount + 5)
   });
 }
 
@@ -85,6 +93,10 @@ const populateUsers = () => {
   return createThisMany(userCount, createUser);
 }
 
+const populateAddresses = () => {
+  return createThisMany(addressCount, createAddress);
+}
+
 const populateOrders = () => {
   return createThisMany(orderCount, createOrder);
 }
@@ -105,11 +117,7 @@ const seed = () => {
       isAdmin: true,
       username: 'jphilipson',
       password: 'JEREMY',
-      email: 'jeremy@gmail.com',
-      street: [faker.address.streetAddress()],
-      city: [faker.address.city()],
-      state: [faker.address.state()],
-      zip: [faker.address.zipCode()],
+      email: 'jeremy@gmail.com'
     }),
     User.create({
       firstName: 'Jeremy',
@@ -117,11 +125,7 @@ const seed = () => {
       isAdmin: true,
       username: 'jgrubard',
       password: 'JEREMY',
-      email: 'jgrubard@gmail.com',
-      street: [faker.address.streetAddress()],
-      city: [faker.address.city()],
-      state: [faker.address.state()],
-      zip: [faker.address.zipCode()],
+      email: 'jgrubard@gmail.com'
     }),
     User.create({
       firstName: 'Alice',
@@ -129,11 +133,7 @@ const seed = () => {
       isAdmin: true,
       username: 'aluong',
       password: 'ALICE',
-      email: 'alice@gmail.com',
-      street: [faker.address.streetAddress()],
-      city: [faker.address.city()],
-      state: [faker.address.state()],
-      zip: [faker.address.zipCode()],
+      email: 'alice@gmail.com'
     }),
     User.create({
       firstName: 'Alex',
@@ -141,11 +141,7 @@ const seed = () => {
       isAdmin: true,
       username: 'alevin',
       password: 'ALEX',
-      email: 'alex@gmail.com',
-      street: [faker.address.streetAddress()],
-      city: [faker.address.city()],
-      state: [faker.address.state()],
-      zip: [faker.address.zipCode()],
+      email: 'alex@gmail.com'
     }),
     User.create({
       firstName: 'John',
@@ -153,11 +149,7 @@ const seed = () => {
       isAdmin: false,
       username: 'jdoe',
       password: 'JOHN',
-      email: 'john@gmail.com',
-      street: [faker.address.streetAddress()],
-      city: [faker.address.city()],
-      state: [faker.address.state()],
-      zip: [faker.address.zipCode()],
+      email: 'john@gmail.com'
     }),
   ])
   .then((users) => {
@@ -172,6 +164,7 @@ const seed = () => {
     ])
     .then(() => Promise.all(populateOrders()))
     .then(() => Promise.all(populateLineItems()))
+    .then(() => Promise.all(populateAddresses()))
   })
   .catch(err => console.error(err))
 }

@@ -7,3 +7,4 @@ app.use('/orders', require('./orders'));
 app.use('/products', require('./products'));
 app.use('/users', require('./users'));
 app.use('/sessions', require('./sessions'));
+app.use('/addresses', require('./addresses'));
