@@ -39,7 +39,7 @@ class LineItemForm extends Component {
           <select
             className = 'form-control'
             name = 'quantity'
-            value = {existingQuantity}
+            value = {existingQuantity ? existingQuantity : quantity}
             onChange = {onChangeLineItem}
             style={{ marginBottom: '10px' }}        
           >
@@ -54,7 +54,7 @@ class LineItemForm extends Component {
           </select>
           <button style={{ marginBottom: '10px' }} className='btn btn-primary'>{buttonText}</button>
         </form>
-        <h6>Total Price: ${total}</h6>
+        <h6> {orderId ? 'Total Price: ' : '' } {orderId ? total : ''} </h6>
       </div>
     )
 
