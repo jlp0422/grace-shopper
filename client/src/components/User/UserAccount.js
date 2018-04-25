@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import PastOrders from '../Order/PastOrders';
 import ActiveOrder from '../Order/ActiveOrder';
 import UserForm from './UserFormNEW';
@@ -30,6 +31,7 @@ class UserAccount extends React.Component {
         <h4>Total orders: {userOrders.length}</h4>
         <Nav style={{margin: '15px 0px'}} tabs>
           <NavItem>
+            <Link to='/'>My Cart</Link>
             <NavLink
               className={activeTab === '1' ? 'active font-weight-bold' : '' }
               onClick={() => { toggle('1'); }}>

@@ -4,6 +4,7 @@ import { HashRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
 import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken } from '../store';
 
+import CheckAuth from './CheckAuth';
 import Home from './Home';
 import Nav from './Nav';
 import Footer from './Footer';
@@ -15,6 +16,8 @@ import Users from './User/Users';
 import UserAccount from './User/UserAccount';
 import LoginForm from './User/LoginForm';
 // import UserForm from './User/UserFormNEW';
+
+// const authAccount = CheckAuth(Nav)
 
 class App extends React.Component {
   componentDidMount() {
