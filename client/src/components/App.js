@@ -4,7 +4,7 @@ import { HashRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
 import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer } from '../store';
 
-import CheckAuth from './CheckAuth';
+import CheckAuth from './General/CheckAuth';
 import Home from './General/Home';
 import Nav from './General/Nav';
 import Footer from './General/Footer';
