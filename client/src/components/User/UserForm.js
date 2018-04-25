@@ -6,15 +6,19 @@ import { updateUserOnServer, updateLoggedUser } from '../../store';
 class UserForm extends Component {
   constructor(props) {
     super(props);
+    console.log(props)
     const { user } = props;
+    const { id } = user
     this.state = {
-      id: user.id ? user.id : '',
-      firstName: user.id ? user.firstName : '',
-      lastName: user.id ? user.lastName : '',
-      isAdmin: user.id ? user.isAdmin : '',
-      username: user.id ? user.username : '',
-      password: user.id ? user.password : '',
-      email: user.id ? user.email : '',
+
+      id: id ? user.id : '',
+      firstName: id ? user.firstName : '',
+      lastName: id ? user.lastName : '',
+      isAdmin: id ? user.isAdmin : '',
+      username: id ? user.username : '',
+      password: id ? user.password : '',
+      email: id ? user.email : '',
+
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -115,4 +119,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatch)(UserForm);
+// export default connect(null, mapDispatch)(UserForm);

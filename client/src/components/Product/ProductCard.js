@@ -23,9 +23,7 @@ const UserCard = (props) => {
 
 const mapState = ({ categories }, { product }) => {
   const category = categories.find(_category => _category.id === product.categoryId);
-  return {
-    category
-  }
+  return { category }
 }
 
 export default connect(mapState)(UserCard);
