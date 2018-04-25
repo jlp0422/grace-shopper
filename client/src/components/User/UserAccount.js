@@ -36,6 +36,9 @@ class UserAccount extends React.Component {
           <Link to={`/users/${id}/edit`}>
             Edit Account
           </Link>
+          <Link to={`/users/${id}/reviews`}>
+            My Reviews
+          </Link>
         </div>
       </div>
     )

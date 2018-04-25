@@ -7,7 +7,7 @@ const faker = require('faker');
 /*-------------HOW-MANY-D0-WE-WANT-TO-SEED?-------------*/
 
 const categoryCount = 3;
-const productCount = 50;
+const productCount = 200;
 const userCount = 5;
 const orderCount = 25;
 const lineItemCount = 70;

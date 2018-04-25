@@ -8,9 +8,6 @@ import ReviewForm from '../Review/ReviewForm';
 
 const ProductInfo = (props) => {
   const { product, deleteProduct, loggedIn, isAdmin, rating, reviewers, isOrAre, makeSingular } = props;
-
-  // console.log(rating);
-
   if (!product) {
     return null;
   }

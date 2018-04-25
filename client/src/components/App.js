@@ -53,12 +53,12 @@ class App extends React.Component {
                 <Route exact path='/products' component={ Products } />
                 {/* PRODUCT ROUTES */}
                 <Route exact path='/products/:id' component={ ProductInfo } />
-                <Route exact path='/products/:id/reviews' component={ Reviews } />
+                <Route exact path='/products/:id/reviews' component={ ({ match }) => <Reviews page='product' id={ match.params.id * 1 } /> } />
                 {/* USER ROUTES */}
                 <Route exact path='/users' component={ Users } />
                 <Route exact path='/users/:id/cart' component={ ActiveOrder } />
                 <Route exact path='/users/:id/orders' component={ PastOrders } />
-                <Route exact path='/users/:id/reviews' component={ Reviews } />
+                <Route exact path='/users/:id/reviews' component={ ({ match }) => <Reviews page='user' id={ match.params.id * 1 } /> } />
                 {/*<Route exact path='/users/:id/addresses' component={} />*/}
                 <Route exact path='/users/:id/edit' component={ UserForm } />
 
