@@ -31,49 +31,12 @@ class UserAccount extends React.Component {
         <h4>Total orders: {userOrders.length}</h4>
         <Nav style={{margin: '15px 0px'}} tabs>
           <NavItem>
-            <Link to='/'>My Cart</Link>
-            <NavLink
-              className={activeTab === '1' ? 'active font-weight-bold' : '' }
-              onClick={() => { toggle('1'); }}>
-              My Cart
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={activeTab === '2' ? 'active font-weight-bold' : '' }
-              onClick={() => { toggle('2'); }}>
-              Past Orders
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={activeTab === '3' ? 'active font-weight-bold' : ''}
-              onClick={() => { toggle('3'); }}>
-              My Addresses
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={activeTab === '4' ? 'active font-weight-bold' : ''}
-              onClick={() => { toggle('4'); }}>
-              Edit Account
-            </NavLink>
+            <Link to={`/users/${id}/cart`}>My Cart</Link>&nbsp;
+            <Link to={`/users/${id}/orders`}>Past Orders</Link>&nbsp;
+            <Link to={`/users/${id}/addresses`}>My Addresses</Link>&nbsp;
+            <Link to={`/users/${id}/edit`}>Edit Account</Link>&nbsp;
           </NavItem>
         </Nav>
-        <TabContent activeTab={activeTab}>
-          <TabPane tabId="1">
-            <ActiveOrder />
-          </TabPane>
-          <TabPane tabId="2">
-            <PastOrders />
-          </TabPane>
-          <TabPane tabId="3">
-            <h4>Address form will go here</h4>
-          </TabPane>
-          <TabPane tabId="4">
-            <UserForm user={user} />
-          </TabPane>
-        </TabContent>
       </div>
 
     )

@@ -15,7 +15,9 @@ import ProductInfo from './Product/ProductInfo';
 import Users from './User/Users';
 import UserAccount from './User/UserAccount';
 import LoginForm from './User/LoginForm';
-// import UserForm from './User/UserFormNEW';
+import ActiveOrder from './Order/ActiveOrder';
+import PastOrders from './Order/PastOrders';
+import UserForm from './User/UserFormNEW';
 
 // const authAccount = CheckAuth(Nav)
 
@@ -36,6 +38,9 @@ class App extends React.Component {
         <div>
           <Route path='/' component={Nav} />
           <div className="container">
+            <Route path='/users/:id' render={({ match }) => (
+              <UserAccount id={match.params.id} />
+            )} />
           <Switch>
             <Route exact path='/' component={Home} />
             {/* CATEGORY ROUTES */}
@@ -46,9 +51,10 @@ class App extends React.Component {
             <Route exact path='/products/:id' component={ProductInfo} />
             {/* USER ROUTES */}
             <Route exact path='/users' component={Users} />
-            <Route exact path='/users/:id' render={({ match }) => (
-              <UserAccount id={ match.params.id } />
-            )}/>
+            <Route exact path='/users/:id/cart' component={ ActiveOrder } />
+            <Route exact path='/users/:id/orders' component={ PastOrders } />
+            <Route exact path='/users/:id/edit' component={ UserForm } />
+
 
             {/* AUTH ROUTES */}
             <Route exact path='/login' component={LoginForm} />
