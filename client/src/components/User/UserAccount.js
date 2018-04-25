@@ -21,7 +21,6 @@ class UserAccount extends React.Component {
 
   render() {
     const { user, userOrders, id, userAddresses } = this.props;
-    console.log(userAddresses)
     const { activeTab } = this.state;
     const { toggle } = this;
     if (!user) return null

@@ -23,10 +23,6 @@ const Addresses = (props) => {
 }
 
 const mapState = ( state, { userAddresses }) => {
-
-
-
-    console.log('ADD: ', userAddresses)
     return { userAddresses }
 };
 

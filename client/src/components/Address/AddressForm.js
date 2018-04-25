@@ -21,10 +21,10 @@ class AddressForm extends Component {
     }
 // ------------------------ LIFECYCLE METHODS ------------------------
 
-  componentWillReceiveProps(nextProps) {
-    const { address } = nextProps;
-    this.setState(nextProps);
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   const { address } = nextProps;
+  //   this.setState(nextProps);
+  // }
 // ---------------------------- METHODS ----------------------------
   handleChange(ev) {
     const change = {};
