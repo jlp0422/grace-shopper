@@ -10,6 +10,7 @@ class UserForm extends Component {
     const { user } = props;
     const { id } = user
     this.state = {
+
       id: id ? user.id : '',
       firstName: id ? user.firstName : '',
       lastName: id ? user.lastName : '',
@@ -17,24 +18,9 @@ class UserForm extends Component {
       username: id ? user.username : '',
       password: id ? user.password : '',
       email: id ? user.email : '',
-      // street: user ? user.street : '',
-      // city: user ? user.city : '',
-      // state: user ? user.state : '',
-      // zip: user ? user.zip : '',
-      // inputError: [],
-      // inputEdited: {}
-    }
-    // ---------------------------- VALIDATORS ----------------------------
-    // this.validators = {
-    //   email: value => {
-    //     const emailFormat = /\S+@\S+\.\S+/;
-    //     if (!emailFormat.test(value)) {
-    //       return `e-mail must be valid e-mail format with @`;
-    //     }
-    //   }
-    // };
 
-    // ---------------------------- BIND METHOD ----------------------------
+    }
+
     this.handleChange = this.handleChange.bind(this);
     this.onSave = this.onSave.bind(this);
   }
@@ -43,19 +29,7 @@ class UserForm extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { user } = nextProps;
-    this.setState({
-      id: user ? user.id : '',
-      firstName: user ? user.firstName : '',
-      lastName: user ? user.lastName : '',
-      isAdmin: user ? user.isAdmin : '',
-      username: user ? user.username : '',
-      password: user ? user.password : '',
-      email: user ? user.email : '',
-      // street: user ? user.street : '',
-      // city: user ? user.city : '',
-      // state: user ? user.state : '',
-      // zip: user ? user.zip : '',
-    });
+    this.setState(user ? user : null);
   }
 
   // ---------------------------- METHODS ----------------------------
@@ -91,7 +65,7 @@ class UserForm extends Component {
 
   render() {
 
-    console.log(this.state);
+    // console.log(this.state);
 
     // const { firstName, lastName, isAdmin, username, password, email, street, city, state, zip } = this.state;
     // const userProps = { firstName, lastName, isAdmin, username, password, email, street, city, state, zip };
