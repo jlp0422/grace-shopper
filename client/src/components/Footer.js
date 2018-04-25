@@ -2,11 +2,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
+import { connect} from 'react-redux';
 import { Col, Container, Row, Footer } from 'mdbreact';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 
-const PageFooter = () => {
+const PageFooter = ({ user, logout }) => {
   return (
     <div className="font-small t-4 mt-4">
       <div className="container-fluid text-left">
@@ -21,9 +22,15 @@ const PageFooter = () => {
           </Col>
           <Col sm="6">
             <ul>
-              <NavLink href='#/login'>Log in</NavLink>
-              <NavLink href='#/myOrders'>myOrders</NavLink>
-              <NavLink href='#/myAccount'>myAccount</NavLink>
+              {
+                user.id ? (
+                  <span onClick={ logout }>Log out</span>
+                ) : (
+                  <NavLink href='#/login'>Log in</NavLink>
+                )
+              }
+              <NavLink href={`#/users/${user.id}/orders`}>myOrders</NavLink>
+              <NavLink href={`#/users/${user.id}/cart`}>myAccount</NavLink>
             </ul>
           </Col>
         </Row>
@@ -37,4 +44,13 @@ const PageFooter = () => {
   );
 };
 
-export default PageFooter;
+const mapState = ({ user }) => {
+  return { user }
+}
+
+const mapDistpach = (dispatch) => {
+  return {
+    logout: () => dispatch(logout())
+  }
+}
+export default connect(mapState, mapDistpach)(PageFooter);
