@@ -2,7 +2,7 @@
 import React from 'react';
 import { HashRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
-import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken } from '../store';
+import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer } from '../store';
 
 import Home from './Home';
 import Nav from './Nav';
@@ -18,13 +18,14 @@ import LoginForm from './User/LoginForm';
 
 class App extends React.Component {
   componentDidMount() {
-    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems } = this.props;
+    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses } = this.props;
     getCategories();
     getProducts();
     getUsers();
     getOrders();
     getUser();
     getLineItems();
+    getAddresses();
   }
 
   render() {
@@ -66,6 +67,7 @@ const mapDispatch = (dispatch) => {
     getUsers: () => dispatch(getUsersFromServer()),
     getOrders: () => dispatch(getOrdersFromServer()),
     getLineItems: () => dispatch(getLineItemsFromServer()),
+    getAddresses: () => dispatch(getAddressesFromServer()),
     getUser: () => {
       if (window.localStorage.getItem('token')) {
         dispatch(getUserFromToken(window.localStorage.getItem('token')))

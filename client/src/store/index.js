@@ -7,6 +7,7 @@ import ordersReducer from './orders';
 import productsReducer from './products';
 import usersReducer from './users';
 import userReducer from './user';
+import addressesReducer from './addresses';
 
 const reducer = combineReducers({
   categories: categoriesReducer,
@@ -14,10 +15,11 @@ const reducer = combineReducers({
   orders: ordersReducer,
   products: productsReducer,
   users: usersReducer,
-  user: userReducer
+  user: userReducer,
+  addresses: addressesReducer
 });
 
-const store = createStore(reducer, applyMiddleware(thunk, logger));
+const store = createStore(reducer, applyMiddleware(thunk/*, logger*/));
 
 export default store;
 
@@ -27,3 +29,4 @@ export * from './orders';
 export * from './products';
 export * from './users';
 export * from './user';
+export * from './addresses';

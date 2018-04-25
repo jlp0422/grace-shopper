@@ -29,3 +29,9 @@ export const UPDATE_USER = 'UPDATE_USER';
 export const DELETE_USER = 'DELETE_USER';
 export const SET_USER = 'SET_USER';
 export const UPDATE_AUTH_USER = 'UPDATE_AUTH_USER';
+
+/*********** ADDRESSES  ***********/
+export const GET_ADDRESSES = 'GET_ADDRESSES';
+export const CREATE_ADDRESS = 'CREATE_ADDRESS';
+export const UPDATE_ADDRESS = 'UPDATE_ADDRESS';
+export const DELETE_ADDRESS = 'DELETE_ADDRESS';

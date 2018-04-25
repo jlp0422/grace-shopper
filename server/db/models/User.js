@@ -37,34 +37,6 @@ const User = conn.define('user', {
     validate: {
       notEmpty: true
     } */
-  },
-  street: {
-    type: Sequelize.ARRAY(Sequelize.TEXT),
-    /* allowNull: false,
-    validate: {
-      notEmpty: true
-    } */
-  },
-  city: {
-    type: Sequelize.ARRAY(Sequelize.TEXT),
-    /* allowNull: false,
-    validate: {
-      notEmpty: true
-    } */
-  },
-  state: {
-    type: Sequelize.ARRAY(Sequelize.TEXT),
-    /* allowNull: false,
-    validate: {
-      notEmpty: true
-    } */
-  },
-  zip: {
-    type: Sequelize.ARRAY(Sequelize.TEXT),
-    /* allowNull: false,
-    validate: {
-      notEmpty: true
-    } */
   }
 }, {
   timestamps: false

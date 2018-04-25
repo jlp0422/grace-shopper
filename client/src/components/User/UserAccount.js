@@ -5,6 +5,7 @@ import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
 import PastOrders from '../Order/PastOrders';
 import ActiveOrder from '../Order/ActiveOrder';
 import UserForm from './UserFormNEW';
+import Addresses from '../Address/Addresses';
 
 class UserAccount extends React.Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class UserAccount extends React.Component {
   }
 
   render() {
-    const { user, userOrders, id } = this.props;
+    const { user, userOrders, id, userAddresses } = this.props;
+    console.log(userAddresses)
     const { activeTab } = this.state;
     const { toggle } = this;
     if (!user) return null
@@ -66,7 +68,7 @@ class UserAccount extends React.Component {
             <PastOrders />
           </TabPane>
           <TabPane tabId="3">
-            <h4>Address form will go here</h4>
+            <Addresses userAddresses={userAddresses} />
           </TabPane>
           <TabPane tabId="4">
             <UserForm user={user} />
@@ -78,9 +80,10 @@ class UserAccount extends React.Component {
   }
 }
 
-const mapState = ({ user, orders }, { id }) => {
+const mapState = ({ user, orders, addresses }, { id }) => {
   const userOrders = orders.filter(order => order.userId === user.id);
-  return { user, userOrders, id }
+  const userAddresses = addresses.filter(address => address.userId === user.id)
+  return { user, userOrders, id, addresses, userAddresses }
 }
 
 export default connect(mapState)(UserAccount);
