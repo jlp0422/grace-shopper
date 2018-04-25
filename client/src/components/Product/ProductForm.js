@@ -26,6 +26,9 @@ class ProductForm extends Component {
     } else {
       value = ev.target.value * 1;
     }
+    // change[ev.target.name] = value;
+    // const val = ev.target.value;
+    console.log(value, typeof value)
     change[ev.target.name] = value;
     this.setState(change);
   }
@@ -53,6 +56,7 @@ class ProductForm extends Component {
           />
           <input
             type='number'
+            // step='1'
             className='form-control'
             placeholder='Price'
             name='price'
@@ -62,6 +66,7 @@ class ProductForm extends Component {
           />
           <input
             type='number'
+            // step='1'
             className='form-control'
             placeholder='Quantity'
             name='quantity'
@@ -94,7 +99,7 @@ class ProductForm extends Component {
             <option value='null'>Select Category</option>
             {
               categories.map(category => (
-                <option key={category.id} value={category.id}/* selected={category.id === categoryId}*/>
+                <option key={category.id} value={category.id * 1}/* selected={category.id === categoryId}*/>
                   {category.name}
                 </option>
               ))
