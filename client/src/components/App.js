@@ -54,13 +54,19 @@ class App extends React.Component {
                 {/* PRODUCT ROUTES */}
                 <Route exact path='/products' component={ Products } />
                 <Route exact path='/products/:id' component={ ProductInfo } />
-                <Route exact path='/products/:id/reviews' component={ ({ match }) => <Reviews page='product' id={ match.params.id * 1 } /> } />
+                <Route exact path='/products/:id/reviews' component={ ({ match }) => (
+                  <Reviews page='product' id={ match.params.id * 1 } />
+                 )} />
                 {/* USER ROUTES */}
                 <Route exact path='/users' component={ Users } />
                 <Route exact path='/users/:id/cart' component={ ActiveOrder } />
                 <Route exact path='/users/:id/orders' component={ PastOrders } />
-                <Route exact path='/users/:id/reviews' component={ ({ match }) => <Reviews page='user' id={ match.params.id * 1 } /> } />
-                {/*<Route exact path='/users/:id/addresses' component={} />*/}
+                <Route exact path='/users/:id/reviews' component={ ({ match }) => (
+                  <Reviews page='user' id={ match.params.id * 1 } />
+                )} />
+                <Route exact path='/users/:id/addresses' render={({match}) => (
+                  <Addresses id={ match.params.id } />
+                )} />
                 <Route exact path='/users/:id/edit' component={ UserForm } />
 
                 {/* AUTH ROUTES */}

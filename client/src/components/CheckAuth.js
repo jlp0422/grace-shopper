@@ -2,31 +2,43 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const CheckAuth = (component) => {
-  return class extends React.Component {
-    constructor(props) {
-      super(props)
-      const { user } = this.props
-      console.log(user)
-    }
+  class AuthComponent extends React.Component {
+    // constructor(props) {
+    //   super(props)
+    // }
 
     componentDidMount(nextProps) {
-      const { user } = nextProps
-      console.log(user)
+      this.checkAuth()
     }
 
+    componentWillReceiveProps(nextProps) {
+      this.checkAuth()
+    }
+
+    checkAuth() {
+      if (!this.props.isAuthenticated) {
+        location.hash = '/login'
+      }
+    }
+
+    // isLogged = () => {
+    //   return this.props
+    // }
+
     render() {
-      return <component />
-      // if (auth.isAuthenticated()) {
-      //   return ('logged in')
-      // }
-      // else {
-      //   return ('not logged in')
-      // }
+      const { isAuthenticated } = this.props
+      return (
+        <div>
+          {this.props}
+        </div>
+      )
     }
   }
 }
 
 const mapState = ({ user }) => {
+  const isAuthenticated = user.id ? true : false
+  console.log(isAuthenticated)
   return { user }
 }
 

@@ -87,7 +87,6 @@ class UserForm extends React.Component {
 }
 
 const mapState = ({ user }) => {
-  // console.log(user)
   return { user }
 }
 
