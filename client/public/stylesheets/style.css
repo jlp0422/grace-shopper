@@ -2,6 +2,10 @@
   font-family: 'Open Sans', sans-serif;
 }
 
+#body-elements {
+  margin-bottom: 80px;
+}
+
 /* MARGIN STYLES */
 .margin-t-15 {
   margin-top: 15px;
