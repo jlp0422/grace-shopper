@@ -58,7 +58,7 @@ class NavBar extends React.Component {
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem onClick={() => location.hash = `/users/${user.id}`}>My Account</DropdownItem>
-                      <DropdownItem onClick={() => location.hash = `/users/${user.id}`}>My Cart ({activeOrder.length})</DropdownItem>
+                      <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({activeOrder.length})</DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem onClick={logout}>Log out</DropdownItem>
                     </DropdownMenu>

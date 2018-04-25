@@ -46,7 +46,8 @@ class LoginForm extends React.Component {
       password: 'Password'
     }
     return (
-      <div>
+      <div className="login-form">
+        <h3>{ url === '/signup' ? ('Sign up for an account') : ('Log in to your account')}</h3>
         <form onSubmit={ onSubmit }>
         {
           url === '/signup' ? (
@@ -86,14 +87,14 @@ class LoginForm extends React.Component {
             </div>
           )
         }
-          <button style={{marginTop: '15px'}} className="btn btn-success">{
-            url === '/signup' ? ('Create account') : ('Log in')
-          }</button>
+          <button className="btn btn-success margin-t-15">
+            { url === '/signup' ? ('Create account') : ('Log in') }
+          </button>
         </form>
         { url === '/signup' ?
-          <h4>Have an account? <a href='#/login'>Log in now</a></h4>
+          <p className="margin-t-15">Have an account? <a href='#/login'>Log in now &raquo;</a></p>
           :
-          <h4>Don't have an account? <a href='#/signup'>Create one now</a></h4>
+          <p className="margin-t-15">Don't have an account? <a href='#/signup'>Create one now &raquo;</a></p>
         }
       </div>
     )

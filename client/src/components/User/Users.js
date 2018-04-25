@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 // import UserCard from './UserCard';
-import UserForm from './UserForm';
 
 const Users = (props) => {
   const { users } = props;
