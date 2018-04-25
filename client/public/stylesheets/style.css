@@ -58,6 +58,7 @@
   padding: 10px 0px;
   background-color: #ccc;
   color: black;
+  z-index: 2000;
 }
 
 #footer a {
