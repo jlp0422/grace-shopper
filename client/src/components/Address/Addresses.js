@@ -19,8 +19,9 @@ const Addresses = (props) => {
         }
       </ul>
       <p></p>
-      <h3>Add A New Address:</h3>
-      <AddressCard />
+      {/* This should be a button which creates a new blank address form 
+      <button onClick={onUpdate} className='btn btn-primary'>Add Address</button>
+      */}
     </div>
   );
 }
@@ -30,4 +31,10 @@ const mapState = ( { addresses }, { id }) => {
   return { userAddresses }
 };
 
-export default connect(mapState)(Addresses);
+const mapDispatch = (dispatch) => {
+  return {
+    createAddress: (address) => dispatch(updateAddressOnServer(address))
+  }
+};
+
+export default connect(mapState, mapDispatch)(Addresses);

@@ -25,6 +25,14 @@ class AddressForm extends Component {
 
 
   // ---------------------------- METHODS ----------------------------
+  componentWillReceiveProps(nextProps) {
+    const { address } = nextProps;
+    if (address.id) {
+      const { id, isShipping, street, city, state, zip } = address
+      this.setState({ id, isShipping, street, city, state, zip  })
+    }
+  }
+ 
   onChange(ev) {
     const change = {}
     change[ev.target.name] = ev.target.value
@@ -33,7 +41,7 @@ class AddressForm extends Component {
 
   onUpdate(ev) {
     ev.preventDefault()
-    const { updateAddress } = this.props;
+    const { updateAddress, deleteAddress } = this.props;
     const { id, isShipping, street, city, state, zip } = this.state
     updateAddress({ id, isShipping, street, city, state, zip });
     this.setState({ isEditing: false })
@@ -43,7 +51,6 @@ class AddressForm extends Component {
 
   render() {
     const { isShipping, isEditing, street, city, state, zip } = this.state;
-    const { deleteAddress } = this.props;
     const { onChange, onUpdate } = this;
     const fields = {
       street: 'Street',
@@ -62,7 +69,6 @@ class AddressForm extends Component {
         )
       }
       <button onClick={() => deleteAddress(address.id)} className='btn btn-danger'>Delete Address</button>
-
           <select
             onChange={onChange}
             name='isShipping'
@@ -95,7 +101,7 @@ class AddressForm extends Component {
 const mapDispatch = (dispatch) => {
   return {
     updateAddress: (address) => dispatch(updateAddressOnServer(address)),
-    deleteAddress: (addressId) => dispatch(deleteAddressOnServer(addressId))
+    deleteAddress: (address) => dispatch(deleteAddressFromServer(address))
   };
 };
 
