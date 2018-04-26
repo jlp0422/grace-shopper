@@ -1,53 +1,22 @@
-/* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
-import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import PastOrders from '../Order/PastOrders';
-import ActiveOrder from '../Order/ActiveOrder';
-import UserForm from './UserFormNEW';
-import Addresses from '../Address/Addresses';
 
-class UserAccount extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const { user, pastOrders, id } = this.props;
-    const url = location.hash.slice(1)
-    if (!user) return null
-    // console.log(this)
-    return (
-      <div>
-        <h1>My Account</h1>
-        <h2>{user.firstName} {user.lastName}</h2>
-        <h4>Total orders: {pastOrders}</h4>
-        <div className="account-nav">
-          <Link to={`/users/${id}/cart`}>
-            My Cart
-          </Link>
-          <Link to={`/users/${id}/orders`}>
-            Past Orders
-          </Link>
-          <Link to={`/users/${id}/addresses`}>
-            My Addresses
-          </Link>
-          <Link to={`/users/${id}/edit`}>
-            Edit Account
-          </Link>
-          <Link to={`/users/${id}/reviews`}>
-            My Reviews
-          </Link>
-        </div>
-      </div>
-    )
-  }
+const UserAccount = ({ totalOrders, totalReviews, savedAddresses }) => {
+  return (
+    <div>
+      <h2>My Account</h2>
+      <h4>Total Orders: {totalOrders}</h4>
+      <h4>Saved Addresses: { savedAddresses }</h4>
+      <h4>Total Reviews: { totalReviews }</h4>
+    </div>
+  )
 }
 
-const mapState = ({ user, orders, addresses }, { id }) => {
-  const pastOrders = orders.filter(order => order.userId === user.id && !order.isActive).length;
-  return { user, pastOrders, id }
+const mapState = ({ orders, reviews, addresses }, { id }) => {
+  const totalOrders = orders.filter(order => order.userId === id && !order.isActive).length;
+  const totalReviews = reviews.filter(review => review.userId === id).length;
+  const savedAddresses = addresses.filter(address => address.userId === id).length;
+  return { totalOrders, totalReviews, savedAddresses }
 }
 
-export default connect(mapState)(UserAccount);
+export default connect(mapState)(UserAccount)
