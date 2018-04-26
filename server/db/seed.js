@@ -12,8 +12,8 @@ const userCount = 5;
 const orderCount = 25;
 const lineItemCount = 70;
 const addressCount = (userCount + 5) * 2;
-const reviewCount = 100;
-const productCategoryCount = 10;
+const reviewCount = 500;
+const productCategoryCount = 300;
 
 /*---------------HOW-MANY-SHOULD-WE-MAKE?---------------*/
 
@@ -188,7 +188,24 @@ const seed = () => {
     ...populateCategories(),
     ...populateProducts(),
     ])
-    .then(() => Promise.all(populateProductCategories()))
+    .then(() => {
+      return Promise.all(populateProductCategories())
+        // .then((pc) => {
+        //   console.log('before:', pc.length)
+        //   // pc.forEach(_pc => console.log(_pc.get()))
+        //   // console.log(pc[0].get())
+        //   const arr = [];
+
+        //   const filtered = pc.forEach((_pc, index, array) => {
+        //     array.forEach(p => {
+        //       if(_pc.productId === p.productId && _pc.categoryId === p.categoryId) {
+        //         arr.push(_pc)
+        //       }
+        //     })
+        //   })
+        //   console.log('after:', arr.length)
+        // })
+      })
     .then(() => Promise.all(populateOrders()))
     .then(() => Promise.all(populateLineItems()))
     .then(() => Promise.all(populateAddresses()))

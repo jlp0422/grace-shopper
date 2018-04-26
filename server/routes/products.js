@@ -1,13 +1,14 @@
 const app = require('express').Router();
 module.exports = app;
-const { Product, Category } = require('../db').models;
+const { Product, Category, ProductCategory } = require('../db').models;
 
 app.get('/', (req, res, next) => {
-  Product.findAll(/*{
-    include: [
-      { model: Category, as: 'categories' }
-    ]
-  }*/)
+  Product.findAll({
+    include: [{
+      model: ProductCategory,
+      inlcude: [ Category ]
+    }]
+  })
     .then(products => res.send(products))
     .catch(next);
 });

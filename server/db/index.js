@@ -13,7 +13,9 @@ const Review = require('./models/Review');
 // Category.belongsToMany(Product, { through: ProductCategory, foreignKey: 'categoryId', as: 'categories '});
 
 ProductCategory.belongsTo(Product);
+Product.hasMany(ProductCategory);
 ProductCategory.belongsTo(Category);
+Category.hasMany(ProductCategory);
 
 LineItem.belongsTo(Product);
 Order.hasMany(LineItem, { as: 'lineItems', foreignKey: 'orderId' });

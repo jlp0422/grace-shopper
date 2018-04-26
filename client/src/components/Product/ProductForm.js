@@ -13,7 +13,7 @@ class ProductForm extends Component {
       return association.categoryId;
     }) : []
 
-    console.log(categoryArray)
+    // console.log(categoryArray)
 
     this.state = {
       id: product ? product.id : null,
@@ -59,7 +59,7 @@ class ProductForm extends Component {
     const { categories } = this.props;
     const { handleChange, onSave } = this;
 
-    console.log(this.state.categoryArray)
+    // console.log(this.state.categoryArray)
 
     return (
       <div>
@@ -133,7 +133,7 @@ class ProductForm extends Component {
 }
 
 const mapState = ({ categories, productCategories }, { product }) => {
-  console.log('PF:', productCategories)
+  // console.log('PF:', productCategories)
   return {
     categories,
     productCategories
