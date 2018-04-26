@@ -185,26 +185,26 @@ const seed = () => {
   })
   .then(() => {
     return Promise.all([
-    ...populateCategories(),
-    ...populateProducts(),
+      ...populateCategories(),
+      ...populateProducts(),
     ])
     .then(() => {
       return Promise.all(populateProductCategories())
-        // .then((pc) => {
-        //   console.log('before:', pc.length)
-        //   // pc.forEach(_pc => console.log(_pc.get()))
-        //   // console.log(pc[0].get())
-        //   const arr = [];
+        /*.then((pc) => {
+          console.log('before:', pc.length)
+          // pc.forEach(_pc => console.log(_pc.get()))
+          // console.log(pc[0].get())
+          const arr = [];
 
-        //   const filtered = pc.forEach((_pc, index, array) => {
-        //     array.forEach(p => {
-        //       if(_pc.productId === p.productId && _pc.categoryId === p.categoryId) {
-        //         arr.push(_pc)
-        //       }
-        //     })
-        //   })
-        //   console.log('after:', arr.length)
-        // })
+          const filtered = pc.forEach((_pc, index, array) => {
+            array.forEach(p => {
+              if(_pc.productId === p.productId && _pc.categoryId === p.categoryId) {
+                arr.push(_pc)
+              }
+            })
+          })
+          console.log('after:', arr.length)
+        })*/
       })
     .then(() => Promise.all(populateOrders()))
     .then(() => Promise.all(populateLineItems()))
