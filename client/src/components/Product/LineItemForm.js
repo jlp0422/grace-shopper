@@ -5,9 +5,11 @@ import { updateLineItemOnServer } from '../../store';
 class LineItemForm extends Component {
   constructor(props) {
     super(props);
-    const { productId, orderId, lineItemMap, priceMap } = props;
+//    const { productId, orderId, lineItemMap, priceMap, activeOrder } = props;
+    const { productId, orderId, lineItemMap } = props;
     this.state = {
       id: orderId ? lineItemMap[productId].lineItemId : null,
+      orderId: orderId,
       productId: productId,
       quantity: lineItemMap[productId] ? lineItemMap[productId].quantity : 1
     } 
@@ -16,7 +18,11 @@ class LineItemForm extends Component {
   }
 
   onChangeLineItem(ev) {
-    this.setState({ quantity: ev.target.value })
+    const { activeOrder, orderId } = this.props;
+    this.setState({ 
+      quantity: ev.target.value,
+      orderId: orderId ==='' ? activeOrder.id : orderId
+    })
   }
 
   onSave(ev) {
@@ -61,7 +67,7 @@ class LineItemForm extends Component {
   }
 }
 
-const mapStateToProps = ({ lineItems, products }, { productId, orderId }) => {
+const mapStateToProps = ({ lineItems, products, orders }, { productId, orderId, userId }) => {
   const lineItemMap = lineItems.reduce((list, lineItem) => {
     if (lineItem.orderId === orderId) {
       if (!list[lineItem.productId]) {
@@ -80,9 +86,13 @@ const mapStateToProps = ({ lineItems, products }, { productId, orderId }) => {
     return list;
   },{});
 
+  const userOrders = orders.filter(order => order.userId === userId);
+  const activeOrder = userOrders.find(order => order.isActive === true);
+
   return {
     lineItemMap,
-    priceMap
+    priceMap,
+    activeOrder
   }
 }
 
