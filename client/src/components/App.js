@@ -18,8 +18,9 @@ import LoginForm from './User/LoginForm';
 import ActiveOrder from './Order/ActiveOrder';
 import PastOrders from './Order/PastOrders';
 import Reviews from './Review/Reviews';
-import UserForm from './User/UserFormNEW';
-import Addresses from './Address/Addresses'
+import UserForm from './User/UserForm';
+import UserAccount from './User/UserAccount';
+import Addresses from './Address/Addresses';
 
 class App extends React.Component {
   componentDidMount() {
@@ -38,6 +39,7 @@ class App extends React.Component {
     const UserNavAuth = CheckAuth(UserNav)
     const ReviewsAuth = CheckAuth(Reviews)
     const AddressesAuth = CheckAuth(Addresses)
+    const UserAccountAuth = CheckAuth(UserAccount)
     return (
       <Router>
         <div>
@@ -60,6 +62,9 @@ class App extends React.Component {
                  )} />
                 {/* USER ROUTES */}
                 <Route exact path='/users' component={ CheckAuth(Users) } />
+                <Route exact path='/users/:id' render={({match}) => (
+                  <UserAccountAuth id={ match.params.id * 1} />
+                )} />
                 <Route exact path='/users/:id/cart' component={ CheckAuth(ActiveOrder) } />
                 <Route exact path='/users/:id/orders' component={ CheckAuth(PastOrders) } />
                 <Route exact path='/users/:id/reviews' component={ ({ match }) => (
