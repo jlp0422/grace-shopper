@@ -11,10 +11,7 @@ export const getProductCategoriesFromServer = () => {
   return (dispatch) => {
     return axios.get('/api/productCategories')
       .then(res => res.data)
-      .then(productCategories => {
-        console.log('PC:', productCategories)
-        dispatch(getProductCategories(productCategories))
-      })
+      .then(productCategories => dispatch(getProductCategories(productCategories)))
       .catch(err => console.error(err))
   }
 }
@@ -22,7 +19,7 @@ export const getProductCategoriesFromServer = () => {
 /*********** PRODUCT CATEGORIES REDUCER ***********/
 
 const productCategoriesReducer = ( state = [], action ) => {
-  switch(action) {
+  switch(action.type) {
 
     case GET_PRODUCT_CATEGORIES:
       state = action.productCategories;
