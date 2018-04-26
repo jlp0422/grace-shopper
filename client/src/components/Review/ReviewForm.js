@@ -38,7 +38,7 @@ class ReviewForm extends Component {
       <div>
         <h3>Rate this product!</h3>
         <form onSubmit={onSave}>
-          <select className='form-control' name='rating' onChange={handleChange}>
+          <select className='form-control margin-b-10' name='rating' onChange={handleChange}>
             <option>Select Rating</option>
             {
               [0, 1, 2, 3, 4, 5].map(rating => (
@@ -50,7 +50,7 @@ class ReviewForm extends Component {
           </select>
           <textarea
             name='description'
-            className='form-control'
+            className='form-control margin-b-10'
             placeholder='How did you like this product?'
             onChange={handleChange}
           />

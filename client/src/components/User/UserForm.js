@@ -8,8 +8,6 @@ class UserForm extends React.Component {
   constructor(props) {
     super(props);
     const { user } = this.props;
-    console.log(this)
-    // when user logges out, form fields are set to undefined
     this.state = {
       id: user.id ? user.id : '',
       firstName: user.id ? user.firstName : '',
@@ -25,8 +23,10 @@ class UserForm extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     const { user } = nextProps;
-    const { id, firstName, lastName, username, email, password } = user
-    this.setState({ id, firstName, lastName, username, email, password })
+    if (user.id) {
+      const { id, firstName, lastName, username, email, password } = user
+      this.setState({ id, firstName, lastName, username, email, password })
+    }
   }
 
   onChange(ev) {
@@ -45,7 +45,6 @@ class UserForm extends React.Component {
   }
 
   render() {
-    console.log(this)
     const { onChange, onUpdate } = this;
     const { firstName, lastName, email, username, password, isEditing } = this.state;
     const fields = {

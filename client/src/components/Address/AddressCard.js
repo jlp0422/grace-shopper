@@ -16,7 +16,6 @@ const AddressCard = (props) => {
 }
 
 const mapState = (state, { address }) => {
-  // console.log('Address Card LOGS:', addresses)
  return { address }
 }
 
