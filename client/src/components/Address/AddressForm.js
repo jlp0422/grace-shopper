@@ -2,19 +2,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateAddressOnServer, deleteAddressFromServer } from '../../store';
-import { Input, Button } from 'mdbreact';
+// import { Input, Button } from 'mdbreact';
 
 class AddressForm extends Component {
   constructor(props) {
     super(props);
-    const { address, deleteAddress } = props;
+    const { address, userId } = this.props;
+    console.log(userId)
     this.state = {
       id: address ? address.id : '',
-      isShipping: address ? address.isShipping : '',
+      isShipping: address ? address.isShipping : true,
       street: address ? address.street : '',
       city: address ? address.city : '',
       state: address ? address.state : '',
       zip: address ? address.zip : '',
+      userId: userId,
       isEditing: false
     }
     // ---------------------------- BIND METHOD ----------------------------
@@ -22,17 +24,16 @@ class AddressForm extends Component {
     this.onUpdate = this.onUpdate.bind(this);
   }
   // ------------------------ LIFECYCLE METHODS ------------------------
-
-
-  // ---------------------------- METHODS ----------------------------
   componentWillReceiveProps(nextProps) {
-    const { address } = nextProps;
+    const { address, userId } = nextProps;
     if (address.id) {
       const { id, isShipping, street, city, state, zip } = address
-      this.setState({ id, isShipping, street, city, state, zip  })
+      this.setState({ id, isShipping, street, city, state, zip, userId  })
     }
   }
- 
+
+  // ---------------------------- METHODS ----------------------------
+
   onChange(ev) {
     const change = {}
     change[ev.target.name] = ev.target.value
@@ -42,16 +43,16 @@ class AddressForm extends Component {
   onUpdate(ev) {
     ev.preventDefault()
     const { updateAddress, deleteAddress } = this.props;
-    const { id, isShipping, street, city, state, zip } = this.state
-    updateAddress({ id, isShipping, street, city, state, zip });
-    this.setState({ isEditing: false })
+    const { id, isShipping, street, city, state, zip, userId } = this.state
+    updateAddress({ id, isShipping, street, city, state, zip, userId });
+    this.setState({ isEditing: false, id: '', isShipping: true, street: '', city: '', state: '', zip:'' })
   }
 
   // --------------------------- RENDER -------------------------
 
   render() {
     const { id, isShipping, isEditing, street, city, state, zip } = this.state;
-    const { deleteAddress, address } = this.props;
+    const { deleteAddress, address, empty } = this.props;
     const { onChange, onUpdate } = this;
     const fields = {
       street: 'Street',
@@ -61,22 +62,22 @@ class AddressForm extends Component {
     }
     return (
       <div>
-      <form>
       {
         isEditing ? (
-          <button onClick={ onUpdate } style={{ marginTop: '15px' }} className="btn btn-success">Save</button>
+          <button onClick={ onUpdate } className="btn btn-success margin-t-15">Save</button>
         ) : (
-          <button onClick={() => this.setState({ isEditing: true })} style={{ marginTop: '15px' }} className="btn btn-outline-success">Edit</button>
+          <button onClick={() => this.setState({ isEditing: true })} className="btn btn-outline-success margin-t-15">{ empty ? ('Add Address') : ('Edit') }</button>
         )
       }
-      <button onClick={() => deleteAddress(id)} className='btn btn-danger'>Delete Address</button>
+      <form>
+        <button onClick={() => deleteAddress(id)} className='btn btn-danger'>Delete Address</button>
           <select
             onChange={onChange}
             name='isShipping'
-            readOnly={isEditing ? false : true}
+            disabled={isEditing ? false : true}
             className={`form-control${isEditing ? `` : `-plaintext` }`}
           >
-            <option value={true}>Shipping</option>  
+            <option value={true}>Shipping</option>
             <option value={false}>Billing</option>
           </select>
           {
@@ -99,6 +100,10 @@ class AddressForm extends Component {
   }
 }
 
+const mapState = (state, { userId }) => {
+  return { userId }
+}
+
 const mapDispatch = (dispatch) => {
   return {
     updateAddress: (address) => dispatch(updateAddressOnServer(address)),
@@ -106,4 +111,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatch)(AddressForm);
+export default connect(mapState, mapDispatch)(AddressForm);
