@@ -19,7 +19,7 @@ const CheckAuth = (Component) => {
       const { isAuthenticated } = this.props
       return (
         <div>
-          {isAuthenticated ? <Component {...this.props} /> : null }
+          { isAuthenticated ? <Component {...this.props} /> : null }
         </div>
       )
     }
