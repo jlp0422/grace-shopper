@@ -24,17 +24,15 @@ class AddressForm extends Component {
     this.onUpdate = this.onUpdate.bind(this);
   }
   // ------------------------ LIFECYCLE METHODS ------------------------
-
-
-  // ---------------------------- METHODS ----------------------------
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     const { address, userId } = nextProps;
     if (address.id) {
       const { id, isShipping, street, city, state, zip } = address
       this.setState({ id, isShipping, street, city, state, zip, userId  })
     }
   }
+
+  // ---------------------------- METHODS ----------------------------
 
   onChange(ev) {
     const change = {}

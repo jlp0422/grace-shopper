@@ -1,7 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
-import AddressCard from './AddressCard';
 import AddressForm from './AddressForm';
 
 const Addresses = ({ userAddresses, userId }) => {
