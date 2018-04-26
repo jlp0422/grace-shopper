@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import AddressCard from './AddressCard';
 import AddressForm from './AddressForm';
 
-const Addresses = (props) => {
-  const { userAddresses } = props;
+const Addresses = ({ userAddresses, userId }) => {
   return (
     <div>
       <h2>Addresses</h2>
@@ -13,26 +12,21 @@ const Addresses = (props) => {
         {
           userAddresses.map(address => (
             <li key={address.id} className='list-group-item'>
-              <AddressCard address={address} />
+              <AddressForm userId={ userId } address={address} />
             </li>
           ))
         }
       </ul>
       <p></p>
-      <AddressCard />
+      <AddressForm empty={ true } userId={ userId }/>
     </div>
   );
 }
 
 const mapState = ( { addresses }, { id }) => {
-  const userAddresses = addresses.filter(address => address.id === id * 1)
-  return { userAddresses }
+  const userId = id * 1
+  const userAddresses = addresses.filter(address => address.userId === id * 1)
+  return { userAddresses, userId }
 };
 
-const mapDispatch = (dispatch) => {
-  return {
-    createAddress: (address) => dispatch(updateAddressOnServer(address))
-  }
-};
-
-export default connect(mapState, mapDispatch)(Addresses);
+export default connect(mapState)(Addresses);
