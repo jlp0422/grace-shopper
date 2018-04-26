@@ -7,3 +7,9 @@ app.get('/', (req, res, next) => {
     .then(productCategories => res.send(productCategories))
     .catch(next);
 });
+
+app.post('/', (req, res, next) => {
+  ProductCategory.create(req.body)
+    .then(productCategory => res.send(productCategories))
+    .catch(next);
+});
