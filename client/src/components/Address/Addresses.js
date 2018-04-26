@@ -18,6 +18,8 @@ const Addresses = (props) => {
           ))
         }
       </ul>
+      <p></p>
+      <AddressCard />
     </div>
   );
 }
@@ -27,4 +29,10 @@ const mapState = ( { addresses }, { id }) => {
   return { userAddresses }
 };
 
-export default connect(mapState)(Addresses);
+const mapDispatch = (dispatch) => {
+  return {
+    createAddress: (address) => dispatch(updateAddressOnServer(address))
+  }
+};
+
+export default connect(mapState, mapDispatch)(Addresses);
