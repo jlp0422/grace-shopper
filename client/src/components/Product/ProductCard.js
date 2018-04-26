@@ -2,18 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-const UserCard = (props) => {
+const ProductCard = (props) => {
   const { product, categories, categoryIds } = props;
-
-  // console.log('test')
-
-// console.log('Association:', product.product_categories)
-
-  // console.log('NEW:', categories)
-
-  // console.log('ID arr:', categoryIds)
-  // console.log('New Categories:', categories)
-
   return (
     <div className='row'>
       <div className='col'>
@@ -23,11 +13,13 @@ const UserCard = (props) => {
         <div>Price: ${product.price}</div>
         <div>Quantity: {product.quantity}</div>
         <div>Categories:</div>
+        <ul>
         {
           categories.map(category => (
-            <div>{category.name}</div>
+            <li key={category.id}>{category.name}</li>
           ))
         }
+        </ul>
       </div>
       <div className='col'>
         <img src={product.imageUrl} className='cardThumbnail'/>
@@ -36,40 +28,17 @@ const UserCard = (props) => {
   );
 }
 
-const mapState = ({ categories, productCategories }, { product }) => {
-  // const category = categories.find(_category => _category.id === product.categoryId);
-
-  // const categoryIds = productCategories.filter(association => association.productId === product.id)
-
-  // const _categories = categories.filter(category => categoryIds.includes(category.id))
-
+const mapState = ({ categories }, { product }) => {
   const pcMap = product.product_categories.reduce((memo, pc) => {
-    if(!memo[pc.categoryId]) {
-      memo[pc.categoryId] = 1
-    } else {
-      memo[pc.categoryId]++
-    }
-    return memo
+    if(!memo[pc.categoryId]) memo[pc.categoryId] = 1;
+    else memo[pc.categoryId]++;
+    return memo;
   }, {})
-
-  // console.log(Object.keys(pcMap).map(categoryId => categoryId * 1))
-
   const catIdArr = Object.keys(pcMap).map(categoryId => categoryId * 1)
-
-  // console.log(catIdArr)
-
   const filteredCategories = catIdArr.map(id => categories.find(category => category.id === id))
-
-  console.log(filteredCategories);
-
-  // console.log('ID arr:', categoryIds)
-  // console.log('New Categories:', _categories)
-
   return {
-    // category,
     categories: filteredCategories
-    // categoryIds
   }
 }
 
-export default connect(mapState)(UserCard);
+export default connect(mapState)(ProductCard);
