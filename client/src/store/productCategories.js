@@ -6,6 +6,7 @@ import { GET_PRODUCT_CATEGORIES, CREATE_PRODUCT_CATEGORY } from './actionConstan
 const getProductCategories = (productCategories) => ({ type: GET_PRODUCT_CATEGORIES, productCategories });
 const createProductCategory = (productCategory) => ({ type: CREATE_PRODUCT_CATEGORY, productCategory });
 
+
 /*********** THUNKS ***********/
 
 export const getProductCategoriesFromServer = () => {

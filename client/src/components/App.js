@@ -63,7 +63,7 @@ class App extends React.Component {
                  )} />
                 {/* USER ROUTES */}
                 <Route exact path='/users' component={ CheckAuth(Users) } />
-                <Route exact path='/users/:id' render={({match}) => (
+                <Route exact path='/users/:id' render={({ match }) => (
                   <UserAccountAuth id={ match.params.id * 1} />
                 )} />
                 <Route exact path='/users/:id/cart' component={ CheckAuth(ActiveOrder) } />
@@ -71,7 +71,7 @@ class App extends React.Component {
                 <Route exact path='/users/:id/reviews' component={ ({ match }) => (
                   <ReviewsAuth page='user' id={ match.params.id * 1 } />
                 )} />
-                <Route exact path='/users/:id/addresses' render={({match}) => (
+                <Route exact path='/users/:id/addresses' render={({ match }) => (
                   <AddressesAuth id={ match.params.id } />
                 )} />
                 <Route exact path='/users/:id/edit' component={ CheckAuth(UserForm) } />
