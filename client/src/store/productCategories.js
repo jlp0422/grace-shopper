@@ -12,7 +12,6 @@ export const getProductCategoriesFromServer = () => {
     return axios.get('/api/productCategories')
       .then(res => res.data)
       .then(productCategories => {
-        console.log('PC:', productCategories)
         dispatch(getProductCategories(productCategories))
       })
       .catch(err => console.error(err))

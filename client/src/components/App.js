@@ -18,15 +18,9 @@ import LoginForm from './User/LoginForm';
 import ActiveOrder from './Order/ActiveOrder';
 import PastOrders from './Order/PastOrders';
 import Reviews from './Review/Reviews';
-<<<<<<< HEAD
-import UserForm from './User/UserFormNEW';
-import Addresses from './Address/Addresses';
-
-=======
 import UserForm from './User/UserForm';
 import UserAccount from './User/UserAccount';
 import Addresses from './Address/Addresses';
->>>>>>> 6df98d4d5d26233c286ae4d06d7cfaea6a21f0b1
 
 class App extends React.Component {
   componentDidMount() {
