@@ -6,14 +6,14 @@ const faker = require('faker');
 
 /*-------------HOW-MANY-D0-WE-WANT-TO-SEED?-------------*/
 
-const categoryCount = 3;
-const productCount = 200;
-const userCount = 5;
+const categoryCount = 10;
+const productCount = 100;
+const userCount = 100;
 const orderCount = 25;
 const lineItemCount = 70;
 const addressCount = (userCount + 5) * 2;
-const reviewCount = 100;
-const productCategoryCount = 10;
+const reviewCount = 1000;
+const productCategoryCount = 300;
 
 /*---------------HOW-MANY-SHOULD-WE-MAKE?---------------*/
 
@@ -185,10 +185,27 @@ const seed = () => {
   })
   .then(() => {
     return Promise.all([
-    ...populateCategories(),
-    ...populateProducts(),
+      ...populateCategories(),
+      ...populateProducts(),
     ])
-    .then(() => Promise.all(populateProductCategories()))
+    .then(() => {
+      return Promise.all(populateProductCategories())
+        /*.then((pc) => {
+          console.log('before:', pc.length)
+          // pc.forEach(_pc => console.log(_pc.get()))
+          // console.log(pc[0].get())
+          const arr = [];
+
+          const filtered = pc.forEach((_pc, index, array) => {
+            array.forEach(p => {
+              if(_pc.productId === p.productId && _pc.categoryId === p.categoryId) {
+                arr.push(_pc)
+              }
+            })
+          })
+          console.log('after:', arr.length)
+        })*/
+      })
     .then(() => Promise.all(populateOrders()))
     .then(() => Promise.all(populateLineItems()))
     .then(() => Promise.all(populateAddresses()))

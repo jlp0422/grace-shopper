@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateProductOnServer } from '../../store';
+import { updateProductOnServer, updateProductCategoryOnServer } from '../../store';
 
 class ProductForm extends Component {
   constructor(props) {
     super(props);
-    const { product } = props;
+    const { product, productCategories } = props; // only getting product on info page passed from props
+    const categoryArray = product ? productCategories.filter(association => {
+      return association.productId === product.id;
+    })
+    .map(association => {
+      return association.categoryId;
+    }) : []
+
+    // console.log(categoryArray)
+
     this.state = {
       id: product ? product.id : null,
       name: product ? product.name : '',
       price: product ? product.price : '',
       quantity: product ? product.quantity : '',
+      imageUrl: product ? product.imageUrl : '',
       description: product ? product.description : '',
-      // categoryId: product ? product.categoryId : null,
+      categoryArray: product ? categoryArray : [],
     }
     this.handleChange = this.handleChange.bind(this);
     this.onSave = this.onSave.bind(this);
@@ -20,8 +30,15 @@ class ProductForm extends Component {
 
   handleChange(ev) {
     const change = {};
+    const arr = this.state.categoryArray;
     let value;
-    if(ev.target.name === 'name' || ev.target.name === 'imageUrl' || ev.target.name === 'description') {
+    if(ev.target.name === 'categoryArray') {
+      value = ev.target.value * 1;
+      return this.setState({
+        categoryArray:
+          arr.includes(value) ? arr.filter(id => id !== value) : [ ...arr, value ]
+        })
+    } else if(ev.target.name === 'name' || ev.target.name === 'imageUrl' || ev.target.name === 'description') {
       value = ev.target.value;
     } else {
       value = ev.target.value * 1;
@@ -32,14 +49,18 @@ class ProductForm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
+    const { id, name, price, quantity, description } = this.state;
     this.props.updateProduct(this.state);
     this.setState({ name: '', price: '', quantity: '', description: '' });
   }
 
   render() {
-    const { name, price, quantity, /*categoryId, */description, imageUrl } = this.state;
+    const { name, price, quantity, description, imageUrl } = this.state;
     const { categories } = this.props;
     const { handleChange, onSave } = this;
+
+    // console.log(this.state.categoryArray)
+
     return (
       <div>
         <form onSubmit={onSave}>
@@ -84,7 +105,7 @@ class ProductForm extends Component {
           {
             categories.map(category => (
               <div key={category.id}>
-                <input type='checkbox' value={category.id} name='categoryId' />
+                <input type='checkbox' value={category.id} name='categoryArray' onChange={handleChange} />
                 <label>&nbsp;{category.name}</label>
               </div>
             ))
@@ -110,9 +131,12 @@ class ProductForm extends Component {
   }
 }
 
-const mapState = ({ categories }) => {
+const mapState = ({ categories, productCategories }, { product }) => {
+  // console.log('PF:', productCategories)
   return {
-    categories
+    categories,
+    productCategories
+    // product
   };
 };
 

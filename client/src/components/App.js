@@ -18,15 +18,9 @@ import LoginForm from './User/LoginForm';
 import ActiveOrder from './Order/ActiveOrder';
 import PastOrders from './Order/PastOrders';
 import Reviews from './Review/Reviews';
-<<<<<<< HEAD
-import UserForm from './User/UserFormNEW';
-import Addresses from './Address/Addresses';
-
-=======
 import UserForm from './User/UserForm';
 import UserAccount from './User/UserAccount';
 import Addresses from './Address/Addresses';
->>>>>>> 6df98d4d5d26233c286ae4d06d7cfaea6a21f0b1
 
 class App extends React.Component {
   componentDidMount() {
@@ -69,7 +63,7 @@ class App extends React.Component {
                  )} />
                 {/* USER ROUTES */}
                 <Route exact path='/users' component={ CheckAuth(Users) } />
-                <Route exact path='/users/:id' render={({match}) => (
+                <Route exact path='/users/:id' render={({ match }) => (
                   <UserAccountAuth id={ match.params.id * 1} />
                 )} />
                 <Route exact path='/users/:id/cart' component={ CheckAuth(ActiveOrder) } />
@@ -77,7 +71,7 @@ class App extends React.Component {
                 <Route exact path='/users/:id/reviews' component={ ({ match }) => (
                   <ReviewsAuth page='user' id={ match.params.id * 1 } />
                 )} />
-                <Route exact path='/users/:id/addresses' render={({match}) => (
+                <Route exact path='/users/:id/addresses' render={({ match }) => (
                   <AddressesAuth id={ match.params.id } />
                 )} />
                 <Route exact path='/users/:id/edit' component={ CheckAuth(UserForm) } />

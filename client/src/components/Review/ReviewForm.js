@@ -62,7 +62,7 @@ class ReviewForm extends Component {
 }
 
 const mapState = ({user}, ownProps) => {
-  const productId = ownProps.productId
+  const { productId } = ownProps;
   const userId = user.id;
   return {
     userId,
