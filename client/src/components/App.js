@@ -13,14 +13,20 @@ import CategoryInfo from './Category/CategoryInfo';
 import Products from './Product/Products';
 import ProductInfo from './Product/ProductInfo';
 import Users from './User/Users';
-import UserAccount from './User/UserAccount';
+import UserNav from './User/UserNav';
 import LoginForm from './User/LoginForm';
 import ActiveOrder from './Order/ActiveOrder';
 import PastOrders from './Order/PastOrders';
 import Reviews from './Review/Reviews';
+<<<<<<< HEAD
 import UserForm from './User/UserFormNEW';
 import Addresses from './Address/Addresses';
 
+=======
+import UserForm from './User/UserForm';
+import UserAccount from './User/UserAccount';
+import Addresses from './Address/Addresses';
+>>>>>>> 6df98d4d5d26233c286ae4d06d7cfaea6a21f0b1
 
 class App extends React.Component {
   componentDidMount() {
@@ -37,9 +43,10 @@ class App extends React.Component {
   }
 
   render() {
-    const UserAccountAuth = CheckAuth(UserAccount)
+    const UserNavAuth = CheckAuth(UserNav)
     const ReviewsAuth = CheckAuth(Reviews)
     const AddressesAuth = CheckAuth(Addresses)
+    const UserAccountAuth = CheckAuth(UserAccount)
     return (
       <Router>
         <div>
@@ -47,7 +54,7 @@ class App extends React.Component {
           <div className="container">
             <div id="body-elements">
               <Route path='/users/:id' render={({ match, history }) => (
-                <UserAccountAuth history={ history } id={ match.params.id * 1 } />
+                <UserNavAuth history={ history } id={ match.params.id * 1 } />
               )} />
               <Switch>
                 <Route exact path='/' component={ Home } />
@@ -62,6 +69,9 @@ class App extends React.Component {
                  )} />
                 {/* USER ROUTES */}
                 <Route exact path='/users' component={ CheckAuth(Users) } />
+                <Route exact path='/users/:id' render={({match}) => (
+                  <UserAccountAuth id={ match.params.id * 1} />
+                )} />
                 <Route exact path='/users/:id/cart' component={ CheckAuth(ActiveOrder) } />
                 <Route exact path='/users/:id/orders' component={ CheckAuth(PastOrders) } />
                 <Route exact path='/users/:id/reviews' component={ ({ match }) => (
