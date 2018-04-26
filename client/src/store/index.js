@@ -9,6 +9,7 @@ import usersReducer from './users';
 import userReducer from './user';
 import addressesReducer from './addresses';
 import reviewsReducer from './reviews';
+import productCategoriesReducer from './productCategories';
 
 const reducer = combineReducers({
   categories: categoriesReducer,
@@ -18,10 +19,11 @@ const reducer = combineReducers({
   users: usersReducer,
   user: userReducer,
   addresses: addressesReducer,
-  reviews: reviewsReducer
+  reviews: reviewsReducer,
+  productCategories: productCategoriesReducer
 });
 
-const store = createStore(reducer, applyMiddleware(thunk))//, logger));
+const store = createStore(reducer, applyMiddleware(thunk, logger));
 
 export default store;
 
@@ -33,3 +35,4 @@ export * from './users';
 export * from './user';
 export * from './addresses';
 export * from './reviews';
+export * from './productCategories';
