@@ -1,6 +1,6 @@
 const { conn } = require('./conn');
 const { models } = require('./index');
-const { Category, LineItem, Order, Product, User, Address, Review } = models;
+const { Category, LineItem, Order, Product, User, Address, Review, ProductCategory } = models;
 
 const faker = require('faker');
 
@@ -13,6 +13,7 @@ const orderCount = 25;
 const lineItemCount = 70;
 const addressCount = (userCount + 5) * 2;
 const reviewCount = 100;
+const productCategoryCount = 10;
 
 /*---------------HOW-MANY-SHOULD-WE-MAKE?---------------*/
 
@@ -89,6 +90,13 @@ const createReview = () => {
   });
 }
 
+const createProductCategory = () => {
+  return ProductCategory.create({
+    productId: Math.ceil(Math.random() * productCount),
+    categoryId: Math.ceil(Math.random() * categoryCount),
+  });
+}
+
 /*-----------------POPULATE-MANY-ITEMS------------------*/
 
 const populateCategories = () => {
@@ -117,6 +125,10 @@ const populateLineItems = () => {
 
 const populateReviews = () => {
   return createThisMany(reviewCount, createReview);
+}
+
+const populateProductCategories = () => {
+  return createThisMany(productCategoryCount, createProductCategory);
 }
 
 /*--------------------SEED-DATABASE---------------------*/
@@ -176,6 +188,7 @@ const seed = () => {
     ...populateCategories(),
     ...populateProducts(),
     ])
+    .then(() => Promise.all(populateProductCategories()))
     .then(() => Promise.all(populateOrders()))
     .then(() => Promise.all(populateLineItems()))
     .then(() => Promise.all(populateAddresses()))

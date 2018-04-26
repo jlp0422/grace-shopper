@@ -9,8 +9,11 @@ const ProductCategory = require('./models/ProductCategory');
 const Address = require('./models/Address');
 const Review = require('./models/Review');
 
-Product.belongsToMany(Category, { through: ProductCategory, foreignKey: 'productId', as: 'products' });
-Category.belongsToMany(Product, { through: ProductCategory, foreignKey: 'categoryId', as: 'categories '});
+// Product.belongsToMany(Category, { through: ProductCategory, foreignKey: 'productId', as: 'products' });
+// Category.belongsToMany(Product, { through: ProductCategory, foreignKey: 'categoryId', as: 'categories '});
+
+ProductCategory.belongsTo(Product);
+ProductCategory.belongsTo(Category);
 
 LineItem.belongsTo(Product);
 Order.hasMany(LineItem, { as: 'lineItems', foreignKey: 'orderId' });
@@ -37,6 +40,7 @@ module.exports = {
     Product,
     User,
     Address,
-    Review
+    Review,
+    ProductCategory
   }
 };

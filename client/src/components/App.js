@@ -2,7 +2,7 @@
 import React from 'react';
 import { HashRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
-import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer } from '../store';
+import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer, getProductCategoriesFromServer } from '../store';
 
 import CheckAuth from './CheckAuth';
 import Home from './Home';
@@ -19,13 +19,14 @@ import ActiveOrder from './Order/ActiveOrder';
 import PastOrders from './Order/PastOrders';
 import Reviews from './Review/Reviews';
 import UserForm from './User/UserFormNEW';
-import Addresses from './Address/Addresses'
+import Addresses from './Address/Addresses';
+
 
 // const authAccount = CheckAuth(Nav)
 
 class App extends React.Component {
   componentDidMount() {
-    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews } = this.props;
+    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews, getProductCategories } = this.props;
     getCategories();
     getProducts();
     getUsers();
@@ -34,6 +35,7 @@ class App extends React.Component {
     getLineItems();
     getAddresses();
     getReviews();
+    getProductCategories();
   }
 
   render() {
@@ -60,7 +62,9 @@ class App extends React.Component {
                 <Route exact path='/users/:id/cart' component={ ActiveOrder } />
                 <Route exact path='/users/:id/orders' component={ PastOrders } />
                 <Route exact path='/users/:id/reviews' component={ ({ match }) => <Reviews page='user' id={ match.params.id * 1 } /> } />
-                {/*<Route exact path='/users/:id/addresses' component={} />*/}
+                <Route exact path='/users/:id/addresses' render={({match}) => (
+                  <Addresses id={ match.params.id } />
+                )} />
                 <Route exact path='/users/:id/edit' component={ UserForm } />
 
                 {/* AUTH ROUTES */}
@@ -85,6 +89,7 @@ const mapDispatch = (dispatch) => {
     getLineItems: () => dispatch(getLineItemsFromServer()),
     getAddresses: () => dispatch(getAddressesFromServer()),
     getReviews: () => dispatch(getReviewsFromServer()),
+    getProductCategories: () => dispatch(getProductCategoriesFromServer()),
     getUser: () => {
       if (window.localStorage.getItem('token')) {
         dispatch(getUserFromToken(window.localStorage.getItem('token')))
