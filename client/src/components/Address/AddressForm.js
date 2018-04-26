@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateAddressOnServer } from '../../store';
+import { updateAddressOnServer, deleteAddressFromServer } from '../../store';
 import { Input, Button } from 'mdbreact';
 
 class AddressForm extends Component {
@@ -50,7 +50,8 @@ class AddressForm extends Component {
   // --------------------------- RENDER -------------------------
 
   render() {
-    const { isShipping, isEditing, street, city, state, zip } = this.state;
+    const { id, isShipping, isEditing, street, city, state, zip } = this.state;
+    const { deleteAddress, address } = this.props;
     const { onChange, onUpdate } = this;
     const fields = {
       street: 'Street',
@@ -68,7 +69,7 @@ class AddressForm extends Component {
           <button onClick={() => this.setState({ isEditing: true })} style={{ marginTop: '15px' }} className="btn btn-outline-success">Edit</button>
         )
       }
-      <button onClick={() => deleteAddress(address.id)} className='btn btn-danger'>Delete Address</button>
+      <button onClick={() => deleteAddress(id)} className='btn btn-danger'>Delete Address</button>
           <select
             onChange={onChange}
             name='isShipping'
@@ -101,7 +102,7 @@ class AddressForm extends Component {
 const mapDispatch = (dispatch) => {
   return {
     updateAddress: (address) => dispatch(updateAddressOnServer(address)),
-    deleteAddress: (address) => dispatch(deleteAddressFromServer(address))
+    deleteAddress: (id) => dispatch(deleteAddressFromServer(id))
   };
 };
 

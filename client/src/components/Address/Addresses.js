@@ -19,9 +19,7 @@ const Addresses = (props) => {
         }
       </ul>
       <p></p>
-      {/* This should be a button which creates a new blank address form 
-      <button onClick={onUpdate} className='btn btn-primary'>Add Address</button>
-      */}
+      <AddressCard />
     </div>
   );
 }
