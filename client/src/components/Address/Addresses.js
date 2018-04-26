@@ -18,6 +18,9 @@ const Addresses = (props) => {
           ))
         }
       </ul>
+      <p></p>
+      <h3>Add A New Address:</h3>
+      <AddressCard />
     </div>
   );
 }

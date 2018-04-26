@@ -2,47 +2,49 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateAddressOnServer } from '../../store';
+import { Input, Button } from 'mdbreact';
 
 class AddressForm extends Component {
   constructor(props) {
     super(props);
-      const { address } = props;
-      this.state = {
-        id: address ? address.id : '',
-        isShipping: address ? address.isShipping : '',
-        street: address ? address.street : '',
-        city: address ? address.city : '',
-        state: address ? address.state : '',
-        zip: address ? address.zip : ''
-      }
-// ---------------------------- BIND METHOD ----------------------------
-      this.handleChange = this.handleChange.bind(this);
-      this.onSave = this.onSave.bind(this);
+    const { address, deleteAddress } = props;
+    this.state = {
+      id: address ? address.id : '',
+      isShipping: address ? address.isShipping : '',
+      street: address ? address.street : '',
+      city: address ? address.city : '',
+      state: address ? address.state : '',
+      zip: address ? address.zip : '',
+      isEditing: false
     }
-// ------------------------ LIFECYCLE METHODS ------------------------
+    // ---------------------------- BIND METHOD ----------------------------
+    this.onChange = this.onChange.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
+  }
+  // ------------------------ LIFECYCLE METHODS ------------------------
 
-  // componentWillReceiveProps(nextProps) {
-  //   const { address } = nextProps;
-  //   this.setState(nextProps);
-  // }
 
-// ---------------------------- METHODS ----------------------------
-  handleChange(ev) {
-    const change = {};
-    change[ev.target.name] = ev.target.value;
+  // ---------------------------- METHODS ----------------------------
+  onChange(ev) {
+    const change = {}
+    change[ev.target.name] = ev.target.value
     this.setState(change);
   }
 
-  onSave(ev) {
-    ev.preventDefault();
-    const { street, city, state, zip } = this.state;
-    this.props.updateAddress(this.state);
+  onUpdate(ev) {
+    ev.preventDefault()
+    const { updateAddress } = this.props;
+    const { id, isShipping, street, city, state, zip } = this.state
+    updateAddress({ id, isShipping, street, city, state, zip });
+    this.setState({ isEditing: false })
   }
 
-// --------------------------- RENDER -------------------------
+  // --------------------------- RENDER -------------------------
 
   render() {
-    const { handleChange, onSave } = this;
+    const { isShipping, isEditing, street, city, state, zip } = this.state;
+    const { deleteAddress } = this.props;
+    const { onChange, onUpdate } = this;
     const fields = {
       street: 'Street',
       city: 'City',
@@ -51,22 +53,39 @@ class AddressForm extends Component {
     }
     return (
       <div>
-        <form onSubmit={onSave}>
-        {/* Drop-down list for Shipping or Billing */}
+      <form>
+      {
+        isEditing ? (
+          <button onClick={ onUpdate } style={{ marginTop: '15px' }} className="btn btn-success">Save</button>
+        ) : (
+          <button onClick={() => this.setState({ isEditing: true })} style={{ marginTop: '15px' }} className="btn btn-outline-success">Edit</button>
+        )
+      }
+      <button onClick={() => deleteAddress(address.id)} className='btn btn-danger'>Delete Address</button>
+
+          <select
+            onChange={onChange}
+            name='isShipping'
+            readOnly={isEditing ? false : true}
+            className={`form-control${isEditing ? `` : `-plaintext` }`}
+          >
+            <option value={true}>Shipping</option>  
+            <option value={false}>Billing</option>
+          </select>
           {
             Object.keys(fields).map(field => (
               <input
                 key={field}
-                className='form-control'
+                readOnly={isEditing ? false : true}
+                className={`form-control${isEditing ? `` : `-plaintext` }`}
                 placeholder={`${fields[field]}`}
                 name={field}
                 value={this.state[field]}
-                onChange={handleChange}
+                onChange={onChange}
                 style={{ marginBottom: '10px' }}
               />
             ))
           }
-          <button className='btn btn-primary'>Save</button>
         </form>
       </div>
     );
@@ -75,7 +94,8 @@ class AddressForm extends Component {
 
 const mapDispatch = (dispatch) => {
   return {
-    updateAddress: (address) => dispatch(updateAddressOnServer(address))
+    updateAddress: (address) => dispatch(updateAddressOnServer(address)),
+    deleteAddress: (addressId) => dispatch(deleteAddressOnServer(addressId))
   };
 };
 
