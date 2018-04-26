@@ -15,6 +15,11 @@ class CategoryForm extends Component {
     this.onSave = this.onSave.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { category } = nextProps;
+    this.setState(category);
+  }
+
   handleChange(ev) {
     const change = {};
     change[ev.target.name] = ev.target.value;

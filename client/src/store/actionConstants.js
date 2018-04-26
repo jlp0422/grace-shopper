@@ -39,3 +39,7 @@ export const DELETE_ADDRESS = 'DELETE_ADDRESS';
 /*********** REVIEWS ***********/
 export const GET_REVIEWS = 'GET_REVIEWS';
 export const CREATE_REVIEW = 'CREATE_REVIEW';
+
+/*********** PRODUCT CATEGORIES ***********/
+export const GET_PRODUCT_CATEGORIES = 'GET_PRODUCT_CATEGORIES';
+export const CREATE_PRODUCT_CATEGORY = 'CREATE_PRODUCT_CATEGORY';

@@ -2,7 +2,7 @@
 import React from 'react';
 import { HashRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
-import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer } from '../store';
+import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer, getProductCategoriesFromServer } from '../store';
 
 import CheckAuth from './General/CheckAuth';
 import Home from './General/Home';
@@ -24,7 +24,7 @@ import Addresses from './Address/Addresses';
 
 class App extends React.Component {
   componentDidMount() {
-    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews } = this.props;
+    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews, getProductCategories } = this.props;
     getCategories();
     getProducts();
     getUsers();
@@ -33,6 +33,7 @@ class App extends React.Component {
     getLineItems();
     getAddresses();
     getReviews();
+    getProductCategories();
   }
 
   render() {
@@ -97,6 +98,7 @@ const mapDispatch = (dispatch) => {
     getLineItems: () => dispatch(getLineItemsFromServer()),
     getAddresses: () => dispatch(getAddressesFromServer()),
     getReviews: () => dispatch(getReviewsFromServer()),
+    getProductCategories: () => dispatch(getProductCategoriesFromServer()),
     getUser: () => {
       if (window.localStorage.getItem('token')) {
         dispatch(getUserFromToken(window.localStorage.getItem('token')))

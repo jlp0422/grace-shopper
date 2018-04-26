@@ -12,7 +12,7 @@ export const getReviewsFromServer = () => {
     return axios.get('/api/reviews')
       .then(res => res.data)
       .then(reviews => dispatch(getReviews(reviews)))
-      // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   }
 }
 
@@ -27,7 +27,7 @@ export const createReviewOnServer = (review) => {
 
 /*********** REVIEWS REDUCER ***********/
 
-const reviewsReducer = (state = [], action) => {
+const reviewsReducer = ( state = [], action ) => {
   switch(action.type) {
 
     case GET_REVIEWS:
