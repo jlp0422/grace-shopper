@@ -9,6 +9,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.post('/', (req, res, next) => {
+  console.log(req.body)
   ProductCategory.create(req.body)
     .then(productCategory => res.send(productCategories))
     .catch(next);

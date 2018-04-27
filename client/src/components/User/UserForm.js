@@ -76,9 +76,9 @@ class UserForm extends React.Component {
         </form>
         {
           isEditing ? (
-            <button onClick={ onUpdate } style={{ marginTop: '15px' }} className="btn btn-success">Save</button>
+            <button onClick={ onUpdate } className="btn btn-success margin-t-15">Save</button>
           ) : (
-            <button onClick={() => this.setState({ isEditing: true })} style={{ marginTop: '15px' }} className="btn btn-outline-success">Edit</button>
+            <button onClick={() => this.setState({ isEditing: true })} className="btn btn-outline-success margin-t-15">Edit</button>
           )
         }
       </div>

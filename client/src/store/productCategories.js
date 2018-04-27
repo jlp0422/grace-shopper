@@ -19,10 +19,14 @@ export const getProductCategoriesFromServer = () => {
 }
 
 export const updateProductCategoryOnServer = (productCategory) => {
+  console.log(productCategory)
   return (dispatch) => {
     return axios.post('/api/productCategories', productCategory)
       .then(res => res.data)
-      .then(productCategory => dispatch(createProductCategory(productCategory)))
+      .then(productCategory => {
+        console.log(productCategory)
+        dispatch(createProductCategory(productCategory))
+      })
       .catch(err => console.error(err))
   }
 }

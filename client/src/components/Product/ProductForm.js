@@ -50,7 +50,7 @@ class ProductForm extends Component {
   onSave(ev) {
     ev.preventDefault();
     const { id, name, price, quantity, description } = this.state;
-    this.props.updateProduct(this.state);
+    this.props.updateProduct({ id, name,price, quantity, description });
     this.setState({ name: '', price: '', quantity: '', description: '' });
   }
 
@@ -58,6 +58,7 @@ class ProductForm extends Component {
     const { name, price, quantity, description, imageUrl } = this.state;
     const { categories } = this.props;
     const { handleChange, onSave } = this;
+    console.log(this.state.categoryArray)
     return (
       <div>
         <form onSubmit={onSave}>
