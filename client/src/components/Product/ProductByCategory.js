@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 class ProductByCategory extends Component {
   constructor(props) {
     super(props);
-    
+      const    
 
 
   }
@@ -13,8 +13,11 @@ class ProductByCategory extends Component {
 
 }
 
-const mapStateToProps = ({ categories, products }) => {
-  const 
+const mapStateToProps = ({ productCategories }, {categoryNum}) => {
+  const productsForCategory = productCategories.filter(productCategory => productCategory.categoryId === categoryNum )
+  return {
+    productsForCategory
+  }
 }
 
 
