@@ -19,7 +19,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { categories, user, loggedIn, logout, activeOrder } = this.props;
+    const { categories, user, loggedIn, logout/*, activeOrder*/, itemsInCart } = this.props;
     const { toggle } = this;
     const { isOpen } = this.state;
     return (
@@ -58,7 +58,7 @@ class NavBar extends React.Component {
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem onClick={() => location.hash = `/users/${user.id}`}>My Account</DropdownItem>
-                      <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({activeOrder.length})</DropdownItem>
+                      <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({itemsInCart})</DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem onClick={logout}>Log out</DropdownItem>
                     </DropdownMenu>
@@ -78,10 +78,25 @@ class NavBar extends React.Component {
   }
 }
 
-const mapState = ({ categories, user, orders }) => {
-  const activeOrder = orders.filter(order => order.userId === user.id && order.isActive)
+const mapState = ({ categories, user, orders, lineItems }) => {
+  const activeOrder = orders.find(order => order.userId === user.id && order.isActive)
+
+  const itemsInCart = lineItems.filter(item => {
+
+    // if(item.userId === user.id && item.orderId === activeOrder.id) {
+      // console.log(item)
+    // }
+
+    return item.orderId === activeOrder.id
+  })
+    .reduce((memo, item) => {
+      return memo + item.quantity;
+    }, 0)
+
+    console.log(itemsInCart)
+
   const loggedIn = !!user.id
-  return { categories, user, loggedIn, activeOrder };
+  return { categories, user, loggedIn/*, activeOrder*/, itemsInCart };
 };
 
 const mapDispatch = (dispatch) => {

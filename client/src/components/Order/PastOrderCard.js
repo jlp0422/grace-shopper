@@ -6,7 +6,7 @@ import LineItemForm from '../Product/LineItemForm.js'
 const OrderCard = ({ orderItems, order, totalPrice, products }) => {
   return (
     <div>
-      <div style={{ backgroundColor: '#f0f3f8', marginBottom: '10px' }}>
+      <div>
         { order.date ? (<p>Order date: {order.date}</p>) : null }
         {
           orderItems.map(item => {
@@ -15,7 +15,7 @@ const OrderCard = ({ orderItems, order, totalPrice, products }) => {
             if(!product) return null;
 
             return (
-              <div key={item.id}>
+              <div key={item.id} style={{ backgroundColor: '#f0f3f8', marginBottom: '20px' }}>
                 <p className="font-weight-bold">Product: {product.name}</p>
                 <p>Quantity: {item.quantity}</p>
                 <p>Price per item: ${product.price}</p>
@@ -34,14 +34,8 @@ const mapState = ({ lineItems, products }, { order }) => {
   const orderItems = lineItems.filter(item => item.orderId === order.id)
   const totalPrice = orderItems.reduce((memo, item) => {
     const product = products.find(product => product.id === item.productId);
-    // if(!product) return 0
-    // console.log(product.price)
-
-
-
-    memo += product ? product.price : 1 * item.quantity
-    return memo
-  }, 0)
+    return memo + (product.price * item.quantity)
+  }, 0);
   return { orderItems, order, totalPrice, products }
 }
 
