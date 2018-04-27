@@ -58,9 +58,7 @@ class ProductForm extends Component {
     const { name, price, quantity, description, imageUrl } = this.state;
     const { categories } = this.props;
     const { handleChange, onSave } = this;
-
     console.log(this.state.categoryArray)
-
     return (
       <div>
         <form onSubmit={onSave}>
