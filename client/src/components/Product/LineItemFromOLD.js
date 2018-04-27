@@ -5,54 +5,45 @@ import { updateLineItemOnServer } from '../../store';
 class LineItemForm extends Component {
   constructor(props) {
     super(props);
-    const { productId, orderId, lineItems } = props;
-    let lineItem = lineItems.find(lineItem => lineItem.productId === productId && lineItem.orderId === orderId)
-
-    console.log(orderId)
-
+    const { productId, orderId, lineItemMap } = props;
     this.state = {
-      id: lineItem ? lineItem.id : '',
-      orderId: orderId ? orderId : '',
+      id: orderId ? lineItemMap[productId].lineItemId : null,
+      orderId: orderId ? orderId : null,
       productId: productId,
-      quantity: 1
+      quantity: lineItemMap[productId] ? lineItemMap[productId].quantity : 1
     }
     this.onChangeLineItem = this.onChangeLineItem.bind(this);
     this.onSave = this.onSave.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { id, orderId, productId, quantity } = nextProps;
-    this.setState({ id, orderId, productId, quantity });
-  }
-
   onChangeLineItem(ev) {
-    this.setState({ quantity: ev.target.value * 1 });
+    const { activeOrder, orderId } = this.props;
+    this.setState({
+      quantity: ev.target.value * 1,
+      orderId
+    })
   }
 
   onSave(ev) {
     ev.preventDefault();
     this.props.updateLineItem(this.state);
-    // this.setState({ id, orderId, productId, quantity });
   }
 
   render() {
-
-    console.log(this.state)
-
     const { quantity } = this.state;
     const { productId, orderId, priceMap } = this.props;
     const { onChangeLineItem, onSave } = this;
     const quantityArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    // const existingQuantity = orderId ? quantity : '';
+    const existingQuantity = orderId ? quantity : '';
     const buttonText = orderId ? 'Change Quantity' : 'Add to Cart';
-    // const total = priceMap[productId] * quantity;
+    const total = priceMap[productId] * quantity;
     return (
       <div>
         <form onSubmit={onSave}>
           <select
             className = 'form-control'
             name = 'quantity'
-            value = {quantity}
+            value = {existingQuantity ? existingQuantity : quantity}
             onChange = {onChangeLineItem}
             style={{ marginBottom: '10px' }}
           >
@@ -67,26 +58,45 @@ class LineItemForm extends Component {
           </select>
           <button style={{ marginBottom: '10px' }} className='btn btn-primary'>{buttonText}</button>
         </form>
-        {/*<h6> {orderId ? 'Total Price: ' : '' } {orderId ? total : ''} </h6>*/}
+        <h6> {orderId ? 'Total Price: ' : '' } {orderId ? total : ''} </h6>
       </div>
     )
 
   }
 }
 
-const mapState = ({ lineItems, orders, user }, { productId, orderId }) => {
-  const order = orders.find(order => order.userId === user.id && order.isActive);
+const mapStateToProps = ({ lineItems, products, orders, user }) => {
+  const order = orders.find(order => order.userId === user.id && order.isAvtive)
+  const lineItemMap = lineItems.reduce((list, lineItem) => {
+    if (order && lineItem.orderId === order.id) {
+      if (!list[lineItem.productId]) {
+        list[lineItem.productId] = {};
+        list[lineItem.productId].quantity = lineItem.quantity;
+        list[lineItem.productId].lineItemId = lineItem.id;
+      }
+    }
+    return list;
+  }, {});
+
+  const priceMap = products.reduce((list, product) => {
+    if(!list[product.id]) {
+      list[product.id] = product.price;
+    }
+    return list;
+  },{});
+
+  const orderId = order ? order.id : null;
   return {
-    orderId: order.id ? order.id : orderId,
-    productId,
-    lineItems
+    lineItemMap,
+    priceMap,
+    orderId
   }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     updateLineItem: (lineItem) => dispatch(updateLineItemOnServer(lineItem))
   }
 };
 
-export default connect(mapState, mapDispatch)(LineItemForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LineItemForm);

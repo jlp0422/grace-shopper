@@ -5,13 +5,14 @@ import { deleteProductFromServer } from '../../store';
 
 import ProductForm from './ProductForm';
 import LineItemForm from './LineItemForm';
+import ReviewForm from '../Review/ReviewForm';
 
 const ProductInfo = (props) => {
   const { product, deleteProduct, loggedIn, isAdmin, rating, reviewCount, makeSingular } = props;
   if (!product) {
     return null;
   }
-  return (    
+  return (
     <div>
     <div className='row'>
       <h3>{product.name}</h3>
@@ -25,7 +26,7 @@ const ProductInfo = (props) => {
         <p>Price: ${product.price}</p>
         <p>Units Available: {product.quantity}</p>
       </div>
-      <LineItemForm productId={product.id} orderId ='' userId= '' />
+      <LineItemForm productId={product.id} />
     </div>
     <h4>Current Rating: {rating}</h4>
     <h5>There {makeSingular[0]} ({reviewCount}) review{makeSingular[1]} on this product</h5>

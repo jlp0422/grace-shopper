@@ -36,7 +36,7 @@ export const updateLineItemOnServer = (item) => {
     return axios[method](url, item)
       .then( res => res.data)
       .then( lineItem => dispatch(action(lineItem)))
-      .then(() => location.hash = '/lineitems' )
+      // .then(() => location.hash = '/lineitems' )
       // .catch(err) placeholder for error handling
   };
 };
