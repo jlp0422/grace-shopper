@@ -29,7 +29,7 @@ const ProductCard = (props) => {
 }
 
 const mapState = ({ categories }, { product }) => {
-  const pcMap = product.product_categories.reduce((memo, pc) => {
+  const pcMap = product && product.product_categories.reduce((memo, pc) => {
     if(!memo[pc.categoryId]) memo[pc.categoryId] = 1;
     else memo[pc.categoryId]++;
     return memo;

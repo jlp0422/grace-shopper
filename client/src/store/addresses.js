@@ -36,7 +36,6 @@ export const updateAddressOnServer = (address) => {
     return axios[method](url, address)
       .then(res => res.data)
       .then(_address => {
-        console.log(_address)
         dispatch(action(_address))
         return _address
       })
@@ -63,7 +62,7 @@ const addressesReducer = (state = [], action) => {
 
     case UPDATE_ADDRESS:
       const addresses = state.filter(address => address.id !== action.address.id * 1)
-      state = [...addresses, action.address]
+      state = [action.address, ...addresses]
       break;
   };
   return state;
