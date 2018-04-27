@@ -51,7 +51,7 @@ class ProductForm extends Component {
     ev.preventDefault();
     const { id, name, price, quantity, description } = this.state;
     this.props.updateProduct(this.state);
-    this.setState({ name: '', price: '', quantity: '', description: '' });
+    this.setState({ name: '', price: '', quantity: '', description: '', categoryArray: [] });
   }
 
   render() {
@@ -59,7 +59,7 @@ class ProductForm extends Component {
     const { categories } = this.props;
     const { handleChange, onSave } = this;
 
-    // console.log(this.state.categoryArray)
+    console.log(this.state.categoryArray)
 
     return (
       <div>
