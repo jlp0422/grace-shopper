@@ -1,146 +1,100 @@
 /* eslint-disable */
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { updateUserOnServer, updateLoggedUser } from '../../store';
+import { Input, Button } from 'mdbreact';
 
-class UserForm extends Component {
+class UserForm extends React.Component {
   constructor(props) {
     super(props);
-    const { user } = props;
+    const { user } = this.props;
     this.state = {
-      id: user ? user.id : '',
-      firstName: user ? user.firstName : '',
-      lastName: user ? user.lastName : '',
-      isAdmin: user ? user.isAdmin : '',
-      username: user ? user.username : '',
-      password: user ? user.password : '',
-      email: user ? user.email : '',
-      // street: user ? user.street : '',
-      // city: user ? user.city : '',
-      // state: user ? user.state : '',
-      // zip: user ? user.zip : '',
-      // inputError: [],
-      // inputEdited: {}
+      id: user.id ? user.id : '',
+      firstName: user.id ? user.firstName : '',
+      lastName: user.id ? user.lastName : '',
+      username: user.id ? user.username : '',
+      password: user.id ? user.password : '',
+      email: user.id ? user.email : '',
+      isEditing: false
     }
-    // ---------------------------- VALIDATORS ----------------------------
-    // this.validators = {
-    //   email: value => {
-    //     const emailFormat = /\S+@\S+\.\S+/;
-    //     if (!emailFormat.test(value)) {
-    //       return `e-mail must be valid e-mail format with @`;
-    //     }
-    //   }
-    // };
-
-    // ---------------------------- BIND METHOD ----------------------------
-    this.handleChange = this.handleChange.bind(this);
-    this.onSave = this.onSave.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
   }
-
-  // ------------------------ LIFECYCLE METHODS ------------------------
 
   componentWillReceiveProps(nextProps) {
     const { user } = nextProps;
-    this.setState({
-      id: user ? user.id : '',
-      firstName: user ? user.firstName : '',
-      lastName: user ? user.lastName : '',
-      isAdmin: user ? user.isAdmin : '',
-      username: user ? user.username : '',
-      password: user ? user.password : '',
-      email: user ? user.email : '',
-      // street: user ? user.street : '',
-      // city: user ? user.city : '',
-      // state: user ? user.state : '',
-      // zip: user ? user.zip : '',
-    });
+    if (user.id) {
+      const { id, firstName, lastName, username, email, password } = user
+      this.setState({ id, firstName, lastName, username, email, password })
+    }
   }
 
-  // ---------------------------- METHODS ----------------------------
-
-  handleChange(ev) {
-    const change = {};
-    change[ev.target.name] = ev.target.value;
+  onChange(ev) {
+    const change = {}
+    change[ev.target.name] = ev.target.value
     this.setState(change);
   }
 
-  onSave(ev) {
-    ev.preventDefault();
-    const { firstName, lastName, isAdmin, username, password, email, street, city, state, zip } = this.state;
-    // const save = { firstName, lastName, isAdmin, username, password, email, street, city, state, zip };
-    // this.props.updateUser(save);
-    this.props.updateUser(this.state);
-    this.props.updateLoggedUser(this.state);
-    // this.setState({
-    //   firstName: '',
-    //   lastName: '',
-    //   isAdmin: '',
-    //   username: '',
-    //   password: '',
-    //   email: '',
-    //   street: '',
-    //   city: '',
-    //   state: '',
-    //   zip: ''
-    // });
+  onUpdate(ev) {
+    ev.preventDefault()
+    const { updateUser, updateLogged } = this.props;
+    const { id, firstName, lastName, username, email, password } = this.state
+    updateUser({ id, firstName, lastName, username, email, password });
+    updateLogged({ id, firstName, lastName, username, email, password });
+    this.setState({ isEditing: false })
   }
 
-  // --------------------------- RENDER -------------------------
-
   render() {
-
-    console.log(this.state);
-
-    // const { firstName, lastName, isAdmin, username, password, email, street, city, state, zip } = this.state;
-    // const userProps = { firstName, lastName, isAdmin, username, password, email, street, city, state, zip };
-    // const { users/*, user*/ } = this.props;
-    const { handleChange, onSave } = this;
+    const { onChange, onUpdate } = this;
+    const { firstName, lastName, email, username, password, isEditing } = this.state;
     const fields = {
-      firstName: 'First Name',
-      lastName: 'Last Name',
+      firstName: 'First name',
+      lastName: 'Last name',
+      email: 'Email address',
       username: 'Username',
-      password: 'Password',
-      email: 'Email Address',
-      /*street: 'Street', city: 'City', state: 'State', zip: 'Zip Code'*/
+      password: 'Password'
     }
     return (
       <div>
-        <form onSubmit={onSave}>
+        <h2>Edit Account</h2>
+        <form>
           {
             Object.keys(fields).map(field => (
-              <div key={field} className=''>
-                <label className="font-weight-bold">{fields[field]}</label>
-                <input
-                  key={field}
-                  className='form-control'
-                  placeholder={`${fields[field]}`}
-                  name={field}
-                  value={this.state[field]}
-                  onChange={handleChange}
-                  style={{ marginBottom: '10px' }}
-                />
+              <div className="" key={field}>
+              <label className="font-weight-bold">{fields[field]}</label>
+              <input
+              name={field}
+              readOnly={isEditing ? false : true}
+              className={`form-control${isEditing ? `` : `-plaintext` }`}
+              onChange={onChange}
+              value={this.state[field]}
+              type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text' }
+              />
               </div>
             ))
           }
-          <button className='btn btn-primary'>Submit</button>
         </form>
+        {
+          isEditing ? (
+            <button onClick={ onUpdate } style={{ marginTop: '15px' }} className="btn btn-success">Save</button>
+          ) : (
+            <button onClick={() => this.setState({ isEditing: true })} style={{ marginTop: '15px' }} className="btn btn-outline-success">Edit</button>
+          )
+        }
       </div>
-    );
+    )
   }
 }
 
-// const mapState = ({ /*users,*/ user }) => {
-//   return {
-// //     users,
-//     user
-//   }
-// }
+const mapState = ({ user }) => {
+  return { user }
+}
 
 const mapDispatch = (dispatch) => {
   return {
     updateUser: (user) => dispatch(updateUserOnServer(user)),
-    updateLoggedUser: (user) => dispatch(updateLoggedUser(user))
-  };
-};
+    updateLogged: (user) => dispatch(updateLoggedUser(user))
+  }
+}
 
-export default connect(null, mapDispatch)(UserForm);
+export default connect(mapState, mapDispatch)(UserForm);

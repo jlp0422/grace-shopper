@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import OrderCard from './OrderCard';
+import OrderCard from './PastOrderCard';
 
 const ActiveOrder = ({ activeOrder }) => {
   return (
     <div>
+      <h2>My Cart</h2>
       {
         activeOrder.map(order => (
           <OrderCard key={order.id} order={order} />

@@ -9,7 +9,7 @@
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "test": "mocha",
     "test:dev": "DATABASE_URL=postgres://localhost/grace_shopper_db ./node_modules/mocha/bin/mocha --watch --recursive test/models/models.spec.js",
-    "start:dev": "npm run webpack -- -w & nodemon server --ignore dist/ --ignore client/",
+    "start:dev": "npm run webpack -- -w & KEY=abc123 nodemon server --ignore src/ --ignore dist/",
     "start": "npm run seed && node server"
   },
   "keywords": [],
@@ -25,6 +25,7 @@
     "bootstrap": "^4.1.0",
     "express": "^4.16.3",
     "faker": "^4.1.0",
+    "glyphicons": "^0.2.0",
     "jwt-simple": "^0.5.1",
     "mdbreact": "^4.3.0",
     "pg": "^7.4.1",

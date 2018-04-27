@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const OrderCard = ({ orderItems, order, totalPrice }) => {
   return (
-    <div style={{backgroundColor: '#f0f3f8'}}>
+    <div style={{ backgroundColor: '#f0f3f8' }}>
       {
         order.date ? (<p>Order date: {order.date}</p>) : null
       }
@@ -12,11 +12,11 @@ const OrderCard = ({ orderItems, order, totalPrice }) => {
           <div key={item.id}>
             <p className="font-weight-bold">Product: {item.product.name}</p>
             <p>Quantity: {item.quantity}</p>
-            <p>Price: ${item.product.price}</p>
+            <p>Price per item: ${item.product.price}</p>
           </div>
         ))
       }
-      <p>Total Price: ${ totalPrice }</p>
+      <p className="font-weight-bold">Total Price: ${totalPrice}</p>
     </div>
   )
 }
@@ -24,7 +24,7 @@ const OrderCard = ({ orderItems, order, totalPrice }) => {
 const mapState = ({ lineItems }, { order }) => {
   const orderItems = lineItems.filter(item => item.orderId === order.id)
   const totalPrice = orderItems.reduce((memo, item) => {
-    memo += item.product.price * 1
+    memo += item.product.price * item.quantity
     return memo
   }, 0)
   return { orderItems, order, totalPrice }

@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { logout } from '../store'
+import { logout } from '../../store'
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -24,12 +24,15 @@ class NavBar extends React.Component {
     const { isOpen } = this.state;
     return (
       <div>
-        <Navbar className="nav-sticky sticky-top" color="light" light expand="sm">
+        <Navbar style={{ marginBottom: '20px'}} sticky="top" className="nav-sticky sticky-top" color="light" light expand="sm">
         <div className="container">
           <NavbarBrand href='#/'>J²A²</NavbarBrand>
           <NavbarToggler onClick={ toggle } />
           <Collapse isOpen={ isOpen } navbar>
             <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <NavLink href='#/'>Home</NavLink>
+                </NavItem>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     Categories
@@ -37,11 +40,11 @@ class NavBar extends React.Component {
                   <DropdownMenu right>
                   {
                     categories.map(category => (
-                      <DropdownItem key={category.id} href={`#/categories/${category.id}`}>{category.name}</DropdownItem>
+                      <DropdownItem key={category.id} onClick={() => location.hash = `#/categories/${category.id}`}>{category.name}</DropdownItem>
                     ))
                   }
                     <DropdownItem divider />
-                    <DropdownItem href='#/categories'>All Categories</DropdownItem>
+                    <DropdownItem onClick={() => location.hash = `/categories`}>All Categories</DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               <NavItem>
@@ -54,8 +57,8 @@ class NavBar extends React.Component {
                       Hello {user.firstName}
                     </DropdownToggle>
                     <DropdownMenu right>
-                      <DropdownItem href={`#/users/${user.id}`}>My Account</DropdownItem>
-                      <DropdownItem>My Cart ({activeOrder.length})</DropdownItem>
+                      <DropdownItem onClick={() => location.hash = `/users/${user.id}`}>My Account</DropdownItem>
+                      <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({activeOrder.length})</DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem onClick={logout}>Log out</DropdownItem>
                     </DropdownMenu>

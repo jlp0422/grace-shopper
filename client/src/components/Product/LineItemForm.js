@@ -67,7 +67,9 @@ class LineItemForm extends Component {
   }
 }
 
-const mapStateToProps = ({ lineItems, products, orders }, { productId, orderId, userId }) => {
+
+//const mapStateToProps = ({ lineItems, products, orders }, { productId, orderId, userId })
+const mapStateToProps = ({ lineItems, products, orders }) => {
   const lineItemMap = lineItems.reduce((list, lineItem) => {
     if (lineItem.orderId === orderId) {
       if (!list[lineItem.productId]) {
