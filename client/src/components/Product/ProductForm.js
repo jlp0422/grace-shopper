@@ -50,8 +50,12 @@ class ProductForm extends Component {
   onSave(ev) {
     ev.preventDefault();
     const { id, name, price, quantity, description } = this.state;
-    this.props.updateProduct(this.state);
-    this.setState({ name: '', price: '', quantity: '', description: '', categoryArray: [] });
+
+    // this.props.updateProduct(this.state);
+    // this.setState({ name: '', price: '', quantity: '', description: '', categoryArray: [] });
+
+    this.props.updateProduct({ id, name, price, quantity, description });
+    this.setState({ name: '', price: '', quantity: '', description: '' });
   }
 
   render() {

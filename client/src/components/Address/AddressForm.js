@@ -8,7 +8,6 @@ class AddressForm extends Component {
   constructor(props) {
     super(props);
     const { address, userId } = this.props;
-    console.log(userId)
     this.state = {
       id: address ? address.id : '',
       isShipping: address ? address.isShipping : true,
