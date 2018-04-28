@@ -20,10 +20,10 @@ class NavBar extends React.Component {
 
   render() {
     window.scrollTo(0, 0)
-    const { categories, user, loggedIn, logout, activeOrder, itemCount } = this.props;
+    const { categories, user, loggedIn, logout, activeOrder, cartCount } = this.props;
     const { toggle } = this;
     const { isOpen } = this.state;
-    if (!itemCount) return null
+    if (!cartCount) return null
     return (
       <div>
         <Navbar style={{ marginBottom: '20px'}} sticky="top" className="nav-sticky sticky-top" color="light" light expand="sm">
@@ -60,7 +60,7 @@ class NavBar extends React.Component {
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem onClick={() => location.hash = `/users/${user.id}`}>My Account</DropdownItem>
-                      <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({ itemCount ? itemCount : null })</DropdownItem>
+                      <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({ cartCount ? cartCount : null })</DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem onClick={logout}>Log out</DropdownItem>
                     </DropdownMenu>
@@ -82,9 +82,10 @@ class NavBar extends React.Component {
 
 const mapState = ({ categories, user, orders, lineItems }) => {
   const activeOrder = orders.find(order => order.userId === user.id && order.isActive)
-  const itemCount = activeOrder && lineItems.filter(item => item.orderId === activeOrder.id).length
+  const activeOrderItems = activeOrder && lineItems.filter(item => item.orderId === activeOrder.id)
+  const cartCount = activeOrderItems.length
   const loggedIn = !!user.id
-  return { categories, user, loggedIn, activeOrder, itemCount };
+  return { categories, user, loggedIn, activeOrder, cartCount };
 };
 
 const mapDispatch = (dispatch) => {
