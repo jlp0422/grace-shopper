@@ -7,7 +7,7 @@ const jwt = require('jwt-simple');
 const KEY = process.env.KEY
 
 const seedUsers = () => {
-  return conn.sync({ force: true})
+  return conn.sync({ force: true })
     .then(() => {
       return Promise.all([
         User.create({
@@ -84,7 +84,7 @@ describe('User Model', () => {
 describe('User.authenticate', () => {
   it('returns a token with correct creds', () => {
     const jeremy = userMap.jphilipson
-    const _token = jwt.encode({id: jeremy.id}, KEY)
+    const _token = jwt.encode({ id: jeremy.id }, KEY)
     const creds = {
       username: jeremy.username,
       password: jeremy.password
@@ -106,7 +106,7 @@ describe('User.authenticate', () => {
 describe('User.exchangeTokenForUser', () => {
   it('returns a user with valid token', () => {
     const jeremy = userMap.jphilipson
-    const _token = jwt.encode({id: jeremy.id}, KEY)
+    const _token = jwt.encode({ id: jeremy.id }, KEY)
     const creds = {
       username: jeremy.username,
       password: jeremy.password
