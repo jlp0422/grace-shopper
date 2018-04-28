@@ -6,7 +6,7 @@ app.get('/', (req, res, next) => {
   Product.findAll({
     include: [{
       model: ProductCategory,
-      inlcude: [ Category ]
+      include: [ Category ]
     }]
   })
     .then(products => res.send(products))

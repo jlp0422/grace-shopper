@@ -7,7 +7,7 @@ const ProductCard = (props) => {
   return (
     <div className='row'>
       <div className='col'>
-        <Link to={`/products/${product.id}`}>
+        <Link to={`/../products/${product.id}`}>
           <h4>{product.name}</h4>
         </Link>
         <div>Price: ${product.price}</div>

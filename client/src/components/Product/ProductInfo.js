@@ -11,6 +11,7 @@ const ProductInfo = (props) => {
   if (!product) {
     return null;
   }
+  const userId = 1 //TO TEST.  USERID WILL PULL FROM CART LATER.
   return (    
     <div>
     <div className='row'>
@@ -25,7 +26,7 @@ const ProductInfo = (props) => {
         <p>Price: ${product.price}</p>
         <p>Units Available: {product.quantity}</p>
       </div>
-      <LineItemForm productId={product.id} orderId ='' userId= '' />
+      <LineItemForm productId={product.id} userId = {userId} orderId ='' />
     </div>
     <h4>Current Rating: {rating}</h4>
     <h5>There {makeSingular[0]} ({reviewCount}) review{makeSingular[1]} on this product</h5>
