@@ -6,25 +6,26 @@ import { updateLineItemOnServer, deleteLineItemFromServer } from '../../store';
 class LineItemForm extends Component {
   constructor(props) {
     super(props);
-    const { productId, orderId, lineItems/*, productMap*/ } = props;
-    let lineItem = lineItems.find(lineItem => lineItem.productId === productId && lineItem.orderId === orderId)
+    const { productId, orderID, lineItems/*, productMap*/ } = props;
+    let lineItem = lineItems.find(lineItem => lineItem.productId === productId && lineItem.orderId === orderID)
 
     // console.log('PI:', productId, 'OI:', orderId)
 
     this.state = {
       id: lineItem ? lineItem.id : '',
-      orderId: orderId ? orderId : '',
-      productId: productId ? productId : '',
+      // orderId: orderId ? orderId : '',
+      // productId: productId ? productId : '',
       quantity: lineItem ? lineItem.quantity : 1
     }
     this.onChangeLineItem = this.onChangeLineItem.bind(this);
     this.onSave = this.onSave.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { id, orderId, productId, quantity } = nextProps;
-    this.setState({ id, orderId, productId, quantity });
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   console.log(nextProps)
+  //   const { id, orderId, productId, quantity } = nextProps;
+  //   this.setState({ id, orderId, productId, quantity });
+  // }
 
   onChangeLineItem(ev) {
     this.setState({ quantity: ev.target.value * 1 });
@@ -32,7 +33,12 @@ class LineItemForm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    this.props.updateLineItem(this.state);
+    const { quantity } = this.state;
+    const { productId, orderID } = this.props;
+
+
+    const save = { productId, orderID, quantity };
+    this.props.updateLineItem(save);
     // this.setState({ id, orderId, productId, quantity });
   }
 
@@ -41,9 +47,9 @@ class LineItemForm extends Component {
     // console.log('LI:', this.state)
 
     const { quantity, id } = this.state;
-    const { productId, orderId/*, priceMap*/, deleteLineItem } = this.props;
+    const { productId, orderID/*, priceMap*/, deleteLineItem } = this.props;
     const { onChangeLineItem, onSave } = this;
-    const buttonText = orderId ? 'Change Quantity' : 'Add to Cart';
+    const buttonText = orderID ? 'Change Quantity' : 'Add to Cart';
     return (
       <div>
         <form onSubmit={onSave}>
@@ -74,8 +80,12 @@ class LineItemForm extends Component {
   }
 }
 
-const mapState = ({ lineItems, orders/*, user */}, { productId, orderId }) => {
-  // const order = orders.find(order => order.id === orderId);
+const mapState = ({ lineItems, orders, user}, { productId, orderId }) => {
+
+  // console.log(orderId)
+  // const order = ;
+
+  const orderID = !orderId ? orders.find(order => order.userId === user.id) : orderId
 
   // const orderLineItems = lineItems.filter(item => item.orderId === order.id)
 
@@ -104,7 +114,7 @@ const mapState = ({ lineItems, orders/*, user */}, { productId, orderId }) => {
     // console.log('MAP:', productMap)
 
   return {
-    orderId,
+    orderID,
     productId,
     lineItems,
     // productMap
