@@ -1,107 +1,90 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateLineItemOnServer } from '../../store';
+import { withRouter } from 'react-router-dom';
+import { updateLineItemOnServer, deleteLineItemFromServer } from '../../store';
 
 class LineItemForm extends Component {
   constructor(props) {
     super(props);
-//    const { productId, orderId, lineItemMap, priceMap, activeOrder } = props;
-    const { productId, orderId, lineItemMap } = props;
+    const { order, productId, orderItems, lineItemForProduct } = props;
     this.state = {
-      id: orderId ? lineItemMap[productId].lineItemId : null,
-      orderId: orderId,
-      productId: productId,
-      quantity: lineItemMap[productId] ? lineItemMap[productId].quantity : 1
-    } 
+      quantity: lineItemForProduct ? lineItemForProduct.quantity : 1
+    }
     this.onChangeLineItem = this.onChangeLineItem.bind(this);
     this.onSave = this.onSave.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { lineItemForProduct } = nextProps
+    this.setState({ quantity: lineItemForProduct ? lineItemForProduct.quantity : 1})
+  }
+
   onChangeLineItem(ev) {
-    const { activeOrder, orderId } = this.props;
-    this.setState({ 
-      quantity: ev.target.value,
-      orderId: orderId ==='' ? activeOrder.id : orderId
-    })
+    this.setState({ quantity: ev.target.value * 1 });
   }
 
   onSave(ev) {
     ev.preventDefault();
-    const lineItem = this.state;
-    this.props.updateLineItem(lineItem);
+    const { quantity } = this.state;
+    const { id, productId, order } = this.props;
+    const save = { id, productId, orderId: order.id, quantity };
+    this.props.updateLineItem(save);
   }
 
   render() {
     const { quantity } = this.state;
-    const { productId, orderId, priceMap } = this.props;
+    const { productId, deleteLineItem, page, id } = this.props;
     const { onChangeLineItem, onSave } = this;
-    const quantityArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    const existingQuantity = orderId ? quantity : '';
-    const buttonText = orderId ? 'Change Quantity' : 'Add to Cart';
-    const total = priceMap[productId] * quantity;
+    const active = page === 'active' ? true : false
     return (
       <div>
-        <form onSubmit={onSave}>
-          <select
-            className = 'form-control'
-            name = 'quantity'
-            value = {existingQuantity ? existingQuantity : quantity}
-            onChange = {onChangeLineItem}
-            style={{ marginBottom: '10px' }}        
+        <div>
+          <label>Quantity</label>
+          <input
+            type='number'
+            className='form-control margin-b-10'
+            value={quantity}
+            placeholder='Select Quantity'
+            onChange={onChangeLineItem}
+          />
+          </div>
+          <button onClick={ onSave } className='btn btn-primary margin-b-10'>{active ? ('Update cart') : ('Add to cart')}</button>
+        {
+          active ? (
+          <button
+            className='btn btn-warning margin-b-10'
+            onClick={() => deleteLineItem(id)}
           >
-            <option value=''>Select Quantity</option>
-            {
-              quantityArray.map(quantity => {
-                return (
-                  <option key = {quantity} value = {quantity}>{quantity}</option>
-                )
-              })
-            }            
-          </select>
-          <button style={{ marginBottom: '10px' }} className='btn btn-primary'>{buttonText}</button>
-        </form>
-        <h6> {orderId ? 'Total Price: ' : '' } {orderId ? total : ''} </h6>
+            Remove From Cart
+          </button>
+          ) : null
+        }
       </div>
     )
 
   }
 }
 
+const mapState = ({ lineItems, orders, user}, { productId, orderId, page, id }) => {
 
-//const mapStateToProps = ({ lineItems, products, orders }, { productId, orderId, userId })
-const mapStateToProps = ({ lineItems, products, orders }) => {
-  const lineItemMap = lineItems.reduce((list, lineItem) => {
-    if (lineItem.orderId === orderId) {
-      if (!list[lineItem.productId]) {
-        list[lineItem.productId] = {};
-        list[lineItem.productId].quantity = lineItem.quantity;
-        list[lineItem.productId].lineItemId = lineItem.id;
-      }
-    }
-    return list;
-  }, {});
-
-  const priceMap = products.reduce((list, product) => {
-    if(!list[product.id]) {
-      list[product.id] = product.price;
-    }
-    return list;
-  },{});
-
-  const userOrders = orders.filter(order => order.userId === userId);
-  const activeOrder = userOrders.find(order => order.isActive === true);
+  const order = orders.find(order => order.userId === user.id && order.isActive)
+  const orderItems = order && lineItems.filter(item => item.orderId === order.id)
+  const lineItemForProduct = orderItems && orderItems.find(item => item.productId === productId)
 
   return {
-    lineItemMap,
-    priceMap,
-    activeOrder
+    order,
+    productId,
+    orderItems,
+    lineItemForProduct,
+    page
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatch = (dispatch) => {
   return {
-    updateLineItem: (lineItem) => dispatch(updateLineItemOnServer(lineItem))
+    updateLineItem: (lineItem) => dispatch(updateLineItemOnServer(lineItem)),
+    deleteLineItem: (id) => dispatch(deleteLineItemFromServer(id))
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LineItemForm);
+export default withRouter(connect(mapState, mapDispatch)(LineItemForm));

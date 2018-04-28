@@ -3,12 +3,12 @@ module.exports = app;
 const { Product, Category, ProductCategory } = require('../db').models;
 
 app.get('/', (req, res, next) => {
-  Product.findAll({
+  Product.findAll(/*{
     include: [{
       model: ProductCategory,
       inlcude: [ Category ]
     }]
-  })
+  }*/)
     .then(products => res.send(products))
     .catch(next);
 });

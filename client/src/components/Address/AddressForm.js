@@ -27,7 +27,7 @@ class AddressForm extends Component {
     const { address, userId } = nextProps;
     if (address.id) {
       const { id, isShipping, street, city, state, zip } = address
-      this.setState({ id, isShipping, street, city, state, zip, userId  })
+      this.setState({ id, isShipping, street, city, state, zip, userId })
     }
   }
 
@@ -68,7 +68,7 @@ class AddressForm extends Component {
           <button onClick={() => this.setState({ isEditing: true })} className="btn btn-outline-success margin-t-15">{ empty ? ('Add Address') : ('Edit') }</button>
         )
       }
-      <form>
+      <div>
         <button onClick={() => deleteAddress(id)} className='btn btn-danger'>Delete Address</button>
           <select
             onChange={onChange}
@@ -93,7 +93,7 @@ class AddressForm extends Component {
               />
             ))
           }
-        </form>
+        </div>
       </div>
     );
   }

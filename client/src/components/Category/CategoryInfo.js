@@ -20,6 +20,7 @@ const CategoryInfo = (props) => {
           </div>
         ) : null
       }
+
     </div>
   );
 }

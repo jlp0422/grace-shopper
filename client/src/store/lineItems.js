@@ -22,12 +22,13 @@ export const deleteLineItemFromServer = (id) => {
   return (dispatch) => {
     return axios.delete(`/api/lineitems/${id}`)
       .then(() => dispatch(deleteLineItem(id)))
-      .then(() => location.hash = '/lineitems')
+      // .then(() => location.hash = '/lineitems')
     // .catch(err) placeholder for error handling
   };
 };
 
 export const updateLineItemOnServer = (item) => {
+  console.log('check Line Item ID:', item)
   const { id } = item;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/lineitems/${id}` : '/api/lineitems';
@@ -35,8 +36,11 @@ export const updateLineItemOnServer = (item) => {
   return (dispatch) => {
     return axios[method](url, item)
       .then( res => res.data)
-      .then( lineItem => dispatch(action(lineItem)))
-      .then(() => location.hash = '/lineitems' )
+      .then( lineItem => {
+        console.log(lineItem)
+        dispatch(action(lineItem))
+      })
+      // .then(() => location.hash = '/lineitems' )
       // .catch(err) placeholder for error handling
   };
 };

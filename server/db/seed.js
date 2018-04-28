@@ -32,9 +32,13 @@ const createCategory = () => {
 }
 
 const createProduct = () => {
+
+  // console.log(Math.round(Math.random() * 490) + 10)
+
   return Product.create({
     name: faker.commerce.productName(),
     price: faker.commerce.price(),
+    // price: Math.round(Math.random() * 490) + 10,
     quantity: Math.round(Math.random() * 100),
     description: faker.lorem.paragraph(),
     categoryId: Math.ceil(Math.random() * categoryCount)
