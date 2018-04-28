@@ -54,7 +54,7 @@ const ProductInfo = (props) => {
 const mapState = ({ products, user, reviews, orders }, { match }) => {
   const id = match.params.id * 1;
   const product = products.find(_product => _product.id === id);
-  const loggedIn = !!Object.keys(user).length;
+  const loggedIn = !!user.id;
   const { isAdmin } = user;
   const ownReviews = reviews.filter(review => review.productId === id)
   const reviewCount = ownReviews.length;
