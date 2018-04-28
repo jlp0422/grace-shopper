@@ -22,7 +22,7 @@ export const deleteLineItemFromServer = (id) => {
   return (dispatch) => {
     return axios.delete(`/api/lineitems/${id}`)
       .then(() => dispatch(deleteLineItem(id)))
-      .then(() => location.hash = '/lineitems')
+      // .then(() => location.hash = '/lineitems')
     // .catch(err) placeholder for error handling
   };
 };

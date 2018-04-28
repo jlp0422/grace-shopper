@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { updateLineItemOnServer } from '../../store';
+import { updateLineItemOnServer, deleteLineItemFromServer } from '../../store';
 
 class LineItemForm extends Component {
   constructor(props) {
@@ -13,8 +13,8 @@ class LineItemForm extends Component {
 
     this.state = {
       id: lineItem ? lineItem.id : '',
-      orderId: lineItem ? orderId : '',
-      productId: lineItem ? productId : '',
+      orderId: orderId ? orderId : '',
+      productId: productId ? productId : '',
       quantity: lineItem ? lineItem.quantity : 1
     }
     this.onChangeLineItem = this.onChangeLineItem.bind(this);
@@ -40,45 +40,44 @@ class LineItemForm extends Component {
 
     // console.log('LI:', this.state)
 
-    const { quantity } = this.state;
-    const { productId, orderId/*, priceMap*/ } = this.props;
+    const { quantity, id } = this.state;
+    const { productId, orderId/*, priceMap*/, deleteLineItem } = this.props;
     const { onChangeLineItem, onSave } = this;
-    const quantityArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-    // const existingQuantity = orderId ? quantity : '';
     const buttonText = orderId ? 'Change Quantity' : 'Add to Cart';
-    // const total = priceMap[productId] * quantity;
     return (
       <div>
         <form onSubmit={onSave}>
-          <select
-            className = 'form-control'
-            name = 'quantity'
-            value = {quantity}
-            onChange = {onChangeLineItem}
+          <input
+            type='number'
+            className='form-control'
+            value={quantity}
+            placeholder='Select Quantity'
+            onChange={onChangeLineItem}
             style={{ marginBottom: '10px' }}
-          >
-            <option value=''>Select Quantity</option>
-            {
-              quantityArray.map(quantity => {
-                return (
-                  <option key = {quantity} value = {quantity}>{quantity}</option>
-                )
-              })
-            }
-          </select>
+          />
           <button style={{ marginBottom: '10px' }} className='btn btn-primary'>{buttonText}</button>
         </form>
-        {/*<h6> {orderId ? 'Total Price: ' : '' } {orderId ? total : ''} </h6>*/}
+        {
+          id ? (
+          <button
+            style={{ marginBottom: '10px' }}
+            className='btn btn-warning'
+            onClick={() => deleteLineItem(id)}
+          >
+            Remove From Cart
+          </button>
+          ) : null
+        }
       </div>
     )
 
   }
 }
 
-const mapState = ({ lineItems, orders, user }, { productId, orderId }) => {
-  const order = orders.find(order => order.id === orderId);
+const mapState = ({ lineItems, orders/*, user */}, { productId, orderId }) => {
+  // const order = orders.find(order => order.id === orderId);
 
-  const orderLineItems = lineItems.filter(item => item.orderId === order.id)
+  // const orderLineItems = lineItems.filter(item => item.orderId === order.id)
 
   // const productMap = orderLineItems.reduce((memo, lineItem) => {
   //   const id = lineItem.productId;
@@ -114,7 +113,8 @@ const mapState = ({ lineItems, orders, user }, { productId, orderId }) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    updateLineItem: (lineItem) => dispatch(updateLineItemOnServer(lineItem))
+    updateLineItem: (lineItem) => dispatch(updateLineItemOnServer(lineItem)),
+    deleteLineItem: (id) => dispatch(deleteLineItemFromServer(id))
   }
 };
 
