@@ -87,7 +87,7 @@ const mapState = ({ categories, user, orders, lineItems }) => {
     activeOrderItems.reduce((memo, lineItem) => {
       return memo + lineItem.quantity
     }, 0)
-    ) : 0
+    ) : '0'
   const loggedIn = !!user.id
   return { categories, user, loggedIn, activeOrder, cartCount };
 };
