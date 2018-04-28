@@ -52,7 +52,7 @@ const createUser = () => {
     firstName: firstName,
     lastName: lastName,
     isAdmin: false,
-    username: `${firstName.slice(0, 1).toLowerCase()}${lastName.toLowerCase()}`,
+    username: `${firstName.toLowerCase()}${lastName.toLowerCase()}`,
     password: faker.internet.password(),
     email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@gmail.com`,
   });
