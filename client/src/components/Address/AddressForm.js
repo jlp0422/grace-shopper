@@ -27,7 +27,7 @@ class AddressForm extends Component {
     const { address, userId } = nextProps;
     if (address.id) {
       const { id, isShipping, street, city, state, zip } = address
-      this.setState({ id, isShipping, street, city, state, zip, userId  })
+      this.setState({ id, isShipping, street, city, state, zip, userId })
     }
   }
 

@@ -28,6 +28,7 @@ export const deleteLineItemFromServer = (id) => {
 };
 
 export const updateLineItemOnServer = (item) => {
+  console.log('check Line Item ID:', item)
   const { id } = item;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/lineitems/${id}` : '/api/lineitems';
