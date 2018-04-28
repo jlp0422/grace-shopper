@@ -8,7 +8,7 @@
     "postinstall": "npm run webpack",
     "webpack": "./node_modules/webpack/bin/webpack.js",
     "test": "mocha",
-    "test:dev": "DATABASE_URL=postgres://localhost/grace_shopper_db ./node_modules/mocha/bin/mocha --watch --recursive test/models/models.spec.js",
+    "test:dev": "KEY=abc123 DATABASE_URL=postgres://localhost/grace_shopper_db ./node_modules/mocha/bin/mocha --watch --recursive test/models/models.spec.js",
     "start:dev": "npm run webpack -- -w & KEY=abc123 nodemon server --ignore src/ --ignore dist/",
     "start": "npm run seed && node server"
   },

@@ -233,3 +233,8 @@ conn.sync({ force: true })
     console.log('Error Seeding Database');
     console.error(err);
   });
+
+
+module.exports = {
+  seed
+}

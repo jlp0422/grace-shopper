@@ -12,4 +12,8 @@ const Order = conn.define('order', {
   timestamps: false
 })
 
+Order.getCartForUser = function(user) {
+
+}
+
 module.exports = Order;
