@@ -14,8 +14,23 @@ app.get('/', (req, res, next) => {
 });
 
 app.post('/', (req, res, next) => {
-  Product.create(req.body)
-    .then(product => res.send(product))
+  // console.log(req.body)
+
+  const { name, price, quantity, imageUrl, description } = req.body;
+  const input = { name, price, quantity, imageUrl, description };
+
+  // console.log(req.body);
+
+  // console.log(req.body.categoryArray)
+
+  Product.create(input)
+    .then(product => {
+      // console.log(req.body);
+      // req.body.categoryArray.forEach(categoryId => {
+        // return ProductCategory.create({ productId: product.id, categoryId })
+      // })
+      res.send(product)
+    })
     .catch(next);
 });
 

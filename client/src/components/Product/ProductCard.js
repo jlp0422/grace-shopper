@@ -7,7 +7,7 @@ const ProductCard = (props) => {
   return (
     <div className='row'>
       <div className='col'>
-        <Link to={`/products/${product.id}`}>
+        <Link to={`/../products/${product.id}`}>
           <h4>{product.name}</h4>
         </Link>
         <div>Price: ${product.price}</div>
@@ -28,8 +28,9 @@ const ProductCard = (props) => {
   );
 }
 
-const mapState = ({ categories }, { product }) => {
-  const pcMap = product.product_categories.reduce((memo, pc) => {
+const mapState = ({ categories, productCategories }, { product }) => {
+  const prodCat = productCategories.filter(proCa => proCa.productId === product.id)
+  const pcMap = prodCat.reduce((memo, pc) => {
     if(!memo[pc.categoryId]) memo[pc.categoryId] = 1;
     else memo[pc.categoryId]++;
     return memo;

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { deleteCategoryOnServer } from '../../store';
 
 import CategoryForm from './CategoryForm';
+import ProductByCategory from './ProductByCategory';
 
 const CategoryInfo = (props) => {
   const { category, deleteCategory, loggedIn, isAdmin } = props;
@@ -20,6 +21,7 @@ const CategoryInfo = (props) => {
           </div>
         ) : null
       }
+      <ProductByCategory categoryNum={category.id} />
     </div>
   );
 }

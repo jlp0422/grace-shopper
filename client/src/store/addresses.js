@@ -35,8 +35,11 @@ export const updateAddressOnServer = (address) => {
   return (dispatch) => {
     return axios[method](url, address)
       .then(res => res.data)
-      .then(address => dispatch(action(address)))
-      .then(() => location.hash = '/addresses')
+      .then(_address => {
+        dispatch(action(_address))
+        return _address
+      })
+      .then(_address => location.hash = `/users/${_address.userId}/addresses`)
     // .catch(err) placeholder for error handling
   }
 }
@@ -59,7 +62,7 @@ const addressesReducer = (state = [], action) => {
 
     case UPDATE_ADDRESS:
       const addresses = state.filter(address => address.id !== action.address.id * 1)
-      state = [...addresses, action.address]
+      state = [action.address, ...addresses]
       break;
   };
   return state;
