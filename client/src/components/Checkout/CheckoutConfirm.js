@@ -6,7 +6,6 @@ import ActiveOrder from '../Order/ActiveOrder';
 import PaymentForm from './PaymentForm';
 
 
-// Issue with route / url
 // Need a way to select address to use
 // Need to get rid of button "checkout" 
 
