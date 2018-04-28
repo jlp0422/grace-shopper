@@ -94,7 +94,6 @@ describe('User.authenticate', () => {
   })
   it('throws an error with a 401 status incorrect creds', () => {
     const jeremy = userMap.jgrubard
-    const _token = jwt.encode({id: jeremy.id}, KEY)
     const creds = {
       username: jeremy.username,
       password: 'admin'
@@ -104,4 +103,30 @@ describe('User.authenticate', () => {
   })
 })
 
-describe('User.exchangeTokenForUser')
+describe('User.exchangeTokenForUser', () => {
+  it('returns a user with valid token', () => {
+    const jeremy = userMap.jphilipson
+    const _token = jwt.encode({id: jeremy.id}, KEY)
+    const creds = {
+      username: jeremy.username,
+      password: jeremy.password
+    }
+    return User.authenticate(creds)
+      .then( token => User.exchangeTokenForUser(token))
+      .then( user => expect(user.username).to.equal(jeremy.username))
+  })
+  it('throws an error with an invalid token', () => {
+    const jeremyp = userMap.jphilipson
+    const _token = jwt.encode({ id: jeremyp.id }, 'bazz')
+    return User.exchangeTokenForUser(_token)
+      .catch(ex => expect(ex.status).to.equal(401))
+  })
+  it('throws an error with a good token, no user', () => {
+    const _token = jwt.encode({ id: 99 }, KEY)
+    return User.exchangeTokenForUser(_token)
+      .then(() => {
+        throw 'no user'
+      })
+      .catch(ex => expect(ex.status).to.equal(401))
+  })
+})

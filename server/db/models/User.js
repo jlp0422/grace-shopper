@@ -53,11 +53,25 @@ User.authenticate = function(credentials) {
     }
   })
   .then( user => {
-    if (user) {
-      return jwt.encode({id: user.id}, KEY)
-    }
+    if (user) return jwt.encode({id: user.id}, KEY)
     throw { status: 401 }
   })
+}
+
+User.exchangeTokenForUser = function(token) {
+  try {
+    const userId = jwt.decode(token, KEY).id
+    return this.findById(userId)
+      .then( user => {
+        if(user) return user
+        throw { status: 401 }
+      })
+  }
+  catch(ex) {
+    return Promise.reject({
+      status: 401
+    })
+  }
 }
 
 module.exports = User;
