@@ -1,22 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import OrderCard from './PastOrderCard';
+import OrderCard from './OrderCard';
+// import LineItemForm from '../Product/LineItemForm.js'
 
 const ActiveOrder = ({ activeOrder }) => {
+  if (!activeOrder) return null
   return (
     <div>
       <h2>My Cart</h2>
-      {
-        activeOrder.map(order => (
-          <OrderCard key={order.id} order={order} />
-        ))
-      }
+      <OrderCard page={'active'} order={activeOrder} />
     </div>
   )
 }
 
 const mapState = ({ orders, user }) => {
-  const activeOrder = orders.filter(order => order.userId === user.id && order.isActive)
+  const activeOrder = orders && orders.find(order => order.userId === user.id && order.isActive)
   return { activeOrder }
 }
 

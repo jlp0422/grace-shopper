@@ -6,26 +6,18 @@ import { updateLineItemOnServer, deleteLineItemFromServer } from '../../store';
 class LineItemForm extends Component {
   constructor(props) {
     super(props);
-    const { productId, orderID, lineItems/*, productMap*/ } = props;
-    let lineItem = lineItems.find(lineItem => lineItem.productId === productId && lineItem.orderId === orderID)
-
-    // console.log('PI:', productId, 'OI:', orderId)
-
+    const { order, productId, orderItems, lineItemForProduct } = props;
     this.state = {
-      id: lineItem ? lineItem.id : '',
-      // orderId: orderId ? orderId : '',
-      // productId: productId ? productId : '',
-      quantity: lineItem ? lineItem.quantity : 1
+      quantity: lineItemForProduct ? lineItemForProduct.quantity : 1
     }
     this.onChangeLineItem = this.onChangeLineItem.bind(this);
     this.onSave = this.onSave.bind(this);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   console.log(nextProps)
-  //   const { id, orderId, productId, quantity } = nextProps;
-  //   this.setState({ id, orderId, productId, quantity });
-  // }
+  componentWillReceiveProps(nextProps) {
+    const { lineItemForProduct } = nextProps
+    this.setState({ quantity: lineItemForProduct ? lineItemForProduct.quantity : 1})
+  }
 
   onChangeLineItem(ev) {
     this.setState({ quantity: ev.target.value * 1 });
@@ -34,40 +26,33 @@ class LineItemForm extends Component {
   onSave(ev) {
     ev.preventDefault();
     const { quantity } = this.state;
-    const { productId, orderID } = this.props;
-
-
-    const save = { productId, orderID, quantity };
+    const { id, productId, order } = this.props;
+    const save = { id, productId, orderId: order.id, quantity };
     this.props.updateLineItem(save);
-    // this.setState({ id, orderId, productId, quantity });
   }
 
   render() {
-
-    // console.log('LI:', this.state)
-
-    const { quantity, id } = this.state;
-    const { productId, orderID/*, priceMap*/, deleteLineItem } = this.props;
+    const { quantity } = this.state;
+    const { productId, deleteLineItem, page, id } = this.props;
     const { onChangeLineItem, onSave } = this;
-    const buttonText = orderID ? 'Change Quantity' : 'Add to Cart';
+    const active = page === 'active' ? true : false
     return (
       <div>
-        <form onSubmit={onSave}>
+        <div>
+          <label>Quantity</label>
           <input
             type='number'
-            className='form-control'
+            className='form-control margin-b-10'
             value={quantity}
             placeholder='Select Quantity'
             onChange={onChangeLineItem}
-            style={{ marginBottom: '10px' }}
           />
-          <button style={{ marginBottom: '10px' }} className='btn btn-primary'>{buttonText}</button>
-        </form>
+          </div>
+          <button onClick={ onSave } className='btn btn-primary margin-b-10'>{active ? ('Update cart') : ('Add to cart')}</button>
         {
-          id ? (
+          active ? (
           <button
-            style={{ marginBottom: '10px' }}
-            className='btn btn-warning'
+            className='btn btn-warning margin-b-10'
             onClick={() => deleteLineItem(id)}
           >
             Remove From Cart
@@ -80,44 +65,18 @@ class LineItemForm extends Component {
   }
 }
 
-const mapState = ({ lineItems, orders, user}, { productId, orderId }) => {
+const mapState = ({ lineItems, orders, user}, { productId, orderId, page, id }) => {
 
-  // console.log(orderId)
-  // const order = ;
-
-  const orderID = !orderId ? orders.find(order => order.userId === user.id) : orderId
-
-  // const orderLineItems = lineItems.filter(item => item.orderId === order.id)
-
-  // const productMap = orderLineItems.reduce((memo, lineItem) => {
-  //   const id = lineItem.productId;
-  //     memo[id] = {};
-  //     memo[id].quantity = lineItem.quantity;
-  //     memo[id].lineItemId = lineItem.id;
-  //   return memo;
-  // }, {});
-
-
-
-  //   const productMap = lineItems.reduce((memo, lineItem) => {
-  //   if (order && lineItem.orderId === order.id) {
-  //     const prodId = lineItem.productId;
-  //     if (!memo[prodId]) {
-  //       memo[prodId] = {};
-  //       memo[prodId].quantity = lineItem.quantity;
-  //       memo[prodId].lineItemId = lineItem.id;
-  //     }
-  //   }
-  //   return memo;
-  // }, {});
-
-    // console.log('MAP:', productMap)
+  const order = orders.find(order => order.userId === user.id && order.isActive)
+  const orderItems = order && lineItems.filter(item => item.orderId === order.id)
+  const lineItemForProduct = orderItems && orderItems.find(item => item.productId === productId)
 
   return {
-    orderID,
+    order,
     productId,
-    lineItems,
-    // productMap
+    orderItems,
+    lineItemForProduct,
+    page
   }
 }
 

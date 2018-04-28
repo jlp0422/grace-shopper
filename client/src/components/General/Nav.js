@@ -19,6 +19,7 @@ class NavBar extends React.Component {
   }
 
   render() {
+    window.scrollTo(0, 0)
     const { categories, user, loggedIn, logout, activeOrder, itemCount } = this.props;
     const { toggle } = this;
     const { isOpen } = this.state;
@@ -85,12 +86,14 @@ const mapState = ({ categories, user, orders, lineItems }) => {
 
   // console.log(activeOrder)
 
-  const itemCount = lineItems.reduce((memo, item) => {
-    if(item.orderId === activeOrder.id) {
-      return memo + item.quantity
-    }
-    return memo;
-  }, 0)
+  // const itemCount = lineItems.reduce((memo, item) => {
+  //   if(item.orderId === activeOrder.id) {
+  //     return memo + item.quantity
+  //   }
+  //   return memo;
+  // }, 0)
+
+  const itemCount = 5
 
 
   //

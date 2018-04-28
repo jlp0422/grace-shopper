@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import OrderCard from './PastOrderCard';
+import OrderCard from './OrderCard';
 
 const PastOrders = ({ pastOrders }) => {
   return (
