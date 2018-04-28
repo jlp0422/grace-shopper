@@ -19,7 +19,7 @@ const OrderCard = ({ orderItems, order, totalPrice, products }) => {
               <p className="font-weight-bold">Product: {product.name}</p>
               <p>Quantity: {item.quantity}</p>
               <p>Prince per item: ${product.price}</p>
-              { order.isActive ? <LineItemForm /> : ''}
+              { order.isActive ? <LineItemForm productId={product.id} orderId={order.id} /> : ''}
             </div>
           );
         })

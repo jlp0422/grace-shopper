@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { updateLineItemOnServer } from '../../store';
 
 class LineItemForm extends Component {
   constructor(props) {
     super(props);
-    const { productId, orderId, lineItems } = props;
+    const { productId, orderId, lineItems/*, productMap*/ } = props;
     let lineItem = lineItems.find(lineItem => lineItem.productId === productId && lineItem.orderId === orderId)
 
-    console.log(orderId)
+    // console.log('PI:', productId, 'OI:', orderId)
 
     this.state = {
       id: lineItem ? lineItem.id : '',
-      orderId: orderId ? orderId : '',
-      productId: productId,
-      quantity: 1
+      orderId: lineItem ? orderId : '',
+      productId: lineItem ? productId : '',
+      quantity: lineItem ? lineItem.quantity : 1
     }
     this.onChangeLineItem = this.onChangeLineItem.bind(this);
     this.onSave = this.onSave.bind(this);
@@ -37,10 +38,10 @@ class LineItemForm extends Component {
 
   render() {
 
-    console.log(this.state)
+    // console.log('LI:', this.state)
 
     const { quantity } = this.state;
-    const { productId, orderId, priceMap } = this.props;
+    const { productId, orderId/*, priceMap*/ } = this.props;
     const { onChangeLineItem, onSave } = this;
     const quantityArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     // const existingQuantity = orderId ? quantity : '';
@@ -75,11 +76,39 @@ class LineItemForm extends Component {
 }
 
 const mapState = ({ lineItems, orders, user }, { productId, orderId }) => {
-  const order = orders.find(order => order.userId === user.id && order.isActive);
+  const order = orders.find(order => order.id === orderId);
+
+  const orderLineItems = lineItems.filter(item => item.orderId === order.id)
+
+  // const productMap = orderLineItems.reduce((memo, lineItem) => {
+  //   const id = lineItem.productId;
+  //     memo[id] = {};
+  //     memo[id].quantity = lineItem.quantity;
+  //     memo[id].lineItemId = lineItem.id;
+  //   return memo;
+  // }, {});
+
+
+
+  //   const productMap = lineItems.reduce((memo, lineItem) => {
+  //   if (order && lineItem.orderId === order.id) {
+  //     const prodId = lineItem.productId;
+  //     if (!memo[prodId]) {
+  //       memo[prodId] = {};
+  //       memo[prodId].quantity = lineItem.quantity;
+  //       memo[prodId].lineItemId = lineItem.id;
+  //     }
+  //   }
+  //   return memo;
+  // }, {});
+
+    // console.log('MAP:', productMap)
+
   return {
-    orderId: order.id ? order.id : orderId,
+    orderId,
     productId,
-    lineItems
+    lineItems,
+    // productMap
   }
 }
 
@@ -89,4 +118,4 @@ const mapDispatch = (dispatch) => {
   }
 };
 
-export default connect(mapState, mapDispatch)(LineItemForm);
+export default withRouter(connect(mapState, mapDispatch)(LineItemForm));
