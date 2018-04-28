@@ -1,4 +1,6 @@
 const { conn, Sequelize } = require('../conn');
+const jwt = require('jwt-simple');
+const KEY = process.env.KEY
 
 const User = conn.define('user', {
   firstName: {
@@ -41,5 +43,21 @@ const User = conn.define('user', {
 }, {
   timestamps: false
 })
+
+User.authenticate = function(credentials) {
+  const { username, password } = credentials
+  return this.findOne({
+    where: {
+      username,
+      password
+    }
+  })
+  .then( user => {
+    if (user) {
+      return jwt.encode({id: user.id}, KEY)
+    }
+    throw { status: 401 }
+  })
+}
 
 module.exports = User;

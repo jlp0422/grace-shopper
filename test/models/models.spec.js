@@ -80,3 +80,28 @@ describe('User Model', () => {
     expect(jg.password).to.equal('JEREMY');
   })
 })
+
+describe('User.authenticate', () => {
+  it('returns a token with correct creds', () => {
+    const jeremy = userMap.jphilipson
+    const _token = jwt.encode({id: jeremy.id}, KEY)
+    const creds = {
+      username: jeremy.username,
+      password: jeremy.password
+    }
+    return User.authenticate(creds)
+      .then( token => expect(token).to.equal(_token))
+  })
+  it('throws an error with a 401 status incorrect creds', () => {
+    const jeremy = userMap.jgrubard
+    const _token = jwt.encode({id: jeremy.id}, KEY)
+    const creds = {
+      username: jeremy.username,
+      password: 'admin'
+    }
+    return User.authenticate(creds)
+      .catch( ex => expect(ex.status).to.equal(401))
+  })
+})
+
+describe('User.exchangeTokenForUser')
