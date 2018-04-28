@@ -1,28 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Addresses from '../Address/Addresses';
 import ActiveOrder from '../Order/ActiveOrder';
 import PaymentForm from './PaymentForm';
+
 
 // Issue with route / url
 // Need a way to select address to use
 // Need to get rid of button "checkout" 
 
-const CheckoutConfirm = ({userId}) => {
-  console.log('####user##', userId)
+const CheckoutConfirm = ({user}) => {
+  console.log('####user##', user)
   return (
     <div>
     <ActiveOrder />
-    <Addresses id={userId}/>
+    <Addresses/>
     <PaymentForm />
-    <button className="btn btn-success">Submit Payment</button>
+    <Link to={`/users/${user.id}/cart/checkout/thankyou`}><button className="btn btn-success">Submit Payment</button></Link>
     </div>
   );
 }
 
-const mapState = ({id}) => {
-  const userId = id * 1
-  return { userId }
+const mapState = ({user}) => {
+  return { user }
 };
 
 export default connect(mapState)(CheckoutConfirm);
