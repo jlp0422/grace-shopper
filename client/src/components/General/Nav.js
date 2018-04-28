@@ -19,7 +19,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { categories, user, loggedIn, logout, activeOrder } = this.props;
+    const { categories, user, loggedIn, logout, activeOrder/*, itemCount */} = this.props;
     const { toggle } = this;
     const { isOpen } = this.state;
     return (
@@ -78,10 +78,24 @@ class NavBar extends React.Component {
   }
 }
 
-const mapState = ({ categories, user, orders }) => {
+const mapState = ({ categories, user, orders, lineItems }) => {
   const activeOrder = orders.filter(order => order.userId === user.id && order.isActive)
+
+  // const activeOrder = orders.find(order => order.userId === user.id && order.isActive)
+
+  // console.log(activeOrder)
+
+  // const itemCount = lineItems.reduce((memo, item) => {
+  //   if(item.orderId === activeOrder.id) {
+  //     return memo + item.quantity
+  //   }
+  //   return memo;
+  // }, 0)
+
+
+  //
   const loggedIn = !!user.id
-  return { categories, user, loggedIn, activeOrder };
+  return { categories, user, loggedIn, activeOrder/*, itemCount */};
 };
 
 const mapDispatch = (dispatch) => {
