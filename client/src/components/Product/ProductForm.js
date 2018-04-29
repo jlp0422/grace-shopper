@@ -63,7 +63,7 @@ class ProductForm extends Component {
     const { categories } = this.props;
     const { handleChange, onSave } = this;
 
-    console.log(this.state.categoryArray)
+    // console.log(this.state.categoryArray)
 
     return (
       <div>

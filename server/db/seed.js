@@ -32,9 +32,13 @@ const createCategory = () => {
 }
 
 const createProduct = () => {
+
+  // console.log(Math.round(Math.random() * 490) + 10)
+
   return Product.create({
     name: faker.commerce.productName(),
     price: faker.commerce.price(),
+    // price: Math.round(Math.random() * 490) + 10,
     quantity: Math.round(Math.random() * 100),
     description: faker.lorem.paragraph(),
     categoryId: Math.ceil(Math.random() * categoryCount)
@@ -48,7 +52,7 @@ const createUser = () => {
     firstName: firstName,
     lastName: lastName,
     isAdmin: false,
-    username: `${firstName.slice(0, 1).toLowerCase()}${lastName.toLowerCase()}`,
+    username: `${firstName.toLowerCase()}${lastName.toLowerCase()}`,
     password: faker.internet.password(),
     email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@gmail.com`,
   });
@@ -229,3 +233,8 @@ conn.sync({ force: true })
     console.log('Error Seeding Database');
     console.error(err);
   });
+
+
+module.exports = {
+  seed
+}

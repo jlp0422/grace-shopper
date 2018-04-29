@@ -56,7 +56,7 @@
   text-align: center;
   width: 100%;
   padding: 10px 0px;
-  background-color: #ccc;
+  background-color: #f0f3f8;
   color: black;
   z-index: 2000;
 }
@@ -79,4 +79,34 @@
 
 #body-elements {
   margin-bottom: 80px;
+}
+
+#cart-line-item {
+  background-color: #f0f3f8;
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+#cart-total-price {
+  background-color: yellow;
+  font-weight: bold;
+  padding: 15px;
+}
+
+.stars-large {
+  font-size: 30px;
+  color: yellow;
+  text-shadow: #F71 0px 0px 1px, #F71 0px 0px 1px, #F71 0px 0px 1px;
+}
+
+.stars-small {
+  font-size: 20px;
+  color: yellow;
+  text-shadow: #F71 0px 0px 1px, #F71 0px 0px 1px, #F71 0px 0px 1px;
+}
+
+.review-card {
+  background-color: #f0f3f8;
+  padding: 15px;
+  margin: 15px;
 }
