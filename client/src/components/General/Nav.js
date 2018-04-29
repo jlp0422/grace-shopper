@@ -23,7 +23,6 @@ class NavBar extends React.Component {
     const { categories, user, loggedIn, logout, activeOrder, cartCount } = this.props;
     const { toggle } = this;
     const { isOpen } = this.state;
-    if (!cartCount) return null
     return (
       <div>
         <Navbar style={{ marginBottom: '20px'}} sticky="top" className="nav-sticky sticky-top" color="light" light expand="sm">
@@ -81,9 +80,9 @@ class NavBar extends React.Component {
 }
 
 const mapState = ({ categories, user, orders, lineItems }) => {
-  const activeOrder = orders.find(order => order.userId === user.id && order.isActive)
-  const activeOrderItems = activeOrder ? lineItems.filter(item => item.orderId === activeOrder.id) : []
-  const cartCount = activeOrderItems.length || 4
+  const activeOrder = orders.length ? orders.find(order => order.userId === user.id && order.isActive) : {};
+  const activeOrderItems = activeOrder ? lineItems.filter(item => item.orderId === activeOrder.id) : [];
+  const cartCount = activeOrderItems.length ? activeOrderItems.reduce((memo, lineItem) => memo + lineItem.quantity, 0) : '0'
   const loggedIn = !!user.id
   return { categories, user, loggedIn, activeOrder, cartCount };
 };
