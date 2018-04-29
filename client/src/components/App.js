@@ -79,9 +79,6 @@ class App extends React.Component {
                   <AddressesAuth id={ match.params.id } />
                 )} />
                 <Route exact path='/users/:id/edit' component={ CheckAuth(UserForm) } />
-               {/* CHECKOUT ROUTES */}
-               
-
                 {/* AUTH ROUTES */}
                 <Route exact path='/login' component={ LoginForm } />
                 <Route exact path='/signup' component={ LoginForm } />
