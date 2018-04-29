@@ -21,6 +21,8 @@ import Reviews from './Review/Reviews';
 import UserForm from './User/UserForm';
 import UserAccount from './User/UserAccount';
 import Addresses from './Address/Addresses';
+import CheckoutConfirm from './Checkout/CheckoutConfirm';
+import ThankYou from './Checkout/ThankYou';
 
 class App extends React.Component {
   componentDidMount() {
@@ -68,6 +70,8 @@ class App extends React.Component {
                 )} />
                 <Route exact path='/users/:id/cart' component={ CheckAuth(ActiveOrder) } />
                 <Route exact path='/users/:id/orders' component={ CheckAuth(PastOrders) } />
+                <Route exact path='/users/:id/checkout' component={ CheckAuth(CheckoutConfirm) } />
+                <Route exact path='/users/:id/checkout/thankyou' component={ CheckAuth(ThankYou) } />
                 <Route exact path='/users/:id/reviews' component={ ({ match }) => (
                   <ReviewsAuth page='user' id={ match.params.id * 1 } />
                 )} />
@@ -75,7 +79,6 @@ class App extends React.Component {
                   <AddressesAuth id={ match.params.id } />
                 )} />
                 <Route exact path='/users/:id/edit' component={ CheckAuth(UserForm) } />
-
                 {/* AUTH ROUTES */}
                 <Route exact path='/login' component={ LoginForm } />
                 <Route exact path='/signup' component={ LoginForm } />
