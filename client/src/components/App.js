@@ -70,8 +70,8 @@ class App extends React.Component {
                 )} />
                 <Route exact path='/users/:id/cart' component={ CheckAuth(ActiveOrder) } />
                 <Route exact path='/users/:id/orders' component={ CheckAuth(PastOrders) } />
-                <Route exact path='/users/:id/cart/checkout' component={ CheckAuth(CheckoutConfirm) } />
-                <Route exact path='/users/:id/cart/checkout/thankyou' component={ CheckAuth(ThankYou) } />
+                <Route exact path='/users/:id/checkout' component={ CheckAuth(CheckoutConfirm) } />
+                <Route exact path='/users/:id/checkout/thankyou' component={ CheckAuth(ThankYou) } />
                 <Route exact path='/users/:id/reviews' component={ ({ match }) => (
                   <ReviewsAuth page='user' id={ match.params.id * 1 } />
                 )} />
