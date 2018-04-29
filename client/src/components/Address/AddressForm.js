@@ -63,7 +63,7 @@ class AddressForm extends Component {
       <div>
       {
         isEditing ? (
-          <button onClick={ onUpdate } className="btn btn-success margin-t-15">Save</button>
+          <button onClick={ onUpdate } className="btn btn-success margin-t-15" disabled={!(street && city && state && zip && isShipping) }>Save</button>
         ) : (
           <button onClick={() => this.setState({ isEditing: true })} className="btn btn-outline-success margin-t-15">{ empty ? ('Add Address') : ('Edit') }</button>
         )
