@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AddressForm from './AddressForm';
 
-const Addresses = ({ userAddresses, userId }) => {
+const Addresses = ({ userAddresses, userId, page }) => {
+  console.log(page)
+
   return (
     <div>
       <h2>Addresses</h2>
@@ -15,16 +17,15 @@ const Addresses = ({ userAddresses, userId }) => {
           ))
         }
       </ul>
-      <p></p>
-      <AddressForm empty={ true } userId={ userId }/>
+      { page !== 'checkout' ? (<AddressForm empty={ true } userId={ userId }/>) : null }
     </div>
   );
 }
 
-const mapState = ( { addresses }, { id }) => {
+const mapState = ( { addresses }, { id, page }) => {
   const userId = id * 1
   const userAddresses = addresses.filter(address => address.userId === id * 1)
-  return { userAddresses, userId }
+  return { userAddresses, userId, page }
 };
 
 export default connect(mapState)(Addresses);

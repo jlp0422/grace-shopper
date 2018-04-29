@@ -9,7 +9,7 @@ const ActiveOrder = ({ activeOrder }) => {
   return (
     <div>
       <h2>My Cart</h2>
-      <OrderCard page={'active'} order={activeOrder} />
+      <OrderCard page={'active'} order={activeOrder} checkout={ false } />
     </div>
   )
 }
