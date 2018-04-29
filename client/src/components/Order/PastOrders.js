@@ -6,6 +6,7 @@ const PastOrders = ({ pastOrders }) => {
   return (
     <div>
       <h2>Past Orders</h2>
+      { pastOrders.length ? null : ('No orders')}
       {
         pastOrders.map(order => (
           <OrderCard key={order.id} order={order} />
