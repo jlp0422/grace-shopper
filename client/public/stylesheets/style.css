@@ -92,3 +92,15 @@
   font-weight: bold;
   padding: 15px;
 }
+
+.stars-large {
+  font-size: 30px;
+  color: yellow;
+  text-shadow: #F71 0px 0px 1px, #F71 0px 0px 1px, #F71 0px 0px 1px;
+}
+
+.stars-small {
+  font-size: 20px;
+  color: yellow;
+  text-shadow: #F71 0px 0px 1px, #F71 0px 0px 1px, #F71 0px 0px 1px;
+}
