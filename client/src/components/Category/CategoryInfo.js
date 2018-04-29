@@ -1,14 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { deleteCategoryOnServer } from '../../store';
-
+import ProductCard from '../Product/ProductCard';
 import CategoryForm from './CategoryForm';
 
-const CategoryInfo = (props) => {
-  const { category, deleteCategory, loggedIn, isAdmin } = props;
-  if (!category) {
-    return null;
-  }
+const CategoryInfo = ({ category, deleteCategory, loggedIn, isAdmin, productMap, products }) => {
+  if (!category) return null;
   return (
     <div>
       <h3>Category: {category.name}</h3>
@@ -20,20 +17,36 @@ const CategoryInfo = (props) => {
           </div>
         ) : null
       }
+      {
+        productMap.map(productCategory => {
+          const product = products.find(p => p.id === productCategory.productId)
+          return (
+            <ul key={productCategory.id} className='list-group'>
+              <li className='list-group-item'>
+                <ProductCard key={productCategory.id} product={product} />
+              </li>
+            </ul>
+
+          )
+        })
+      }
 
     </div>
   );
 }
 
-const mapState = ({ categories, user }, { match }) => {
+const mapState = ({ categories, user, productCategories, products }, { match }) => {
   const id = match.params.id * 1;
   const category = categories.find(_category => _category.id === id);
   const loggedIn = !!Object.keys(user).length;
   const { isAdmin } = user;
+  const productMap = productCategories.filter(combo => combo.categoryId === id)
   return {
     category,
     loggedIn,
-    isAdmin
+    isAdmin,
+    productMap,
+    products
   }
 }
 
