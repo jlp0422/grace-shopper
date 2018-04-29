@@ -82,8 +82,8 @@ class NavBar extends React.Component {
 
 const mapState = ({ categories, user, orders, lineItems }) => {
   const activeOrder = orders.find(order => order.userId === user.id && order.isActive)
-  const activeOrderItems = activeOrder && lineItems.filter(item => item.orderId === activeOrder.id)
-  const cartCount = activeOrderItems.length
+  const activeOrderItems = activeOrder ? lineItems.filter(item => item.orderId === activeOrder.id) : []
+  const cartCount = activeOrderItems.length || 4
   const loggedIn = !!user.id
   return { categories, user, loggedIn, activeOrder, cartCount };
 };
