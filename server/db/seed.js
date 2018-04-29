@@ -6,7 +6,7 @@ const faker = require('faker');
 
 /*-------------HOW-MANY-D0-WE-WANT-TO-SEED?-------------*/
 
-const categoryCount = 10;
+const categoryCount = 8;
 const productCount = 100;
 const userCount = 100;
 const orderCount = 25;
@@ -189,7 +189,14 @@ const seed = () => {
   })
   .then(() => {
     return Promise.all([
-      ...populateCategories(),
+      Category.create({ name: 'Books'}),
+      Category.create({ name: 'Computers'}),
+      Category.create({ name: 'Bags'}),
+      Category.create({ name: 'Outdoors'}),
+      Category.create({ name: 'Sports'}),
+      Category.create({ name: 'Electronics'}),
+      Category.create({ name: 'Woodworking'}),
+      Category.create({ name: 'Hardware'}),
       ...populateProducts(),
     ])
     .then(() => {

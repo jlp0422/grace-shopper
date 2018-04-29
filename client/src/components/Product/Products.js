@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import ProductCard from './ProductCard';
@@ -9,7 +10,13 @@ const Products = (props) => {
   return (
     <div>
       <h2>Products</h2>
-      { loggedIn && isAdmin ? <ProductForm /> : null }
+      { loggedIn && isAdmin ? (
+        <div>
+          <Link to='/products/create'>
+            <button className="btn btn-primary">Create new product</button>
+          </Link>
+        </div>
+      ) : null }
       <ul className='list-group'>
         {
           products.map(product => (
