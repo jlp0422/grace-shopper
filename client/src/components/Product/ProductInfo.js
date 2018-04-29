@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteProductFromServer } from '../../store';
+import { starRating } from '../../store/reusableFunctions';
 
 import ProductForm from './ProductForm';
 import LineItemForm from './LineItemForm';
@@ -9,6 +10,7 @@ import ReviewForm from '../Review/ReviewForm';
 
 const ProductInfo = (props) => {
   const { product, deleteProduct, loggedIn, isAdmin, rating, reviewCount, makeSingular, activeOrder } = props;
+  const displayRating = rating ? starRating(rating, 'stars-large') : 'This product has a rating of Zero :('
   if (!product) return null;
   if (!activeOrder) return null;
   return (
@@ -29,8 +31,8 @@ const ProductInfo = (props) => {
       <LineItemForm orderId={activeOrder.id} productId={product.id} />
 
     </div>
-    <h4>Current Rating: {rating}</h4>
-    <h5>There {makeSingular[0]} ({reviewCount}) review{makeSingular[1]} on this product</h5>
+    { displayRating }
+    <h5 style={{display:'inline'}}>There {makeSingular[0]} ({reviewCount}) review{makeSingular[1]} on this product</h5>
     <Link to={`/products/${product.id}/reviews`}>
       <h6>Click here for all reviews</h6>
     </Link>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { starRating } from '../../store/reusableFunctions';
 
 const Reviews = (props) => {
   const { product, products, productReviews, userReviews, users, page } = props;
@@ -13,8 +14,14 @@ const Reviews = (props) => {
           productReviews.map(review => {
             const user = users.find(user => user.id === review.userId);
             return (
-              <div key={review.id} style={{ backgroundColor: 'lightgrey' }}>
-                <h4>{user.username}'s Review: {review.rating} Stars</h4>
+              <div key={review.id} className='review-card'>
+                <h4>
+                  {
+                    user.username} {review.rating ? (
+                      starRating(review.rating, 'stars-small')
+                    ) : '(0 stars)'
+                  }
+                </h4>
                 <p>{review.description}</p>
               </div>
             )
@@ -32,8 +39,16 @@ const Reviews = (props) => {
           userReviews.map(review => {
             const product = products.find(product => product.id === review.productId);
             return (
-              <div key={review.id} style={{ backgroundColor: 'lightgrey' }}>
-                <Link to={`/products/${product.id}/reviews`}><h4>{product.name}: {review.rating} Stars</h4></Link>
+              <div key={review.id}  className='review-card'>
+                <Link to={`/products/${product.id}/reviews`}>
+                  <h4>
+                  {
+                    product.name} {review.rating ? (
+                      starRating(review.rating, 'stars-small')
+                    ) : '(0 stars)'
+                  }
+                  </h4>
+                </Link>
                 <p>{review.description}</p>
               </div>
             )
