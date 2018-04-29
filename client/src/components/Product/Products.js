@@ -30,10 +30,10 @@ const Products = (props) => {
   );
 }
 
-const mapState = ({ products, user }) => {
+const mapState = ({ products, user, productCategories }) => {
   const { isAdmin } = user;
   const loggedIn = !!Object.keys(user).length;
-  // console.log()
+  console.log(productCategories)
   return {
     products,
     isAdmin,

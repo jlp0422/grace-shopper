@@ -14,23 +14,16 @@ app.get('/', (req, res, next) => {
 });
 
 app.post('/', (req, res, next) => {
-  // console.log(req.body)
-
-  const { name, price, quantity, imageUrl, description } = req.body;
+  const { name, price, quantity, imageUrl, description, categoryArray } = req.body;
   const input = { name, price, quantity, imageUrl, description };
-
-  // console.log(req.body);
-
-  // console.log(req.body.categoryArray)
-
+  let pcArray
   Product.create(input)
-    .then(product => {
-      // console.log(req.body);
-      // req.body.categoryArray.forEach(categoryId => {
-        // return ProductCategory.create({ productId: product.id, categoryId })
-      // })
-      res.send(product)
+    .then(product => product.addCategories(categoryArray))
+    .then(_pcArray => {
+      pcArray = _pcArray
+      return Product.findById(pcArray[0][0].productId)
     })
+        .then(product => res.send({ product, pcArray }))
     .catch(next);
 });
 

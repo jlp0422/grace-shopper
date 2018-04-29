@@ -1,6 +1,7 @@
 /* eslint-disable */
 import axios from 'axios';
 import { GET_PRODUCTS, CREATE_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT } from './actionConstants';
+import { getProductCategoriesFromServer, updateProductCategories } from './productCategories';
 
 /*********** ACTION CREATORS ***********/
 const getProducts = (products) => ({ type: GET_PRODUCTS, products });
@@ -35,7 +36,11 @@ export const updateProductOnServer = (product) => {
   return (dispatch) => {
     return axios[method](url, product)
       .then(res => res.data)
-      .then(prod => dispatch(action(prod)))
+      .then(prod => {
+        const { product, pcArray } = prod
+        dispatch(action(product))
+        dispatch(updateProductCategories(pcArray))
+      })
       .then(() => location.hash = '/products')
     // .catch(err) placeholder for error handling
   }

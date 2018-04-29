@@ -50,4 +50,6 @@ const Product = conn.define('product', {
   timestamps: false
 })
 
+
+
 module.exports = Product;
