@@ -7,7 +7,7 @@ const faker = require('faker');
 /*-------------HOW-MANY-D0-WE-WANT-TO-SEED?-------------*/
 
 const categoryCount = 8;
-const productCount = 100;
+const productCount = 20;
 const userCount = 100;
 const orderCount = 25;
 const lineItemCount = 70;
@@ -200,7 +200,28 @@ const seed = () => {
       ...populateProducts(),
     ])
     .then(() => {
-      return Promise.all(populateProductCategories())
+      return Promise.all([
+        ProductCategory.create({ productId: 3, categoryId: 1 }),
+        ProductCategory.create({ productId: 1, categoryId: 1 }),
+        ProductCategory.create({ productId: 2, categoryId: 1 }),
+        ProductCategory.create({ productId: 4, categoryId: 1 }),
+        ProductCategory.create({ productId: 5, categoryId: 1 }),
+        ProductCategory.create({ productId: 5, categoryId: 2 }),
+        ProductCategory.create({ productId: 7, categoryId: 2 }),
+        ProductCategory.create({ productId: 8, categoryId: 2 }),
+        ProductCategory.create({ productId: 9, categoryId: 2 }),
+        ProductCategory.create({ productId: 3, categoryId: 3 }),
+        ProductCategory.create({ productId: 4, categoryId: 3 }),
+        ProductCategory.create({ productId: 7, categoryId: 3 }),
+        ProductCategory.create({ productId: 5, categoryId: 3 }),
+        ProductCategory.create({ productId: 10, categoryId: 3 }),
+        ProductCategory.create({ productId: 3, categoryId: 4 }),
+        ProductCategory.create({ productId: 7, categoryId: 4 }),
+        ProductCategory.create({ productId: 9, categoryId: 5 }),
+        ProductCategory.create({ productId: 8, categoryId: 5 }),
+        ProductCategory.create({ productId: 9, categoryId: 6 })
+      ])
+        //populateProductCategories()])
         /*.then((pc) => {
           console.log('before:', pc.length)
           // pc.forEach(_pc => console.log(_pc.get()))
@@ -216,13 +237,13 @@ const seed = () => {
           })
           console.log('after:', arr.length)
         })*/
-      })
     .then(() => Promise.all(populateOrders()))
     .then(() => Promise.all(populateLineItems()))
     .then(() => Promise.all(populateAddresses()))
     .then(() => Promise.all(populateReviews()))
   })
   .catch(err => console.error(err))
+})
 }
 
 conn.sync({ force: true })
@@ -242,6 +263,6 @@ conn.sync({ force: true })
   });
 
 
-module.exports = {
-  seed
-}
+// module.exports = {
+//   seed
+// }

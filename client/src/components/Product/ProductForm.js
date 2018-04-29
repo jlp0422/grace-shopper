@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateProductOnServer, updateProductCategoryOnServer } from '../../store';
+import { updateProductOnServer, updateProductCategoryOnServer, getProductCategoriesFromServer } from '../../store';
 
 class ProductForm extends Component {
   constructor(props) {
@@ -49,13 +49,13 @@ class ProductForm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { id, name, price, quantity, description } = this.state;
+    const { id, name, price, quantity, description, categoryArray } = this.state;
 
     // this.props.updateProduct(this.state);
     // this.setState({ name: '', price: '', quantity: '', description: '', categoryArray: [] });
 
-    this.props.updateProduct({ id, name, price, quantity, description });
-    this.setState({ name: '', price: '', quantity: '', description: '' });
+    this.props.updateProduct({ id, name, price, quantity, description, categoryArray });
+    this.setState({ name: '', price: '', quantity: '', description: '', categoryArray: [] });
   }
 
   render() {
@@ -144,7 +144,10 @@ const mapState = ({ categories, productCategories }, { product }) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    updateProduct: (product) => dispatch(updateProductOnServer(product))
+    updateProduct: (product) => {
+      dispatch(updateProductOnServer(product))
+      dispatch(getProductCategoriesFromServer())
+    }
   };
 };
 

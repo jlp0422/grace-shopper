@@ -9,13 +9,13 @@ const ProductCategory = require('./models/ProductCategory');
 const Address = require('./models/Address');
 const Review = require('./models/Review');
 
-// Product.belongsToMany(Category, { through: ProductCategory, foreignKey: 'productId', as: 'products' });
-// Category.belongsToMany(Product, { through: ProductCategory, foreignKey: 'categoryId', as: 'categories '});
+Product.belongsToMany(Category, { through: ProductCategory });
+Category.belongsToMany(Product, { through: ProductCategory });
 
-ProductCategory.belongsTo(Product);
-Product.hasMany(ProductCategory);
-ProductCategory.belongsTo(Category);
-Category.hasMany(ProductCategory);
+// ProductCategory.belongsTo(Product);
+// Product.hasMany(ProductCategory);
+// ProductCategory.belongsTo(Category);
+// Category.hasMany(ProductCategory);
 
 LineItem.belongsTo(Product);
 Order.hasMany(LineItem, { as: 'lineItems', foreignKey: 'orderId' });
