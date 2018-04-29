@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 import CategoryCard from './CategoryCard';
 import CategoryForm from './CategoryForm';
 
@@ -9,7 +9,13 @@ const Categories = (props) => {
   return (
     <div>
       <h2>Categories</h2>
-      { loggedIn && isAdmin ? <CategoryForm /> : null }
+      { loggedIn && isAdmin ? (
+        <div>
+          <Link to='/categories/create'>
+            <button className="btn btn-primary">Create new category</button>
+          </Link>
+        </div>
+      ) : null }
       <ul className='list-group'>
         {
           categories.map(category => (

@@ -38,7 +38,7 @@ class CategoryForm extends Component {
     return (
       <div>
         <form onSubmit={onSave}>
-          <label className="font-weight-bold">Edit name</label>
+          <label className="font-weight-bold">Category name</label>
           <input
             placeholder='Category Name'
             name='name'

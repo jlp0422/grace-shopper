@@ -10,6 +10,7 @@ import Nav from './General/Nav';
 import Footer from './General/Footer';
 import Categories from './Category/Categories';
 import CategoryInfo from './Category/CategoryInfo';
+import CategoryForm from './Category/CategoryForm';
 import Products from './Product/Products';
 import ProductForm from './Product/ProductForm';
 import ProductInfo from './Product/ProductInfo';
@@ -55,6 +56,7 @@ class App extends React.Component {
                 <Route exact path='/' component={ Home } />
                 {/* CATEGORY ROUTES */}
                 <Route exact path='/categories' component={ Categories } />
+                <Route exact path='/categories/create' component={CategoryForm} />
                 <Route exact path='/categories/:id' component={ CategoryInfo } />
                 {/* PRODUCT ROUTES */}
                 <Route exact path='/products' component={ Products } />
