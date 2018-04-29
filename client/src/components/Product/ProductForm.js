@@ -64,7 +64,6 @@ class ProductForm extends Component {
     const { handleChange, onSave } = this;
 
     // console.log(this.state.categoryArray)
-
     return (
       <div>
         <form onSubmit={onSave}>
@@ -136,7 +135,6 @@ class ProductForm extends Component {
 }
 
 const mapState = ({ categories, productCategories }, { product }) => {
-  // console.log('PF:', productCategories)
   return {
     categories,
     productCategories

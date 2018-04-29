@@ -70,7 +70,6 @@ const mapState = ({ products, user, reviews, orders }, { match }) => {
     }
   }, 0);
   const activeOrder = orders.find(order => order.userId === user.id && order.isActive)
-  console.log(activeOrder)
   return {
     product,
     loggedIn,

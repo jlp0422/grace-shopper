@@ -21,6 +21,7 @@ class AddressForm extends Component {
     // ---------------------------- BIND METHOD ----------------------------
     this.onChange = this.onChange.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
+    this.onCancel = this.onCancel.bind(this);
   }
   // ------------------------ LIFECYCLE METHODS ------------------------
   componentWillReceiveProps(nextProps) {
@@ -39,6 +40,17 @@ class AddressForm extends Component {
     this.setState(change);
   }
 
+  onCancel(ev) {
+    ev.preventDefault()
+    this.setState({
+      street: '',
+      city: '',
+      state: '',
+      zip: '',
+      isEditing: false
+    })
+  }
+
   onUpdate(ev) {
     ev.preventDefault()
     const { updateAddress, deleteAddress } = this.props;
@@ -52,7 +64,7 @@ class AddressForm extends Component {
   render() {
     const { id, isShipping, isEditing, street, city, state, zip } = this.state;
     const { deleteAddress, address, empty } = this.props;
-    const { onChange, onUpdate } = this;
+    const { onChange, onUpdate, onCancel } = this;
     const fields = {
       street: 'Street',
       city: 'City',
@@ -71,7 +83,7 @@ class AddressForm extends Component {
       { empty ? null : <button onClick={() => deleteAddress(id)} className='btn btn-danger margin-t-15'>Delete Address</button> }
       {
         empty && isEditing ? (
-          <button onClick={() => this.setState({ isEditing: false })} className="btn btn-outline-secondary margin-t-15">Cancel</button>
+          <button onClick={ onCancel } className="btn btn-outline-secondary margin-t-15">Cancel</button>
         ) : null
       }
       <div>
