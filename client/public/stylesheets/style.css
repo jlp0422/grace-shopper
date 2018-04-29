@@ -104,3 +104,9 @@
   color: yellow;
   text-shadow: #F71 0px 0px 1px, #F71 0px 0px 1px, #F71 0px 0px 1px;
 }
+
+.review-card {
+  background-color: #f0f3f8;
+  padding: 15px;
+  margin: 15px;
+}

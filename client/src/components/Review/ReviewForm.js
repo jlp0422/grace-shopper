@@ -34,6 +34,7 @@ class ReviewForm extends Component {
 
   render() {
     const { handleChange, onSave } = this;
+    const { rating, description } = this.state;
     return (
       <div>
         <h3>Rate this product!</h3>
@@ -54,7 +55,7 @@ class ReviewForm extends Component {
             placeholder='How did you like this product?'
             onChange={handleChange}
           />
-          <button className='btn btn-primary'>Submit Review</button>
+          <button disabled={rating === null || rating < 0 || !description} className='btn btn-primary'>Submit Review</button>
         </form>
       </div>
     );

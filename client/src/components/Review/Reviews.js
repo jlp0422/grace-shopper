@@ -14,7 +14,7 @@ const Reviews = (props) => {
           productReviews.map(review => {
             const user = users.find(user => user.id === review.userId);
             return (
-              <div key={review.id} style={{ backgroundColor: '#f0f3f8', padding:'15px', margin: '15px' }}>
+              <div key={review.id} className='review-card'>
                 <h4>
                   {
                     user.username} {review.rating ? (
@@ -39,7 +39,7 @@ const Reviews = (props) => {
           userReviews.map(review => {
             const product = products.find(product => product.id === review.productId);
             return (
-              <div key={review.id} style={{ backgroundColor: '#f0f3f8', padding:'15px', margin: '15px' }}>
+              <div key={review.id}  className='review-card'>
                 <Link to={`/products/${product.id}/reviews`}>
                   <h4>
                   {

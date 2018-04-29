@@ -48,7 +48,7 @@ class LineItemForm extends Component {
             onChange={onChangeLineItem}
           />
           </div>
-          <button onClick={ onSave } className='btn btn-primary margin-b-10'>{active ? ('Update cart') : ('Add to cart')}</button>
+          <button disabled={quantity < 1} onClick={ onSave } className='btn btn-primary margin-b-10'>{active ? ('Update cart') : ('Add to cart')}</button>
         {
           active ? (
           <button
