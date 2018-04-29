@@ -63,13 +63,19 @@ class AddressForm extends Component {
       <div>
       {
         isEditing ? (
-          <button onClick={ onUpdate } className="btn btn-success margin-t-15">Save</button>
+          <button onClick={ onUpdate } className="btn btn-success margin-t-15" disabled={!(street && city && state && zip && isShipping) }>Save</button>
         ) : (
           <button onClick={() => this.setState({ isEditing: true })} className="btn btn-outline-success margin-t-15">{ empty ? ('Add Address') : ('Edit') }</button>
         )
       }
+      { empty ? null : <button onClick={() => deleteAddress(id)} className='btn btn-danger margin-t-15'>Delete Address</button> }
+      {
+        empty && isEditing ? (
+          <button onClick={() => this.setState({ isEditing: false })} className="btn btn-outline-secondary margin-t-15">Cancel</button>
+        ) : null
+      }
       <div>
-        <button onClick={() => deleteAddress(id)} className='btn btn-danger'>Delete Address</button>
+        <label className="font-weight-bold">Address Type</label>
           <select
             onChange={onChange}
             name='isShipping'
@@ -81,16 +87,18 @@ class AddressForm extends Component {
           </select>
           {
             Object.keys(fields).map(field => (
-              <input
-                key={field}
-                readOnly={isEditing ? false : true}
-                className={`form-control${isEditing ? `` : `-plaintext` }`}
-                placeholder={`${fields[field]}`}
-                name={field}
-                value={this.state[field]}
-                onChange={onChange}
-                style={{ marginBottom: '10px' }}
-              />
+              <div key={field}>
+                <label className="font-weight-bold">{ fields[field] }</label>
+                <input
+                  readOnly={isEditing ? false : true}
+                  className={`form-control${isEditing ? `` : `-plaintext` }`}
+                  placeholder={`${fields[field]}`}
+                  name={field}
+                  value={this.state[field]}
+                  onChange={onChange}
+                  style={{ marginBottom: '10px' }}
+                />
+              </div>
             ))
           }
         </div>
