@@ -89,7 +89,9 @@ const createUser = () => {
 }
 
 const createAddress = () => {
+  const addressNames = ['Home', 'Work', 'Mom & Dad', 'Home-1', 'Home-2'];
   return Address.create({
+    nickname: addressNames[Math.round(Math.random() * 4)],
     isShipping: true,
     street: faker.address.streetAddress(),
     city: faker.address.city(),

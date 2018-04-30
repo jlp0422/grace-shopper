@@ -10,6 +10,7 @@ class AddressForm extends Component {
     const { address, userId } = this.props;
     this.state = {
       id: address ? address.id : '',
+      nickname: address ? address.nickname : '',
       isShipping: address ? address.isShipping : true,
       street: address ? address.street : '',
       city: address ? address.city : '',
@@ -27,8 +28,8 @@ class AddressForm extends Component {
   componentWillReceiveProps(nextProps) {
     const { address, userId } = nextProps;
     if (address.id) {
-      const { id, isShipping, street, city, state, zip } = address
-      this.setState({ id, isShipping, street, city, state, zip, userId })
+      const { id, nickname, isShipping, street, city, state, zip } = address
+      this.setState({ id, nickname, isShipping, street, city, state, zip, userId })
     }
   }
 
@@ -66,6 +67,7 @@ class AddressForm extends Component {
     const { deleteAddress, address, empty } = this.props;
     const { onChange, onUpdate, onCancel } = this;
     const fields = {
+      nickname: 'Address Nickname',
       street: 'Street',
       city: 'City',
       state: 'State',
