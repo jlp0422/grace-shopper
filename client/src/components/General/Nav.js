@@ -20,7 +20,7 @@ class NavBar extends React.Component {
 
   render() {
     window.scrollTo(0, 0)
-    const { categories, user, loggedIn, logout, activeOrder, cartCount } = this.props;
+    const { categories, user, loggedIn, logout, activeOrder, cartCount, isAdmin } = this.props;
     const { toggle } = this;
     const { isOpen } = this.state;
     return (
@@ -58,16 +58,32 @@ class NavBar extends React.Component {
                       Hello {user.firstName}
                     </DropdownToggle>
                     <DropdownMenu right>
-                      <DropdownItem onClick={() => location.hash = `/users/${user.id}`}>My Account</DropdownItem>
+                      <DropdownItem onClick={() => location.hash = `/users/${user.id}`}>My Account {isAdmin ? <img style={{ width: '25px', height: '18.8px' }} src="https://vignette.wikia.nocookie.net/animal-jam-clans-1/images/9/93/F1391de46653163d885be283ade13c47_crown-clip-art-transparent-king-crown-clipart-no-background_800-598.png/revision/latest/scale-to-width-down/640?cb=20170108005804" /> : null
+                      }</DropdownItem>
                       <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({ cartCount ? cartCount : null })</DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem onClick={logout}>Log out</DropdownItem>
+                      { isAdmin ? (
+                        <div>
+                          <DropdownItem divider />
+                          <DropdownItem onClick={() => location.hash = '/admin/users'}>View all users</DropdownItem>
+                          <DropdownItem onClick={() => location.hash = '/admin/orders'}>View all orders</DropdownItem>
+                        </div>
+                      ): null}
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 ) : (
-                  <NavItem>
-                    <NavLink href='#/login'>Log in</NavLink>
-                  </NavItem>
+                  <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                      My Account
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem onClick={() => location.hash = '/login'}>Sign In</DropdownItem>
+                      <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({cartCount ? cartCount : null})</DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem onClick={() => location.hash = '/signup'}>Create Account</DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
                 )
               }
             </Nav>
@@ -80,11 +96,12 @@ class NavBar extends React.Component {
 }
 
 const mapState = ({ categories, user, orders, lineItems }) => {
+  const { isAdmin } = user
   const activeOrder = orders.length ? orders.find(order => order.userId === user.id && order.isActive) : {};
   const activeOrderItems = activeOrder ? lineItems.filter(item => item.orderId === activeOrder.id) : [];
   const cartCount = activeOrderItems.length ? activeOrderItems.reduce((memo, lineItem) => memo + lineItem.quantity, 0) : '0'
   const loggedIn = !!user.id
-  return { categories, user, loggedIn, activeOrder, cartCount };
+  return { categories, user, loggedIn, activeOrder, cartCount, isAdmin };
 };
 
 const mapDispatch = (dispatch) => {
