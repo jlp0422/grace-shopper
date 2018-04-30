@@ -3,16 +3,19 @@ import { connect } from 'react-redux';
 import { updateUserOnServer } from '../../store';
 
 class PaymentForm extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { user } = props;
+    const { ccType, ccNum, ccExp, ccSec } = user;
     this.state = {
-      ccType: '',
-      ccNum: '',
-      ccExp: '',
-      ccSec: '',
+      ccType: user.id ? ccType : '',
+      ccNum: user.id ? ccNum : '',
+      ccExp: user.id ? ccExp : '',
+      ccSec: user.id ? ccSec : '',
     }
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.removeCard = this.removeCard.bind(this);
   }
 
   onChange(ev) {
@@ -24,13 +27,19 @@ class PaymentForm extends Component {
   onSave(ev) {
     ev.preventDefault();
     const { onSave, user } = this.props;
-
-    console.log(user);
-
     const { ccType, ccNum, ccExp, ccSec } = this.state;
     const { id, firstName, lastName, username, password, email, isAdmin } = user;
     onSave({ id , firstName, lastName, username, password, email, isAdmin, ccType, ccNum, ccExp, ccSec });
   }
+
+  removeCard(ev) {
+    ev.preventDefault();
+    const { onSave, user } = this.props;
+    this.setState({ ccType: '', ccNum: '', ccExp: '', ccSec: '' })
+    const { ccType, ccNum, ccExp, ccSec } = this.state;
+    const { id, firstName, lastName, username, password, email, isAdmin } = user;
+    onSave({ id , firstName, lastName, username, password, email, isAdmin, ccType, ccNum, ccExp, ccSec });
+  } // i'm just testing this will work, will dry out later
 
   render() {
     const fields = {
@@ -39,7 +48,9 @@ class PaymentForm extends Component {
       ccExp: 'Expiration',
       ccSec: 'Security Code',
     }
-    const { onSave, onChange } = this;
+    const { onSave, onChange, removeCard } = this;
+    const { ccType } = this.state;
+    const buttonMessage = ccType ? 'Submit Payment' : 'Submit with New Card'
     return (
       <div>
         <h4> Payment Details </h4>
@@ -58,7 +69,8 @@ class PaymentForm extends Component {
             ))
           }
         </div>
-        <button onClick={onSave}>submit payment</button>
+        <button onClick={onSave}>{buttonMessage}</button>
+        { ccType ? <button onClick={removeCard}>Remove Card</button> : null }
       </div>
     );
   }

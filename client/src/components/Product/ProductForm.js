@@ -12,9 +12,6 @@ class ProductForm extends Component {
     .map(association => {
       return association.categoryId;
     }) : []
-
-    // console.log(categoryArray)
-
     this.state = {
       id: product ? product.id : null,
       name: product ? product.name : '',
@@ -59,7 +56,7 @@ class ProductForm extends Component {
   }
 
   render() {
-    const { name, price, quantity, description, imageUrl } = this.state;
+    const { name, price, quantity, description, imageUrl, categoryArray } = this.state;
     const { categories } = this.props;
     const { handleChange, onSave } = this;
 
@@ -108,7 +105,13 @@ class ProductForm extends Component {
           {
             categories.map(category => (
               <div key={category.id}>
-                <input type='checkbox' value={category.id} name='categoryArray' onChange={handleChange} />
+                <input
+                  type='checkbox'
+                  value={category.id}
+                  name='categoryArray'
+                  onChange={handleChange}
+                  // selected={categoryArray.includes(category.id)}
+                />
                 <label>&nbsp;{category.name}</label>
               </div>
             ))
