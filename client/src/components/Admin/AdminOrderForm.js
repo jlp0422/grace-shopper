@@ -16,6 +16,7 @@ class AdminOrderForm extends React.Component {
 
   render() {
     const { order, user, deleteOrder } = this.props
+    if (!order) return null
     console.log(this.state)
     return (
       <div>
@@ -31,7 +32,7 @@ class AdminOrderForm extends React.Component {
           </div>
         )}
         { order.isActive ? <button className="btn btn-outline-success">Edit order</button> : null }
-        { order.isActive ? <button onClick={() => deleteOrder(order.id)} className="btn btn-warning">Delete order</button> : null }
+        { order.isActive ? <button onClick={() => deleteOrder(order.id, 'admin')} className="btn btn-warning">Delete order</button> : null }
       </div>
     )
   }
@@ -40,13 +41,12 @@ class AdminOrderForm extends React.Component {
 const mapState = ({ orders, users },{ id }) => {
   const order = orders.find(order => order.id === id)
   const user = order && users.find(user => user.id === order.userId)
-  // console.log(order)
   return { order, user  }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    deleteOrder: (id) => dispatch(deleteOrderFromServer(id))
+    deleteOrder: (id, page) => dispatch(deleteOrderFromServer(id, page))
   }
 }
 

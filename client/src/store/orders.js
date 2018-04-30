@@ -18,11 +18,13 @@ export const getOrdersFromServer = () => {
   };
 };
 
-export const deleteOrderFromServer = (id) => {
+export const deleteOrderFromServer = (id, page) => {
   return (dispatch) => {
     return axios.delete(`/api/orders/${id}`)
       .then(() => dispatch(deleteOrder(id)))
-      .then(() => location.hash = '/orders')
+      .then(() => {
+        if (page === 'admin') return location.hash = '/admin/orders'
+      })
     // .catch(err) placeholder for error handling
   };
 };
