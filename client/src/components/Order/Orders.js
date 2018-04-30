@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const Orders = ({ orders }) => {
   return (
     <div>
+      <h2>Orders</h2>
       <ul className="list-group">
         {
           orders.map(order => (

@@ -15,8 +15,12 @@ class AdminOrderForm extends React.Component {
     return (
       <div>
         <h3>Order #{order.id}</h3>
-        <h5>User: {`${user.firstName} ${user.lastName}`}</h5>
-        <h6>Status: {order.isActive ? ('Active') : ('Completed')} </h6>
+        <h4>User: {`${user.firstName} ${user.lastName}`}</h4>
+        <h5>Status: {order.isActive ? ('Active') : ('Completed')} </h5>
+        { order.isActive ? null : <h5>Order date: {order.date}</h5> }
+        <h5>Shipping Address: </h5>
+        <h5>Billing Address: </h5>
+        <h5>Payment method: </h5>
       </div>
     )
   }
