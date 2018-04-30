@@ -10,7 +10,7 @@ const fields = {
 
 const PaymentForm = () => {
   return (
-    <div> 
+    <div>
     <h4> Payment Details </h4>
     <form>
       {
