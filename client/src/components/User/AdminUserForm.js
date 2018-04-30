@@ -62,11 +62,11 @@ class AdminUserForm extends React.Component {
         ))}
         <h6 className="font-weight-bold">User Type</h6>
         <div className="form-check">
-          <input onChange={onChange} className="form-check-input" type="radio" name="isAdmin" value={true} />
+          <input onChange={onChange} className="form-check-input" type="radio" name="isAdmin" value={true} defaultChecked={ user.isAdmin }/>
           <label className="form-check-label">Administrator</label>
         </div>
         <div className="form-check margin-b-10">
-          <input onChange={onChange} className="form-check-input" type="radio" name="isAdmin" value={false} />
+          <input onChange={onChange} className="form-check-input" type="radio" name="isAdmin" value={false} defaultChecked={!user.isAdmin} />
           <label className="form-check-label">Not Adminstrator</label>
         </div>
 
