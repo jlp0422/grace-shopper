@@ -15,9 +15,10 @@ const CheckoutConfirm = ({ user }) => {
   return (
     <div>
     <ActiveOrder />
-    <Addresses id={user.id} page='checkout' />
+    {/*<Addresses id={user.id} page='checkout' />*/}
 
     {/*<Link to={`/users/${user.id}/cart/checkout/thankyou`}><button className="btn btn-success">Submit Payment</button></Link>*/}
+
     </div>
   );
 }

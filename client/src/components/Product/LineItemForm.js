@@ -39,7 +39,7 @@ class LineItemForm extends Component {
     return (
       <div>
         <div>
-          <label>Quantity</label>
+          <label>Quantity:</label>
           <input
             type='number'
             className='form-control margin-b-10'

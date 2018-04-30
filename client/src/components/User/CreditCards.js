@@ -7,27 +7,21 @@ import { deleteCreditCardOnServer } from '../../store';
 
 const CreditCards = (props) => {
   const { userCards, user, deleteCard } = props;
-  // if(!user) return null
-
-  // console.log(user);
   return (
     <div>
-      {
-        userCards.map(card => (
-          <div key={card.id} style={{borderStyle:'solid'}}>
-            <p>Card Type: {card.ccType}</p>
-            <p>{'****************' + card.ccNum.slice(-4)}</p>
-            <p>Expiration: {card.ccExp}</p>
-            <p>Security Code: {card.ccSec}</p>
-
-            <button onClick={() => deleteCard(card.id)}>Delete Card</button>
-
-          </div>
-
-
-
-        ))
-      }
+      <h3>Credit Cards</h3>
+      <ul className='list-group'>
+        {
+          userCards.map(card => (
+            <li key={card.id} className='list-group-item'>
+              <p>Card Type: {card.ccType}</p>
+              <p>{'****************' + card.ccNum.slice(-4)}</p>
+              <p>Expiration: {card.ccExp}</p>
+              <button onClick={() => deleteCard(card.id)} className='btn btn-danger'>Delete Card</button>
+            </li>
+          ))
+        }
+      </ul>
       <CreditCardForm userId={user.id} />
     </div>
   );
