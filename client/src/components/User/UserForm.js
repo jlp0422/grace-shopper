@@ -57,7 +57,7 @@ class UserForm extends React.Component {
     return (
       <div>
         <h2>Edit Account</h2>
-        <form>
+        <div>
           {
             Object.keys(fields).map(field => (
               <div className="" key={field}>
@@ -73,7 +73,7 @@ class UserForm extends React.Component {
               </div>
             ))
           }
-        </form>
+        </div>
         {
           isEditing ? (
             <button onClick={ onUpdate } className="btn btn-success margin-t-15">Save</button>
