@@ -26,6 +26,7 @@ import UserAccount from './User/UserAccount';
 import Addresses from './Address/Addresses';
 import CheckoutConfirm from './Checkout/CheckoutConfirm';
 import ThankYou from './Checkout/ThankYou';
+import AdminUserForm from './User/AdminUserForm';
 
 class App extends React.Component {
   componentDidMount() {
@@ -46,6 +47,7 @@ class App extends React.Component {
     const ReviewsAuth = CheckAuth(Reviews)
     const AddressesAuth = CheckAuth(Addresses)
     const UserAccountAuth = CheckAuth(UserAccount)
+    const AdminUserFormAuth = CheckAdmin(AdminUserForm)
     return (
       <Router>
         <div>
@@ -66,7 +68,7 @@ class App extends React.Component {
                 <Route exact path='/products' component={ Products } />
                 <Route exact path='/products/create' component={ ProductForm } />
                 <Route exact path='/products/:id' component={ ProductInfo } />
-                <Route exact path='/products/:id/reviews' component={ ({ match }) => (
+                <Route exact path='/products/:id/reviews' render={ ({ match }) => (
                   <Reviews page='product' id={ match.params.id * 1 } />
                  )} />
 
@@ -78,7 +80,7 @@ class App extends React.Component {
                 <Route exact path='/users/:id/orders' component={ CheckAuth(PastOrders) } />
                 <Route exact path='/users/:id/checkout' component={ CheckAuth(CheckoutConfirm) } />
                 <Route exact path='/users/:id/checkout/thankyou' component={ CheckAuth(ThankYou) } />
-                <Route exact path='/users/:id/reviews' component={ ({ match }) => (
+                <Route exact path='/users/:id/reviews' render={ ({ match }) => (
                   <ReviewsAuth page='user' id={ match.params.id * 1 } />
                 )} />
                 <Route exact path='/users/:id/addresses' render={({ match }) => (
@@ -93,8 +95,10 @@ class App extends React.Component {
                 {/* ADMIN ROUTES */}
                 {/* all routes need to have CheckAdmin HOC */}
                 <Route exact path='/admin/users' component={CheckAdmin(Users)} />
-                <Route exact path='/admin/users/:id' component={CheckAuth(Users)} />
-                <Route exact path='/admin/orders' component={CheckAuth(Users)} />
+                <Route exact path='/admin/users/:id' render={({ match }) => (
+                  <AdminUserFormAuth id={ match.params.id * 1} />
+                )} />
+                <Route exact path='/admin/orders' component={CheckAdmin(Users)} />
               </Switch>
             </div>
           <Route component={ Footer } />

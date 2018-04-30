@@ -56,11 +56,10 @@ class NavBar extends React.Component {
                   <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
                       Hello {user.firstName}
-                      { isAdmin ? <img style={{ width: '25px', height: '18.8px' }} src="https://vignette.wikia.nocookie.net/animal-jam-clans-1/images/9/93/F1391de46653163d885be283ade13c47_crown-clip-art-transparent-king-crown-clipart-no-background_800-598.png/revision/latest/scale-to-width-down/640?cb=20170108005804" /> : null
-                      }
                     </DropdownToggle>
                     <DropdownMenu right>
-                      <DropdownItem onClick={() => location.hash = `/users/${user.id}`}>My Account</DropdownItem>
+                      <DropdownItem onClick={() => location.hash = `/users/${user.id}`}>My Account {isAdmin ? <img style={{ width: '25px', height: '18.8px' }} src="https://vignette.wikia.nocookie.net/animal-jam-clans-1/images/9/93/F1391de46653163d885be283ade13c47_crown-clip-art-transparent-king-crown-clipart-no-background_800-598.png/revision/latest/scale-to-width-down/640?cb=20170108005804" /> : null
+                      }</DropdownItem>
                       <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({ cartCount ? cartCount : null })</DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem onClick={logout}>Log out</DropdownItem>

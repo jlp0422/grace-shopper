@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import AddressForm from './AddressForm';
 
 const Addresses = ({ userAddresses, userId, page }) => {
-  console.log(page)
-
   return (
     <div>
       <h2>Addresses</h2>

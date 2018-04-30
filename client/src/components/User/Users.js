@@ -21,7 +21,7 @@ const Users = ({ users, deleteUser }) => {
                 {`${user.firstName} ${user.lastName}`}
               </Link>
               <button onClick={() => deleteUser(user.id)} className="btn btn-outline-danger">Delete user</button>
-              <button className="btn btn-outline-success">Edit user</button>
+              <Link to={`/admin/users/${user.id}`}><button className="btn btn-outline-success">Edit user</button></Link>
             </li>
           ))
         }

@@ -4,21 +4,6 @@ import NotAdmin from './NotAdmin';
 
 const CheckAdmin = (Component) => {
   class AdminComponent extends React.Component {
-    componentDidMount() {
-      this.checkAdmin()
-    }
-
-    componentWillReceiveProps(nextProps) {
-      this.checkAdmin()
-    }
-
-    checkAdmin() {
-      console.log(this)
-      if (!this.props.isAdmin) {
-        return <NotAdmin />
-      }
-    }
-
     render() {
       const { isAdmin } = this.props
       return (
