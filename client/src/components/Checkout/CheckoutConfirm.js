@@ -11,7 +11,7 @@ import PaymentForm from './PaymentForm';
 // Need to get rid of button "checkout"
 
 const CheckoutConfirm = ({ user }) => {
-  console.log('####user##', user)
+  // console.log('####user##', user)
 
   if(!user.id) return null
 
@@ -20,7 +20,7 @@ const CheckoutConfirm = ({ user }) => {
     <ActiveOrder />
     <Addresses id={user.id} page='checkout' />
     <PaymentForm />
-    <Link to={`/users/${user.id}/cart/checkout/thankyou`}><button className="btn btn-success">Submit Payment</button></Link>
+    {/*<Link to={`/users/${user.id}/cart/checkout/thankyou`}><button className="btn btn-success">Submit Payment</button></Link>*/}
     </div>
   );
 }
