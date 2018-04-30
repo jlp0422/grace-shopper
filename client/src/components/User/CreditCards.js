@@ -1,8 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import CreditCardForm from '../Checkout/CreditCardForm';
+
+import { deleteCreditCardOnServer } from '../../store';
+
 const CreditCards = (props) => {
-  const { userCards } = props;
+  const { userCards, user, deleteCard } = props;
+  // if(!user) return null
+
+  // console.log(user);
   return (
     <div>
       {
@@ -12,9 +19,16 @@ const CreditCards = (props) => {
             <p>{'****************' + card.ccNum.slice(-4)}</p>
             <p>Expiration: {card.ccExp}</p>
             <p>Security Code: {card.ccSec}</p>
+
+            <button onClick={() => deleteCard(card.id)}>Delete Card</button>
+
           </div>
+
+
+
         ))
       }
+      <CreditCardForm userId={user.id} />
     </div>
   );
 }
@@ -22,8 +36,15 @@ const CreditCards = (props) => {
 const mapState = ({ creditCards, user }) => {
   const userCards = creditCards.filter(card => card.userId === user.id)
   return {
-    userCards
+    userCards,
+    user
   }
 }
 
-export default connect(mapState)(CreditCards);
+const mapDispatch = (dispatch) => {
+  return {
+    deleteCard: (id) => dispatch(deleteCreditCardOnServer(id))
+  }
+}
+
+export default connect(mapState, mapDispatch)(CreditCards);

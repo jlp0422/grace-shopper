@@ -24,9 +24,9 @@ app.post('/', (req, res, next) => {
 //     .catch(next);
 // });
 
-// app.delete('/:id', (req, res, next) => {
-//   CreditCard.findById(req.params.id)
-//     .then(creditCard => creditCard.destroy())
-//     .then(() => res.sendStatus(204))
-//     .catch(next);
-// })
+app.delete('/:id', (req, res, next) => {
+  CreditCard.findById(req.params.id)
+    .then(creditCard => creditCard.destroy())
+    .then(() => res.sendStatus(204))
+    .catch(next);
+})

@@ -1,12 +1,11 @@
 /* eslint-disable */
 import axios from 'axios';
-import { GET_CREDIT_CARDS, CREATE_CREDIT_CARD, UPDATE_CREDIT_CARD, DELETE_CREDIT_CARD } from './actionConstants';
+import { GET_CREDIT_CARDS, CREATE_CREDIT_CARD, DELETE_CREDIT_CARD } from './actionConstants';
 
 /*********** ACTION CREATORS ***********/
 const getCreditCards = (creditCards) => ({ type: GET_CREDIT_CARDS, creditCards });
 const createCreditCard = (creditCard) => ({ type: CREATE_CREDIT_CARD, creditCard });
-const updateCreditCard = (creditCard) => ({ type: UPDATE_CREDIT_CARD, creditCard });
-
+const deleteCreditCard = (id) => ({ type: DELETE_CREDIT_CARD, id })
 
 /*********** THUNKS ***********/
 export const getCreditCardsFromServer = () => {
@@ -18,15 +17,19 @@ export const getCreditCardsFromServer = () => {
   };
 };
 
-export const updateCreditCardOnServer = (creditCard) => {
-  const { id } = creditCard;
-  const method = id ? 'put' : 'post';
-  const url = id ? `/api/creditCards/${id}` : '/api/creditCards';
-  const action = id ? updateCreditCard : createCreditCard ;
+export const createCreditCardOnServer = (creditCard) => {
   return (dispatch) => {
-    return axios[method](url, creditCard)
+    return axios.post('/api/creditCards', creditCard)
       .then(res => res.data)
-      .then(creditCard => dispatch(action(creditCard)))
+      .then(creditCard => dispatch(createCreditCard(creditCard)))
+      .catch(err => console.error(err))
+  };
+};
+
+export const deleteCreditCardOnServer = (id) => {
+  return (dispatch) => {
+    return axios.delete(`/api/creditCards/${id}`)
+      .then(() => dispatch(deleteCreditCard(id)))
       .catch(err => console.error(err))
   };
 };
@@ -43,8 +46,8 @@ const creditCardsReducer = ( state = [], action ) => {
       state = [ ...state, action.creditCard ];
       break;
 
-    case UPDATE_CREDIT_CARD:
-      state = [ ...state.filter(creditCard => creditCard.id === action.creditCard.id), action.creditCard ];
+    case DELETE_CREDIT_CARD:
+      state = state.filter(creditCard => creditCard.id !== action.id)
       break;
 
   }

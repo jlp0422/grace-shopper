@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Addresses from '../Address/Addresses';
 // import ActiveOrder from '../Order/ActiveOrder';
 import ActiveOrder from '../Order/ActiveOrder';
-import CreditCardForm from './CreditCardForm';
+
 
 
 // Need a way to select address to use
@@ -16,7 +16,7 @@ const CheckoutConfirm = ({ user }) => {
     <div>
     <ActiveOrder />
     <Addresses id={user.id} page='checkout' />
-    <CreditCardForm userId={user.id} />
+
     {/*<Link to={`/users/${user.id}/cart/checkout/thankyou`}><button className="btn btn-success">Submit Payment</button></Link>*/}
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateCreditCardOnServer } from '../../store';
+import { createCreditCardOnServer } from '../../store';
 
 class CreditCardForm extends Component {
   constructor(props) {
@@ -8,14 +8,15 @@ class CreditCardForm extends Component {
     // const { user } = props;
     // const { ccType, ccNum, ccExp, ccSec } = user;
 
-    const { userId } = props;
+    // const { userId } = props;
+
+    // console.log(userId)
 
     this.state = {
       ccType: '',
       ccNum: '',
       ccExp: '',
       ccSec: '',
-      userId
     }
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
@@ -30,10 +31,11 @@ class CreditCardForm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { onSave } = this.props;
-    // const { ccType, ccNum, ccExp, ccSec } = this.state;
+    const { onSave, userId } = this.props;
+    const { ccType, ccNum, ccExp, ccSec } = this.state;
     // const { id, firstName, lastName, username, password, email, isAdmin } = user;
-    onSave(this.state);
+    onSave({ ccType, ccNum, ccExp, ccSec, userId });
+    this.setState({ ccType: '', ccNum: '', ccExp: '', ccSec: '' });
   }
 
   // removeCard(ev) {
@@ -46,6 +48,9 @@ class CreditCardForm extends Component {
   // } // i'm just testing this will work, will dry out later
 
   render() {
+
+    console.log(this.state)
+
     const fields = {
       ccType: 'Credit Card Type',
       ccNum: 'Credit Card Number',
@@ -53,11 +58,11 @@ class CreditCardForm extends Component {
       ccSec: 'Security Code',
     }
     const { onSave, onChange, removeCard } = this;
-    const { ccType } = this.state;
+    // const { ccType } = this.state;
     // const buttonMessage = ccType ? 'Submit Payment' : 'Submit with New Card'
     return (
       <div>
-        <h4> Payment Details </h4>
+        <h4>Add New Card</h4>
         <div>
           {
             Object.keys(fields).map(field => (
@@ -82,14 +87,14 @@ class CreditCardForm extends Component {
   }
 }
 
-const mapState = ({ creditCards }, { userId }) => {
-  // const userCards = creditCards.filter(card => card.userId === userId);
+const mapState = ( state, { userId }) => {
+  // console.log(userId)
   return { userId }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-    onSave: (creditCard) => dispatch(updateCreditCardOnServer(creditCard))
+    onSave: (creditCard) => dispatch(createCreditCardOnServer(creditCard))
   }
 }
 
