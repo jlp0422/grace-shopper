@@ -27,7 +27,8 @@ Review.belongsTo(Product);
 
 CreditCard.belongsTo(User);
 User.hasMany(CreditCard);
-CreditCard.belongsTo(Order);
+Order.belongsTo(CreditCard);
+// CreditCard.hasMany(Order);
 
 const sync = () => {
   return conn.sync({ force: true });

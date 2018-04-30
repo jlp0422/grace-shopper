@@ -8,11 +8,11 @@ app.get('/', (req, res, next) => {
     .catch(next);
 });
 
-// app.post('/', (req, res, next) => {
-//   CreditCard.create(req.body)
-//     .then(creditCard => res.send(creditCard))
-//     .catch(next);
-// });
+app.post('/', (req, res, next) => {
+  CreditCard.create(req.body)
+    .then(creditCard => res.send(creditCard))
+    .catch(next);
+});
 
 // app.put('/:id', (req, res, next) => {
 //   CreditCard.findById(req.params.id)

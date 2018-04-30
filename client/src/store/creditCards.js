@@ -3,7 +3,10 @@ import axios from 'axios';
 import { GET_CREDIT_CARDS, CREATE_CREDIT_CARD, UPDATE_CREDIT_CARD, DELETE_CREDIT_CARD } from './actionConstants';
 
 /*********** ACTION CREATORS ***********/
-const getCreditCards = (creditCards) => ({ type: GET_CREDIT_CARDS, creditCards })
+const getCreditCards = (creditCards) => ({ type: GET_CREDIT_CARDS, creditCards });
+const createCreditCard = (creditCard) => ({ type: CREATE_CREDIT_CARD, creditCard });
+const updateCreditCard = (creditCard) => ({ type: UPDATE_CREDIT_CARD, creditCard });
+
 
 /*********** THUNKS ***********/
 export const getCreditCardsFromServer = () => {
@@ -15,6 +18,19 @@ export const getCreditCardsFromServer = () => {
   };
 };
 
+export const updateCreditCardOnServer = (creditCard) => {
+  const { id } = creditCard;
+  const method = id ? 'put' : 'post';
+  const url = id ? `/api/creditCards/${id}` : '/api/creditCards';
+  const action = id ? updateCreditCard : createCreditCard ;
+  return (dispatch) => {
+    return axios[method](url, creditCard)
+      .then(res => res.data)
+      .then(creditCard => dispatch(action(creditCard)))
+      .catch(err => console.error(err))
+  };
+};
+
 /*********** CREDIT CARDS REDUCER ***********/
 const creditCardsReducer = ( state = [], action ) => {
   switch(action.type) {
@@ -22,6 +38,15 @@ const creditCardsReducer = ( state = [], action ) => {
     case GET_CREDIT_CARDS:
       state = action.creditCards;
       break;
+
+    case CREATE_CREDIT_CARD:
+      state = [ ...state, action.creditCard ];
+      break;
+
+    case UPDATE_CREDIT_CARD:
+      state = [ ...state.filter(creditCard => creditCard.id === action.creditCard.id), action.creditCard ];
+      break;
+
   }
 
   return state;

@@ -14,7 +14,7 @@ const lineItemCount = 70;
 const addressCount = (userCount + 5) * 2;
 const reviewCount = 1000;
 const productCategoryCount = 300;
-const creditCardCount = 300;
+const creditCardCount = 100;
 
 /*---------------HOW-MANY-SHOULD-WE-MAKE?---------------*/
 
@@ -45,7 +45,13 @@ function createCreditCard() {
   for(let j = 0; j < 16; j++) {
     ccNum += Math.round(Math.random() * 9)
   }
-  return CreditCard.create({ ccType, ccNum, ccExp, ccSec });
+  return CreditCard.create({
+    ccType,
+    ccNum,
+    ccExp,
+    ccSec,
+    userId: Math.ceil(Math.random() * userCount + 4)
+  });
 }
 
 /*--------------GENERATE-ONE-GENERIC-ITEM---------------*/
@@ -97,7 +103,8 @@ const createOrder = () => {
   return Order.create({
     isActive: false,
     date: faker.date.past(),
-    userId: Math.ceil(Math.random() * (userCount + 4))
+    userId: Math.ceil(Math.random() * (userCount + 4)),
+    // creditCardId: Math.ceil(Math.random() * creditCardCount)
   });
 }
 
