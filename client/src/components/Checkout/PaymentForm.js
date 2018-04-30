@@ -69,8 +69,8 @@ class PaymentForm extends Component {
             ))
           }
         </div>
-        <button onClick={onSave}>{buttonMessage}</button>
-        { ccType ? <button onClick={removeCard}>Remove Card</button> : null }
+        <button onClick={onSave} className="btn btn-success">{buttonMessage}</button>
+        { ccType ? <button onClick={removeCard} className="btn btn-danger">Remove Card</button> : null }
       </div>
     );
   }
