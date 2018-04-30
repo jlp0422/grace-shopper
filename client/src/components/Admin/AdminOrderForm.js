@@ -1,17 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { deleteOrderFromServer } from '../../store'
 
 class AdminOrderForm extends React.Component {
   constructor(props) {
     super(props)
+    // console.log(props)
     this.state = {
-
+      shippingAddress: '',
+      billingAddress: '',
+      creditCardId: ''
     }
   }
 
   render() {
-    const { order, user } = this.props
+    const { order, user, deleteOrder } = this.props
+    console.log(this.state)
     return (
       <div>
         <h3>Order #{order.id}</h3>
@@ -25,7 +30,8 @@ class AdminOrderForm extends React.Component {
             <h5>Payment method: </h5>
           </div>
         )}
-        <button className="btn btn-outline-success">Edit order</button>
+        { order.isActive ? <button className="btn btn-outline-success">Edit order</button> : null }
+        { order.isActive ? <button onClick={() => deleteOrder(order.id)} className="btn btn-warning">Delete order</button> : null }
       </div>
     )
   }
@@ -34,13 +40,13 @@ class AdminOrderForm extends React.Component {
 const mapState = ({ orders, users },{ id }) => {
   const order = orders.find(order => order.id === id)
   const user = order && users.find(user => user.id === order.userId)
-  console.log(order)
+  // console.log(order)
   return { order, user  }
 }
 
 const mapDispatch = (dispatch) => {
   return {
-
+    deleteOrder: (id) => dispatch(deleteOrderFromServer(id))
   }
 }
 
