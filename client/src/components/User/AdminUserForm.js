@@ -7,10 +7,10 @@ import { updateUserOnServer } from '../../store';
 class AdminUserForm extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props)
     const { user } = this.props
-    const { firstName, lastName, email, password, username, isAdmin } = user
+    const { id, firstName, lastName, email, password, username, isAdmin } = user
     this.state = {
+      id,
       firstName,
       lastName,
       email,
@@ -19,19 +19,25 @@ class AdminUserForm extends React.Component {
       isAdmin
     }
     this.onChange = this.onChange.bind(this)
+    this.onSave = this.onSave.bind(this)
   }
 
   onChange(ev) {
-    // ev.preventDefault()
     const change = {}
     change[ev.target.name] = ev.target.value
     this.setState(change)
   }
 
+  onSave(ev) {
+    ev.preventDefault()
+    const { updateUser } = this.props
+    updateUser(this.state)
+  }
+
   render() {
     const { user } = this.props
     const { firstName, lastName, email, password, username, isAdmin } = this.state
-    const { onChange } = this
+    const { onChange, onSave } = this
     const fields = {
       firstName: "First Name",
       lastName: "Last Name",
@@ -39,7 +45,6 @@ class AdminUserForm extends React.Component {
       password: "Password",
       username: "Username",
     }
-    console.log(isAdmin)
     return (
       <div>
         <h2>Editing: {`${user.firstName} ${user.lastName}`}</h2>
@@ -65,7 +70,7 @@ class AdminUserForm extends React.Component {
           <label className="form-check-label">Not Adminstrator</label>
         </div>
 
-        <button className="btn btn-success">Save User</button>
+        <button onClick={ onSave } className="btn btn-success">Save User</button>
         <Link to='/admin/users'><button className="btn btn-info">Cancel Edit</button></Link>
       </div>
     )
@@ -74,8 +79,13 @@ class AdminUserForm extends React.Component {
 
 const mapState = ({ users }, { id }) => {
   const user = users.find(user => user.id === id)
-  // console.log(user)
   return { user }
 }
 
-export default connect(mapState)(AdminUserForm);
+const mapDispatch = (dispatch) => {
+  return {
+    updateUser: (user) => dispatch(updateUserOnServer(user))
+  }
+}
+
+export default connect(mapState, mapDispatch)(AdminUserForm);
