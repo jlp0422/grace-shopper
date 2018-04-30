@@ -33,11 +33,11 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
           <h3 id="cart-total-price">Total Price: ${totalPrice}.00</h3>
         </div>
         {
-          equal ? null : (
+          !equal && page !== 'past' ? (
           <div className='col'>
             <Link to={`/users/${order.userId}/checkout`}><button className="btn btn-success margin-t-15">Checkout</button></Link>
           </div>
-          )
+          ) : null
         }
       </div>
     </div>

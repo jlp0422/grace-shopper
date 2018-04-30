@@ -15,7 +15,13 @@ const Addresses = ({ userAddresses, userId, page }) => {
           ))
         }
       </ul>
-      { page !== 'checkout' ? (<AddressForm empty={ true } userId={ userId }/>) : null }
+      { page !== 'checkout' ? (
+        <ul className="list-group">
+          <li className="list-group-item">
+            <AddressForm empty={ true } userId={ userId }/>
+          </li>
+        </ul>
+      ) : null }
     </div>
   );
 }
