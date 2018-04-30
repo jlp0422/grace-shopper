@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { updateUserOnServer } from '../../store';
 
 class PaymentForm extends Component {
   constructor() {
@@ -10,13 +11,26 @@ class PaymentForm extends Component {
       ccExp: '',
       ccSec: '',
     }
-    // this.onChange = this.onChange.bind(this);
-    // this.onSave = this.onSave.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSave = this.onSave.bind(this);
   }
 
-  // onChange(ev) {
+  onChange(ev) {
+    const change = {}
+    change[ev.target.name] = ev.target.value;
+    this.setState(change);
+  }
 
-  // }
+  onSave(ev) {
+    ev.preventDefault();
+    const { onSave, user } = this.props;
+
+    console.log(user);
+
+    const { ccType, ccNum, ccExp, ccSec } = this.state;
+    const { id, firstName, lastName, username, password, email, isAdmin } = user;
+    onSave({ id , firstName, lastName, username, password, email, isAdmin, ccType, ccNum, ccExp, ccSec });
+  }
 
   render() {
     const fields = {
@@ -25,11 +39,11 @@ class PaymentForm extends Component {
       ccExp: 'Expiration',
       ccSec: 'Security Code',
     }
-
+    const { onSave, onChange } = this;
     return (
       <div>
         <h4> Payment Details </h4>
-        <form>
+        <div>
           {
             Object.keys(fields).map(field => (
               <input
@@ -39,19 +53,25 @@ class PaymentForm extends Component {
                 name={field}
                 style={{ marginBottom: '10px' }}
                 value={this.state[field]}
+                onChange={onChange}
               />
             ))
           }
-        </form>
+        </div>
+        <button onClick={onSave}>submit payment</button>
       </div>
     );
   }
 }
 
+const mapState = ({ user }) => {
+  return { user }
+}
+
 const mapDispatch = (dispatch) => {
   return {
-
+    onSave: (ccInfo) => dispatch(updateUserOnServer(ccInfo))
   }
 }
 
-export default connect(null, mapDispatch)(PaymentForm);
+export default connect(mapState, mapDispatch)(PaymentForm);
