@@ -17,10 +17,15 @@ class AdminOrderForm extends React.Component {
         <h3>Order #{order.id}</h3>
         <h4>User: {`${user.firstName} ${user.lastName}`}</h4>
         <h5>Status: {order.isActive ? ('Active') : ('Completed')} </h5>
-        { order.isActive ? null : <h5>Order date: {order.date}</h5> }
-        <h5>Shipping Address: </h5>
-        <h5>Billing Address: </h5>
-        <h5>Payment method: </h5>
+        { order.isActive ? null : (
+          <div>
+            <h5>Order date: {order.date}</h5>
+            <h5>Shipping Address: </h5>
+            <h5>Billing Address: </h5>
+            <h5>Payment method: </h5>
+          </div>
+        )}
+        <button className="btn btn-outline-success">Edit order</button>
       </div>
     )
   }
