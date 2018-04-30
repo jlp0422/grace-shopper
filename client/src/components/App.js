@@ -9,6 +9,7 @@ import CheckAdmin from './General/CheckAdmin';
 import Home from './General/Home';
 import Nav from './General/Nav';
 import Footer from './General/Footer';
+import FourOhFour from './General/FourOhFour';
 import Categories from './Category/Categories';
 import CategoryInfo from './Category/CategoryInfo';
 import CategoryForm from './Category/CategoryForm';
@@ -26,7 +27,7 @@ import UserAccount from './User/UserAccount';
 import Addresses from './Address/Addresses';
 import CheckoutConfirm from './Checkout/CheckoutConfirm';
 import ThankYou from './Checkout/ThankYou';
-import AdminUserForm from './User/AdminUserForm';
+import AdminUserForm from './Admin/AdminUserForm';
 
 class App extends React.Component {
   componentDidMount() {
@@ -99,6 +100,7 @@ class App extends React.Component {
                   <AdminUserFormAuth id={ match.params.id * 1} />
                 )} />
                 <Route exact path='/admin/orders' component={CheckAdmin(Users)} />
+                <Route path='/:id' component={ FourOhFour } />
               </Switch>
             </div>
           <Route component={ Footer } />
