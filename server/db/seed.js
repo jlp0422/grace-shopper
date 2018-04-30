@@ -1,6 +1,6 @@
 const { conn } = require('./conn');
 const { models } = require('./index');
-const { Category, LineItem, Order, Product, User, Address, Review, ProductCategory } = models;
+const { Category, LineItem, Order, Product, User, Address, Review, ProductCategory, CreditCard } = models;
 
 const faker = require('faker');
 
@@ -14,6 +14,7 @@ const lineItemCount = 70;
 const addressCount = (userCount + 5) * 2;
 const reviewCount = 1000;
 const productCategoryCount = 300;
+const creditCardCount = 300;
 
 /*---------------HOW-MANY-SHOULD-WE-MAKE?---------------*/
 
@@ -28,28 +29,27 @@ const createThisMany = (count, item) => {
 /*--------------GENERATE-CREDIT-CARD---------------*/
 
 function createCreditCard() {
-  const ccInfo = {}
+  // const ccInfo = {}
   const month = Math.ceil(Math.random() * 12)
   const ccExp = `${ month < 10 ? '0' + month : month }/20${Math.round(Math.random() * 5) + 20}`
   const type = ['VISA', 'MASTERCARD', 'DISCOVER', 'AMEX'];
   let ccType = type[Math.round(Math.random() * 3)]
   let ccSec = '';
   let ccNum = '';
-  ccInfo.ccExp = ccExp;
-  ccInfo.ccType = ccType;
+  // ccInfo.ccExp = ccExp;
+  // ccInfo.ccType = ccType;
   for(let i = 0; i < 4; i++) {
     ccSec += Math.round(Math.random() * 9)
   }
-  if(ccInfo.ccType === 'AMEX') {
-    ccInfo.ccSec = ccSec;
-  } else {
-    ccInfo.ccSec = ccSec.slice(0,3);
+  if(ccType !== 'AMEX') {
+    ccSec = ccSec.slice(0,3);
   }
   for(let j = 0; j < 16; j++) {
     ccNum += Math.round(Math.random() * 9)
   }
-  ccInfo.ccNum = ccNum;
-  return ccInfo;
+  // ccInfo.ccNum = ccNum;
+  // return ccInfo;
+  return CreditCard.create({ ccType, ccNum, ccExp, ccSec });
 }
 
 /*--------------GENERATE-ONE-GENERIC-ITEM---------------*/
@@ -71,7 +71,7 @@ const createProduct = () => {
 const createUser = () => {
   const firstName = faker.name.firstName();
   const lastName = faker.name.lastName();
-  const { ccType, ccNum, ccSec, ccExp } = createCreditCard();
+  // const { ccType, ccNum, ccSec, ccExp } = createCreditCard();
   return User.create({
     firstName: firstName,
     lastName: lastName,
@@ -79,10 +79,10 @@ const createUser = () => {
     username: `${firstName.toLowerCase()}${lastName.toLowerCase()}`,
     password: faker.internet.password(),
     email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@gmail.com`,
-    ccType,
-    ccNum,
-    ccExp,
-    ccSec
+    // ccType,
+    // ccNum,
+    // ccExp,
+    // ccSec
   });
 }
 
@@ -159,6 +159,10 @@ const populateReviews = () => {
   return createThisMany(reviewCount, createReview);
 }
 
+const populateCreditCards = () => {
+  return createThisMany(creditCardCount, createCreditCard);
+}
+
 /*const populateProductCategories = () => {
   return createThisMany(productCategoryCount, createProductCategory);
 }*/
@@ -176,10 +180,10 @@ const seed = () => {
       username: 'jphilipson',
       password: 'JEREMY',
       email: 'jeremy@gmail.com',
-      ccType: createCreditCard().ccType,
-      ccNum: createCreditCard().ccNum,
-      ccExp: createCreditCard().ccExp,
-      ccSec: createCreditCard().ccSec
+      // ccType: createCreditCard().ccType,
+      // ccNum: createCreditCard().ccNum,
+      // ccExp: createCreditCard().ccExp,
+      // ccSec: createCreditCard().ccSec
     }),
     User.create({
       firstName: 'Jeremy',
@@ -188,10 +192,10 @@ const seed = () => {
       username: 'jgrubard',
       password: 'JEREMY',
       email: 'jgrubard@gmail.com',
-      ccType: createCreditCard().ccType,
-      ccNum: createCreditCard().ccNum,
-      ccExp: createCreditCard().ccExp,
-      ccSec: createCreditCard().ccSec
+      // ccType: createCreditCard().ccType,
+      // ccNum: createCreditCard().ccNum,
+      // ccExp: createCreditCard().ccExp,
+      // ccSec: createCreditCard().ccSec
     }),
     User.create({
       firstName: 'Alex',
@@ -200,10 +204,10 @@ const seed = () => {
       username: 'alevin',
       password: 'ALEX',
       email: 'alex@gmail.com',
-      ccType: createCreditCard().ccType,
-      ccNum: createCreditCard().ccNum,
-      ccExp: createCreditCard().ccExp,
-      ccSec: createCreditCard().ccSec
+      // ccType: createCreditCard().ccType,
+      // ccNum: createCreditCard().ccNum,
+      // ccExp: createCreditCard().ccExp,
+      // ccSec: createCreditCard().ccSec
     }),
     User.create({
       firstName: 'John',
@@ -212,10 +216,10 @@ const seed = () => {
       username: 'jdoe',
       password: 'JOHN',
       email: 'john@gmail.com',
-      ccType: createCreditCard().ccType,
-      ccNum: createCreditCard().ccNum,
-      ccExp: createCreditCard().ccExp,
-      ccSec: createCreditCard().ccSec
+      // ccType: createCreditCard().ccType,
+      // ccNum: createCreditCard().ccNum,
+      // ccExp: createCreditCard().ccExp,
+      // ccSec: createCreditCard().ccSec
     }),
   ])
   .then((users) => {
@@ -277,6 +281,7 @@ const seed = () => {
     .then(() => Promise.all(populateLineItems()))
     .then(() => Promise.all(populateAddresses()))
     .then(() => Promise.all(populateReviews()))
+    .then(() => Promise.all(populateCreditCards()))
   })
   .catch(err => console.error(err))
 })
