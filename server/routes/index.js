@@ -10,3 +10,4 @@ app.use('/sessions', require('./sessions'));
 app.use('/addresses', require('./addresses'));
 app.use('/reviews', require('./reviews'));
 app.use('/productCategories', require('./productCategories'));
+app.use('/creditCards', require('./creditCards'));

@@ -36,8 +36,6 @@ function createCreditCard() {
   let ccType = type[Math.round(Math.random() * 3)]
   let ccSec = '';
   let ccNum = '';
-  // ccInfo.ccExp = ccExp;
-  // ccInfo.ccType = ccType;
   for(let i = 0; i < 4; i++) {
     ccSec += Math.round(Math.random() * 9)
   }
@@ -47,8 +45,6 @@ function createCreditCard() {
   for(let j = 0; j < 16; j++) {
     ccNum += Math.round(Math.random() * 9)
   }
-  // ccInfo.ccNum = ccNum;
-  // return ccInfo;
   return CreditCard.create({ ccType, ccNum, ccExp, ccSec });
 }
 
