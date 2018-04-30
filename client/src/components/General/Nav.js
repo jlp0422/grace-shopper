@@ -62,14 +62,9 @@ class NavBar extends React.Component {
                       }</DropdownItem>
                       <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({ cartCount ? cartCount : null })</DropdownItem>
                       <DropdownItem divider />
+                      <DropdownItem onClick={() => location.hash = '/admin'}>Admin Tools</DropdownItem>
+                      <DropdownItem divider />
                       <DropdownItem onClick={logout}>Log out</DropdownItem>
-                      { isAdmin ? (
-                        <div>
-                          <DropdownItem divider />
-                          <DropdownItem onClick={() => location.hash = '/admin/users'}>View all users</DropdownItem>
-                          <DropdownItem onClick={() => location.hash = '/admin/orders'}>View all orders</DropdownItem>
-                        </div>
-                      ): null}
                     </DropdownMenu>
                   </UncontrolledDropdown>
                 ) : (

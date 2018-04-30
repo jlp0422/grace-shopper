@@ -19,6 +19,7 @@ import ProductInfo from './Product/ProductInfo';
 import Users from './User/Users';
 import UserNav from './User/UserNav';
 import LoginForm from './User/LoginForm';
+import Orders from './Order/Orders';
 import ActiveOrder from './Order/ActiveOrder';
 import PastOrders from './Order/PastOrders';
 import Reviews from './Review/Reviews';
@@ -28,6 +29,8 @@ import Addresses from './Address/Addresses';
 import CheckoutConfirm from './Checkout/CheckoutConfirm';
 import ThankYou from './Checkout/ThankYou';
 import AdminUserForm from './Admin/AdminUserForm';
+import AdminOrderForm from './Admin/AdminOrderForm';
+import AdminNav from './Admin/AdminNav';
 
 class App extends React.Component {
   componentDidMount() {
@@ -49,6 +52,7 @@ class App extends React.Component {
     const AddressesAuth = CheckAuth(Addresses)
     const UserAccountAuth = CheckAuth(UserAccount)
     const AdminUserFormAuth = CheckAdmin(AdminUserForm)
+    const AdminOrderFormAuth = CheckAdmin(AdminOrderForm)
     return (
       <Router>
         <div>
@@ -58,6 +62,7 @@ class App extends React.Component {
               <Route path='/users/:id' render={({ match, history }) => (
                 <UserNavAuth history={ history } id={ match.params.id * 1 } />
               )} />
+              <Route path='/admin' component={CheckAdmin(AdminNav)} />
               <Switch>
                 <Route exact path='/' component={ Home } />
                 {/* CATEGORY ROUTES */}
@@ -99,8 +104,13 @@ class App extends React.Component {
                 <Route exact path='/admin/users/:id' render={({ match }) => (
                   <AdminUserFormAuth id={ match.params.id * 1} />
                 )} />
-                <Route exact path='/admin/orders' component={CheckAdmin(Users)} />
-                <Route path='/:id' component={ FourOhFour } />
+                <Route exact path='/admin/orders' component={CheckAdmin(Orders)} />
+                <Route exact path ='/admin/orders/:id' render={({ match }) => (
+                  <AdminOrderFormAuth id={ match.params.id * 1 } />
+                )} />
+                {/* shows on /admin right now, since /admin is not in switch
+                 <Route path='/:id' component={ FourOhFour } />
+                */}
               </Switch>
             </div>
           <Route component={ Footer } />
