@@ -21,7 +21,7 @@ const CategoryInfo = ({ category, deleteCategory, loggedIn, isAdmin, productMap,
         productMap.map(productCategory => {
           const product = products.find(p => p.id === productCategory.productId)
           return (
-            <ul key={productCategory.id} className='list-group'>
+            <ul key={product.id} className='list-group'>
               <li className='list-group-item'>
                 <ProductCard key={productCategory.id} product={product} />
               </li>
