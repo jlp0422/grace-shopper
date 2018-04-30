@@ -22,7 +22,7 @@ export const deleteUserOnServer = (id) => {
   return (dispatch) => {
     return axios.delete(`/api/users/${id}`)
       .then(() => dispatch(deleteUser(id)))
-      .then(() => location.hash = '/users')
+      .then(() => location.hash = '/admin/users')
       // .catch(err) placeholder for error handling
   };
 };

@@ -60,7 +60,7 @@ class UserForm extends React.Component {
         <div>
           {
             Object.keys(fields).map(field => (
-              <div className="" key={field}>
+              <div className="margin-b-10" key={field}>
               <label className="font-weight-bold">{fields[field]}</label>
               <input
               name={field}

@@ -17,11 +17,9 @@ const Users = ({ users, deleteUser }) => {
         {
           users.map(user => (
             <li key={user.id} className='list-group-item'>
-              <Link to={`/users/${user.id}`}>
-                {`${user.firstName} ${user.lastName}`}
-              </Link>
-              <button onClick={() => deleteUser(user.id)} className="btn btn-outline-danger">Delete user</button>
+              <h5>{`${user.firstName} ${user.lastName}`}</h5>
               <Link to={`/admin/users/${user.id}`}><button className="btn btn-outline-success">Edit user</button></Link>
+              <button onClick={() => deleteUser(user.id)} className="btn btn-outline-danger">Delete user</button>
             </li>
           ))
         }
