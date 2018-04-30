@@ -2,7 +2,7 @@
 import React from 'react';
 import { HashRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
-import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer, getProductCategoriesFromServer } from '../store';
+import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer, getProductCategoriesFromServer, getCreditCardsFromServer } from '../store';
 
 import CheckAuth from './General/CheckAuth';
 import CheckAdmin from './General/CheckAdmin';
@@ -30,7 +30,7 @@ import AdminUserForm from './User/AdminUserForm';
 
 class App extends React.Component {
   componentDidMount() {
-    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews, getProductCategories } = this.props;
+    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews, getProductCategories, getCreditCards } = this.props;
     getCategories();
     getProducts();
     getUsers();
@@ -40,6 +40,7 @@ class App extends React.Component {
     getAddresses();
     getReviews();
     getProductCategories();
+    getCreditCards();
   }
 
   render() {
@@ -119,6 +120,7 @@ const mapDispatch = (dispatch) => {
     getAddresses: () => dispatch(getAddressesFromServer()),
     getReviews: () => dispatch(getReviewsFromServer()),
     getProductCategories: () => dispatch(getProductCategoriesFromServer()),
+    getCreditCards: () => dispatch(getCreditCardsFromServer()),
     getUser: () => {
       if (window.localStorage.getItem('token')) {
         dispatch(getUserFromToken(window.localStorage.getItem('token')))
