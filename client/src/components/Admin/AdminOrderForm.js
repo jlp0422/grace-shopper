@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteOrderFromServer } from '../../store'
+import { deleteOrderFromServer } from '../../store';
+import AddressForm from '../Address/AddressForm'
 
 class AdminOrderForm extends React.Component {
   constructor(props) {
@@ -10,12 +11,14 @@ class AdminOrderForm extends React.Component {
     this.state = {
       shippingAddress: '',
       billingAddress: '',
-      creditCardId: ''
+      creditCardId: '',
+      isEditing: false
     }
   }
 
   render() {
     const { order, user, deleteOrder } = this.props
+    const { isEditing } = this.state
     if (!order) return null
     console.log(this.state)
     return (
@@ -23,16 +26,17 @@ class AdminOrderForm extends React.Component {
         <h3>Order #{order.id}</h3>
         <h4>User: {`${user.firstName} ${user.lastName}`}</h4>
         <h5>Status: {order.isActive ? ('Active') : ('Completed')} </h5>
-        { order.isActive ? null : (
-          <div>
-            <h5>Order date: {order.date}</h5>
-            <h5>Shipping Address: </h5>
-            <h5>Billing Address: </h5>
-            <h5>Payment method: </h5>
-          </div>
-        )}
-        { order.isActive ? <button className="btn btn-outline-success">Edit order</button> : null }
-        { order.isActive ? <button onClick={() => deleteOrder(order.id, 'admin')} className="btn btn-warning">Delete order</button> : null }
+        <h5>Shipping Address: { order.isActive ? null : ('shipping') }</h5>
+        <h5>Billing Address: { order.isActive ? null : ('billing') }</h5>
+        <h5>Payment method: { order.isActive ? null : ('cc num') }</h5>
+        { order.isActive ?
+          <button onClick={() => this.setState({ isEditing: !isEditing })} className={`btn btn-${ isEditing ? `` : `outline-`}success`}>{ isEditing ? ('Save') : ('Edit')}</button>
+          : null
+        }
+        { order.isActive ?
+          <button onClick={() => deleteOrder(order.id, 'admin')} className="btn btn-warning">Delete order</button>
+          : null
+        }
       </div>
     )
   }
