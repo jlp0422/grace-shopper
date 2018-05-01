@@ -62,7 +62,6 @@ class AddressForm extends Component {
   // --------------------------- RENDER -------------------------
 
   render() {
-    console.log(this.state)
     const { id, isShipping, isEditing, street, city, state, zip } = this.state;
     const { deleteAddress, address, empty, admin } = this.props;
     const { onChange, onUpdate, onCancel } = this;
@@ -72,7 +71,6 @@ class AddressForm extends Component {
       state: 'State',
       zip: 'Zip Code'
     }
-    console.log(admin)
     return (
       <div>
       {

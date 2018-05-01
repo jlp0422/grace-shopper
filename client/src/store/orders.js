@@ -29,7 +29,7 @@ export const deleteOrderFromServer = (id, page) => {
   };
 };
 
-export const updateOrderOnServer = (order) => {
+export const updateOrderOnServer = (order, page) => {
   const { id } = order;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/orders/${id}` : '/api/orders';
@@ -38,7 +38,9 @@ export const updateOrderOnServer = (order) => {
     return axios[method](url, order)
       .then(res => res.data)
       .then(ord => dispatch(action(ord)))
-      .then(() => location.hash = '/orders')
+      .then(() => {
+        if (page === 'admin') return location.hash = '/orders'
+      })
     // .catch(err) placeholder for error handling
   }
 }
