@@ -4,10 +4,6 @@ const Address = conn.define('address', {
   nickname: {
     type: Sequelize.STRING
   },
-  isShipping: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: true
-  },
   street: {
     type: Sequelize.STRING,
     allowNull: false,

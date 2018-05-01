@@ -17,8 +17,8 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
           return (
             <div key={item.id} id='cart-line-item'>
               <p className="font-weight-bold">Product: {product.name}</p>
-              { order.date ? <p>Quantity Purcahed: {item.quantity}</p> : null }
-              <p>Prince per item: ${product.price}</p>
+              { order.date ? <p>Quantity Purchased: {item.quantity}</p> : null }
+              <p>Price per item: ${product.price}</p>
               { order.isActive ? (
                 <LineItemForm id={ item.id } page={page} productId={product.id} orderId={order.id} />
               )

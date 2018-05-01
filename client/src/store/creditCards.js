@@ -17,11 +17,14 @@ export const getCreditCardsFromServer = () => {
   };
 };
 
-export const createCreditCardOnServer = (creditCard) => {
+export const createCreditCardOnServer = (creditCard, page) => {
   return (dispatch) => {
     return axios.post('/api/creditCards', creditCard)
       .then(res => res.data)
       .then(creditCard => dispatch(createCreditCard(creditCard)))
+      .then(() => {
+        if (page === 'checkout') location.hash = `/users/${creditCard.userId}/checkout`
+      })
       .catch(err => console.error(err))
   };
 };

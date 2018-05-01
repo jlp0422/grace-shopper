@@ -14,8 +14,8 @@ Product.belongsToMany(Category, { through: ProductCategory });
 Category.belongsToMany(Product, { through: ProductCategory });
 
 LineItem.belongsTo(Product);
-Order.hasMany(LineItem, { as: 'lineItems', foreignKey: 'orderId' });
-LineItem.belongsTo(Order, { as: 'order' });
+Order.hasMany(LineItem);
+LineItem.belongsTo(Order);
 User.hasMany(Order);
 Order.belongsTo(User);
 
@@ -29,6 +29,9 @@ CreditCard.belongsTo(User);
 User.hasMany(CreditCard);
 Order.belongsTo(CreditCard);
 // CreditCard.hasMany(Order);
+
+Order.belongsTo(Address, { as: 'shipping' })
+Order.belongsTo(Address, { as: 'billing' })
 
 const sync = () => {
   return conn.sync({ force: true });

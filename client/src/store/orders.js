@@ -39,6 +39,7 @@ export const updateOrderOnServer = (order, page) => {
       .then(res => res.data)
       .then(ord => dispatch(action(ord)))
       .then(() => {
+        if(!!order.id) return location.hash = `/users/${order.userId}/checkout/thankyou`;
         if (page === 'admin') return location.hash = '/orders'
       })
     // .catch(err) placeholder for error handling
