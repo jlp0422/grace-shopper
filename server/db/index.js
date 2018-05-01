@@ -14,8 +14,8 @@ Product.belongsToMany(Category, { through: ProductCategory });
 Category.belongsToMany(Product, { through: ProductCategory });
 
 LineItem.belongsTo(Product);
-Order.hasMany(LineItem, { as: 'lineItems', foreignKey: 'orderId' });
-LineItem.belongsTo(Order, { as: 'order' });
+Order.hasMany(LineItem);
+LineItem.belongsTo(Order);
 User.hasMany(Order);
 Order.belongsTo(User);
 
