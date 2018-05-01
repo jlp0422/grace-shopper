@@ -2,35 +2,42 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Dropdown extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {}
   }
 
   render() {
-    const { addresses, title } = this.props
-    // console.log('add:', addresses)
-    // return ('test');
-    // if(!addresses.length) return null
+    const { items, title } = this.props;
+
+    console.log(items)
+
     return (
       <div>
-        <select className='form-control'>
-          <option>Select Your { title }</option>
-          {
-            addresses.map(address => (
-              <option key={address.id}>{address.nickname}</option>
-            ))
-          }
-        </select>
+        {
+          items.length ? (
+            <select className='form-control'>
+              <option>Select Your { title }</option>
+              {
+                items.map(item => (
+                  <option key={item.id} value={item.id}>
+                    {item.ccType ? `${item.ccType} ****${item.ccNum.slice(-4)}` : item.nickname}
+                  </option>
+                ))
+              }
+            </select>
+          ) : (
+            <p>You have no saved {title}s</p>
+          )
+        }
       </div>
     );
   }
 }
 
-const mapState = ( state, { addresses, title }) => {
-  // console.log('add:', addresses)
+const mapState = ( state, { items, title }) => {
   return {
-    addresses,
+    items,
     title
   }
 }

@@ -5,35 +5,37 @@ import Addresses from '../Address/Addresses';
 import ActiveOrder from '../Order/ActiveOrder';
 import Dropdown from './Dropdown';
 
-// Need a way to select address to use
-// Need to get rid of button "checkout"
-
-const CheckoutConfirm = ({ user, billingAddresses, shippingAddresses }) => {
-
-  console.log('Bill:', billingAddresses)
-  console.log('Ship:', shippingAddresses)
-
-  if(!user.id) return null
+const CheckoutConfirm = ({ user, billingAddresses, shippingAddresses, ownCards }) => {
   return (
     <div>
-    <ActiveOrder />
-    <label>Select Shipping Address:</label>
-    <Dropdown addresses={shippingAddresses} title='Shipping' />
-    <label>Select Billing Address:</label>
-    <Dropdown addresses={billingAddresses} title='Billing' />
-    <label>Select Credit Card:</label>
-    <Dropdown title='Credit Card'/>
+      <ActiveOrder />
+      <br />
+      <div className='row'>
+        <div className='col'>
+          <h5>Select Shipping Address:</h5>
+          <Dropdown items={shippingAddresses} title='Shipping Address' />
+        </div>
+        <div className='col'>
+          <h5>Select Billing Address:</h5>
+          <Dropdown items={billingAddresses} title='Billing Address' />
+        </div>
+      </div>
+      <br />
+      <h5>Select Credit Card:</h5>
+        <Dropdown items={ownCards} title='Credit Card'/>
     </div>
   );
 }
 
-const mapState = ({ user, addresses }) => {
+const mapState = ({ user, addresses, creditCards }) => {
   const billingAddresses = addresses.filter(address => user.id === address.userId && !address.isShipping)
   const shippingAddresses = addresses.filter(address => user.id === address.userId && address.isShipping)
+  const ownCards = creditCards.filter(card => card.userId === user.id)
   return {
     user,
     billingAddresses,
-    shippingAddresses
+    shippingAddresses,
+    ownCards
   }
 };
 
