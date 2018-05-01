@@ -16,25 +16,30 @@ class CheckoutConfirm extends Component {
       billingId: '',
     }
     this.handleChange = this.handleChange.bind(this);
+    this.onSave = this.onSave.bind(this);
   }
 
   handleChange(ev) {
     const change = {}
-    change[ev.target.name] = ev.target.value * 1;
-    this.setState(change);
+    const value = ev.target.value * 1;
+    const name = ev.target.name;
+    change[name] = value;
+    this.setState(change)
   }
 
   onSave(ev) {
     ev.preventDefault();
-    const { onSave, order, user } = this.props;
+    const { onUpdate, order, user } = this.props;
     const { creditCardId, shippingId, billingId } = this.state;
     const { id } = order;
-    onSave({ id, isActive: false, date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
+    const orderToSubmit = { id, isActive: false, date: Date.now(), userId: user.id, creditCardId, shippingId, billingId };
+    onUpdate(orderToSubmit);
+    onUpdate({ isActive: true, userId: user.id });
   }
 
   render() {
-    const { handleChange } = this;
-    const { ownAddresses, ownCards, user, onSave } = this.props;
+    const { handleChange, onSave } = this;
+    const { ownAddresses, ownCards, user, onUpdate } = this.props;
 
     console.log(this.state)
 
@@ -62,7 +67,7 @@ class CheckoutConfirm extends Component {
             <Link to={`/users/${user.id}/creditCards`}>
               <button className='btn btn-info'>Add New Card</button>
             </Link>
-          <button className='btn btn-success' onClickCapture={ onSave }>Submit Payment</button>
+          <button className='btn btn-success' onClick={ onSave }>Submit Payment</button>
       </div>
     );
   }
@@ -83,7 +88,7 @@ const mapState = ({ user, addresses, creditCards, orders }) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    onSave: (order) => dispatch(updateOrderOnServer(order))
+    onUpdate: (order) => dispatch(updateOrderOnServer(order)),
   }
 }
 

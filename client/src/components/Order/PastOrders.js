@@ -9,7 +9,10 @@ const PastOrders = ({ pastOrders }) => {
       { pastOrders.length ? null : ('No orders')}
       {
         pastOrders.map(order => (
-          <OrderCard page={'past'} key={order.id} order={order} />
+          <div key={order.id}>
+            <OrderCard page={'past'} order={order} />
+            <hr />
+          </div>
         ))
       }
     </div>

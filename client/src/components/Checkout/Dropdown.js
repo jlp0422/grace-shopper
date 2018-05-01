@@ -12,7 +12,7 @@ const Dropdown = (props) => {
             {
               items.map(item => (
                 <option key={item.id} value={item.id}>
-                  {item.ccType ? `${item.ccType} ****${item.ccNum.slice(-4)}` : item.nickname}
+                  {item.ccType ? (`${item.ccType} ****${item.ccNum.slice(-4)}`) : item.nickname}
                 </option>
               ))
             }

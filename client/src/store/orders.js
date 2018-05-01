@@ -36,7 +36,11 @@ export const updateOrderOnServer = (order) => {
     return axios[method](url, order)
       .then(res => res.data)
       .then(ord => dispatch(action(ord)))
-      .then(() => location.hash = '/orders')
+      .then(() => {
+        if(!!order.id) {
+          location.hash = `/users/${order.userId}/checkout/thankyou`;
+        }
+      })
     // .catch(err) placeholder for error handling
   }
 }
