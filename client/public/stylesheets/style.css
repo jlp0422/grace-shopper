@@ -47,6 +47,13 @@
   border-bottom: 2px solid black;
 }
 
+/* ADMIN TOOLS */
+.admin-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1
+}
+
 /* FOOTER */
 #footer {
   position: fixed;
