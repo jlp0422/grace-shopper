@@ -38,8 +38,6 @@ class CheckoutConfirm extends Component {
     const { ownAddresses, ownCards, user } = this.props;
     return (
       <div>
-        <ActiveOrder />
-          <br />
         <div className='row'>
           <div className='col'>
             <h5>Select Shipping Address:</h5>
@@ -60,6 +58,8 @@ class CheckoutConfirm extends Component {
             <Link to={`/users/${user.id}/creditCards`}>
               <button className='btn btn-info'>Add New Card</button>
             </Link>
+          <ActiveOrder />
+          <br />
           <button className='btn btn-success' onClick={ onSave }>Submit Payment</button>
       </div>
     );
