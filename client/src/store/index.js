@@ -25,7 +25,7 @@ const reducer = combineReducers({
   creditCards: creditCardsReducer
 });
 
-const store = createStore(reducer, applyMiddleware(thunk))//, logger));
+const store = createStore(reducer, applyMiddleware(thunk, logger));
 
 export default store;
 
