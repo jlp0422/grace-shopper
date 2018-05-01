@@ -8,11 +8,9 @@ import ProductForm from './ProductForm';
 import LineItemForm from './LineItemForm';
 import ReviewForm from '../Review/ReviewForm';
 
-const ProductInfo = (props) => {
-  const { product, deleteProduct, loggedIn, isAdmin, rating, reviewCount, makeSingular, activeOrder } = props;
+const ProductInfo = ({ product, deleteProduct, loggedIn, isAdmin, rating, reviewCount, makeSingular, activeOrder }) => {
   const displayRating = rating ? starRating(rating, 'stars-large') : 'This product has a rating of Zero :('
   if (!product) return null;
-  // if (!activeOrder) return null;
   return (
     <div>
     <div className='row'>

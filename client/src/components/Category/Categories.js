@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import CategoryCard from './CategoryCard';
 import CategoryForm from './CategoryForm';
 
-const Categories = (props) => {
-  const { categories, loggedIn, isAdmin } = props;
+const Categories = ({ categories, loggedIn, isAdmin }) => {
   return (
     <div>
       <h2>Categories</h2>
