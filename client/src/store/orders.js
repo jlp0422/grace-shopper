@@ -18,16 +18,18 @@ export const getOrdersFromServer = () => {
   };
 };
 
-export const deleteOrderFromServer = (id) => {
+export const deleteOrderFromServer = (id, page) => {
   return (dispatch) => {
     return axios.delete(`/api/orders/${id}`)
       .then(() => dispatch(deleteOrder(id)))
-      .then(() => location.hash = '/orders')
+      .then(() => {
+        if (page === 'admin') return location.hash = '/admin/orders'
+      })
     // .catch(err) placeholder for error handling
   };
 };
 
-export const updateOrderOnServer = (order) => {
+export const updateOrderOnServer = (order, page) => {
   const { id } = order;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/orders/${id}` : '/api/orders';
@@ -36,7 +38,9 @@ export const updateOrderOnServer = (order) => {
     return axios[method](url, order)
       .then(res => res.data)
       .then(ord => dispatch(action(ord)))
-      .then(() => location.hash = '/orders')
+      .then(() => {
+        if (page === 'admin') return location.hash = '/orders'
+      })
     // .catch(err) placeholder for error handling
   }
 }

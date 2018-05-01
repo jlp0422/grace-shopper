@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import NotAdmin from './NotAdmin';
+import NotAdmin from '../Admin/NotAdmin';
 
 const CheckAdmin = (Component) => {
   class AdminComponent extends React.Component {

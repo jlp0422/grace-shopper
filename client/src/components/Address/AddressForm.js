@@ -64,7 +64,7 @@ class AddressForm extends Component {
 
   render() {
     const { id, isShipping, isEditing, street, city, state, zip } = this.state;
-    const { deleteAddress, address, empty } = this.props;
+    const { deleteAddress, address, empty, admin } = this.props;
     const { onChange, onUpdate, onCancel } = this;
     const fields = {
       nickname: 'Address Nickname',
