@@ -30,7 +30,7 @@ const Categories = (props) => {
 };
 
 const mapState = ({ categories, user }) => {
-  const loggedIn = !!Object.keys(user).length;
+  const loggedIn = !!user.id;
   const { isAdmin } = user;
   return {
     categories,

@@ -30,7 +30,7 @@ const UserAccount = ({ user, id }) => {
   )
 }
 
-const mapState = ({ user, orders, addresses }, { id }) => {
+const mapState = ({ user, orders, addresses }, { id, history }) => {
   const pastOrders = orders.filter(order => order.userId === user.id && !order.isActive).length;
   return { user, id }
 }

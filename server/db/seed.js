@@ -1,6 +1,6 @@
 const { conn } = require('./conn');
 const { models } = require('./index');
-const { Category, LineItem, Order, Product, User, Address, Review, ProductCategory } = models;
+const { Category, LineItem, Order, Product, User, Address, Review, ProductCategory, CreditCard } = models;
 
 const faker = require('faker');
 
@@ -14,6 +14,7 @@ const lineItemCount = 70;
 const addressCount = (userCount + 5) * 2;
 const reviewCount = 1000;
 const productCategoryCount = 300;
+const creditCardCount = 100;
 
 /*---------------HOW-MANY-SHOULD-WE-MAKE?---------------*/
 
@@ -25,20 +26,44 @@ const createThisMany = (count, item) => {
   return result;
 }
 
-/*--------------GENERATE-ONE-GENERIC-ITEM---------------*/
+/*--------------GENERATE-CREDIT-CARD---------------*/
 
-const createCategory = () => {
-  return Category.create({ name: faker.commerce.department() });
+function createCreditCard() {
+  // const ccInfo = {}
+  const month = Math.ceil(Math.random() * 12)
+  const ccExp = `${ month < 10 ? '0' + month : month }/20${Math.round(Math.random() * 5) + 20}`
+  const type = ['VISA', 'MASTERCARD', 'DISCOVER', 'AMEX'];
+  let ccType = type[Math.round(Math.random() * 3)]
+  let ccSec = '';
+  let ccNum = '';
+  for(let i = 0; i < 4; i++) {
+    ccSec += Math.round(Math.random() * 9)
+  }
+  if(ccType !== 'AMEX') {
+    ccSec = ccSec.slice(0,3);
+  }
+  for(let j = 0; j < 16; j++) {
+    ccNum += Math.round(Math.random() * 9)
+  }
+  return CreditCard.create({
+    ccType,
+    ccNum,
+    ccExp,
+    ccSec,
+    userId: Math.ceil(Math.random() * userCount + 4)
+  });
 }
 
+/*--------------GENERATE-ONE-GENERIC-ITEM---------------*/
+
+/*const createCategory = () => {
+  return Category.create({ name: faker.commerce.department() });
+}*/
+
 const createProduct = () => {
-
-  // console.log(Math.round(Math.random() * 490) + 10)
-
   return Product.create({
     name: faker.commerce.productName(),
     price: faker.commerce.price(),
-    // price: Math.round(Math.random() * 490) + 10,
     quantity: Math.round(Math.random() * 100),
     description: faker.lorem.paragraph(),
     categoryId: Math.ceil(Math.random() * categoryCount)
@@ -48,6 +73,7 @@ const createProduct = () => {
 const createUser = () => {
   const firstName = faker.name.firstName();
   const lastName = faker.name.lastName();
+  // const { ccType, ccNum, ccSec, ccExp } = createCreditCard();
   return User.create({
     firstName: firstName,
     lastName: lastName,
@@ -55,17 +81,23 @@ const createUser = () => {
     username: `${firstName.toLowerCase()}${lastName.toLowerCase()}`,
     password: faker.internet.password(),
     email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@gmail.com`,
+    // ccType,
+    // ccNum,
+    // ccExp,
+    // ccSec
   });
 }
 
 const createAddress = () => {
+  const addressNames = ['Home', 'Work', 'Mom & Dad', 'Home-1', 'Home-2'];
   return Address.create({
+    nickname: addressNames[Math.round(Math.random() * 4)],
     isShipping: true,
     street: faker.address.streetAddress(),
     city: faker.address.city(),
     state: faker.address.state(),
     zip: faker.address.zipCode(),
-    userId: Math.ceil(Math.random() * userCount + 5)
+    userId: Math.ceil(Math.random() * userCount + 4)
   });
 }
 
@@ -73,7 +105,8 @@ const createOrder = () => {
   return Order.create({
     isActive: false,
     date: faker.date.past(),
-    userId: Math.ceil(Math.random() * (userCount + 5))
+    userId: Math.ceil(Math.random() * (userCount + 4)),
+    // creditCardId: Math.ceil(Math.random() * creditCardCount)
   });
 }
 
@@ -89,23 +122,23 @@ const createReview = () => {
   return Review.create({
     rating: Math.round(Math.random() * 5),
     productId: Math.ceil(Math.random() * productCount),
-    userId: Math.ceil(Math.random() * (userCount + 5)),
+    userId: Math.ceil(Math.random() * (userCount + 4)),
     description: faker.lorem.paragraph(),
   });
 }
 
-const createProductCategory = () => {
+/*const createProductCategory = () => {
   return ProductCategory.create({
     productId: Math.ceil(Math.random() * productCount),
     categoryId: Math.ceil(Math.random() * categoryCount),
   });
-}
+}*/
 
 /*-----------------POPULATE-MANY-ITEMS------------------*/
 
-const populateCategories = () => {
+/*const populateCategories = () => {
   return createThisMany(categoryCount, createCategory);
-}
+}*/
 
 const populateProducts = () => {
   return createThisMany(productCount, createProduct);
@@ -131,9 +164,13 @@ const populateReviews = () => {
   return createThisMany(reviewCount, createReview);
 }
 
-const populateProductCategories = () => {
-  return createThisMany(productCategoryCount, createProductCategory);
+const populateCreditCards = () => {
+  return createThisMany(creditCardCount, createCreditCard);
 }
+
+/*const populateProductCategories = () => {
+  return createThisMany(productCategoryCount, createProductCategory);
+}*/
 
 /*--------------------SEED-DATABASE---------------------*/
 
@@ -147,7 +184,11 @@ const seed = () => {
       isAdmin: true,
       username: 'jphilipson',
       password: 'JEREMY',
-      email: 'jeremy@gmail.com'
+      email: 'jeremy@gmail.com',
+      // ccType: createCreditCard().ccType,
+      // ccNum: createCreditCard().ccNum,
+      // ccExp: createCreditCard().ccExp,
+      // ccSec: createCreditCard().ccSec
     }),
     User.create({
       firstName: 'Jeremy',
@@ -155,15 +196,11 @@ const seed = () => {
       isAdmin: true,
       username: 'jgrubard',
       password: 'JEREMY',
-      email: 'jgrubard@gmail.com'
-    }),
-    User.create({
-      firstName: 'Alice',
-      lastName: 'Luong',
-      isAdmin: true,
-      username: 'aluong',
-      password: 'ALICE',
-      email: 'alice@gmail.com'
+      email: 'jgrubard@gmail.com',
+      // ccType: createCreditCard().ccType,
+      // ccNum: createCreditCard().ccNum,
+      // ccExp: createCreditCard().ccExp,
+      // ccSec: createCreditCard().ccSec
     }),
     User.create({
       firstName: 'Alex',
@@ -171,7 +208,11 @@ const seed = () => {
       isAdmin: true,
       username: 'alevin',
       password: 'ALEX',
-      email: 'alex@gmail.com'
+      email: 'alex@gmail.com',
+      // ccType: createCreditCard().ccType,
+      // ccNum: createCreditCard().ccNum,
+      // ccExp: createCreditCard().ccExp,
+      // ccSec: createCreditCard().ccSec
     }),
     User.create({
       firstName: 'John',
@@ -179,7 +220,11 @@ const seed = () => {
       isAdmin: false,
       username: 'jdoe',
       password: 'JOHN',
-      email: 'john@gmail.com'
+      email: 'john@gmail.com',
+      // ccType: createCreditCard().ccType,
+      // ccNum: createCreditCard().ccNum,
+      // ccExp: createCreditCard().ccExp,
+      // ccSec: createCreditCard().ccSec
     }),
   ])
   .then((users) => {
@@ -241,6 +286,7 @@ const seed = () => {
     .then(() => Promise.all(populateLineItems()))
     .then(() => Promise.all(populateAddresses()))
     .then(() => Promise.all(populateReviews()))
+    .then(() => Promise.all(populateCreditCards()))
   })
   .catch(err => console.error(err))
 })

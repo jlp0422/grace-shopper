@@ -2,7 +2,7 @@
 import React from 'react';
 import { HashRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
-import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer, getProductCategoriesFromServer } from '../store';
+import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer, getProductCategoriesFromServer, getCreditCardsFromServer } from '../store';
 
 import CheckAuth from './General/CheckAuth';
 import CheckAdmin from './General/CheckAdmin';
@@ -31,10 +31,11 @@ import ThankYou from './Checkout/ThankYou';
 import AdminUserForm from './Admin/AdminUserForm';
 import AdminOrderForm from './Admin/AdminOrderForm';
 import AdminNav from './Admin/AdminNav';
+import CreditCards from './User/CreditCards';
 
 class App extends React.Component {
   componentDidMount() {
-    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews, getProductCategories } = this.props;
+    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews, getProductCategories, getCreditCards } = this.props;
     getCategories();
     getProducts();
     getUsers();
@@ -44,6 +45,7 @@ class App extends React.Component {
     getAddresses();
     getReviews();
     getProductCategories();
+    getCreditCards();
   }
 
   render() {
@@ -84,6 +86,7 @@ class App extends React.Component {
                 )} />
                 <Route exact path='/users/:id/cart' component={ CheckAuth(ActiveOrder) } />
                 <Route exact path='/users/:id/orders' component={ CheckAuth(PastOrders) } />
+                <Route exact path='/users/:id/creditCards' component={ CheckAuth(CreditCards) } />
                 <Route exact path='/users/:id/checkout' component={ CheckAuth(CheckoutConfirm) } />
                 <Route exact path='/users/:id/checkout/thankyou' component={ CheckAuth(ThankYou) } />
                 <Route exact path='/users/:id/reviews' render={ ({ match }) => (
@@ -131,6 +134,7 @@ const mapDispatch = (dispatch) => {
     getAddresses: () => dispatch(getAddressesFromServer()),
     getReviews: () => dispatch(getReviewsFromServer()),
     getProductCategories: () => dispatch(getProductCategoriesFromServer()),
+    getCreditCards: () => dispatch(getCreditCardsFromServer()),
     getUser: () => {
       if (window.localStorage.getItem('token')) {
         dispatch(getUserFromToken(window.localStorage.getItem('token')))

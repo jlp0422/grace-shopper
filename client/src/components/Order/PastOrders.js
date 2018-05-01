@@ -9,14 +9,14 @@ const PastOrders = ({ pastOrders }) => {
       { pastOrders.length ? null : ('No orders')}
       {
         pastOrders.map(order => (
-          <OrderCard key={order.id} order={order} />
+          <OrderCard page={'past'} key={order.id} order={order} />
         ))
       }
     </div>
   )
 }
 
-const mapState = ({ orders, user }) => {
+const mapState = ({ orders, user }, { page }) => {
   const pastOrders = orders.filter(order => order.userId === user.id && !order.isActive)
   return { pastOrders }
 }

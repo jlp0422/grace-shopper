@@ -17,7 +17,7 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
           return (
             <div key={item.id} id='cart-line-item'>
               <p className="font-weight-bold">Product: {product.name}</p>
-              <p>Quantity: {item.quantity}</p>
+              { order.date ? <p>Quantity Purcahed: {item.quantity}</p> : null }
               <p>Prince per item: ${product.price}</p>
               { order.isActive ? (
                 <LineItemForm id={ item.id } page={page} productId={product.id} orderId={order.id} />
@@ -33,11 +33,11 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
           <h3 id="cart-total-price">Total Price: ${totalPrice}.00</h3>
         </div>
         {
-          equal ? null : (
+          !equal && page !== 'past' ? (
           <div className='col'>
             <Link to={`/users/${order.userId}/checkout`}><button className="btn btn-success margin-t-15">Checkout</button></Link>
           </div>
-          )
+          ) : null
         }
       </div>
     </div>

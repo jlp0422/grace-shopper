@@ -12,7 +12,7 @@ const ProductInfo = (props) => {
   const { product, deleteProduct, loggedIn, isAdmin, rating, reviewCount, makeSingular, activeOrder } = props;
   const displayRating = rating ? starRating(rating, 'stars-large') : 'This product has a rating of Zero :('
   if (!product) return null;
-  if (!activeOrder) return null;
+  // if (!activeOrder) return null;
   return (
     <div>
     <div className='row'>
@@ -28,7 +28,7 @@ const ProductInfo = (props) => {
         <p>Units Available: {product.quantity}</p>
       </div>
 
-      <LineItemForm orderId={activeOrder.id} productId={product.id} />
+      { activeOrder ? <LineItemForm orderId={activeOrder.id} productId={product.id} /> : null }
 
     </div>
     { displayRating }
