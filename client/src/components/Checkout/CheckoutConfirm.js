@@ -21,10 +21,7 @@ class CheckoutConfirm extends Component {
 
   handleChange(ev) {
     const change = {}
-    const value = ev.target.value * 1;
-    const name = ev.target.name;
-    change[name] = value;
-    this.setState(change)
+    this.setState({ [ev.target.name]: ev.target.value * 1 })
   }
 
   onSave(ev) {
@@ -32,17 +29,13 @@ class CheckoutConfirm extends Component {
     const { onUpdate, order, user } = this.props;
     const { creditCardId, shippingId, billingId } = this.state;
     const { id } = order;
-    const orderToSubmit = { id, isActive: false, date: Date.now(), userId: user.id, creditCardId, shippingId, billingId };
-    onUpdate(orderToSubmit);
+    onUpdate({ id, isActive: false, date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     onUpdate({ isActive: true, userId: user.id });
   }
 
   render() {
     const { handleChange, onSave } = this;
-    const { ownAddresses, ownCards, user, onUpdate } = this.props;
-
-    console.log(this.state)
-
+    const { ownAddresses, ownCards, user } = this.props;
     return (
       <div>
         <ActiveOrder />
