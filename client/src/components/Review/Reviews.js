@@ -2,9 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { starRating } from '../../store/reusableFunctions';
+import UserNav from '../User/UserNav';
 
 const Reviews = (props) => {
-  const { product, products, productReviews, userReviews, users, page } = props;
+  const { product, products, productReviews, userReviews, users, page, user } = props;
   if(page === 'product') {
     if (!product) return null
     return (
@@ -34,6 +35,7 @@ const Reviews = (props) => {
   if(page === 'user') {
     return (
       <div>
+        <UserNav user={user} />
         <h3>My Reviews</h3>
         {
           userReviews.map(review => {
@@ -61,7 +63,7 @@ const Reviews = (props) => {
 
 }
 
-const mapState = ({ products, reviews, users }, { id, page }) => {
+const mapState = ({ products, reviews, users, user }, { id, page }) => {
   const product = products && products.find(product => product.id === id)
   const productReviews = reviews.filter(review => review.productId === id);
   const userReviews = reviews.filter(review => review.userId === id);
@@ -70,7 +72,8 @@ const mapState = ({ products, reviews, users }, { id, page }) => {
     products,
     productReviews,
     userReviews,
-    users
+    users,
+    user
   }
 }
 

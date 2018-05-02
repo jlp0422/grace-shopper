@@ -3,7 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const UserAccount = ({ user, id }) => {
+const UserAccount = ({ user }) => {
+  console.log(location)
+  // console.log(location.hash.slice(11))
+  const { id } = user
   if (!user) return null
   return (
     <div>
@@ -33,9 +36,8 @@ const UserAccount = ({ user, id }) => {
   )
 }
 
-const mapState = ({ user, orders, addresses }, { id, history }) => {
-  const pastOrders = orders.filter(order => order.userId === user.id && !order.isActive).length;
-  return { user, id }
+const mapState = ({ user }) => {
+  return { user }
 }
 
 export default connect(mapState)(UserAccount);

@@ -61,9 +61,9 @@ class App extends React.Component {
           <Route path='/' component={ Nav } />
           <div className="container">
             <div id="body-elements">
-              <Route path='/users/:id' render={({ match, history }) => (
+              {/*<Route path='/users/:id' render={({ match, history }) => (
                 <UserNavAuth history={ history } id={ match.params.id * 1 } />
-              )} />
+              )} /> */}
               <Route path='/admin' component={CheckAdmin(AdminNav)} />
               <Switch>
                 <Route exact path='/' component={ Home } />
