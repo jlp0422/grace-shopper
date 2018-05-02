@@ -44,8 +44,8 @@ const Reviews = (props) => {
               <div key={review.id}  className='review-card'>
                 <Link to={`/products/${product.id}/reviews`}>
                   <h4>
-                  {
-                    product.name} {review.rating ? (
+                  { product.name}
+                  { review.rating ? (
                       starRating(review.rating, 'stars-small')
                     ) : '(0 stars)'
                   }

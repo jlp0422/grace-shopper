@@ -37,6 +37,7 @@ class CheckoutConfirm extends Component {
   render() {
     const { handleChange, onSave } = this;
     const { ownAddresses, ownCards, user } = this.props;
+    const url = location.hash
     return (
       <div>
         <UserNav user={ user } />
@@ -60,7 +61,7 @@ class CheckoutConfirm extends Component {
             <Link to={`/users/${user.id}/creditCards`}>
               <button className='btn btn-info'>Add New Card</button>
             </Link>
-          <ActiveOrder />
+          <ActiveOrder checkout={ true }/>
           <br />
           <button className='btn btn-success' onClick={ onSave }>Submit Payment</button>
       </div>

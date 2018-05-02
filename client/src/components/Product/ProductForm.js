@@ -9,9 +9,7 @@ class ProductForm extends Component {
     const categoryArray = product ? productCategories.filter(association => {
       return association.productId === product.id;
     })
-    .map(association => {
-      return association.categoryId;
-    }) : []
+    .map(association => association.categoryId) : []
     this.state = {
       id: product ? product.id : null,
       name: product ? product.name : '',
@@ -23,6 +21,16 @@ class ProductForm extends Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.onSave = this.onSave.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { product, productCategories } = nextProps
+    const categoryArray = product ? productCategories.filter(association => {
+      return association.productId === product.id;
+    })
+    .map(association => association.categoryId) : []
+    this.setState(product)
+    this.setState({ categoryArray })
   }
 
   handleChange(ev) {
@@ -47,10 +55,6 @@ class ProductForm extends Component {
   onSave(ev) {
     ev.preventDefault();
     const { id, name, price, quantity, description, categoryArray } = this.state;
-
-    // this.props.updateProduct(this.state);
-    // this.setState({ name: '', price: '', quantity: '', description: '', categoryArray: [] });
-
     this.props.updateProduct({ id, name, price, quantity, description, categoryArray });
     this.setState({ name: '', price: '', quantity: '', description: '', categoryArray: [] });
   }
@@ -59,8 +63,6 @@ class ProductForm extends Component {
     const { name, price, quantity, description, imageUrl, categoryArray } = this.state;
     const { categories } = this.props;
     const { handleChange, onSave } = this;
-
-    // console.log(this.state.categoryArray)
     return (
       <div>
         <form onSubmit={onSave}>
@@ -110,26 +112,12 @@ class ProductForm extends Component {
                   value={category.id}
                   name='categoryArray'
                   onChange={handleChange}
-                  // selected={categoryArray.includes(category.id)}
+                  checked={categoryArray.includes(category.id * 1)}
                 />
                 <label>&nbsp;{category.name}</label>
               </div>
             ))
           }
-          {/*<select
-            onChange={handleChange}
-            name='categoryId'
-            className='form-control margin-b-10'
-          >
-            <option value='null'>Select Category</option>
-            {
-              categories.map(category => (
-                <option key={category.id} value={category.id * 1}>
-                  {category.name}
-                </option>
-              ))
-            }
-          </select>*/}
           <button className='btn btn-primary margin-b-10'>Create</button>
         </form>
       </div>
