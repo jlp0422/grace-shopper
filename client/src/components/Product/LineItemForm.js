@@ -26,9 +26,8 @@ class LineItemForm extends Component {
   onSave(ev) {
     ev.preventDefault();
     const { quantity } = this.state;
-    const { id, productId, order/*, addedToCart*/ } = this.props;
+    const { id, productId, order } = this.props;
     const save = { id, productId, orderId: order.id, quantity };
-    // console.log(addedToCart)
     this.props.updateLineItem(save);
   }
 
@@ -38,9 +37,6 @@ class LineItemForm extends Component {
     const { onChangeLineItem, onSave } = this;
     const active = page === 'active' ? true : false
     const itemExists = !!lineItemForProduct && !id;
-
-    // console.log(checkCart)
-
     return (
       <div>
         <div>
@@ -73,28 +69,17 @@ class LineItemForm extends Component {
         }
       </div>
     )
-
   }
 }
 
 const mapState = ({ lineItems, orders, user, products }, { productId, orderId, page, id, itemId, checkCart }) => {
-
-  // console.log('id:', id)
-  // console.log('itemId:', itemId)
-
-  console.log(checkCart)
-
-  const order = orders.find(order => order.userId === user.id && order.isActive)
+  const order = orders.find(order => {
+    return !!user.id ? order.userId === user.id && order.isActive : !order.userId && order.isActive
+  })
   const orderItems = order && lineItems.filter(item => item.orderId === order.id)
   const lineItemForProduct = orderItems && orderItems.find(item => item.productId === productId)
   const product = products.find(product => product.id === productId);
-
   const addedToCart = `${product.name} Added to Cart!`;
-
-  console.log(lineItemForProduct)
-
-
-
   return {
     order,
     productId,

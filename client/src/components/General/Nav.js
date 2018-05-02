@@ -92,10 +92,14 @@ class NavBar extends React.Component {
 
 const mapState = ({ categories, user, orders, lineItems }) => {
   const { isAdmin } = user
-  const activeOrder = orders.length ? orders.find(order => order.userId === user.id && order.isActive) : {};
+  const loggedIn = !!user.id
+  const activeOrder = orders.length && loggedIn ? (
+    orders.find(order => order.userId === user.id && order.isActive)
+  ) : (
+    orders.find(order => !order.userId && order.isActive)
+  );
   const activeOrderItems = activeOrder ? lineItems.filter(item => item.orderId === activeOrder.id) : [];
   const cartCount = activeOrderItems.length ? activeOrderItems.reduce((memo, lineItem) => memo + lineItem.quantity, 0) : '0'
-  const loggedIn = !!user.id
   return { categories, user, loggedIn, activeOrder, cartCount, isAdmin };
 };
 
