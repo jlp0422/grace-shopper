@@ -7,8 +7,8 @@ const PastOrders = ({ pastOrders, user }) => {
   return (
     <div>
       <UserNav user={ user } />
-      <h2>Past Orders</h2>
-      { pastOrders.length ? null : ('No orders')}
+      <h2>Orders</h2>
+      { pastOrders.length ? null : ('No recent orders')}
       {
         pastOrders.map(order => (
           <div key={order.id}>

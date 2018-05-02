@@ -36,7 +36,7 @@ const Reviews = (props) => {
     return (
       <div>
         <UserNav user={user} />
-        <h2>My Reviews</h2>
+        <h2>Reviews</h2>
         {
           userReviews.map(review => {
             const product = products.find(product => product.id === review.productId);

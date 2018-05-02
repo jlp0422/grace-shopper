@@ -10,7 +10,7 @@ const ActiveOrder = ({ activeOrder, user }) => {
   return (
     <div>
       <UserNav user={ user } />
-      <h2>My Cart</h2>
+      <h2>Cart</h2>
       <OrderCard page={'active'} order={activeOrder} checkout={ false } />
     </div>
   )
