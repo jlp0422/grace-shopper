@@ -31,15 +31,13 @@ class Categories extends React.Component {
       <div>
         <h2>Categories</h2>
         { loggedIn && isAdmin ? (
-          <div>
             <Link to='/categories/create'>
               <button className="btn btn-primary">Create new category</button>
             </Link>
-            <div>
-              <input value={ name } onChange={ onChange } className="form-control" />
-            </div>
+          ) : null }
+          <div>
+            <input placeholder={'Search for a category'} value={ name } onChange={ onChange } className="form-control" />
           </div>
-        ) : null }
         <ul className='list-group'>
           {
             matchingCategories.map(category => (

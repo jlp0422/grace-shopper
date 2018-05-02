@@ -31,15 +31,13 @@ class Products extends React.Component {
       <div>
         <h2>Products</h2>
         { loggedIn && isAdmin ? (
-          <div>
             <Link to='/products/create'>
               <button className="btn btn-primary">Create new product</button>
             </Link>
-            <div>
-              <input placeholder={'Search for a product'} value={ name } onChange={ onChange } className="form-control" />
-            </div>
-          </div>
         ) : null }
+        <div>
+          <input placeholder={'Search for a product'} value={name} onChange={onChange} className="form-control" />
+        </div>
         <ul className='list-group'>
           {
             matchingProducts.map(product => (
