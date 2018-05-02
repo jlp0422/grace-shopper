@@ -40,7 +40,7 @@ class LineItemForm extends Component {
 
     // console.log('LIFP:', lineItemForProduct)
 
-    const itemExists = !!lineItemForProduct;
+    const itemExists = !!lineItemForProduct && !id;
 
     console.log(itemExists)
 
@@ -79,7 +79,10 @@ class LineItemForm extends Component {
   }
 }
 
-const mapState = ({ lineItems, orders, user, products }, { productId, orderId, page, id }) => {
+const mapState = ({ lineItems, orders, user, products }, { productId, orderId, page, id, itemId }) => {
+
+  console.log('id:', id)
+  console.log('itemId:', itemId)
 
   const order = orders.find(order => order.userId === user.id && order.isActive)
   const orderItems = order && lineItems.filter(item => item.orderId === order.id)
@@ -87,6 +90,8 @@ const mapState = ({ lineItems, orders, user, products }, { productId, orderId, p
   const product = products.find(product => product.id === productId);
 
   const addedToCart = `${product.name} Added to Cart!`;
+
+
 
   return {
     order,

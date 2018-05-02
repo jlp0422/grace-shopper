@@ -9,7 +9,7 @@ import LineItemForm from './LineItemForm';
 import ReviewForm from '../Review/ReviewForm';
 
 const ProductInfo = (props) => {
-  const { product, deleteProduct, loggedIn, isAdmin, rating, reviewCount, makeSingular, activeOrder } = props;
+  const { product, deleteProduct, loggedIn, isAdmin, rating, reviewCount, makeSingular, activeOrder, itemId } = props;
   const displayRating = rating ? starRating(rating, 'stars-large') : 'This product has a rating of Zero :('
   if (!product) return null;
   if (!activeOrder) return null;
@@ -27,7 +27,7 @@ const ProductInfo = (props) => {
         <p>Price: ${product.price}</p>
         <p>Units Available: {product.quantity}</p>
       </div>
-      <LineItemForm orderId={activeOrder.id} productId={product.id} />
+      <LineItemForm itemId={itemId} orderId={activeOrder.id} productId={product.id} />
     </div>
     { displayRating }
     <h5 style={{display:'inline'}}>There {makeSingular[0]} ({reviewCount}) review{makeSingular[1]} on this product</h5>
@@ -51,7 +51,7 @@ const ProductInfo = (props) => {
   );
 }
 
-const mapState = ({ products, user, reviews, orders }, { match }) => {
+const mapState = ({ products, user, reviews, orders, lineItems }, { match }) => {
   const id = match.params.id * 1;
   const product = products.find(_product => _product.id === id);
   const loggedIn = !!user.id;
@@ -70,6 +70,11 @@ const mapState = ({ products, user, reviews, orders }, { match }) => {
   const activeOrder = orders.find(order => {
     return loggedIn ? order.userId === user.id && order.isActive : order.isActive && !order.userId
   })
+  const orderItems = activeOrder && lineItems.filter(item => item.orderId === activeOrder.id)
+  const lineItemForProduct = orderItems && orderItems.find(item => item.productId === product.id)
+
+  const itemId = lineItemForProduct ? lineItemForProduct.id : null;
+
   return {
     product,
     loggedIn,
@@ -77,7 +82,8 @@ const mapState = ({ products, user, reviews, orders }, { match }) => {
     rating,
     reviewCount,
     makeSingular,
-    activeOrder
+    activeOrder,
+    itemId
   }
 }
 
