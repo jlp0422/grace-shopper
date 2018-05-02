@@ -26,23 +26,20 @@ class LineItemForm extends Component {
   onSave(ev) {
     ev.preventDefault();
     const { quantity } = this.state;
-    const { id, productId, order, addedToCart } = this.props;
+    const { id, productId, order/*, addedToCart*/ } = this.props;
     const save = { id, productId, orderId: order.id, quantity };
-    console.log(addedToCart)
+    // console.log(addedToCart)
     this.props.updateLineItem(save);
   }
 
   render() {
     const { quantity } = this.state;
-    const { productId, deleteLineItem, page, id, product, addedToCart, lineItemForProduct } = this.props;
+    const { productId, deleteLineItem, page, id, product, addedToCart, lineItemForProduct, checkCart } = this.props;
     const { onChangeLineItem, onSave } = this;
     const active = page === 'active' ? true : false
-
-    // console.log('LIFP:', lineItemForProduct)
-
     const itemExists = !!lineItemForProduct && !id;
 
-    console.log(itemExists)
+    // console.log(checkCart)
 
     return (
       <div>
@@ -58,11 +55,12 @@ class LineItemForm extends Component {
                 placeholder='Select Quantity'
                 onChange={onChangeLineItem}
               />
-              <button disabled={quantity < 1 || quantity > product.quantity || itemExists} onClick={ onSave } className='btn btn-primary margin-b-10'>{active ? ('Update cart') : ('Add to cart')}</button>
+              <button disabled={quantity < 1 || quantity > product.quantity || itemExists} onClick={ onSave } className='btn btn-primary margin-b-10'>{active ? 'Update cart' : 'Add to cart'}</button>
             </div>
             )
           }
         </div>
+        { lineItemForProduct && checkCart === 'product-page' ? <h3 style={{color:'red'}}>Added to Cart!</h3> : null }
         {
           active ? (
           <button
@@ -79,10 +77,12 @@ class LineItemForm extends Component {
   }
 }
 
-const mapState = ({ lineItems, orders, user, products }, { productId, orderId, page, id, itemId }) => {
+const mapState = ({ lineItems, orders, user, products }, { productId, orderId, page, id, itemId, checkCart }) => {
 
-  console.log('id:', id)
-  console.log('itemId:', itemId)
+  // console.log('id:', id)
+  // console.log('itemId:', itemId)
+
+  console.log(checkCart)
 
   const order = orders.find(order => order.userId === user.id && order.isActive)
   const orderItems = order && lineItems.filter(item => item.orderId === order.id)
@@ -90,6 +90,8 @@ const mapState = ({ lineItems, orders, user, products }, { productId, orderId, p
   const product = products.find(product => product.id === productId);
 
   const addedToCart = `${product.name} Added to Cart!`;
+
+  console.log(lineItemForProduct)
 
 
 
@@ -100,7 +102,8 @@ const mapState = ({ lineItems, orders, user, products }, { productId, orderId, p
     orderItems,
     lineItemForProduct,
     page,
-    addedToCart
+    addedToCart,
+    checkCart
   }
 }
 

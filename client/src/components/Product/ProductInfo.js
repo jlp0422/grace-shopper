@@ -27,7 +27,7 @@ const ProductInfo = (props) => {
         <p>Price: ${product.price}</p>
         <p>Units Available: {product.quantity}</p>
       </div>
-      <LineItemForm itemId={itemId} orderId={activeOrder.id} productId={product.id} />
+      <LineItemForm checkCart={'product-page'} itemId={itemId} orderId={activeOrder.id} productId={product.id} />
     </div>
     { displayRating }
     <h5 style={{display:'inline'}}>There {makeSingular[0]} ({reviewCount}) review{makeSingular[1]} on this product</h5>
