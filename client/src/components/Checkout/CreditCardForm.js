@@ -48,9 +48,6 @@ class CreditCardForm extends Component {
   // } // i'm just testing this will work, will dry out later
 
   render() {
-
-    console.log(this.state)
-
     const fields = {
       ccType: 'Credit Card Type',
       ccNum: 'Credit Card Number',

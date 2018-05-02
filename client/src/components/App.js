@@ -111,7 +111,7 @@ class App extends React.Component {
                 <Route exact path ='/admin/orders/:id' render={({ match }) => (
                   <AdminOrderFormAuth id={ match.params.id * 1 } />
                 )} />
-                {/* shows on /admin right now, since /admin is not in switch
+                {/* shows on /admin and any /users page right now, since those are not in switch
                  <Route path='/:id' component={ FourOhFour } />
                 */}
               </Switch>

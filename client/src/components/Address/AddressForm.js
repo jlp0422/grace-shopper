@@ -88,7 +88,7 @@ class AddressForm extends Component {
             <button onClick={ onCancel } className="btn btn-outline-secondary margin-t-15">Cancel</button>
           ) : null
         }
-        <div>
+        <div className="margin-t-15">
           {
             Object.keys(fields).map(field => (
               <div key={field}>
