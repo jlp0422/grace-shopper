@@ -8,7 +8,7 @@ const CreditCards = ({ userCards, user, deleteCard }) => {
   return (
     <div>
       <UserNav user={ user } />
-      <h3>Credit Cards</h3>
+      <h2>Credit Cards</h2>
       <ul className='list-group'>
         {
           userCards.map(card => (
