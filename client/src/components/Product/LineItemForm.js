@@ -26,16 +26,24 @@ class LineItemForm extends Component {
   onSave(ev) {
     ev.preventDefault();
     const { quantity } = this.state;
-    const { id, productId, order } = this.props;
+    const { id, productId, order, addedToCart } = this.props;
     const save = { id, productId, orderId: order.id, quantity };
+    console.log(addedToCart)
     this.props.updateLineItem(save);
   }
 
   render() {
     const { quantity } = this.state;
-    const { productId, deleteLineItem, page, id, product } = this.props;
+    const { productId, deleteLineItem, page, id, product, addedToCart, lineItemForProduct } = this.props;
     const { onChangeLineItem, onSave } = this;
     const active = page === 'active' ? true : false
+
+    // console.log('LIFP:', lineItemForProduct)
+
+    const itemExists = !!lineItemForProduct;
+
+    console.log(itemExists)
+
     return (
       <div>
         <div>
@@ -50,7 +58,7 @@ class LineItemForm extends Component {
                 placeholder='Select Quantity'
                 onChange={onChangeLineItem}
               />
-              <button disabled={quantity < 1 || quantity > product.quantity} onClick={ onSave } className='btn btn-primary margin-b-10'>{active ? ('Update cart') : ('Add to cart')}</button>
+              <button disabled={quantity < 1 || quantity > product.quantity || itemExists} onClick={ onSave } className='btn btn-primary margin-b-10'>{active ? ('Update cart') : ('Add to cart')}</button>
             </div>
             )
           }
@@ -77,13 +85,17 @@ const mapState = ({ lineItems, orders, user, products }, { productId, orderId, p
   const orderItems = order && lineItems.filter(item => item.orderId === order.id)
   const lineItemForProduct = orderItems && orderItems.find(item => item.productId === productId)
   const product = products.find(product => product.id === productId);
+
+  const addedToCart = `${product.name} Added to Cart!`;
+
   return {
     order,
     productId,
     product,
     orderItems,
     lineItemForProduct,
-    page
+    page,
+    addedToCart
   }
 }
 
