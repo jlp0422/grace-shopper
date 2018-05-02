@@ -27,9 +27,7 @@ const ProductInfo = (props) => {
         <p>Price: ${product.price}</p>
         <p>Units Available: {product.quantity}</p>
       </div>
-
-      { activeOrder ? <LineItemForm orderId={activeOrder.id} productId={product.id} /> : null }
-
+      <LineItemForm orderId={activeOrder.id} productId={product.id} />
     </div>
     { displayRating }
     <h5 style={{display:'inline'}}>There {makeSingular[0]} ({reviewCount}) review{makeSingular[1]} on this product</h5>
@@ -69,7 +67,9 @@ const mapState = ({ products, user, reviews, orders }, { match }) => {
       return memo;
     }
   }, 0);
-  const activeOrder = orders.find(order => order.userId === user.id && order.isActive)
+  const activeOrder = orders.find(order => {
+    return loggedIn ? order.userId === user.id && order.isActive : order.isActive && !order.userId
+  })
   return {
     product,
     loggedIn,

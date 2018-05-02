@@ -2,7 +2,7 @@
 import React from 'react';
 import { HashRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
-import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer, getProductCategoriesFromServer, getCreditCardsFromServer } from '../store';
+import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer, getProductCategoriesFromServer, getCreditCardsFromServer, updateOrderOnServer } from '../store';
 
 import CheckAuth from './General/CheckAuth';
 import CheckAdmin from './General/CheckAdmin';
@@ -35,7 +35,7 @@ import CreditCards from './User/CreditCards';
 
 class App extends React.Component {
   componentDidMount() {
-    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews, getProductCategories, getCreditCards } = this.props;
+    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews, getProductCategories, getCreditCards, hasUser, createOrder } = this.props;
     getCategories();
     getProducts();
     getUsers();
@@ -46,6 +46,7 @@ class App extends React.Component {
     getReviews();
     getProductCategories();
     getCreditCards();
+    !hasUser ? createOrder({ isActive: true }) : null
   }
 
   render() {
@@ -62,7 +63,7 @@ class App extends React.Component {
           <div className="container">
             <div id="body-elements">
               <Route path='/users/:id' render={({ match, history }) => (
-                <UserNavAuth history={ history } id={ match.params.id * 1 } />
+                <UserNav history={ history } id={ match.params.id * 1 } />
               )} />
               <Route path='/admin' component={CheckAdmin(AdminNav)} />
               <Switch>
@@ -84,7 +85,7 @@ class App extends React.Component {
                 <Route exact path='/users/:id' render={({ match }) => (
                   <UserAccountAuth id={ match.params.id * 1} />
                 )} />
-                <Route exact path='/users/:id/cart' component={ CheckAuth(ActiveOrder) } />
+                <Route exact path='/users/:id/cart' component={ ActiveOrder } />
                 <Route exact path='/users/:id/orders' component={ CheckAuth(PastOrders) } />
                 <Route exact path='/users/:id/creditCards' component={ CheckAuth(CreditCards) } />
                 <Route exact path='/users/:id/checkout' component={ CheckAuth(CheckoutConfirm) } />
@@ -124,6 +125,13 @@ class App extends React.Component {
   }
 }
 
+const mapState = ({ orders, user }) => {
+  const hasUser = !!user.id || orders.find(order => order.userId === undefined)
+  return {
+    hasUser
+  }
+}
+
 const mapDispatch = (dispatch) => {
   return {
     getCategories: () => dispatch(getCategoriesFromServer()),
@@ -139,8 +147,9 @@ const mapDispatch = (dispatch) => {
       if (window.localStorage.getItem('token')) {
         dispatch(getUserFromToken(window.localStorage.getItem('token')))
       }
-    }
+    },
+    createOrder: (order) => dispatch(updateOrderOnServer(order))
   }
 }
 
-export default connect(null, mapDispatch)(App);
+export default connect(mapState, mapDispatch)(App);

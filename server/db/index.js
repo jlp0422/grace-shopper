@@ -28,7 +28,6 @@ Review.belongsTo(Product);
 CreditCard.belongsTo(User);
 User.hasMany(CreditCard);
 Order.belongsTo(CreditCard);
-// CreditCard.hasMany(Order);
 
 Order.belongsTo(Address, { as: 'shipping' })
 Order.belongsTo(Address, { as: 'billing' })

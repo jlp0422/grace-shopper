@@ -20,7 +20,6 @@ class CheckoutConfirm extends Component {
   }
 
   handleChange(ev) {
-    const change = {}
     this.setState({ [ev.target.name]: ev.target.value * 1 })
   }
 

@@ -27,7 +27,7 @@ class NavBar extends React.Component {
       <div>
         <Navbar style={{ marginBottom: '20px'}} sticky="top" className="nav-sticky sticky-top" color="light" light expand="sm">
         <div className="container">
-          <NavbarBrand href='#/'>J²A²</NavbarBrand>
+          <NavbarBrand href='#/'>J²A</NavbarBrand>
           <NavbarToggler onClick={ toggle } />
           <Collapse isOpen={ isOpen } navbar>
             <Nav className="ml-auto" navbar>

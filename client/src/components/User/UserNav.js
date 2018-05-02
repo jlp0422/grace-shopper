@@ -22,6 +22,9 @@ const UserAccount = ({ user, id }) => {
         <Link to={`/users/${id}/reviews`}>
           My Reviews
         </Link>
+        <Link to={`/users/${id}/creditCards`}>
+          Credit Cards
+        </Link>
         <Link to={`/users/${id}/edit`}>
           Edit Account
         </Link>
