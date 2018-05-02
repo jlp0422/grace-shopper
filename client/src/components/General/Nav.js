@@ -74,7 +74,7 @@ class NavBar extends React.Component {
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem onClick={() => location.hash = '/login'}>Sign In</DropdownItem>
-                      <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({cartCount ? cartCount : null})</DropdownItem>
+                      <DropdownItem onClick={() => location.hash = `/cart`}>My Cart ({cartCount ? cartCount : null})</DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem onClick={() => location.hash = '/signup'}>Create Account</DropdownItem>
                     </DropdownMenu>

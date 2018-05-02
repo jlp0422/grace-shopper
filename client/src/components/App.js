@@ -85,7 +85,9 @@ class App extends React.Component {
                 <Route exact path='/users/:id' render={({ match }) => (
                   <UserAccountAuth id={ match.params.id * 1} />
                 )} />
-                <Route exact path='/users/:id/cart' component={ ActiveOrder } />
+                {/*<Route exact path='/users/:id/cart' component={ ActiveOrder } />*/}
+                <Route exact path='/cart' component={ ActiveOrder } />
+                <Route exact path='/users/:id/cart' component={ CheckAuth(ActiveOrder) } />
                 <Route exact path='/users/:id/orders' component={ CheckAuth(PastOrders) } />
                 <Route exact path='/users/:id/creditCards' component={ CheckAuth(CreditCards) } />
                 <Route exact path='/users/:id/checkout' component={ CheckAuth(CheckoutConfirm) } />

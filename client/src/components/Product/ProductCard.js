@@ -11,7 +11,7 @@ const ProductCard = (props) => {
           <h4>{product.name}</h4>
         </Link>
         <div>Price: ${product.price}</div>
-        <div>Quantity: {product.quantity}</div>
+        <div>Quantity: {product.quantity ? product.quantity : 'OUT OF STOCK'}</div>
         <div>Categories:</div>
         <ul>
         {

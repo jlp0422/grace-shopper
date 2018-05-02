@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-
-
 import LineItemForm from '../Product/LineItemForm.js'
 
 const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => {

@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createCreditCardOnServer } from '../../store';
 
 class CreditCardForm extends Component {
   constructor(props) {
     super(props);
-    // const { user } = props;
-    // const { ccType, ccNum, ccExp, ccSec } = user;
-
-    // const { userId } = props;
-
-    // console.log(userId)
-
     this.state = {
       ccType: '',
       ccNum: '',
@@ -20,7 +14,6 @@ class CreditCardForm extends Component {
     }
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
-    // this.removeCard = this.removeCard.bind(this);
   }
 
   onChange(ev) {
@@ -33,24 +26,11 @@ class CreditCardForm extends Component {
     ev.preventDefault();
     const { onSave, userId } = this.props;
     const { ccType, ccNum, ccExp, ccSec } = this.state;
-    // const { id, firstName, lastName, username, password, email, isAdmin } = user;
     onSave({ ccType, ccNum, ccExp, ccSec, userId });
     this.setState({ ccType: '', ccNum: '', ccExp: '', ccSec: '' });
   }
 
-  // removeCard(ev) {
-  //   ev.preventDefault();
-  //   const { onSave, user } = this.props;
-  //   this.setState({ ccType: '', ccNum: '', ccExp: '', ccSec: '' })
-  //   const { ccType, ccNum, ccExp, ccSec } = this.state;
-    // const { id, firstName, lastName, username, password, email, isAdmin } = user;
-  //   onSave({ id , firstName, lastName, username, password, email, isAdmin, ccType, ccNum, ccExp, ccSec });
-  // } // i'm just testing this will work, will dry out later
-
   render() {
-
-    console.log(this.state)
-
     const fields = {
       ccType: 'Credit Card Type',
       ccNum: 'Credit Card Number',
@@ -58,8 +38,7 @@ class CreditCardForm extends Component {
       ccSec: 'Security Code',
     }
     const { onSave, onChange, removeCard } = this;
-    // const { ccType } = this.state;
-    // const buttonMessage = ccType ? 'Submit Payment' : 'Submit with New Card'
+    const { userId } = this.props;
     return (
       <div>
         <h4>Add New Card</h4>
@@ -79,23 +58,20 @@ class CreditCardForm extends Component {
           }
         </div>
         <button onClick={onSave} className="btn btn-success">Save</button>
-      {/*
-        { ccType ? <button onClick={removeCard} className="btn btn-danger">Remove Card</button> : null }
-      */}
       </div>
     );
   }
 }
 
 const mapState = ( state, { userId }) => {
-  // console.log(userId)
   return { userId }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { location }) => {
+  const page = location.state;
   return {
-    onSave: (creditCard) => dispatch(createCreditCardOnServer(creditCard))
+    onSave: (creditCard) => dispatch(createCreditCardOnServer(creditCard, page))
   }
 }
 
-export default connect(mapState, mapDispatch)(CreditCardForm);
+export default withRouter(connect(mapState, mapDispatch)(CreditCardForm));
