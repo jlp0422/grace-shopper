@@ -27,7 +27,7 @@ export const deleteUserOnServer = (id) => {
   };
 };
 
-export const updateUserOnServer = (user) => {
+export const updateUserOnServer = (user, page) => {
   const { id } = user;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/users/${id}` : '/api/users';
@@ -35,8 +35,13 @@ export const updateUserOnServer = (user) => {
   return (dispatch) => {
     return axios[method](url, user)
       .then( res => res.data)
-      .then( u => dispatch(action(u)))
-      // .then(() => location.hash = '/users')
+      .then( u => {
+        dispatch(action(u))
+      })
+      .then(() => {
+        if (page === 'signup') location.hash = '/'
+        if (page === 'admin') location.hash = '/admin/users'
+      })
       // .catch(err) placeholder for error handling
   };
 };
