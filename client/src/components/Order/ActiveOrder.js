@@ -17,7 +17,11 @@ const ActiveOrder = ({ activeOrder, user, checkout }) => {
 }
 
 const mapState = ({ orders, user }, { checkout }) => {
-  const activeOrder = orders.find(order => order.userId === user.id && order.isActive)
+  const activeOrder = !!user.id ? (
+      orders.find(order => order.userId === user.id && order.isActive)
+    ) : (
+      orders.find(order => !order.userId && order.isActive)
+    )
   return { activeOrder, user, checkout }
 }
 

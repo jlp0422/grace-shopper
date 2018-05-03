@@ -15,6 +15,7 @@ const ThankYou = ({ user }) => {
   );
 }
 
+
 const mapState = ({ user }) => {
   return { user }
 }

@@ -33,22 +33,30 @@ class LineItemForm extends Component {
 
   render() {
     const { quantity } = this.state;
-    const { productId, deleteLineItem, page, id } = this.props;
+    const { productId, deleteLineItem, page, id, product, addedToCart, lineItemForProduct, checkCart } = this.props;
     const { onChangeLineItem, onSave } = this;
     const active = page === 'active' ? true : false
+    const itemExists = !!lineItemForProduct && !id;
     return (
       <div>
         <div>
-          <label>Quantity:</label>
-          <input
-            type='number'
-            className='form-control margin-b-10'
-            value={quantity}
-            placeholder='Select Quantity'
-            onChange={onChangeLineItem}
-          />
-          </div>
-          <button disabled={quantity < 1} onClick={ onSave } className='btn btn-primary margin-b-10'>{active ? ('Update cart') : ('Add to cart')}</button>
+          { product.quantity <= 0 ? (
+              <h2 style={{color: 'red'}}>Out of Stock</h2>
+            ) : (
+            <div>
+              <input
+                type='number'
+                className='form-control margin-b-10'
+                value={quantity}
+                placeholder='Select Quantity'
+                onChange={onChangeLineItem}
+              />
+              <button disabled={quantity < 1 || quantity > product.quantity || itemExists} onClick={ onSave } className='btn btn-primary margin-b-10'>{active ? 'Update cart' : 'Add to cart'}</button>
+            </div>
+            )
+          }
+        </div>
+        { lineItemForProduct && checkCart === 'product-page' ? <h3 style={{color:'red'}}>Added to Cart!</h3> : null }
         {
           active ? (
           <button
@@ -61,22 +69,26 @@ class LineItemForm extends Component {
         }
       </div>
     )
-
   }
 }
 
-const mapState = ({ lineItems, orders, user}, { productId, orderId, page, id }) => {
-
-  const order = orders.find(order => order.userId === user.id && order.isActive)
+const mapState = ({ lineItems, orders, user, products }, { productId, orderId, page, id, itemId, checkCart }) => {
+  const order = orders.find(order => {
+    return !!user.id ? order.userId === user.id && order.isActive : !order.userId && order.isActive
+  })
   const orderItems = order && lineItems.filter(item => item.orderId === order.id)
   const lineItemForProduct = orderItems && orderItems.find(item => item.productId === productId)
-
+  const product = products.find(product => product.id === productId);
+  const addedToCart = `${product.name} Added to Cart!`;
   return {
     order,
     productId,
+    product,
     orderItems,
     lineItemForProduct,
-    page
+    page,
+    addedToCart,
+    checkCart
   }
 }
 

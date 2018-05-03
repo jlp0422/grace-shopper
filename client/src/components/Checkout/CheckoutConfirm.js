@@ -6,7 +6,9 @@ import ActiveOrder from '../Order/ActiveOrder';
 import Dropdown from './Dropdown';
 import UserNav from '../User/UserNav';
 
-import { updateOrderOnServer } from '../../store';
+import axios from 'axios';
+
+import { updateOrderOnServer, updateProductOnServer } from '../../store';
 
 class CheckoutConfirm extends Component {
   constructor(props) {
@@ -21,17 +23,24 @@ class CheckoutConfirm extends Component {
   }
 
   handleChange(ev) {
-    const change = {}
     this.setState({ [ev.target.name]: ev.target.value * 1 })
+  }
+
+  sendEmail(user) {
+    return axios.post('/api/email', user)
+      .then(res => res.data)
+      .catch(err => console.error(err))
   }
 
   onSave(ev) {
     ev.preventDefault();
-    const { onUpdate, order, user } = this.props;
+    const { onUpdate, onUpdateProducts, order, user, items, products } = this.props;
     const { creditCardId, shippingId, billingId } = this.state;
     const { id } = order;
     onUpdate({ id, isActive: false, date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     onUpdate({ isActive: true, userId: user.id });
+    onUpdateProducts(items, products);
+    this.sendEmail(user);
   }
 
   render() {
@@ -58,7 +67,10 @@ class CheckoutConfirm extends Component {
           <br />
         <h5>Select Credit Card:</h5>
           <Dropdown items={ownCards} title='Credit Card' name='creditCardId' handleChange={handleChange} />
-            <Link to={`/users/${user.id}/creditCards`}>
+            <Link to={{
+              pathname: `/users/${user.id}/creditCards`,
+              state: 'checkout'
+            }}>
               <button className='btn btn-info'>Add New Card</button>
             </Link>
           <ActiveOrder checkout={ true }/>
@@ -70,21 +82,32 @@ class CheckoutConfirm extends Component {
 
 }
 
-const mapState = ({ user, addresses, creditCards, orders }) => {
+const mapState = ({ user, addresses, creditCards, orders, lineItems, products }) => {
   const ownAddresses = addresses.filter(address => user.id === address.userId)
   const ownCards = creditCards.filter(card => card.userId === user.id)
   const order = orders.find(order => order.userId === user.id && order.isActive)
+  const items = lineItems.filter(item => item.orderId === order.id)
   return {
     user,
     ownAddresses,
     ownCards,
-    order
+    order,
+    items,
+    products
   }
 };
 
 const mapDispatch = (dispatch) => {
   return {
     onUpdate: (order) => dispatch(updateOrderOnServer(order)),
+    onUpdateProducts: (items, products) => {
+      items.forEach(item => {
+        const product = products.find(product => product.id === item.productId)
+        const stock = product.quantity - item.quantity;
+        Object.assign(product, { quantity: stock })
+        dispatch(updateProductOnServer(product))
+      })
+    }
   }
 }
 

@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteProductFromServer } from '../../store';
 import { starRating } from '../../store/reusableFunctions';
-
 import ProductForm from './ProductForm';
 import LineItemForm from './LineItemForm';
 import ReviewForm from '../Review/ReviewForm';
 
-const ProductInfo = ({ product, deleteProduct, loggedIn, isAdmin, rating, reviewCount, makeSingular, activeOrder }) => {
+const ProductInfo = (props) => {
+  const { product, deleteProduct, loggedIn, isAdmin, rating, reviewCount, makeSingular, activeOrder, itemId } = props;
   const displayRating = rating ? starRating(rating, 'stars-large') : 'This product has a rating of Zero :('
   if (!product) return null;
+  if (!activeOrder) return null;
   return (
     <div>
     <div className='row'>
@@ -25,9 +26,7 @@ const ProductInfo = ({ product, deleteProduct, loggedIn, isAdmin, rating, review
         <p>Price: ${product.price}</p>
         <p>Units Available: {product.quantity}</p>
       </div>
-
-      { activeOrder ? <LineItemForm orderId={activeOrder.id} productId={product.id} /> : null }
-
+      <LineItemForm checkCart={'product-page'} itemId={itemId} orderId={activeOrder.id} productId={product.id} />
     </div>
     { displayRating }
     <h5 style={{display:'inline'}}>There {makeSingular[0]} ({reviewCount}) review{makeSingular[1]} on this product</h5>
@@ -51,7 +50,7 @@ const ProductInfo = ({ product, deleteProduct, loggedIn, isAdmin, rating, review
   );
 }
 
-const mapState = ({ products, user, reviews, orders }, { match }) => {
+const mapState = ({ products, user, reviews, orders, lineItems }, { match }) => {
   const id = match.params.id * 1;
   const product = products.find(_product => _product.id === id);
   const loggedIn = !!user.id;
@@ -67,7 +66,14 @@ const mapState = ({ products, user, reviews, orders }, { match }) => {
       return memo;
     }
   }, 0);
-  const activeOrder = orders.find(order => order.userId === user.id && order.isActive)
+  const activeOrder = orders.find(order => {
+    return loggedIn ? order.userId === user.id && order.isActive : order.isActive && !order.userId
+  })
+  const orderItems = activeOrder && lineItems.filter(item => item.orderId === activeOrder.id)
+  const lineItemForProduct = orderItems && orderItems.find(item => item.productId === product.id)
+
+  const itemId = lineItemForProduct ? lineItemForProduct.id : null;
+
   return {
     product,
     loggedIn,
@@ -75,7 +81,8 @@ const mapState = ({ products, user, reviews, orders }, { match }) => {
     rating,
     reviewCount,
     makeSingular,
-    activeOrder
+    activeOrder,
+    itemId
   }
 }
 

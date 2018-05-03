@@ -27,7 +27,7 @@ class NavBar extends React.Component {
       <div>
         <Navbar style={{ marginBottom: '20px'}} sticky="top" className="nav-sticky sticky-top" color="light" light expand="sm">
         <div className="container">
-          <NavbarBrand href='#/'>J²A²</NavbarBrand>
+          <NavbarBrand href='#/'>J²A</NavbarBrand>
           <NavbarToggler onClick={ toggle } />
           <Collapse isOpen={ isOpen } navbar>
             <Nav className="ml-auto" navbar>
@@ -77,7 +77,7 @@ class NavBar extends React.Component {
                     </DropdownToggle>
                     <DropdownMenu right>
                       <DropdownItem onClick={() => location.hash = '/login'}>Sign In</DropdownItem>
-                      <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({cartCount ? cartCount : null})</DropdownItem>
+                      <DropdownItem onClick={() => location.hash = `/cart`}>My Cart ({cartCount ? cartCount : null})</DropdownItem>
                       <DropdownItem divider />
                       <DropdownItem onClick={() => location.hash = '/signup'}>Create Account</DropdownItem>
                     </DropdownMenu>
@@ -95,10 +95,14 @@ class NavBar extends React.Component {
 
 const mapState = ({ categories, user, orders, lineItems }) => {
   const { isAdmin } = user
-  const activeOrder = orders.length ? orders.find(order => order.userId === user.id && order.isActive) : {};
+  const loggedIn = !!user.id
+  const activeOrder = orders.length && loggedIn ? (
+    orders.find(order => order.userId === user.id && order.isActive)
+  ) : (
+    orders.find(order => !order.userId && order.isActive)
+  );
   const activeOrderItems = activeOrder ? lineItems.filter(item => item.orderId === activeOrder.id) : [];
   const cartCount = activeOrderItems.length ? activeOrderItems.reduce((memo, lineItem) => memo + lineItem.quantity, 0) : '0'
-  const loggedIn = !!user.id
   return { categories, user, loggedIn, activeOrder, cartCount, isAdmin };
 };
 

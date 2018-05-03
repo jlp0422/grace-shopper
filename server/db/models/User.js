@@ -3,6 +3,11 @@ const jwt = require('jwt-simple');
 const KEY = process.env.KEY
 
 const User = conn.define('user', {
+  // id: {
+  //   type: Sequelize.UUID,
+  //   defaultValue: Sequelize.UUIDV4,
+  //   primaryKey: true
+  // },
   firstName: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -40,19 +45,6 @@ const User = conn.define('user', {
       notEmpty: true
     } */
   },
-  ccType: {
-    type: Sequelize.STRING
-  },
-  ccNum: {
-    type: Sequelize.STRING
-  },
-  ccExp: {
-    type: Sequelize.STRING
-  },
-  ccSec: { // visa, mc, discover = 3 digits, amex = 4 digits
-    type: Sequelize.STRING
-  },
-
 }, {
   timestamps: false
 })
