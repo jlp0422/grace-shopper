@@ -3,29 +3,31 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const UserAccount = ({ user, id }) => {
+const UserAccount = ({ user }) => {
+  const url = location.hash.substring(11)
+  const { id } = user
   if (!user) return null
   return (
     <div>
       <h1>My Account</h1>
       <h2>{user.firstName} {user.lastName}</h2>
       <div className="account-nav">
-        <Link to={`/users/${id}/cart`}>
-          My Cart
+        <Link className={`user-nav${ url === '/cart' ? ('-active') : '' }`} to={`/users/${id}/cart`}>
+          Cart
         </Link>
-        <Link to={`/users/${id}/orders`}>
-          My Orders
+        <Link className={`user-nav${url === '/orders' ? ('-active') : ''}`} to={`/users/${id}/orders`}>
+          Orders
         </Link>
-        <Link to={`/users/${id}/addresses`}>
-          My Addresses
+        <Link className={`user-nav${url === '/addresses' ? ('-active') : ''}`} to={`/users/${id}/addresses`}>
+          Addresses
         </Link>
-        <Link to={`/users/${id}/reviews`}>
-          My Reviews
+        <Link className={`user-nav${url === '/reviews' ? ('-active') : ''}`} to={`/users/${id}/reviews`}>
+          Reviews
         </Link>
-        <Link to={`/users/${id}/creditCards`}>
+        <Link className={`user-nav${url === '/creditcards' ? ('-active') : ''}`} to={`/users/${id}/creditcards`}>
           Credit Cards
         </Link>
-        <Link to={`/users/${id}/edit`}>
+        <Link className={`user-nav${url === '/edit' ? ('-active') : ''}`}to={`/users/${id}/edit`}>
           Edit Account
         </Link>
       </div>
@@ -33,9 +35,8 @@ const UserAccount = ({ user, id }) => {
   )
 }
 
-const mapState = ({ user, orders, addresses }, { id, history }) => {
-  const pastOrders = orders.filter(order => order.userId === user.id && !order.isActive).length; // what is this being used for?
-  return { user, id }
+const mapState = ({ user }) => {
+  return { user }
 }
 
 export default connect(mapState)(UserAccount);

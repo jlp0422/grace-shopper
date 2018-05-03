@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteProductFromServer } from '../../store';
 import { starRating } from '../../store/reusableFunctions';
-
 import ProductForm from './ProductForm';
 import LineItemForm from './LineItemForm';
 import ReviewForm from '../Review/ReviewForm';

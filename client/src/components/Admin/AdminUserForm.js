@@ -31,7 +31,7 @@ class AdminUserForm extends React.Component {
   onSave(ev) {
     ev.preventDefault()
     const { updateUser } = this.props
-    updateUser(this.state)
+    updateUser(this.state, 'admin')
   }
 
   render() {
@@ -84,7 +84,7 @@ const mapState = ({ users }, { id }) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    updateUser: (user) => dispatch(updateUserOnServer(user))
+    updateUser: (user, page) => dispatch(updateUserOnServer(user, page))
   }
 }
 

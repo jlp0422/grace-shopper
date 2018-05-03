@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateUserOnServer, updateLoggedUser } from '../../store';
-import { Input, Button } from 'mdbreact';
+import UserNav from './UserNav'
 
 class UserForm extends React.Component {
   constructor(props) {
@@ -46,6 +46,7 @@ class UserForm extends React.Component {
 
   render() {
     const { onChange, onUpdate } = this;
+    const { user } = this.props
     const { firstName, lastName, email, username, password, isEditing } = this.state;
     const fields = {
       firstName: 'First name',
@@ -56,8 +57,16 @@ class UserForm extends React.Component {
     }
     return (
       <div>
+        <UserNav user={ user } />
         <h2>Edit Account</h2>
-        <div>
+        {
+          isEditing ? (
+            <button onClick={ onUpdate } className="btn btn-success margin-t-15">Save</button>
+          ) : (
+            <button onClick={() => this.setState({ isEditing: true })} className="btn btn-outline-success margin-t-15">Edit</button>
+          )
+        }
+        <div className="margin-t-15">
           {
             Object.keys(fields).map(field => (
               <div className="margin-b-10" key={field}>
@@ -74,13 +83,6 @@ class UserForm extends React.Component {
             ))
           }
         </div>
-        {
-          isEditing ? (
-            <button onClick={ onUpdate } className="btn btn-success margin-t-15">Save</button>
-          ) : (
-            <button onClick={() => this.setState({ isEditing: true })} className="btn btn-outline-success margin-t-15">Edit</button>
-          )
-        }
       </div>
     )
   }

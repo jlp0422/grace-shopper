@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import LineItemForm from '../Product/LineItemForm.js'
+import LineItemForm from '../Product/LineItemForm.js';
+import moment from 'moment';
 
 const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => {
+  const orderDate = order.date ? moment(order.date).format("ddd, MMMM Do YYYY h:MMA") : null
   return (
     <div>
-      { order.date ? (<p>Order date: {order.date}</p>) : null }
+      { order.date ? (<p>Order date: {orderDate}</p>) : null }
       {
         orderItems.map(item => {
           const product = products.find(product => product.id === item.productId);

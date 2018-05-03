@@ -62,9 +62,9 @@ class App extends React.Component {
           <Route path='/' component={ Nav } />
           <div className="container">
             <div id="body-elements">
-              <Route path='/users/:id' render={({ match, history }) => (
-                <UserNav history={ history } id={ match.params.id * 1 } />
-              )} />
+              {/*<Route path='/users/:id' render={({ match, history }) => (
+                <UserNavAuth history={ history } id={ match.params.id * 1 } />
+              )} /> */}
               <Route path='/admin' component={CheckAdmin(AdminNav)} />
               <Switch>
                 <Route exact path='/' component={ Home } />
@@ -114,7 +114,7 @@ class App extends React.Component {
                 <Route exact path ='/admin/orders/:id' render={({ match }) => (
                   <AdminOrderFormAuth id={ match.params.id * 1 } />
                 )} />
-                {/* shows on /admin right now, since /admin is not in switch
+                {/* shows on /admin and any /users page right now, since those are not in switch
                  <Route path='/:id' component={ FourOhFour } />
                 */}
               </Switch>

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Addresses from '../Address/Addresses';
 import ActiveOrder from '../Order/ActiveOrder';
 import Dropdown from './Dropdown';
+import UserNav from '../User/UserNav';
 
 import axios from 'axios';
 
@@ -45,8 +46,10 @@ class CheckoutConfirm extends Component {
   render() {
     const { handleChange, onSave } = this;
     const { ownAddresses, ownCards, user } = this.props;
+    const url = location.hash
     return (
       <div>
+        <UserNav user={ user } />
         <div className='row'>
           <div className='col'>
             <h5>Select Shipping Address:</h5>
@@ -70,7 +73,7 @@ class CheckoutConfirm extends Component {
             }}>
               <button className='btn btn-info'>Add New Card</button>
             </Link>
-          <ActiveOrder />
+          <ActiveOrder checkout={ true }/>
           <br />
           <button className='btn btn-success' onClick={ onSave }>Submit Payment</button>
       </div>

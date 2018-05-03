@@ -28,12 +28,17 @@ app.post('/', (req, res, next) => {
 });
 
 app.put('/:id', (req, res, next) => {
-  Product.findById(req.params.id)
+  const { name, price, quantity, imageUrl, description, categoryArray } = req.body;
+  const { id } = req.params
+  let pcArray
+  Product.findById(id)
     .then(product => {
       Object.assign(product, req.body)
+      console.log('****** PRODUCT *****', product.get())
       return product.save();
     })
-    .then(product => res.send(product))
+    .then(product => product.addCategories(cate))
+      //res.send({product, categoryArray}))
     .catch(next);
 });
 

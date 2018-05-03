@@ -29,7 +29,7 @@ class LoginForm extends React.Component {
     const url = location.hash.slice(1)
     const { firstName, lastName, email, username, password } = this.state
     const { attemptLogin, attemptSignup } = this.props
-    if (url === '/signup') attemptSignup(this.state)
+    if (url === '/signup') attemptSignup(this.state, 'signup')
     else attemptLogin({ username, password })
     this.setState({ username: '', password: '' })
   }
@@ -104,7 +104,7 @@ class LoginForm extends React.Component {
 const mapDispatch = (dispatch) => {
   return {
     attemptLogin: (credentials) => dispatch(attemptLogin(credentials)),
-    attemptSignup: (user) => dispatch(updateUserOnServer(user))
+    attemptSignup: (user, page) => dispatch(updateUserOnServer(user, page))
   }
 }
 

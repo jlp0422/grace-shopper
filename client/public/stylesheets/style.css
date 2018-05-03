@@ -42,7 +42,12 @@
   grid-template-rows: 1
 }
 
-.nav-active {
+.user-nav {
+  border-bottom: 2px solid transparent;
+  margin-bottom: 5px;
+}
+
+.user-nav-active {
   font-weight: bold;
   border-bottom: 2px solid black;
 }

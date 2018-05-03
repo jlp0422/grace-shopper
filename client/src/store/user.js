@@ -19,6 +19,8 @@ export const attemptLogin = (credentials) => {
       .then( res => window.localStorage.setItem('token', res.data))
       .then(() => dispatch(getUserFromToken(window.localStorage.getItem('token'))))
       .then(() => location.hash = '/')
+      .then( () => dispatch(getUserFromToken(window.localStorage.getItem('token'))))
+      .then( () => location.hash = '/')
   }
 }
 

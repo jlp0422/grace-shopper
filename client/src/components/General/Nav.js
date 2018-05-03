@@ -58,11 +58,14 @@ class NavBar extends React.Component {
                       Hello {user.firstName}
                     </DropdownToggle>
                     <DropdownMenu right>
-                      <DropdownItem onClick={() => location.hash = `/users/${user.id}`}>My Account {isAdmin ? <img style={{ width: '25px', height: '18.8px' }} src="https://vignette.wikia.nocookie.net/animal-jam-clans-1/images/9/93/F1391de46653163d885be283ade13c47_crown-clip-art-transparent-king-crown-clipart-no-background_800-598.png/revision/latest/scale-to-width-down/640?cb=20170108005804" /> : null
+                      <DropdownItem onClick={() => location.hash = `/users/${user.id}`}>My Account {isAdmin ? <img style={{ width: '25px', height: '18.8px' }} src={'./vendor/images/admin-crown.png'} /> : null
                       }</DropdownItem>
                       <DropdownItem onClick={() => location.hash = `/users/${user.id}/cart`}>My Cart ({ cartCount ? cartCount : null })</DropdownItem>
-                      <DropdownItem divider />
-                      <DropdownItem onClick={() => location.hash = '/admin'}>Admin Tools</DropdownItem>
+                      { isAdmin ? (
+                        <div>
+                          <DropdownItem divider />
+                          <DropdownItem onClick={() => location.hash = '/admin'}>Admin Tools</DropdownItem>
+                        </div>) : null }
                       <DropdownItem divider />
                       <DropdownItem onClick={logout}>Log out</DropdownItem>
                     </DropdownMenu>
