@@ -5,9 +5,7 @@ import Addresses from '../Address/Addresses';
 import ActiveOrder from '../Order/ActiveOrder';
 import Dropdown from './Dropdown';
 import UserNav from '../User/UserNav';
-
 import axios from 'axios';
-
 import { updateOrderOnServer, updateProductOnServer } from '../../store';
 
 class CheckoutConfirm extends Component {
