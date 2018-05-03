@@ -177,7 +177,7 @@ const seed = () => {
       isAdmin: true,
       username: 'jphilipson',
       password: 'JEREMY',
-      email: 'jeremy@gmail.com',
+      email: 'jeremyphilipson@gmail.com',
     }),
     User.create({
       firstName: 'Jeremy',

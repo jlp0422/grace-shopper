@@ -32,7 +32,7 @@ class AdminOrderForm extends React.Component {
     ev.preventDefault()
     const { shippingId, billingId, creditCardId } = this.state
     const { updateOrder, order, user } = this.props
-    updateOrder({ id: order.id, shippingId, billingId, creditCardId, userId: user.id }, 'admin')
+    updateOrder({ id: order.id, isActive: false, shippingId, billingId, creditCardId, userId: user.id, date: new Date() }, 'admin')
     this.setState({ isEditing: false })
   }
 
@@ -50,22 +50,22 @@ class AdminOrderForm extends React.Component {
         <h5>Status: {order.isActive ? ('Active') : ('Completed')} </h5>
         <h5>Shipping Address: </h5>
         { order.isActive ? (
-          <Dropdown items={userAddresses} title="Shipping Address" name="shippingId" handleChange={ onChange } />
+          <Dropdown readOnly={ !isEditing } items={userAddresses} title="Shipping Address" name="shippingId" handleChange={ onChange } />
           ) : <p>{shippingAddress && shippingAddress.nickname}</p> }
 
         <h5>Billing Address: </h5>
         { order.isActive ? (
-          <Dropdown items={userAddresses} title="Billing Address" name="billingId" handleChange={onChange} />
+          <Dropdown readOnly={ !isEditing } items={userAddresses} title="Billing Address" name="billingId" handleChange={onChange} />
           ) : <p>{billingAddress && billingAddress.nickname}</p> }
 
         <h5>Payment method: </h5>
         { order.isActive ? (
-          <Dropdown items={userCards} title="Credit Card" name="creditCardId" handleChange={onChange} />
-          ) : (' Credit Card Number') }
+          <Dropdown readOnly={ !isEditing } items={userCards} title="Credit Card" name="creditCardId" handleChange={onChange} />
+          ) : ('Credit Card') }
 
         { order.isActive ?
           isEditing ? (
-            <button onClick={ onUpdate } className={`btn btn-success`}>Save</button>
+            <button onClick={ onUpdate } disabled={ billingId && shippingId && creditCardId ? false : true } className={`btn btn-success`}>Save</button>
           ) : (
             <button onClick={() => this.setState({ isEditing: !isEditing })} className={`btn btn-outline-success`}>Edit</button>
           )
@@ -73,6 +73,10 @@ class AdminOrderForm extends React.Component {
         }
         { order.isActive ?
           <button onClick={() => deleteOrder(order.id, 'admin')} className="btn btn-warning">Delete order</button>
+          : null
+        }
+        {
+          isEditing ? <button onClick={() => this.setState({ isEditing: !isEditing })} className={`btn btn-outline-secondary`}>Cancel Edit</button>
           : null
         }
       </div>
