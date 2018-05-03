@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 const Dropdown = (props) => {
   const { items, title, name, handleChange, readOnly } = props;
-  console.log(readOnly)
   return (
     <div>
     {

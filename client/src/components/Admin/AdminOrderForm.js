@@ -32,7 +32,7 @@ class AdminOrderForm extends React.Component {
     ev.preventDefault()
     const { shippingId, billingId, creditCardId } = this.state
     const { updateOrder, order, user } = this.props
-    updateOrder({ id: order.id, shippingId, billingId, creditCardId, userId: user.id }, 'admin')
+    updateOrder({ id: order.id, isActive: false, shippingId, billingId, creditCardId, userId: user.id, date: new Date() }, 'admin')
     this.setState({ isEditing: false })
   }
 
@@ -61,7 +61,7 @@ class AdminOrderForm extends React.Component {
         <h5>Payment method: </h5>
         { order.isActive ? (
           <Dropdown readOnly={ !isEditing } items={userCards} title="Credit Card" name="creditCardId" handleChange={onChange} />
-          ) : (' Credit Card Number') }
+          ) : ('Credit Card') }
 
         { order.isActive ?
           isEditing ? (

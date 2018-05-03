@@ -24,7 +24,10 @@ app.put('/:id', (req, res, next) => {
       Object.assign(order, req.body)
       return order.save();
     })
-    .then(order => res.send(order))
+    .then(order => {
+      console.log(order)
+      res.send(order)
+    })
     .catch(next);
 });
 
