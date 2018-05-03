@@ -26,8 +26,25 @@ class CheckoutConfirm extends Component {
     this.setState({ [ev.target.name]: ev.target.value * 1 })
   }
 
-  sendEmail(user) {
-    return axios.post('/api/email', user)
+  getInfoForEmail() {
+    const { user, ownAddresses, ownCards, order, items, products } = this.props;
+    const { shippingId, billingId } = this.state;
+    const shipping = ownAddresses.find(address => address.id === shippingId)
+    const billing = ownAddresses.find(address => address.id === billingId)
+    const totalCost = items.reduce((memo, item) => {
+      const product = products.find(product => item.productId === product.id)
+      memo += (product.price * item.quantity)
+      return memo;
+    }, 0);
+    const ownProducts = items.map(item => {
+      return products.find(product => item.productId === product.id)
+    })
+    const info = { user, shipping, billing, totalCost, ownProducts }
+    return info;
+  }
+
+  sendEmail(info) {
+    return axios.post('/api/email', {info})
       .then(res => res.data)
       .catch(err => console.error(err))
   }
@@ -40,7 +57,8 @@ class CheckoutConfirm extends Component {
     onUpdate({ id, isActive: false, date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     onUpdate({ isActive: true, userId: user.id });
     onUpdateProducts(items, products);
-    this.sendEmail(user);
+    this.sendEmail(this.getInfoForEmail());
+    // console.log(this.getInfoForEmail())
   }
 
   render() {

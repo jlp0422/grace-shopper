@@ -37,8 +37,9 @@ app.put('/:id', (req, res, next) => {
       console.log('****** PRODUCT *****', product.get())
       return product.save();
     })
-    .then(product => product.addCategories(cate))
-      //res.send({product, categoryArray}))
+    .then(product => res.send(product))
+    // .then(product => product.addCategories(cate))
+    //   res.send({product, categoryArray}))
     .catch(next);
 });
 

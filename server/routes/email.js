@@ -4,7 +4,17 @@ module.exports = app;
 const nodemailer = require('nodemailer')
 
 app.post('/', (req, res, next) => {
-  const { email } = req.body
+  const { user, shipping, billing, totalCost, ownProducts } = req.body.info
+  const { email, firstName } = user;
+  const { street, city, state, zip } = shipping;
+  const plural = ownProducts.length > 1 ? 's' : '';
+  const productString = ownProducts.reduce((memo, product, index, array) => {
+    if(array.length === 1) return memo + product.name
+    if(index !== array.length - 1) {
+      return memo + `${product.name}, `
+    }
+    return memo.slice(0,-2) + ` & ${product.name}`
+  }, '')
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     secure: false,
@@ -22,7 +32,7 @@ app.post('/', (req, res, next) => {
     from: '"J²A Widgets" <j2awidgets@gmail.com>',
     to: email,
     subject: 'Re: Your Recent Purchase',
-    text: 'Thank you so much for your purchase!'
+    text: `Thank you ${firstName} for your purchase${plural} of ${productString}! Your order will be sent to ${street}, ${city}, ${state} ${zip}. Your total cost is $${totalCost}.00`
   }
 
   transporter.sendMail(HelperOptions, (error, info) => {
