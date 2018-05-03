@@ -31,7 +31,6 @@ class CheckoutConfirm extends Component {
     const { shippingId, billingId, creditCardId } = this.state;
     const { email, firstName, lastName } = user;
     const shipping = ownAddresses.find(address => address.id === shippingId)
-    // const billing = ownAddresses.find(address => address.id === billingId)
     const { street, city, state, zip } = shipping;
     const orderId = order.id;
     const card = ownCards.find(card => card.id === creditCardId)
@@ -86,7 +85,7 @@ class CheckoutConfirm extends Component {
   }
 
   sendEmail(info) {
-    return axios.post('/api/email', {info})
+    return axios.post('/api/email', info)
       .then(res => res.data)
       .catch(err => console.error(err))
   }
@@ -105,7 +104,7 @@ class CheckoutConfirm extends Component {
   render() {
     const { handleChange, onSave } = this;
     const { ownAddresses, ownCards, user } = this.props;
-    const url = location.hash
+    const url = location.hash; // what is this doing?
     return (
       <div>
         <UserNav user={ user } />
@@ -119,7 +118,10 @@ class CheckoutConfirm extends Component {
             <Dropdown items={ownAddresses} title='Billing Address' name='billingId' handleChange={handleChange} />
           </div>
         </div>
-        <Link to={`/users/${user.id}/addresses`}>
+        <Link to={{
+          pathname: `/users/${user.id}/addresses`,
+          state: 'checkout'
+        }}>
           <button className='btn btn-primary'>Add New Address</button>
         </Link>
           <br />
