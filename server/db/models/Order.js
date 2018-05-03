@@ -7,10 +7,6 @@ const Order = conn.define('order', {
   },
   date: {
     type: Sequelize.DATE,
-  },
-  confirmation: {
-    type: Sequelize.STRING,
-    defaultValue: null
   }
 }, {
   timestamps: false

@@ -14,7 +14,7 @@ export const getAddressesFromServer = () => {
     return axios.get('/api/addresses')
       .then(res => res.data)
       .then(addresses => dispatch(getAddresses(addresses)))
-    // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   };
 };
 
@@ -23,11 +23,11 @@ export const deleteAddressFromServer = (id) => {
     return axios.delete(`/api/addresses/${id}`)
       .then(() => dispatch(deleteAddress(id)))
       // .then(() => location.hash = '/addresses')
-    // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   };
 };
 
-export const updateAddressOnServer = (address) => {
+export const updateAddressOnServer = (address, page) => {
   const { id } = address;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/addresses/${id}` : '/api/addresses';
@@ -39,8 +39,11 @@ export const updateAddressOnServer = (address) => {
         dispatch(action(_address))
         return _address
       })
+      .then(() => {
+        if (page === 'checkout') location.hash = `/users/${address.userId}/checkout`
+      })
       // .then(_address => location.hash = `/users/${_address.userId}/addresses`)
-    // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   }
 }
 
