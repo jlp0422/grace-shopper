@@ -5,6 +5,8 @@ import Addresses from '../Address/Addresses';
 import ActiveOrder from '../Order/ActiveOrder';
 import Dropdown from './Dropdown';
 
+import axios from 'axios';
+
 import { updateOrderOnServer, updateProductOnServer } from '../../store';
 
 class CheckoutConfirm extends Component {
@@ -23,6 +25,12 @@ class CheckoutConfirm extends Component {
     this.setState({ [ev.target.name]: ev.target.value * 1 })
   }
 
+  sendEmail(user) {
+    return axios.post('/api/email', user)
+      .then(res => res.data)
+      .catch(err => console.error(err))
+  }
+
   onSave(ev) {
     ev.preventDefault();
     const { onUpdate, onUpdateProducts, order, user, items, products } = this.props;
@@ -31,6 +39,7 @@ class CheckoutConfirm extends Component {
     onUpdate({ id, isActive: false, date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     onUpdate({ isActive: true, userId: user.id });
     onUpdateProducts(items, products);
+    this.sendEmail(user);
   }
 
   render() {
