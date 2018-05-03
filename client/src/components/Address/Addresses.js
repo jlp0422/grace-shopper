@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AddressForm from './AddressForm';
+import UserNav from '../User/UserNav';
 
-const Addresses = ({ userAddresses, userId, page }) => {
+const Addresses = ({ userAddresses, userId, page, user }) => {
   return (
     <div>
+      <UserNav user={ user } />
       <h2>Addresses</h2>
       <ul className='list-group'>
         {
@@ -26,10 +28,10 @@ const Addresses = ({ userAddresses, userId, page }) => {
   );
 }
 
-const mapState = ( { addresses }, { id, page }) => {
+const mapState = ( { addresses, user }, { id, page }) => {
   const userId = id * 1
   const userAddresses = addresses.filter(address => address.userId === id * 1)
-  return { userAddresses, userId, page }
+  return { userAddresses, userId, page, user }
 };
 
 export default connect(mapState)(Addresses);
