@@ -25,6 +25,7 @@ class CreditCardForm extends Component {
   onSave(ev) {
     ev.preventDefault();
     const { onSave, userId } = this.props;
+    const { orderId } = this.props.location
     const { ccType, ccNum, ccExp, ccSec } = this.state;
     onSave({ ccType, ccNum, ccExp, ccSec, userId });
     this.setState({ ccType: '', ccNum: '', ccExp: '', ccSec: '' });
@@ -68,9 +69,9 @@ const mapState = ( state, { userId }) => {
 }
 
 const mapDispatch = (dispatch, { location }) => {
-  const page = location.state;
+  const { orderId, page } = location
   return {
-    onSave: (creditCard) => dispatch(createCreditCardOnServer(creditCard, page))
+    onSave: (creditCard) => dispatch(createCreditCardOnServer(creditCard, page, orderId))
   }
 }
 

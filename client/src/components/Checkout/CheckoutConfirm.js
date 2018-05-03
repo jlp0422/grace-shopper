@@ -25,12 +25,11 @@ class CheckoutConfirm extends Component {
   }
 
   getInfoForEmail() {
-    const { user, ownAddresses, ownCards, order, items, products } = this.props;
+    const { user, ownAddresses, ownCards, orderId, items, products } = this.props;
     const { shippingId, billingId, creditCardId } = this.state;
     const { email, firstName, lastName } = user;
     const shipping = ownAddresses.find(address => address.id === shippingId)
     const { street, city, state, zip } = shipping;
-    const orderId = order.id;
     const card = ownCards.find(card => card.id === creditCardId)
     const { ccType, ccNum } = card;
     const totalPrice = items.reduce((memo, item) => {
@@ -90,10 +89,9 @@ class CheckoutConfirm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { onUpdate, onUpdateProducts, order, user, items, products } = this.props;
+    const { onUpdate, onUpdateProducts, orderId, user, items, products } = this.props;
     const { creditCardId, shippingId, billingId } = this.state;
-    const { id } = order;
-    onUpdate({ id, isActive: false, date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
+    onUpdate({ id: orderId, isActive: false, date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     onUpdate({ isActive: true, userId: user.id });
     onUpdateProducts(items, products);
     this.sendEmail(this.getInfoForEmail());
@@ -101,8 +99,7 @@ class CheckoutConfirm extends Component {
 
   render() {
     const { handleChange, onSave } = this;
-    const { ownAddresses, ownCards, user } = this.props;
-    const url = location.hash; // what is this doing?
+    const { ownAddresses, ownCards, user, orderId } = this.props;
     return (
       <div>
         <UserNav user={ user } />
@@ -118,7 +115,7 @@ class CheckoutConfirm extends Component {
         </div>
         <Link to={{
           pathname: `/users/${user.id}/addresses`,
-          state: 'checkout'
+          state: 'checkout',
         }}>
           <button className='btn btn-primary'>Add New Address</button>
         </Link>
@@ -128,7 +125,8 @@ class CheckoutConfirm extends Component {
           <Dropdown items={ownCards} title='Credit Card' name='creditCardId' handleChange={handleChange} />
             <Link to={{
               pathname: `/users/${user.id}/creditCards`,
-              state: 'checkout'
+              page: 'checkout',
+              orderId: orderId
             }}>
               <button className='btn btn-info'>Add New Card</button>
             </Link>
@@ -145,13 +143,12 @@ const mapState = ({ user, addresses, creditCards, orders, lineItems, products },
   console.log(orderId)
   const ownAddresses = addresses.filter(address => user.id === address.userId)
   const ownCards = creditCards.filter(card => card.userId === user.id)
-  const order = orders.find(order => order.userId === user.id && order.isActive)
-  const items = lineItems.filter(item => item.orderId === order.id)
+  const items = lineItems.filter(item => item.orderId === orderId)
   return {
     user,
     ownAddresses,
     ownCards,
-    order,
+    orderId,
     items,
     products
   }
