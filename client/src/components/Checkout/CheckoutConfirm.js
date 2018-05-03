@@ -28,18 +28,60 @@ class CheckoutConfirm extends Component {
 
   getInfoForEmail() {
     const { user, ownAddresses, ownCards, order, items, products } = this.props;
-    const { shippingId, billingId } = this.state;
+    const { shippingId, billingId, creditCardId } = this.state;
+    const { email, firstName, lastName } = user;
     const shipping = ownAddresses.find(address => address.id === shippingId)
-    const billing = ownAddresses.find(address => address.id === billingId)
-    const totalCost = items.reduce((memo, item) => {
+    // const billing = ownAddresses.find(address => address.id === billingId)
+    const { street, city, state, zip } = shipping;
+    const orderId = order.id;
+    const card = ownCards.find(card => card.id === creditCardId)
+    const { ccType, ccNum } = card;
+    const totalPrice = items.reduce((memo, item) => {
       const product = products.find(product => item.productId === product.id)
       memo += (product.price * item.quantity)
       return memo;
     }, 0);
-    const ownProducts = items.map(item => {
-      return products.find(product => item.productId === product.id)
-    })
-    const info = { user, shipping, billing, totalCost, ownProducts }
+    const productMap = items.reduce((memo, item) => {
+      const product = products.find(product => item.productId === product.id)
+      const id = product.id;
+      memo[id] = {}
+      memo[id].name = product.name;
+      memo[id].quantity = item.quantity
+      memo[id].price = product.price
+      return memo;
+    }, {})
+    const listItems = items.reduce((memo, item) => {
+      const product = productMap[item.productId];
+      memo += (`
+        <li>
+          Product #${item.productId}: (${product.quantity}) ${product.name} --- $${product.price}/each
+        </li>
+      `)
+      return memo
+    }, '')
+    const htmlForEmail = (`
+      <html>
+        <head><title>Thank You!</title></head>
+        <body>
+          <h2>Hello ${firstName}!</h2>
+          <p>Thank you so much for your purchase!</p>
+          <p>You ordered the following:</p>
+          <ul>${listItems}</ul>
+          <h4>Total Price: $${totalPrice}.00</h4>
+          <p>Credit Card: ${ccType} ****${ccNum.slice(-4)}</p>
+          <p><b>Order#${orderId}</b> will be shipped to:</p>
+          <p>
+            ${firstName} ${lastName}
+            <br />
+            ${street}
+            <br />
+            ${city}, ${state} ${zip}
+          </p>
+          <h3>Thank You from the Team at J²A Widgets!</h3>
+        </body>
+      </html>
+    `);
+    const info = { email, orderId, htmlForEmail };
     return info;
   }
 
@@ -58,7 +100,6 @@ class CheckoutConfirm extends Component {
     onUpdate({ isActive: true, userId: user.id });
     onUpdateProducts(items, products);
     this.sendEmail(this.getInfoForEmail());
-    // console.log(this.getInfoForEmail())
   }
 
   render() {
