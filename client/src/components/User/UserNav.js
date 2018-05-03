@@ -13,19 +13,19 @@ const UserAccount = ({ user }) => {
       <h2>{user.firstName} {user.lastName}</h2>
       <div className="account-nav">
         <Link className={`user-nav${ url === '/cart' ? ('-active') : '' }`} to={`/users/${id}/cart`}>
-          My Cart
+          Cart
         </Link>
         <Link className={`user-nav${url === '/orders' ? ('-active') : ''}`} to={`/users/${id}/orders`}>
-          My Orders
+          Orders
         </Link>
         <Link className={`user-nav${url === '/addresses' ? ('-active') : ''}`} to={`/users/${id}/addresses`}>
-          My Addresses
+          Addresses
         </Link>
         <Link className={`user-nav${url === '/reviews' ? ('-active') : ''}`} to={`/users/${id}/reviews`}>
-          My Reviews
+          Reviews
         </Link>
         <Link className={`user-nav${url === '/creditcards' ? ('-active') : ''}`} to={`/users/${id}/creditcards`}>
-          My Credit Cards
+          Credit Cards
         </Link>
         <Link className={`user-nav${url === '/edit' ? ('-active') : ''}`}to={`/users/${id}/edit`}>
           Edit Account
