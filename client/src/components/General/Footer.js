@@ -6,7 +6,6 @@ import { connect} from 'react-redux';
 
 const PageFooter = ({ user, logout }) => {
   const url = location.hash.slice(1)
-  console.log(url)
   return (
     <div id="footer">
       {

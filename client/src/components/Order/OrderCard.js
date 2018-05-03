@@ -34,7 +34,7 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
         {
           !equal && page !== 'past' ? (
           <div className='col'>
-            <Link to={`/users/${order.userId}/checkout`}><button className="btn btn-success margin-t-15">Checkout</button></Link>
+            <Link to={`/users/${order.userId}/checkout/${order.id}`}><button className="btn btn-success margin-t-15">Checkout</button></Link>
           </div>
           ) : null
         }
@@ -45,7 +45,7 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
 
 const mapState = ({ lineItems, products, user }, { order, page, location }) => {
   const path = location.pathname;
-  const currentPath = `/users/${user.id}/checkout`;
+  const currentPath = `/users/${user.id}/checkout/${order.id}`;
   const equal = path === currentPath;
   const orderItems = lineItems.filter(item => item.orderId === order.id);
   const totalPrice = orderItems.reduce((memo, item) => {

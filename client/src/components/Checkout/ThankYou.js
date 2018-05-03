@@ -7,7 +7,7 @@ const ThankYou = ({ user }) => {
     <div>
       <UserNav user={ user } />
       <div className='jumbotron'>
-        <h1>J²A² Widgets</h1>
+        <h1>J²A Widgets</h1>
         <h2>Success!</h2>
         <h3>Thank you for your order!</h3>
       </div>
