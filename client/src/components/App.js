@@ -56,6 +56,8 @@ class App extends React.Component {
     const UserAccountAuth = CheckAuth(UserAccount)
     const AdminUserFormAuth = CheckAdmin(AdminUserForm)
     const AdminOrderFormAuth = CheckAdmin(AdminOrderForm)
+    const CheckoutConfirmAuth = CheckAuth(CheckoutConfirm)
+    const ThankYouAuth = CheckAuth(ThankYou)
     return (
       <Router>
         <div>
@@ -90,8 +92,12 @@ class App extends React.Component {
                 <Route exact path='/users/:id/cart' component={ CheckAuth(ActiveOrder) } />
                 <Route exact path='/users/:id/orders' component={ CheckAuth(PastOrders) } />
                 <Route exact path='/users/:id/creditCards' component={ CheckAuth(CreditCards) } />
-                <Route exact path='/users/:id/checkout' component={ CheckAuth(CheckoutConfirm) } />
-                <Route exact path='/users/:id/checkout/thankyou' component={ CheckAuth(ThankYou) } />
+                <Route exact path='/users/:id/checkout/:orderId' render={({ match }) => (
+                  <CheckoutConfirmAuth id={ match.params.id * 1} orderId={ match.params.orderId * 1 } />
+                )} />
+                <Route exact path='/users/:id/checkout/:orderId/thankyou' render={() => (
+                  <ThankYouAuth id={match.params.id * 1} orderId={match.params.orderId * 1} />
+                )} />
                 <Route exact path='/users/:id/reviews' render={ ({ match }) => (
                   <ReviewsAuth page='user' id={ match.params.id * 1 } />
                 )} />

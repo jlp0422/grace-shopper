@@ -29,7 +29,9 @@ class LoginForm extends React.Component {
     const url = location.hash.slice(1)
     const { firstName, lastName, email, username, password } = this.state
     const { attemptLogin, attemptSignup } = this.props
-    if (url === '/signup') attemptSignup(this.state, 'signup')
+    if (url === '/signup') {
+      attemptSignup(this.state, 'signup')
+    }
     else attemptLogin({ username, password })
     this.setState({ username: '', password: '' })
   }
@@ -48,7 +50,7 @@ class LoginForm extends React.Component {
     return (
       <div className="login-form">
         <h3>{ url === '/signup' ? ('Sign up for an account') : ('Log in to your account')}</h3>
-        <form onSubmit={ onSubmit }>
+        <div>
         {
           url === '/signup' ? (
             Object.keys(fields).map(field => (
@@ -87,10 +89,10 @@ class LoginForm extends React.Component {
             </div>
           )
         }
-          <button className="btn btn-success margin-t-15">
-            { url === '/signup' ? ('Create account') : ('Log in') }
-          </button>
-        </form>
+        </div>
+        <button onClick={ onSubmit } className="btn btn-success margin-t-15">
+          { url === '/signup' ? ('Create account') : ('Log in') }
+        </button>
         { url === '/signup' ?
           <p className="margin-t-15">Have an account? <a href='#/login'>Log in now &raquo;</a></p>
           :

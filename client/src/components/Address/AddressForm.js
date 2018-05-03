@@ -1,8 +1,8 @@
 /* eslint-disable */
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { updateAddressOnServer, deleteAddressFromServer } from '../../store';
-// import { Input, Button } from 'mdbreact';
 
 class AddressForm extends Component {
   constructor(props) {
@@ -115,11 +115,12 @@ const mapState = (state, { userId }) => {
   return { userId }
 }
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { location }) => {
+  const page = location.state;
   return {
-    updateAddress: (address) => dispatch(updateAddressOnServer(address)),
+    updateAddress: (address) => dispatch(updateAddressOnServer(address, page)),
     deleteAddress: (id) => dispatch(deleteAddressFromServer(id))
   };
 };
 
-export default connect(mapState, mapDispatch)(AddressForm);
+export default withRouter(connect(mapState, mapDispatch)(AddressForm));
