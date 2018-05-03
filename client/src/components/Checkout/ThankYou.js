@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from "react-redux";
 import UserNav from '../User/UserNav';
 
-const ThankYou = ({ user, order }) => {
+const ThankYou = ({ user, orderId }) => {
   return (
     <div>
-      <UserNav user={ user, orderId } />
+      <UserNav user={ user } />
       <div className='jumbotron'>
         <h1>J²A Widgets</h1>
         <br />

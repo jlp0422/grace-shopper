@@ -140,7 +140,6 @@ class CheckoutConfirm extends Component {
 }
 
 const mapState = ({ user, addresses, creditCards, orders, lineItems, products }, { orderId }) => {
-  console.log(orderId)
   const ownAddresses = addresses.filter(address => user.id === address.userId)
   const ownCards = creditCards.filter(card => card.userId === user.id)
   const items = lineItems.filter(item => item.orderId === orderId)
