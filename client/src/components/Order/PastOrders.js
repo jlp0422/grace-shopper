@@ -22,7 +22,7 @@ const PastOrders = ({ pastOrders, user }) => {
 }
 
 const mapState = ({ orders, user }, { page }) => {
-  const pastOrders = orders.filter(order => order.userId === user.id && !order.isActive)
+  const pastOrders = orders.filter(order => order.userId === user.id && order.status !== 'cart')
   return { pastOrders, user }
 }
 

@@ -32,7 +32,7 @@ class AdminOrderForm extends React.Component {
     ev.preventDefault()
     const { shippingId, billingId, creditCardId } = this.state
     const { updateOrder, order, user } = this.props
-    updateOrder({ id: order.id, isActive: false, shippingId, billingId, creditCardId, userId: user.id, date: new Date() }, 'admin')
+    updateOrder({ id: order.id, status: 'complete', shippingId, billingId, creditCardId, userId: user.id, date: new Date() }, 'admin')
     this.setState({ isEditing: false })
   }
 
@@ -47,23 +47,23 @@ class AdminOrderForm extends React.Component {
       <div>
         <h3>Order #{order.id}</h3>
         <h3>User: {`${user.firstName} ${user.lastName}`}</h3>
-        <h5>Status: {order.isActive ? ('Active') : ('Completed')} </h5>
+        <h5>Status: {order.status} </h5>
         <h5>Shipping Address: </h5>
-        { order.isActive ? (
+        { order.status === 'processed' || order.status === 'cart'  ? (
           <Dropdown readOnly={ !isEditing } items={userAddresses} title="Shipping Address" name="shippingId" handleChange={ onChange } />
           ) : <p>{shippingAddress && shippingAddress.nickname}</p> }
 
         <h5>Billing Address: </h5>
-        { order.isActive ? (
+        { order.status === 'processed' || order.status === 'cart'  ? (
           <Dropdown readOnly={ !isEditing } items={userAddresses} title="Billing Address" name="billingId" handleChange={onChange} />
           ) : <p>{billingAddress && billingAddress.nickname}</p> }
 
         <h5>Payment method: </h5>
-        { order.isActive ? (
+        { order.status === 'processed' || order.status === 'cart'  ? (
           <Dropdown readOnly={ !isEditing } items={userCards} title="Credit Card" name="creditCardId" handleChange={onChange} />
           ) : ('Credit Card') }
 
-        { order.isActive ?
+        { order.status === 'processed' || order.status === 'cart' ?
           isEditing ? (
             <button onClick={ onUpdate } disabled={ billingId && shippingId && creditCardId ? false : true } className={`btn btn-success`}>Save</button>
           ) : (
@@ -71,7 +71,7 @@ class AdminOrderForm extends React.Component {
           )
           : null
         }
-        { order.isActive ?
+        { order.status === 'processed' || order.status === 'cart'  ?
           <button onClick={() => deleteOrder(order.id, 'admin')} className="btn btn-warning">Delete order</button>
           : null
         }

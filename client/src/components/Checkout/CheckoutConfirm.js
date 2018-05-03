@@ -91,8 +91,8 @@ class CheckoutConfirm extends Component {
     ev.preventDefault();
     const { onUpdate, onUpdateProducts, orderId, user, items, products } = this.props;
     const { creditCardId, shippingId, billingId } = this.state;
-    onUpdate({ id: orderId, isActive: false, date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
-    onUpdate({ isActive: true, userId: user.id });
+    onUpdate({ id: orderId, status: 'processed', date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
+    onUpdate({ status: 'cart', userId: user.id });
     onUpdateProducts(items, products);
     this.sendEmail(this.getInfoForEmail());
   }

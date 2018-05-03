@@ -97,9 +97,9 @@ const mapState = ({ categories, user, orders, lineItems }) => {
   const { isAdmin } = user
   const loggedIn = !!user.id
   const activeOrder = orders.length && loggedIn ? (
-    orders.find(order => order.userId === user.id && order.isActive)
+    orders.find(order => order.userId === user.id && order.status === 'cart')
   ) : (
-    orders.find(order => !order.userId && order.isActive)
+    orders.find(order => !order.userId && order.status === 'cart')
   );
   const activeOrderItems = activeOrder ? lineItems.filter(item => item.orderId === activeOrder.id) : [];
   const cartCount = activeOrderItems.length ? activeOrderItems.reduce((memo, lineItem) => memo + lineItem.quantity, 0) : '0'

@@ -46,7 +46,7 @@ class App extends React.Component {
     getReviews();
     getProductCategories();
     getCreditCards();
-    !hasUser ? createOrder({ isActive: true }) : null
+    !hasUser ? createOrder({ status: 'cart' }) : null
   }
 
   render() {

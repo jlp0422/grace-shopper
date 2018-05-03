@@ -11,7 +11,7 @@ const ThankYou = ({ user, orderId }) => {
         <br />
         <h3>Thank you for your order!</h3>
         <br />
-        <h4>You will receive an email shortly with details about Order#{orderId}</h4>
+        <h4>You will receive an email shortly with details about Order #{orderId}</h4>
       </div>
     </div>
   );

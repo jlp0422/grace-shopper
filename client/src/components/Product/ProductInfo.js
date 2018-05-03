@@ -67,7 +67,7 @@ const mapState = ({ products, user, reviews, orders, lineItems }, { match }) => 
     }
   }, 0);
   const activeOrder = orders.find(order => {
-    return loggedIn ? order.userId === user.id && order.isActive : order.isActive && !order.userId
+    return loggedIn ? order.userId === user.id && order.status === 'cart' : order.status === 'cart' && !order.userId
   })
   const orderItems = activeOrder && lineItems.filter(item => item.orderId === activeOrder.id)
   const lineItemForProduct = orderItems && orderItems.find(item => item.productId === product.id)
