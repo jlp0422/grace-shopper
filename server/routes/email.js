@@ -32,7 +32,17 @@ app.post('/', (req, res, next) => {
     from: '"J²A Widgets" <j2awidgets@gmail.com>',
     to: email,
     subject: 'Re: Your Recent Purchase',
-    text: `Thank you ${firstName} for your purchase${plural} of ${productString}! Your order will be sent to ${street}, ${city}, ${state} ${zip}. Your total cost is $${totalCost}.00`
+    // text: `Thank you ${firstName} for your purchase${plural} of ${productString}! Your order will be sent to ${street}, ${city}, ${state} ${zip}. Your total cost is $${totalCost}.00`
+    html: (`
+      <div>
+        <h3>Hello ${firstName}!</h3>
+        <p>Thank you so much for your purchase!</p>
+        <p>Your ${productString} will be sent out shortly to the shipping address you provided:</p>
+        <p>${street}</p>
+        <p>${city}, ${state} ${zip}</p>
+        <h4>Thank you for your payment of $${totalCost}.00!</h4>
+      </div>
+    `)
   }
 
   transporter.sendMail(HelperOptions, (error, info) => {
