@@ -5,6 +5,8 @@ import { logout } from '../../store';
 import { connect} from 'react-redux';
 
 const PageFooter = ({ user, logout }) => {
+  const url = location.hash.slice(1)
+  console.log(url)
   return (
     <div id="footer">
       {
@@ -18,7 +20,13 @@ const PageFooter = ({ user, logout }) => {
         ) : (
           <div className="footer-2">
             <Link to='/'>Home</Link>
-            <Link to='/login'>Log in</Link>
+            {
+              url === '/login' ? (
+                <Link to='/signup'>Sign up</Link>
+              ) : (
+                <Link to='/login'>Log in</Link>
+              )
+            }
           </div>
           )
       }
