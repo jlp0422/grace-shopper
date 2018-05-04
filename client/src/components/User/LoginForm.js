@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { attemptLogin, updateUserOnServer } from '../../store'
-import { Button, Input, Progress } from 'mdbreact'
+import { Button, Input, Progress, Fa } from 'mdbreact'
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -76,8 +76,6 @@ class LoginForm extends React.Component {
                   value={email}
                   type='email'
                 />
-                <div>
-                </div>
                 <Input
                   label='Username'
                   name="username"
