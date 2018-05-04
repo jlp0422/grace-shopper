@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { attemptLogin, updateUserOnServer } from '../../store'
-import { Button, Input } from 'mdbreact'
+import { Button, Input, Progress } from 'mdbreact'
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -43,6 +43,7 @@ class LoginForm extends React.Component {
     const { username, password, email } = this.state
     const passwordTestStrong = passwordRegexStrong.test(password)
     const passwordTestMedium = passwordRegexMedium.test(password)
+    const isEmail = emailRegex.test(email)
     const fields = {
       firstName: 'First name',
       lastName: 'Last name',
@@ -75,6 +76,8 @@ class LoginForm extends React.Component {
                   value={email}
                   type='email'
                 />
+                <div>
+                </div>
                 <Input
                   label='Username'
                   name="username"
@@ -90,11 +93,22 @@ class LoginForm extends React.Component {
                   value={password}
                   type="password"
                 />
-                <div className={`password-regex
+                {/*<div className={`password-regex
                   ${passwordTestStrong ? ('pw-strong') : `${passwordTestMedium ? ('pw-medium') : ('pw-weak')}`}`
-                }>
-                { passwordTestStrong ? ('Strong') : (
-                  passwordTestMedium ? ('Medium') : ('Weak')
+                }>*/}
+                <div>
+                { passwordTestStrong ? (
+                  <Progress value={100} color={"success"} />
+                ) : (
+                  passwordTestMedium ? (
+                    <Progress value={67} color={"warning"} />
+                  ) : (
+                    password ? (
+                      <Progress value={33} color={"danger"} />
+                    ) : (
+                      <Progress value={0} color={"danger"} />
+                    )
+                  )
                   ) }
                 </div>
             </div>

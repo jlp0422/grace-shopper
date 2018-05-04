@@ -31,10 +31,10 @@
   max-width: 450px;
 }
 
-.password-regex {
+/* .password-regex {
   padding: 10px;
   color: white;
-}
+} */
 
 .pw-strong {
   background-color: green;
