@@ -29,20 +29,20 @@ class LoginForm extends React.Component {
     const url = location.hash.slice(1)
     const { firstName, lastName, email, username, password } = this.state
     const { attemptLogin, attemptSignup } = this.props
-    if (url === '/signup') {
-      attemptSignup(this.state, 'signup')
-    }
+    if (url === '/signup') attemptSignup(this.state, 'signup')
     else attemptLogin({ username, password })
     this.setState({ username: '', password: '' })
   }
 
   render() {
     const url = location.hash.slice(1)
-    const emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
-    const passwordRegexMedium = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
-    const passwordRegexStrong = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+    const emailRegex = RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+    const passwordRegexMedium = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+    const passwordRegexStrong = RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
     const { onChange, onSubmit } = this
     const { username, password, email } = this.state
+    const passwordTestStrong = passwordRegexStrong.test(password)
+    const passwordTestMedium = passwordRegexMedium.test(password)
     const fields = {
       firstName: 'First name',
       lastName: 'Last name',
@@ -90,6 +90,13 @@ class LoginForm extends React.Component {
                   value={password}
                   type="password"
                 />
+                <div className={`password-regex
+                  ${passwordTestStrong ? ('pw-strong') : `${passwordTestMedium ? ('pw-medium') : ('pw-weak')}`}`
+                }>
+                { passwordTestStrong ? ('Strong') : (
+                  passwordTestMedium ? ('Medium') : ('Weak')
+                  ) }
+                </div>
             </div>
           ) : (
             <div>

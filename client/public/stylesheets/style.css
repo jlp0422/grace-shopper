@@ -31,6 +31,23 @@
   max-width: 450px;
 }
 
+.password-regex {
+  padding: 10px;
+  color: white;
+}
+
+.pw-strong {
+  background-color: green;
+}
+
+.pw-medium {
+  background-color: yellow;
+}
+
+.pw-weak {
+  background-color: red;
+}
+
 /* USER ACCOUNT */
 .account-nav {
   border-bottom:2px solid transparent;
