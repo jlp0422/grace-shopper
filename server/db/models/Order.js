@@ -1,9 +1,9 @@
 const { conn, Sequelize } = require('../conn');
 
 const Order = conn.define('order', {
-  isActive: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: true
+  status: {
+    type: Sequelize.STRING,
+    defaultValue: 'cart'
   },
   date: {
     type: Sequelize.DATE,

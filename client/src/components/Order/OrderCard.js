@@ -8,7 +8,12 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
   const orderDate = order.date ? moment(order.date).format("ddd, MMMM Do YYYY h:MMA") : null
   return (
     <div>
-      { order.date ? (<p>Order date: {orderDate}</p>) : null }
+      { order.date ? (
+        <div>
+          <p><strong>Order date:</strong> {orderDate}</p>
+          <p><strong>Order status:</strong> {order.status}</p>
+        </div>
+        ) : null }
       {
         orderItems.map(item => {
           const product = products.find(product => product.id === item.productId);
@@ -18,7 +23,7 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
               <p className="font-weight-bold">Product: {product.name}</p>
               { order.date ? <p>Quantity Purchased: {item.quantity}</p> : null }
               <p>Price per item: ${product.price}</p>
-              { order.isActive ? (
+              { order.status === 'cart' ? (
                 <LineItemForm id={ item.id } page={page} productId={product.id} orderId={order.id} />
               )
                 : null
@@ -34,7 +39,14 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
         {
           !equal && page !== 'past' ? (
           <div className='col'>
-            <Link to={`/users/${order.userId}/checkout/${order.id}`}><button className="btn btn-success margin-t-15">Checkout</button></Link>
+          {
+            orderItems.length === 0 ? (
+              <button disabled={ true } className="btn btn-success margin-t-15">Checkout</button>
+            ) : (
+              <Link to={`/users/${order.userId}/checkout/${order.id}`}><button className="btn btn-success margin-t-15">Checkout</button></Link>
+
+            )
+          }
           </div>
           ) : null
         }

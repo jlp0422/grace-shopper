@@ -46,7 +46,7 @@ class App extends React.Component {
     getReviews();
     getProductCategories();
     getCreditCards();
-    !hasUser ? createOrder({ isActive: true }) : null
+    !hasUser ? createOrder({ status: 'cart' }) : null
   }
 
   render() {
@@ -95,7 +95,7 @@ class App extends React.Component {
                 <Route exact path='/users/:id/checkout/:orderId' render={({ match }) => (
                   <CheckoutConfirmAuth id={ match.params.id * 1} orderId={ match.params.orderId * 1 } />
                 )} />
-                <Route exact path='/users/:id/checkout/:orderId/thankyou' render={() => (
+                <Route exact path='/users/:id/checkout/:orderId/thankyou' render={({ match }) => (
                   <ThankYouAuth id={match.params.id * 1} orderId={match.params.orderId * 1} />
                 )} />
                 <Route exact path='/users/:id/reviews' render={ ({ match }) => (

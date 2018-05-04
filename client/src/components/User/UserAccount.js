@@ -15,7 +15,7 @@ const UserAccount = ({ totalOrders, totalReviews, savedAddresses, user }) => {
 }
 
 const mapState = ({ orders, reviews, addresses, user }, { id }) => {
-  const totalOrders = orders.filter(order => order.userId === id && !order.isActive).length;
+  const totalOrders = orders.filter(order => order.userId === id && order.status !== 'cart').length;
   const totalReviews = reviews.filter(review => review.userId === id).length;
   const savedAddresses = addresses.filter(address => address.userId === id).length;
   return { totalOrders, totalReviews, savedAddresses }

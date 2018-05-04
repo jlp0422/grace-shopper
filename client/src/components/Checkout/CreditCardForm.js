@@ -68,9 +68,9 @@ const mapState = ( state, { userId }) => {
 }
 
 const mapDispatch = (dispatch, { location }) => {
-  const page = location.state;
+  const { orderId, page } = location
   return {
-    onSave: (creditCard) => dispatch(createCreditCardOnServer(creditCard, page))
+    onSave: (creditCard) => dispatch(createCreditCardOnServer(creditCard, page, orderId))
   }
 }
 

@@ -3,11 +3,7 @@ module.exports = app;
 const { Order, LineItem } = require('../db').models;
 
 app.get('/', (req, res, next) => {
-  Order.findAll(/*{
-    include: [
-      { model: LineItem , as: 'lineItems' }
-    ]
-  }*/)
+  Order.findAll()
     .then(orders => res.send(orders))
     .catch(next);
 });

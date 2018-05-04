@@ -74,7 +74,7 @@ class LineItemForm extends Component {
 
 const mapState = ({ lineItems, orders, user, products }, { productId, orderId, page, id, itemId, checkCart }) => {
   const order = orders.find(order => {
-    return !!user.id ? order.userId === user.id && order.isActive : !order.userId && order.isActive
+    return !!user.id ? order.userId === user.id && order.status === 'cart' : !order.userId && order.status === 'cart'
   })
   const orderItems = order && lineItems.filter(item => item.orderId === order.id)
   const lineItemForProduct = orderItems && orderItems.find(item => item.productId === productId)

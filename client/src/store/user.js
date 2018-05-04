@@ -31,9 +31,7 @@ export const logout = () => {
 }
 
 export const updateLoggedUser = (user) => {
-  return (dispatch) => {
-    dispatch(setUser(user));
-  }
+  return (dispatch) => dispatch(setUser(user));
 }
 
 const userReducer = (state = {}, action) => {

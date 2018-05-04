@@ -97,7 +97,7 @@ const createAddress = () => {
 
 const createOrder = () => {
   return Order.create({
-    isActive: false,
+    status: 'complete',
     date: faker.date.past(),
     userId: Math.ceil(Math.random() * (userCount + 4)),
   });
@@ -206,7 +206,7 @@ const seed = () => {
   ])
   .then((users) => {
     users.forEach(user => {
-      Order.create({ isActive: true, date: null, userId: user.id });
+      Order.create({ status: 'cart', date: null, userId: user.id });
     })
   })
   .then(() => {
