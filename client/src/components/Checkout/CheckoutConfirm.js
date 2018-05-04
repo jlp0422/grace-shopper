@@ -93,9 +93,9 @@ class CheckoutConfirm extends Component {
     const { creditCardId, shippingId, billingId } = this.state;
     onUpdate({ id: orderId, status: 'processed', date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     onUpdate({ status: 'cart', userId: user.id });
-    console.log('products :', products)
+    // console.log('products :', products)
     items.map(item => {
-      console.log('items: ', items)
+      // console.log('items: ', items)
       const product = products.find(product => product.id === item.productId)
       // console.log(item)
       // console.log(product)
