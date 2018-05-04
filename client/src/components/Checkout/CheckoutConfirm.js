@@ -89,11 +89,21 @@ class CheckoutConfirm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { onUpdate, onUpdateProducts, orderId, user, items, products } = this.props;
+    const { onUpdate, updateProduct, orderId, user, items, products } = this.props;
     const { creditCardId, shippingId, billingId } = this.state;
     onUpdate({ id: orderId, status: 'processed', date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     onUpdate({ status: 'cart', userId: user.id });
-    onUpdateProducts(items, products);
+    console.log('products :', products)
+    products.map(product => {
+      console.log('items: ', items)
+      const item = items.find(item => item.productId === product.id)
+      // console.log(item)
+      // console.log(product)
+      const stock = product.quantity - item.quantity;
+      Object.assign(product, { quantity: stock })
+      console.log(product)
+      updateProduct(product)
+    })
     this.sendEmail(this.getInfoForEmail());
   }
 
@@ -163,7 +173,8 @@ const mapDispatch = (dispatch) => {
         Object.assign(product, { quantity: stock })
         dispatch(updateProductOnServer(product))
       })
-    }
+    },
+    updateProduct: (product) => dispatch(updateProductOnServer(product))
   }
 }
 
