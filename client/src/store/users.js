@@ -1,7 +1,7 @@
 /* eslint-disable */
 import axios from 'axios';
 import { GET_USERS, CREATE_USER, UPDATE_USER, DELETE_USER } from './actionConstants';
-import { attemptLogin, getUserFromToken } from './user';
+import { attemptLogin } from './user';
 
 /*********** ACTION CREATORS ***********/
 const getUsers = (users) => ({ type: GET_USERS, users });
@@ -36,9 +36,7 @@ export const updateUserOnServer = (user, page) => {
   return (dispatch) => {
     return axios[method](url, user)
       .then( res => res.data)
-      .then( u => {
-        return dispatch(action(u))
-      })
+      .then( u => dispatch(action(u)))
       .then( data => {
         const { username, password } = data.user
         if (page === 'signup') dispatch(attemptLogin({username, password}))
