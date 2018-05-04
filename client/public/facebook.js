@@ -8,6 +8,11 @@ window.fbAsyncInit = function() {
 
   FB.AppEvents.logPageView();
 
+  FB.getLoginStatus(function (response) {
+    console.log(response)
+    statusChangeCallback(response);
+  });
+
 };
 
 (function(d, s, id){
