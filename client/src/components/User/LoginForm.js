@@ -38,14 +38,14 @@ class LoginForm extends React.Component {
 
   render() {
     const url = location.hash.slice(1)
+    const emailRegex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+    const passwordRegexMedium = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+    const passwordRegexStrong = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
     const { onChange, onSubmit } = this
-    const { username, password } = this.state
+    const { username, password, email } = this.state
     const fields = {
       firstName: 'First name',
       lastName: 'Last name',
-      email: 'Email address',
-      username: 'Username',
-      password: 'Password'
     }
     return (
       <div className="login-form">
@@ -53,7 +53,8 @@ class LoginForm extends React.Component {
         <div>
         {
           url === '/signup' ? (
-            Object.keys(fields).map(field => (
+            <div>
+            {Object.keys(fields).map(field => (
               <div key={field}>
                 {/* <label className="font-weight-bold">{fields[field]}</label> */}
                 <Input
@@ -62,10 +63,34 @@ class LoginForm extends React.Component {
                   className="form-control"
                   onChange={onChange}
                   value={this.state[field]}
-                  type={field === 'password' ? 'password' : field === 'email' ? 'email' : 'text'}
+                  type="text"
                 />
               </div>
-            ))
+            )) }
+                <Input
+                  label="Email address"
+                  name="email"
+                  className="form-control"
+                  onChange={onChange}
+                  value={email}
+                  type='email'
+                />
+                <Input
+                  label='Username'
+                  name="username"
+                  className="form-control"
+                  onChange={onChange}
+                  value={username}
+                />
+                <Input
+                  label='Password'
+                  name="password"
+                  className="form-control"
+                  onChange={onChange}
+                  value={password}
+                  type="password"
+                />
+            </div>
           ) : (
             <div>
              {/* <label className="font-weight-bold">Username</label> */}
@@ -98,7 +123,7 @@ class LoginForm extends React.Component {
           :
           <p className="margin-t-15">Don't have an account? <a href='#/signup'>Create one now &raquo;</a></p>
         }
-        <div className="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+        {/*<div className="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>*/}
       </div>
     )
   }
