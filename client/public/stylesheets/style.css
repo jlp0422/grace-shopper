@@ -38,6 +38,10 @@
   padding-bottom: 5px;
 }
 
+.progress-wrapper {
+  margin-bottom: 10px;
+}
+
 /* USER ACCOUNT */
 .account-nav {
   border-bottom:2px solid transparent;

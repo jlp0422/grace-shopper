@@ -28,6 +28,7 @@ class LoginForm extends React.Component {
       email: (value) => {
         if (!value) return 'Email is required'
         if (this.props.emails.includes(value)) return 'Email already exists!'
+        if (!emailRegex.test(value)) return 'Email is not valid'
       },
       username: (value) => {
         if (!value) return 'Username is required'
@@ -70,12 +71,11 @@ class LoginForm extends React.Component {
 
   render() {
     const url = location.hash.slice(1)
-
     const { onChange, onSubmit } = this
     const { firstName, lastName, username, password, email, errors } = this.state
     const passwordTestStrong = passwordRegexStrong.test(password)
     const passwordTestMedium = passwordRegexMedium.test(password)
-    const isEmail = emailRegex.test(email)
+    // const isEmail = emailRegex.test(email)
     return (
       <div className="login-form">
         <h3>{ url === '/signup' ? ('Sign up for an account') : ('Log in to your account')}</h3>
@@ -152,30 +152,38 @@ class LoginForm extends React.Component {
                 </div>
                 }
               </div>
-              { passwordTestStrong ? (
-                <Progress value={100} color={"success"} />
-                ) : (
-                passwordTestMedium ? (
-                  <Progress value={67} color={"warning"} />
-                ) : (
-                password.length > 3 ? (
-                  <Progress value={33} color={"danger"} />
-                ) : (
-                  <Progress value={0} color={"danger"} />
-                  )
-                ) )
-              }
+              <div className="progress-wrapper">
+                { passwordTestStrong ? (
+                  <Progress value={100} color={"success"} />
+                  ) : (
+                  passwordTestMedium ? (
+                    <Progress value={67} color={"warning"} />
+                  ) : (
+                  password.length > 3 ? (
+                    <Progress value={33} color={"danger"} />
+                  ) : (
+                    <Progress value={0} color={"danger"} />
+                    )
+                  ) )
+                }
+              </div>
             </div>
           ) : (
             <div>
              {/* <label className="font-weight-bold">Username</label> */}
-              <Input
-                label='Username'
-                name="username"
-                className="form-control"
-                onChange={onChange}
-                value={username}
-              />
+              <div className="form-group">
+                <Input
+                  label='Username'
+                  name="username"
+                  className="form-control"
+                  onChange={onChange}
+                  value={username}
+                />
+                {errors.username && <div className="help-block">
+                  {errors.username}
+                </div>
+                }
+              </div>
 
             {/*  <label className="font-weight-bold">Password</label> */}
               <Input
