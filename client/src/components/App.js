@@ -54,10 +54,11 @@ class App extends React.Component {
     const ReviewsAuth = CheckAuth(Reviews)
     const AddressesAuth = CheckAuth(Addresses)
     const UserAccountAuth = CheckAuth(UserAccount)
-    const AdminUserFormAuth = CheckAdmin(AdminUserForm)
-    const AdminOrderFormAuth = CheckAdmin(AdminOrderForm)
     const CheckoutConfirmAuth = CheckAuth(CheckoutConfirm)
     const ThankYouAuth = CheckAuth(ThankYou)
+    const AdminUserFormAdmin = CheckAdmin(AdminUserForm)
+    const AdminOrderFormAdmin = CheckAdmin(AdminOrderForm)
+    const OrdersAdmin = CheckAdmin(Orders)
     return (
       <Router>
         <div>
@@ -114,11 +115,14 @@ class App extends React.Component {
                 {/* all routes need to have CheckAdmin HOC */}
                 <Route exact path='/admin/users' component={CheckAdmin(Users)} />
                 <Route exact path='/admin/users/:id' render={({ match }) => (
-                  <AdminUserFormAuth id={ match.params.id * 1} />
+                  <AdminUserFormAdmin id={ match.params.id * 1} />
+                )} />
+                <Route exact path='/admin/users/:id/orders' render={({ match }) => (
+                  <OrdersAdmin id={match.params.id * 1} />
                 )} />
                 <Route exact path='/admin/orders' component={CheckAdmin(Orders)} />
                 <Route exact path ='/admin/orders/:id' render={({ match }) => (
-                  <AdminOrderFormAuth id={ match.params.id * 1 } />
+                  <AdminOrderFormAdmin id={ match.params.id * 1 } />
                 )} />
                 {/* shows on /admin and any /users page right now, since those are not in switch
                  <Route path='/:id' component={ FourOhFour } />

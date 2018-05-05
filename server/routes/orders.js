@@ -3,7 +3,9 @@ module.exports = app;
 const { Order, LineItem } = require('../db').models;
 
 app.get('/', (req, res, next) => {
-  Order.findAll()
+  Order.findAll({
+    order: [[ 'id', 'ASC' ]]
+  })
     .then(orders => res.send(orders))
     .catch(next);
 });

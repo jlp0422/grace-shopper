@@ -3,7 +3,9 @@ module.exports = app;
 const { User } = require('../db').models
 
 app.get('/', (req, res, next) => {
-  User.findAll()
+  User.findAll({
+    order: [[ 'id', 'ASC' ]]
+  })
     .then(users => res.send(users))
     .catch(next);
 });
