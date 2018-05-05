@@ -22,7 +22,7 @@ class LoginForm extends React.Component {
         if (!value) return 'First name is required!'
       },
       lastName: (value) => {
-        if (!value) return 'Last name is required'
+        if (!value) return 'Last name is required!'
       },
       email: (value) => {
         if (!value) return 'Email is required'
@@ -68,7 +68,6 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    console.log(this.state.errors)
     const url = location.hash.slice(1)
     const emailRegex = RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
     const passwordRegexMedium = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
