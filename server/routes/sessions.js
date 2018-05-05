@@ -1,9 +1,8 @@
 const app = require('express').Router();
 const jwt = require('jwt-simple');
 const { User } = require('../db').models
+const { KEY } = require('../../secret')
 module.exports = app;
-
-const KEY = process.env.KEY
 
 app.get('/:token', (req, res, next) => {
   try {

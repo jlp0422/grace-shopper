@@ -8,7 +8,9 @@ class Products extends React.Component {
   constructor() {
     super()
     this.state = {
-      name: ''
+      name: '',
+      startIndex: 0,
+      endIndex: 10
     }
     this.onChange = this.onChange.bind(this)
   }
@@ -20,13 +22,20 @@ class Products extends React.Component {
   render() {
     const { products, isAdmin, loggedIn } = this.props
     const { onChange } = this
-    const { name } = this.state
+    const { name, startIndex, endIndex } = this.state
     const matchingProducts = products.reduce((memo, product) => {
       if (product.name.toLowerCase().match(name.toLowerCase())) {
         return memo.concat(product)
       }
       return memo
     }, [])
+    const tenProducts = matchingProducts.reduce((memo, product, index) => {
+      if (index < endIndex && index >= startIndex) memo.push(product)
+      return memo
+    }, [])
+    console.log('ten products: ', tenProducts)
+    // console.log('products: ', products.length)
+    // console.log('start index: ', startIndex)
     return (
       <div>
         <h2>Products</h2>
@@ -40,13 +49,21 @@ class Products extends React.Component {
         </div>
         <ul className='list-group'>
           {
-            matchingProducts.map(product => (
+            tenProducts.map(product => (
               <li key={product.id} className='list-group-item'>
                 <ProductCard product={product} />
               </li>
             ))
           }
         </ul>
+        <div style={{ margin: '0 auto'}}>
+          { startIndex <= 0 ? null :
+            <button onClick={() => this.setState({ startIndex: startIndex - 10, endIndex: endIndex - 10 })}>Previous</button>
+          }
+          { endIndex >= products.length ? null :
+            <button onClick={() => this.setState({ startIndex: startIndex + 10, endIndex: endIndex + 10})}>Next</button>
+          }
+        </div>
       </div>
     )
   }
