@@ -2,7 +2,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { attemptLogin, updateUserOnServer } from '../../store'
-import { Input, Progress } from 'mdbreact'
+import { Input, Progress } from 'mdbreact';
+import { emailRegex, passwordRegexMedium, passwordRegexStrong } from '../../const'
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -69,9 +70,7 @@ class LoginForm extends React.Component {
 
   render() {
     const url = location.hash.slice(1)
-    const emailRegex = RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
-    const passwordRegexMedium = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
-    const passwordRegexStrong = RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+
     const { onChange, onSubmit } = this
     const { firstName, lastName, username, password, email, errors } = this.state
     const passwordTestStrong = passwordRegexStrong.test(password)
