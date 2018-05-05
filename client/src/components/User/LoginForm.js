@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { attemptLogin, updateUserOnServer } from '../../store'
-import { Button, Input, Progress, Fa } from 'mdbreact'
+import { Input, Progress } from 'mdbreact'
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -61,58 +61,82 @@ class LoginForm extends React.Component {
         {
           url === '/signup' ? (
             <div>
-              <Input
-                label="First name"
-                name="firstName"
-                className="form-control"
-                onChange={onChange}
-                value={firstName}
-                type="text"
-              />
-              <Input
-                label="Last name"
-                name="lastName"
-                className="form-control"
-                onChange={onChange}
-                value={lastName}
-                type="text"
-              />
-              <Input
-                label="Email address"
-                name="email"
-                className="form-control"
-                onChange={onChange}
-                value={email}
-                type='email'
-              />
-              <Input
-                label='Username'
-                name="username"
-                className="form-control"
-                onChange={onChange}
-                value={username}
-              />
-              <Input
-                label='Password'
-                name="password"
-                className="form-control"
-                onChange={onChange}
-                value={password}
-                type="password"
-              />
+              <div className="form-group">
+                <Input
+                  label="First name"
+                  name="firstName"
+                  className="form-control"
+                  onChange={onChange}
+                  value={firstName}
+                  type="text"
+                />
+                <div className="help-block">
+                  First name is required!
+                </div>
+              </div>
+              <div className="form-group">
+                <Input
+                  label="Last name"
+                  name="lastName"
+                  className="form-control"
+                  onChange={onChange}
+                  value={lastName}
+                  type="text"
+                />
+                <div className="help-block">
+                  Last name is required!
+                </div>
+              </div>
+              <div className="form-group">
+                <Input
+                  label="Email address"
+                  name="email"
+                  className="form-control"
+                  onChange={onChange}
+                  value={email}
+                  type='email'
+                />
+                <div className="help-block">
+                  Please enter a valid email address // Email address already exists!
+                </div>
+              </div>
+              <div className="form-group">
+                <Input
+                  label='Username'
+                  name="username"
+                  className="form-control"
+                  onChange={onChange}
+                  value={username}
+                />
+                <div className="help-block">
+                  Username is required! // Username already exists!
+                </div>
+              </div>
+              <div className="form-group">
+                <Input
+                  label='Password'
+                  name="password"
+                  className="form-control"
+                  onChange={onChange}
+                  value={password}
+                  type="password"
+                />
+                <div className="help-block">
+                  Password must be at least 4 characters
+                </div>
+              </div>
               { passwordTestStrong ? (
                 <Progress value={100} color={"success"} />
                 ) : (
-                  passwordTestMedium ? (
-                    <Progress value={67} color={"warning"} />
-                  ) : (
-                    password.length > 3 ? (
-                      <Progress value={33} color={"danger"} />
-                    ) : (
-                      <Progress value={0} color={"danger"} />
-                    )
+                passwordTestMedium ? (
+                  <Progress value={67} color={"warning"} />
+                ) : (
+                password.length > 3 ? (
+                  <Progress value={33} color={"danger"} />
+                ) : (
+                  <Progress value={0} color={"danger"} />
                   )
-                )
+                ) )
               }
             </div>
           ) : (

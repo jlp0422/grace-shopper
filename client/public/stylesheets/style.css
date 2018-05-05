@@ -31,21 +31,10 @@
   max-width: 450px;
 }
 
-/* .password-regex {
-  padding: 10px;
-  color: white;
-} */
-
-.pw-strong {
-  background-color: green;
-}
-
-.pw-medium {
-  background-color: orange;
-}
-
-.pw-weak {
-  background-color: red;
+.help-block {
+  font-size: 12px;
+  text-align: left;
+  color: red;
 }
 
 /* USER ACCOUNT */
