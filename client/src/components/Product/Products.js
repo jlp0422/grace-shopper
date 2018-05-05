@@ -34,7 +34,7 @@ class Products extends React.Component {
       return memo
     }, [])
     const currentPage = endIndex / 7
-    const lastPage = Math.ceil(products.length / 7)
+    const lastPage = Math.ceil(matchingProducts.length / 7)
     return (
       <div>
         <h2>Products</h2>
