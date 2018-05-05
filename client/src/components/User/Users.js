@@ -32,17 +32,29 @@ class Users extends React.Component {
 
   render() {
     const { users, deleteUser } = this.props
-    const { startIndex, endIndex } = this.state
-    const { onNextPage, onPreviousPage } = this
-    const usersToShow = users.reduce((memo, user, index) => {
+    const { startIndex, endIndex, name } = this.state
+    const { onChange, onNextPage, onPreviousPage } = this
+    const matchingUsers = users.reduce((memo, user )=> {
+      if (user.firstName.toLowerCase().match(name.toLowerCase())) {
+        memo.push(user)
+        return memo
+      }
+      else if (user.lastName.toLowerCase().match(name.toLowerCase())) {
+        memo.push(user)
+        return memo
+      }
+      return memo
+    }, [])
+    const usersToShow = matchingUsers.reduce((memo, user, index) => {
       if (index < endIndex && index >= startIndex) memo.push(user)
       return memo
     }, [])
     const currentPage = endIndex / 15
-    const lastPage = Math.ceil(users.length / 15)
+    const lastPage = Math.ceil(matchingUsers.length / 15)
     return (
       <div>
         <h2>Users</h2>
+        <input onChange={ onChange } value={ name } className="form-control margin-b-10" placeholder="Search for a user" />
         <ul className='list-group'>
           {
             usersToShow.map(user => (
@@ -58,7 +70,7 @@ class Users extends React.Component {
         <div className="product-buttons">
           <button disabled={ startIndex < 15 } className="btn btn-outline-info prev-btn" onClick={ onPreviousPage }>Previous</button>
           <button disabled className="btn btn-info">Page { currentPage } / { lastPage }</button>
-          <button disabled={ endIndex >= users.length } className=" btn btn-outline-info next-btn" onClick={ onNextPage }>Next</button>
+          <button disabled={ endIndex >= matchingUsers.length } className=" btn btn-outline-info next-btn" onClick={ onNextPage }>Next</button>
         </div>
       </div>
     );
