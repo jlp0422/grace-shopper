@@ -13,11 +13,30 @@ class LoginForm extends React.Component {
       email: '',
       username: '',
       password: '',
-      errors: [],
-      error: {}
+      errors: {},
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
+    this.validators = {
+      firstName: (value) => {
+        if (!value) return 'First name is required!'
+      },
+      lastName: (value) => {
+        if (!value) return 'Last name is required'
+      },
+      email: (value) => {
+        if (!value) return 'Email is required'
+        if (this.props.emails.includes(value)) return 'Email already exists!'
+      },
+      username: (value) => {
+        if (!value) return 'Username is required'
+        if (this.props.usernames.includes(value)) return 'Username already exists!'
+      },
+      password: (value) => {
+        if (!value) return 'Password is required'
+        if (value.length < 4) return 'Password must be at least 4 characters'
+      }
+    }
   }
 
   onChange(ev) {
@@ -32,12 +51,16 @@ class LoginForm extends React.Component {
     const { firstName, lastName, email, username, password } = this.state
     const { attemptLogin, attemptSignup, usernames } = this.props
     if (url === '/signup') {
-      // checking to see if new user is signing up with existing username
-      usernames.includes(username) ? (
-        console.log('username exists')
-      ) : (
-        attemptSignup({ firstName, lastName, email, username, password}, 'signup')
-      )
+      const errors = Object.keys(this.validators).reduce((memo, key) => {
+        const validator = this.validators[key]
+        const value = this.state[key]
+        const error = validator(value)
+        if (error) memo[key] = error
+        return memo
+      }, {})
+      this.setState({ errors })
+      if (Object.keys(errors).length) return;
+      attemptSignup({ firstName, lastName, email, username, password}, 'signup')
     }
     else {
       attemptLogin({ username, password })
@@ -45,12 +68,13 @@ class LoginForm extends React.Component {
   }
 
   render() {
+    console.log(this.state.errors)
     const url = location.hash.slice(1)
     const emailRegex = RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
     const passwordRegexMedium = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
     const passwordRegexStrong = RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
     const { onChange, onSubmit } = this
-    const { firstName, lastName, username, password, email } = this.state
+    const { firstName, lastName, username, password, email, errors } = this.state
     const passwordTestStrong = passwordRegexStrong.test(password)
     const passwordTestMedium = passwordRegexMedium.test(password)
     const isEmail = emailRegex.test(email)
@@ -70,9 +94,10 @@ class LoginForm extends React.Component {
                   value={firstName}
                   type="text"
                 />
-                <div className="help-block">
-                  First name is required!
+                { errors.firstName && <div className="help-block">
+                  {errors.firstName}
                 </div>
+                }
               </div>
               <div className="form-group">
                 <Input
@@ -83,9 +108,10 @@ class LoginForm extends React.Component {
                   value={lastName}
                   type="text"
                 />
-                <div className="help-block">
-                  Last name is required!
+                { errors.lastName && <div className="help-block">
+                  {errors.lastName}
                 </div>
+                }
               </div>
               <div className="form-group">
                 <Input
@@ -96,9 +122,10 @@ class LoginForm extends React.Component {
                   value={email}
                   type='email'
                 />
-                <div className="help-block">
-                  Please enter a valid email address // Email address already exists!
+                { errors.email && <div className="help-block">
+                  {errors.email}
                 </div>
+                }
               </div>
               <div className="form-group">
                 <Input
@@ -108,9 +135,10 @@ class LoginForm extends React.Component {
                   onChange={onChange}
                   value={username}
                 />
-                <div className="help-block">
-                  Username is required! // Username already exists!
+                { errors.username && <div className="help-block">
+                  {errors.username}
                 </div>
+                }
               </div>
               <div className="form-group">
                 <Input
@@ -121,9 +149,10 @@ class LoginForm extends React.Component {
                   value={password}
                   type="password"
                 />
-                <div className="help-block">
-                  Password must be at least 4 characters
+                { errors.password && <div className="help-block">
+                  {errors.password}
                 </div>
+                }
               </div>
               { passwordTestStrong ? (
                 <Progress value={100} color={"success"} />
@@ -178,12 +207,15 @@ class LoginForm extends React.Component {
 }
 
 const mapState = ({ users }) => {
-  const usernames = users.reduce((memo, item) => {
-    memo.push(item.username)
+  const usernames = users.reduce((memo, user) => {
+    memo.push(user.username)
     return memo
   }, [])
-  // console.log(usernames)
-  return { usernames }
+  const emails = users.reduce((memo, user) => {
+    memo.push(user.email)
+    return memo
+  }, [])
+  return { usernames, emails }
 }
 
 const mapDispatch = (dispatch) => {
