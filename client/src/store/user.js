@@ -20,13 +20,8 @@ export const attemptLogin = (credentials) => {
       .then( res => window.localStorage.setItem('token', res.data))
       .then( () => {
         dispatch(getUserFromToken(window.localStorage.getItem('token')))
-        // dispatch(getOrdersFromServer())
       })
-      // .then( () => dispatch(getOrdersFromServer()))
-      .then( () => {
-        // dispatch(getOrdersFromServer())
-        location.hash = '/'
-      })
+      .then( () => location.hash = '/')
   }
 }
 
@@ -39,10 +34,7 @@ export const logout = () => {
 }
 
 export const updateLoggedUser = (user) => {
-  return (dispatch) => {
-    dispatch(setUser(user))
-    // dispatch(getOrdersFromServer())
-  }
+  return (dispatch) => dispatch(setUser(user))
 }
 
 const userReducer = (state = {}, action) => {

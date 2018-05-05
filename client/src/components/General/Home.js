@@ -1,32 +1,13 @@
-// import React from 'react';
-
-// const Home = () => {
-//   return (
-//     <div className='jumbotron'>
-//       <h1>J²A Widgets</h1>
-//       <br />
-//       <p>Come buy our <s>sh*t</s> stuff.</p>
-//     </div>
-//   );
-// }
-
-// export default Home;
-
-
-
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getOrdersFromServer } from '../../store';
+import { getLineItemsFromServer } from '../../store';
 
 class Home extends Component {
 
-  // componentDidMount() {
-    // const { loadOrders } = this.props;
-    // console.log(loadOrders())
-    // this.forceUpdate()
-    // loadOrders();
-  // }
+  componentWillMount() {
+    const { reloadItems } = this.props;
+    reloadItems();
+  }
 
   render() {
     return (
@@ -41,7 +22,7 @@ class Home extends Component {
 
 const mapDispatch = (dispatch) => {
   return {
-    loadOrders: () => dispatch(getOrdersFromServer())
+    reloadItems: () => dispatch(getLineItemsFromServer())
   }
 }
 

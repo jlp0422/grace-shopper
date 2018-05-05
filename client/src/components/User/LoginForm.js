@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
-import { attemptLogin, updateUserOnServer, getOrdersFromServer } from '../../store'
+import { attemptLogin, updateUserOnServer, getLineItemsFromServer } from '../../store'
 import { Button, Input } from 'mdbreact'
 
 class LoginForm extends React.Component {
@@ -16,10 +16,6 @@ class LoginForm extends React.Component {
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
-  }
-
-  componentWillUnmount() {
-    this.props.loadOrders();
   }
 
   onChange(ev) {
@@ -109,12 +105,8 @@ class LoginForm extends React.Component {
 
 const mapDispatch = (dispatch) => {
   return {
-    attemptLogin: (credentials) => {
-      dispatch(attemptLogin(credentials))
-      // dispatch(getOrdersFromServer())
-    },
+    attemptLogin: (credentials) => dispatch(attemptLogin(credentials)),
     attemptSignup: (user, page) => dispatch(updateUserOnServer(user, page)),
-    loadOrders: () => dispatch(getOrdersFromServer())
   }
 }
 
