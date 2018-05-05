@@ -2,7 +2,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { attemptLogin, updateUserOnServer } from '../../store'
-import { Button, Input } from 'mdbreact'
+import { Button, Input } from 'mdbreact';
+import FacebookLogin from './FacebookLogin';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -98,7 +99,6 @@ class LoginForm extends React.Component {
           :
           <p className="margin-t-15">Don't have an account? <a href='#/signup'>Create one now &raquo;</a></p>
         }
-        <div className="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
       </div>
     )
   }
