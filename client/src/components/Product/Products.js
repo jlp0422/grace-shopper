@@ -33,7 +33,8 @@ class Products extends React.Component {
       if (index < endIndex && index >= startIndex) memo.push(product)
       return memo
     }, [])
-    const page = endIndex / 7
+    const currentPage = endIndex / 7
+    const lastPage = Math.ceil(products.length / 7)
     return (
       <div>
         <h2>Products</h2>
@@ -58,7 +59,7 @@ class Products extends React.Component {
           <button disabled={startIndex < 7 } className="btn btn-outline-info prev-btn" onClick={() => this.setState({ startIndex: startIndex - 7, endIndex: endIndex - 7 })}>
             &laquo; Previous
           </button>
-          <button disabled className="btn btn-info">Page { page }</button>
+          <button disabled className="btn btn-info">Page { currentPage } / { lastPage }</button>
           <button disabled={ endIndex >= matchingProducts.length } className="btn btn-outline-info next-btn" onClick={() => this.setState({ startIndex: startIndex + 7, endIndex: endIndex + 7})}>
             Next &raquo;
           </button>
