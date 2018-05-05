@@ -2,12 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteUserOnServer } from '../../store'
-/*
-THINGS TO ADD
-- Check Admin HOC
-- Delete user button
-- Edit user button
-*/
+
+class Users extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      name: '',
+      startIndex: 0,
+      endIndex: 15
+    }
+    this.onChange = this.onChange.bind(this)
+  }
+
+  onChange(ev) {
+    this.setState({ name: ev.target.value, startIndex: 0, endIndex: 15 })
+  }
+}
 
 const Users = ({ users, deleteUser, orders }) => {
   return (
