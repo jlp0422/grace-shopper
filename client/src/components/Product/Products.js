@@ -16,7 +16,7 @@ class Products extends React.Component {
   }
 
   onChange(ev) {
-    this.setState({ name: ev.target.value })
+    this.setState({ name: ev.target.value, startIndex: 0, endIndex: 7 })
   }
 
   render() {
@@ -59,7 +59,7 @@ class Products extends React.Component {
             &laquo; Previous
           </button>
           <button disabled className="btn btn-info">Page { page }</button>
-          <button disabled={ endIndex >= products.length } className="btn btn-outline-info next-btn" onClick={() => this.setState({ startIndex: startIndex + 7, endIndex: endIndex + 7})}>
+          <button disabled={ endIndex >= matchingProducts.length } className="btn btn-outline-info next-btn" onClick={() => this.setState({ startIndex: startIndex + 7, endIndex: endIndex + 7})}>
             Next &raquo;
           </button>
         </div>
