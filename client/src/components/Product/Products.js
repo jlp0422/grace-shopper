@@ -56,11 +56,11 @@ class Products extends React.Component {
         </ul>
         <div className="product-buttons">
           <button disabled={startIndex < 7 } className="btn btn-outline-info prev-btn" onClick={() => this.setState({ startIndex: startIndex - 7, endIndex: endIndex - 7 })}>
-            Previous
+            &laquo; Previous
           </button>
           <button disabled className="btn btn-info">Page { page }</button>
           <button disabled={ endIndex >= products.length } className="btn btn-outline-info next-btn" onClick={() => this.setState({ startIndex: startIndex + 7, endIndex: endIndex + 7})}>
-            Next
+            Next &raquo;
           </button>
         </div>
       </div>
