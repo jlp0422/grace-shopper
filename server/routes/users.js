@@ -4,7 +4,7 @@ const { User } = require('../db').models
 
 app.get('/', (req, res, next) => {
   User.findAll({
-    order: [[ 'id', 'ASC' ]]
+    order: [[ 'lastName', 'ASC' ]]
   })
     .then(users => res.send(users))
     .catch(next);
