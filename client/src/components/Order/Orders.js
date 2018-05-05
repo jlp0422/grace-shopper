@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import AdminNav from './../Admin/AdminNav'
 
 const Orders = ({ orders }) => {
   return (
     <div>
+      <AdminNav />
       <h2>Orders</h2>
       <ul className="list-group">
         {

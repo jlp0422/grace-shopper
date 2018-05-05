@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { updateUserOnServer } from '../../store';
+import AdminNav from './AdminNav';
 
 class AdminUserForm extends React.Component {
   constructor(props) {
@@ -47,6 +48,7 @@ class AdminUserForm extends React.Component {
     }
     return (
       <div>
+        <AdminNav />
         <h2>Editing: {`${user.firstName} ${user.lastName}`}</h2>
         { Object.keys(fields).map(field => (
           <div key={field} className="margin-b-10">

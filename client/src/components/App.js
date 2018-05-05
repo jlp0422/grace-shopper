@@ -66,8 +66,9 @@ class App extends React.Component {
             <div id="body-elements">
               {/*<Route path='/users/:id' render={({ match, history }) => (
                 <UserNavAuth history={ history } id={ match.params.id * 1 } />
-              )} /> */}
+              )} />
               <Route path='/admin' component={CheckAdmin(AdminNav)} />
+              */}
               <Switch>
                 <Route exact path='/' component={ Home } />
                 {/* CATEGORY ROUTES */}
@@ -111,7 +112,7 @@ class App extends React.Component {
                 <Route exact path='/signup' component={ LoginForm } />
 
                 {/* ADMIN ROUTES */}
-                {/* all routes need to have CheckAdmin HOC */}
+                <Route exact path='/admin' component={CheckAdmin(AdminNav)} />
                 <Route exact path='/admin/users' component={CheckAdmin(Users)} />
                 <Route exact path='/admin/users/:id' render={({ match }) => (
                   <AdminUserFormAuth id={ match.params.id * 1} />
@@ -120,9 +121,9 @@ class App extends React.Component {
                 <Route exact path ='/admin/orders/:id' render={({ match }) => (
                   <AdminOrderFormAuth id={ match.params.id * 1 } />
                 )} />
-                {/* shows on /admin and any /users page right now, since those are not in switch
-                 <Route path='/:id' component={ FourOhFour } />
-                */}
+
+                {/* 404 PAGE */}
+                <Route path='/:id' component={ FourOhFour } />
               </Switch>
             </div>
           <Route component={ Footer } />
