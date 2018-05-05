@@ -59,6 +59,11 @@
   grid-template-rows: 1
 }
 
+/* PRODUCT PAGE */
+.product-buttons {
+  margin: 0 auto;
+}
+
 /* FOOTER */
 #footer {
   position: fixed;

@@ -33,9 +33,8 @@ class Products extends React.Component {
       if (index < endIndex && index >= startIndex) memo.push(product)
       return memo
     }, [])
-    console.log('ten products: ', tenProducts)
-    // console.log('products: ', products.length)
-    // console.log('start index: ', startIndex)
+    console.log('start index: ', startIndex)
+    console.log('end index: ', endIndex)
     return (
       <div>
         <h2>Products</h2>
@@ -56,13 +55,13 @@ class Products extends React.Component {
             ))
           }
         </ul>
-        <div style={{ margin: '0 auto'}}>
-          { startIndex <= 0 ? null :
-            <button onClick={() => this.setState({ startIndex: startIndex - 10, endIndex: endIndex - 10 })}>Previous</button>
-          }
-          { endIndex >= products.length ? null :
-            <button onClick={() => this.setState({ startIndex: startIndex + 10, endIndex: endIndex + 10})}>Next</button>
-          }
+        <div className="product-buttons">
+          <button disabled={startIndex < 10 } className="btn btn-outline-info" onClick={() => this.setState({ startIndex: startIndex - 10, endIndex: endIndex - 10 })}>
+            Previous
+          </button>
+          <button disabled={ endIndex >= products.length } className="btn btn-outline-info" onClick={() => this.setState({ startIndex: startIndex + 10, endIndex: endIndex + 10})}>
+            Next
+          </button>
         </div>
       </div>
     )
