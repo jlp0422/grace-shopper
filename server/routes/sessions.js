@@ -35,13 +35,10 @@ app.post('/', (req, res, next) => {
         .then( user => {
           const { username, password } = user
           User.authenticate({username, password})
-            .then( token => {
-              console.log('should be token: ', token)
-              res.send(token)
-            })
+            .then( token => res.send(token))
         })
-
     })
+    .catch(next)
   // const { username, password } = req.body
   // const hash = bcrypt.hash(password, saltRounds)
   // bcrypt.compare(password, hash)
