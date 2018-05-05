@@ -10,7 +10,7 @@ class Products extends React.Component {
     this.state = {
       name: '',
       startIndex: 0,
-      endIndex: 10
+      endIndex: 7
     }
     this.onChange = this.onChange.bind(this)
   }
@@ -33,8 +33,7 @@ class Products extends React.Component {
       if (index < endIndex && index >= startIndex) memo.push(product)
       return memo
     }, [])
-    console.log('start index: ', startIndex)
-    console.log('end index: ', endIndex)
+    const page = endIndex / 7
     return (
       <div>
         <h2>Products</h2>
@@ -56,10 +55,11 @@ class Products extends React.Component {
           }
         </ul>
         <div className="product-buttons">
-          <button disabled={startIndex < 10 } className="btn btn-outline-info" onClick={() => this.setState({ startIndex: startIndex - 10, endIndex: endIndex - 10 })}>
+          <button disabled={startIndex < 7 } className="btn btn-outline-info prev-btn" onClick={() => this.setState({ startIndex: startIndex - 7, endIndex: endIndex - 7 })}>
             Previous
           </button>
-          <button disabled={ endIndex >= products.length } className="btn btn-outline-info" onClick={() => this.setState({ startIndex: startIndex + 10, endIndex: endIndex + 10})}>
+          <button disabled className="btn btn-info">Page { page }</button>
+          <button disabled={ endIndex >= products.length } className="btn btn-outline-info next-btn" onClick={() => this.setState({ startIndex: startIndex + 7, endIndex: endIndex + 7})}>
             Next
           </button>
         </div>
