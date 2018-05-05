@@ -12,7 +12,9 @@ class LoginForm extends React.Component {
       lastName: '',
       email: '',
       username: '',
-      password: ''
+      password: '',
+      errors: [],
+      error: {}
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -28,10 +30,18 @@ class LoginForm extends React.Component {
     ev.preventDefault()
     const url = location.hash.slice(1)
     const { firstName, lastName, email, username, password } = this.state
-    const { attemptLogin, attemptSignup } = this.props
-    if (url === '/signup') attemptSignup(this.state, 'signup')
-    else attemptLogin({ username, password })
-    this.setState({ username: '', password: '' })
+    const { attemptLogin, attemptSignup, usernames } = this.props
+    if (url === '/signup') {
+      // checking to see if new user is signing up with existing username
+      usernames.includes(username) ? (
+        console.log('username exists')
+      ) : (
+        attemptSignup({ firstName, lastName, email, username, password}, 'signup')
+      )
+    }
+    else {
+      attemptLogin({ username, password })
+    }
   }
 
   render() {
@@ -40,14 +50,10 @@ class LoginForm extends React.Component {
     const passwordRegexMedium = RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
     const passwordRegexStrong = RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
     const { onChange, onSubmit } = this
-    const { username, password, email } = this.state
+    const { firstName, lastName, username, password, email } = this.state
     const passwordTestStrong = passwordRegexStrong.test(password)
     const passwordTestMedium = passwordRegexMedium.test(password)
     const isEmail = emailRegex.test(email)
-    const fields = {
-      firstName: 'First name',
-      lastName: 'Last name',
-    }
     return (
       <div className="login-form">
         <h3>{ url === '/signup' ? ('Sign up for an account') : ('Log in to your account')}</h3>
@@ -55,60 +61,59 @@ class LoginForm extends React.Component {
         {
           url === '/signup' ? (
             <div>
-            {Object.keys(fields).map(field => (
-              <div key={field}>
-                {/* <label className="font-weight-bold">{fields[field]}</label> */}
-                <Input
-                  label={fields[field]}
-                  name={field}
-                  className="form-control"
-                  onChange={onChange}
-                  value={this.state[field]}
-                  type="text"
-                />
-              </div>
-            )) }
-                <Input
-                  label="Email address"
-                  name="email"
-                  className="form-control"
-                  onChange={onChange}
-                  value={email}
-                  type='email'
-                />
-                <Input
-                  label='Username'
-                  name="username"
-                  className="form-control"
-                  onChange={onChange}
-                  value={username}
-                />
-                <Input
-                  label='Password'
-                  name="password"
-                  className="form-control"
-                  onChange={onChange}
-                  value={password}
-                  type="password"
-                />
-                {/*<div className={`password-regex
-                  ${passwordTestStrong ? ('pw-strong') : `${passwordTestMedium ? ('pw-medium') : ('pw-weak')}`}`
-                }>*/}
-                <div>
-                { passwordTestStrong ? (
-                  <Progress value={100} color={"success"} />
+              <Input
+                label="First name"
+                name="firstName"
+                className="form-control"
+                onChange={onChange}
+                value={firstName}
+                type="text"
+              />
+              <Input
+                label="Last name"
+                name="lastName"
+                className="form-control"
+                onChange={onChange}
+                value={lastName}
+                type="text"
+              />
+              <Input
+                label="Email address"
+                name="email"
+                className="form-control"
+                onChange={onChange}
+                value={email}
+                type='email'
+              />
+              <Input
+                label='Username'
+                name="username"
+                className="form-control"
+                onChange={onChange}
+                value={username}
+              />
+              <Input
+                label='Password'
+                name="password"
+                className="form-control"
+                onChange={onChange}
+                value={password}
+                type="password"
+              />
+              { passwordTestStrong ? (
+                <Progress value={100} color={"success"} />
                 ) : (
                   passwordTestMedium ? (
                     <Progress value={67} color={"warning"} />
                   ) : (
-                    password ? (
+                    password.length > 3 ? (
                       <Progress value={33} color={"danger"} />
                     ) : (
                       <Progress value={0} color={"danger"} />
                     )
                   )
-                  ) }
-                </div>
+                )
+              }
             </div>
           ) : (
             <div>
@@ -148,6 +153,15 @@ class LoginForm extends React.Component {
   }
 }
 
+const mapState = ({ users }) => {
+  const usernames = users.reduce((memo, item) => {
+    memo.push(item.username)
+    return memo
+  }, [])
+  // console.log(usernames)
+  return { usernames }
+}
+
 const mapDispatch = (dispatch) => {
   return {
     attemptLogin: (credentials) => dispatch(attemptLogin(credentials)),
@@ -155,4 +169,4 @@ const mapDispatch = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatch)(LoginForm)
+export default connect(mapState, mapDispatch)(LoginForm)
