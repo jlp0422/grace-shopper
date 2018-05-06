@@ -42,6 +42,10 @@ class LoginForm extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({})
+  }
+
   onChange(ev) {
     const change = {}
     change[ev.target.name] = ev.target.value
@@ -76,7 +80,6 @@ class LoginForm extends React.Component {
     const { firstName, lastName, username, password, email, errors } = this.state
     const passwordTestStrong = passwordRegexStrong.test(password)
     const passwordTestMedium = passwordRegexMedium.test(password)
-    // const isEmail = emailRegex.test(email)
     return (
       <div className="login-form">
         <h3>{ url === '/signup' ? ('Sign up for an account') : ('Log in to your account')}</h3>

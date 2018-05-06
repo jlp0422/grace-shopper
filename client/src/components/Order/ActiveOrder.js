@@ -6,6 +6,7 @@ import OrderCard from './OrderCard';
 // import LineItemForm from '../Product/LineItemForm.js'
 
 const ActiveOrder = ({ activeOrder, user, checkout }) => {
+  console.log(activeOrder)
   if (!activeOrder) return null
   return (
     <div>

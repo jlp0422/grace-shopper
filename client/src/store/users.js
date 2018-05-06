@@ -38,7 +38,7 @@ export const updateUserOnServer = (user, page) => {
       .then( res => res.data)
       .then( u => dispatch(action(u)))
       .then( data => {
-        const { username, password } = data.user
+        const { username, password } = user
         if (page === 'signup') dispatch(attemptLogin({username, password}))
         if (page === 'admin') location.hash = '/admin/users'
       })
