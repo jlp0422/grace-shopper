@@ -20,10 +20,11 @@ app.get('/:token', (req, res, next) => {
   }
 })
 
-let _user;
-let _items;
-let _cart;
+
 app.post('/', (req, res, next) => {
+  let _user;
+  let _items;
+  let _cart;
   User.findOne({ where: req.body })
     .then( user => {
       if (user) {
