@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { logout } from '../../store'
+import { logout, getOrdersFromServer} from '../../store'
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -18,7 +18,12 @@ class NavBar extends React.Component {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
+  componentWillReceiveProps(nextProps) {
+    // console.log('****** NEXT PROPS; ', nextProps, '*******')
+  }
+
   render() {
+    // console.log('******* RENDER PROPS: ', this.props, '*******')
     window.scrollTo(0, 0)
     const { categories, user, loggedIn, logout, activeOrder, cartCount, isAdmin } = this.props;
     const { toggle } = this;
@@ -101,14 +106,18 @@ const mapState = ({ categories, user, orders, lineItems }) => {
   ) : (
     orders.find(order => !order.userId && order.status === 'cart')
   );
+  // console.log('active order: ', activeOrder)
   const activeOrderItems = activeOrder ? lineItems.filter(item => item.orderId === activeOrder.id) : [];
+  // console.log('active order items :', activeOrderItems)
   const cartCount = activeOrderItems.length ? activeOrderItems.reduce((memo, lineItem) => memo + lineItem.quantity, 0) : '0'
+  // console.log('cart count: ', cartCount)
   return { categories, user, loggedIn, activeOrder, cartCount, isAdmin };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    // getOrders: () => dispatch(getOrdersFromServer())
   }
 }
 

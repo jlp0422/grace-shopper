@@ -10,3 +10,11 @@ const LineItem = conn.define('line_item', {
 })
 
 module.exports = LineItem;
+
+LineItem.getItemsFromCart = function(cart) {
+  return this.findAll({ where: { orderId: cart.id} })
+}
+
+LineItem.prototype.updateCartOnItem = function(cart, _cart) {
+  return this.update({ orderId: cart.id }, { where: { orderId: _cart.id } })
+}

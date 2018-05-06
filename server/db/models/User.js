@@ -40,10 +40,10 @@ const User = conn.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
-   /* allowNull: false,
+   allowNull: false,
     validate: {
       notEmpty: true
-    } */
+    }
   },
 }, {
   timestamps: false

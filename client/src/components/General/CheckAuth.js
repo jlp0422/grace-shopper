@@ -29,7 +29,7 @@ const CheckAuth = (Component) => {
     }
   }
 
-  const mapState = ({ user }, { id }) => {
+  const mapState = () => {
     const token = window.localStorage.getItem('token')
     const isAuthenticated = token ? true : false
     return { isAuthenticated }

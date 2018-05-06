@@ -137,7 +137,9 @@ const mapDispatch = (dispatch) => {
   return {
     updateProduct: (product) => {
       dispatch(updateProductOnServer(product))
-      dispatch(getProductCategoriesFromServer())
+      setTimeout(() => {
+        dispatch(getProductCategoriesFromServer())
+      }, 100)
     }
   };
 };

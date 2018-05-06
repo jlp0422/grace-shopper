@@ -20,29 +20,44 @@ app.post('/', (req, res, next) => {
       pcArray = _pcArray
       return Product.findById(pcArray[0][0].productId)
     })
-        .then(product => res.send({ product, pcArray }))
+    .then(product => res.send({ product, pcArray }))
     .catch(next);
 });
 
 app.put('/:id', (req, res, next) => {
   const { name, price, quantity, imageUrl, description, categoryArray } = req.body;
   const { id } = req.params
-  let pcArray
+  const input = { name, price, quantity, imageUrl, description };
+  let _product;
+  let pcArray;
   Product.findById(id)
     .then(product => {
-      Object.assign(product, req.body)
-      // console.log('****** PRODUCT *****', product.get())
+      Object.assign(product, input)
       return product.save();
     })
-    .then(product => res.send(product))
-    // .then(product => product.addCategories(cate))
-    //   res.send({product, categoryArray}))
+    .then(product => {
+      _product = product
+      return product.getCategories()
+    })
+    .then(categories => _product.removeCategories(categories))
+    .then(() => _product.addCategories(categoryArray))
+    .then(_pcArray => {
+      pcArray = _pcArray
+      return _product;
+    })
+    .then(product => res.send({ product, pcArray }))
     .catch(next);
 });
 
 app.delete('/:id', (req, res, next) => {
+  let _product;
   Product.findById(req.params.id)
-    .then(product => product.destroy())
+    .then(product => {
+      _product = product
+      return product.getCategories()
+    })
+    .then(categories => _product.removeCategories(categories))
+    .then(() => _product.destroy())
     .then(() => res.sendStatus(204))
     .catch(next);
 });

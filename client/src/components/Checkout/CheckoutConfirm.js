@@ -93,15 +93,15 @@ class CheckoutConfirm extends Component {
     const { creditCardId, shippingId, billingId } = this.state;
     onUpdate({ id: orderId, status: 'processed', date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     onUpdate({ status: 'cart', userId: user.id });
-    console.log('products :', products)
-    products.map(product => {
-      console.log('items: ', items)
-      const item = items.find(item => item.productId === product.id)
+    // console.log('products :', products)
+    items.map(item => {
+      // console.log('items: ', items)
+      const product = products.find(product => product.id === item.productId)
       // console.log(item)
       // console.log(product)
       const stock = product.quantity - item.quantity;
       Object.assign(product, { quantity: stock })
-      console.log(product)
+      // console.log(product)
       updateProduct(product)
     })
     this.sendEmail(this.getInfoForEmail());
@@ -166,14 +166,14 @@ const mapState = ({ user, addresses, creditCards, orders, lineItems, products },
 const mapDispatch = (dispatch) => {
   return {
     onUpdate: (order) => dispatch(updateOrderOnServer(order)),
-    onUpdateProducts: (items, products) => {
-      items.forEach(item => {
-        const product = products.find(product => product.id === item.productId)
-        const stock = product.quantity - item.quantity;
-        Object.assign(product, { quantity: stock })
-        dispatch(updateProductOnServer(product))
-      })
-    },
+    // onUpdateProducts: (items, products) => {
+    //   items.forEach(item => {
+    //     const product = products.find(product => product.id === item.productId)
+    //     const stock = product.quantity - item.quantity;
+    //     Object.assign(product, { quantity: stock })
+    //     dispatch(updateProductOnServer(product))
+    //   })
+    // },
     updateProduct: (product) => dispatch(updateProductOnServer(product))
   }
 }

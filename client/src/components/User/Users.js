@@ -2,16 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteUserOnServer } from '../../store'
-/*
-THINGS TO ADD
-- Check Admin HOC
-- Delete user button
-- Edit user button
-*/
+import AdminNav from './../Admin/AdminNav'
 
 const Users = ({ users, deleteUser }) => {
   return (
     <div>
+      <AdminNav />
       <h2>Users</h2>
       <ul className='list-group'>
         {
