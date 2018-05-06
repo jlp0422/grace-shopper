@@ -8,3 +8,7 @@ export const starRating = (rating, cssClass) => {
   }
   return <span className={cssClass}>{stars}</span>
 }
+
+export const sentenceCase = (str) => {
+  return `${str.slice(0, 1).toUpperCase()}${str.slice(1)}`
+}

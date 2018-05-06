@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { deleteOrderFromServer, updateOrderOnServer } from '../../store';
 import AddressForm from '../Address/AddressForm';
 import Dropdown from '../Checkout/Dropdown';
+import { sentenceCase } from '../../store/reusableFunctions';
 import AdminNav from './AdminNav';
 
 /*
@@ -49,7 +50,7 @@ class AdminOrderForm extends React.Component {
         <AdminNav />
         <h3>Order #{order.id}</h3>
         <h3>User: {`${user.firstName} ${user.lastName}`}</h3>
-        <h5>Status: {order.status} </h5>
+        <h5>Status: {sentenceCase(order.status)} </h5>
         <h5>Shipping Address: </h5>
         { order.status === 'processed' || order.status === 'cart'  ? (
           <Dropdown readOnly={ !isEditing } items={userAddresses} title="Shipping Address" name="shippingId" handleChange={ onChange } />

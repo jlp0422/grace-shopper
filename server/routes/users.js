@@ -6,7 +6,9 @@ module.exports = app;
 const saltRounds = 10;
 
 app.get('/', (req, res, next) => {
-  User.findAll()
+  User.findAll({
+    order: [[ 'lastName', 'ASC' ]]
+  })
     .then(users => res.send(users))
     .catch(next);
 });
