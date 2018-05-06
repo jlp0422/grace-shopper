@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LineItemForm from '../Product/LineItemForm.js';
 import moment from 'moment';
+import { sentenceCase } from '../../store/reusableFunctions';
 
 const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => {
   const orderDate = order.date ? moment(order.date).format("ddd, MMMM Do YYYY h:MMA") : null
@@ -11,7 +12,7 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
       { order.date ? (
         <div>
           <p><strong>Order date:</strong> {orderDate}</p>
-          <p><strong>Order status:</strong> {order.status}</p>
+          <p><strong>Order status:</strong> {sentenceCase(order.status)}</p>
         </div>
         ) : null }
       {

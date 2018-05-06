@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { sentenceCase } from '../../store/reusableFunctions'
 
 /* THINGS TO ADD:
 - PAGINATION
@@ -67,7 +68,7 @@ class Orders extends React.Component {
           statuses.map(status => (
             <div key={ status } className="form-check form-check-inline">
               <input checked={ statusView === status } className="form-check-input" onChange={onCheck} type="radio" value={status} />
-              <label className="form-check-label">{status}</label>
+              <label className="form-check-label">{sentenceCase(status)}</label>
             </div>
           ))
         }
@@ -78,7 +79,7 @@ class Orders extends React.Component {
               <div key={ order.id }>
                 <li className="list-group-item">
                   <Link to={`/admin/orders/${order.id}`}>Order #{order.id}</Link>
-                  <br/>Status: {order.status}
+                  <br/>Status: {sentenceCase(order.status)}
                 </li>
               </div>
             ))
