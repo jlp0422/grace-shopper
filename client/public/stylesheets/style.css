@@ -70,6 +70,22 @@
   grid-template-rows: 1
 }
 
+/* PRODUCT PAGE */
+.product-buttons {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  /* grid-template-rows: 1 */
+}
+
+.prev-btn {
+  grid-column: 2
+}
+
+.next-btn {
+  grid-column: 4
+}
+
 /* FOOTER */
 #footer {
   position: fixed;

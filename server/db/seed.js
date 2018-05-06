@@ -8,7 +8,7 @@ const saltRounds = 10;
 /*-------------HOW-MANY-D0-WE-WANT-TO-SEED?-------------*/
 
 const categoryCount = 8;
-const productCount = 20;
+const productCount = 40;
 const userCount = 100;
 const orderCount = 25;
 const lineItemCount = 70;

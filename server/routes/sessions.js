@@ -1,9 +1,10 @@
 const app = require('express').Router();
-const jwt = require('jwt-simple');
-const { User, Order, LineItem } = require('../db').models
-const bcrypt = require('bcrypt');
 module.exports = app;
-const KEY = process.env.KEY
+const { User, Order, LineItem } = require('../db').models
+
+const jwt = require('jwt-simple');
+const bcrypt = require('bcrypt');
+const { KEY } = require('../../secret')
 
 app.get('/:token', (req, res, next) => {
   User.exchangeTokenForUser(req.params.token)

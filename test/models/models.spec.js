@@ -1,10 +1,9 @@
 const expect = require('chai').expect;
 const db = require('../../server/db')
 const { conn, Sequelize } = require('../../server/db/conn')
-// const seedFile = require('../../server/db/seed')
 const { User } = db.models;
 const jwt = require('jwt-simple');
-const KEY = process.env.KEY
+const { KEY } = require('../../secret')
 
 const seedUsers = () => {
   return conn.sync({ force: true })
