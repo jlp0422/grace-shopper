@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const UserAccount = ({ user, loggedIn }) => {
   const url = location.hash.substring(11)
   const { id } = user
-  console.log(loggedIn)
+  // console.log(loggedIn)
   return (
     <div>
       <h1>My Account</h1>

@@ -47,6 +47,7 @@ app.post('/', (req, res, next) => {
               Order.getCartForUser(_user)
                 .then(cart => {
                   _items.forEach(item => {
+                    console.log(item)
                     return item.updateCartOnItem(cart, _cart)
                   })
                 })

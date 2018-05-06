@@ -16,5 +16,8 @@ LineItem.getItemsFromCart = function(cart) {
 }
 
 LineItem.prototype.updateCartOnItem = function(cart, _cart) {
+
+  console.log('new cart:', cart, 'old cart:', _cart)
+
   return this.update({ orderId: cart.id }, { where: { orderId: _cart.id } })
 }
