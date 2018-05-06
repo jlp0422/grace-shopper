@@ -34,30 +34,19 @@ app.post('/', (req, res, next) => {
       const error = { status: 401 };
       throw error
     })
-    .then(() => {
-      return Order.getCartWithoutUser()
-    })
+    .then(() => Order.getCartWithoutUser())
     .then(cart => {
       _cart = cart
-      // console.log('1-cart without user:', cart)
       return LineItem.getItemsFromCart(cart)
     })
     .then(items => {
       _items = items;
-      // console.log('2-items from non-user cart:', items)
       return items;
     })
-    .then(() => {
-      // console.log('3-user:', _user)
-      return Order.getCartForUser(_user)
-    })
+    .then(() => Order.getCartForUser(_user))
     .then(cart => {
-      // console.log('4a-cart with user:', cart)
-      // console.log('4b-cart without user:', _cart)
       _items.forEach(item => {
-        // console.log('5a-item pre-update:', item)
         item.updateCartOnItem(cart, _cart)
-        // console.log('5b-item post-update:', item)
       })
     })
     .catch(next)
