@@ -13,19 +13,31 @@ class Products extends React.Component {
       endIndex: 7
     }
     this.onChange = this.onChange.bind(this)
+    this.onPrevPage = this.onPrevPage.bind(this)
+    this.onNextPage = this.onNextPage.bind(this)
   }
 
   onChange(ev) {
     this.setState({ name: ev.target.value, startIndex: 0, endIndex: 7 })
   }
 
+  onPrevPage() {
+    const { startIndex, endIndex } = this.state
+    this.setState({ startIndex: startIndex - 7, endIndex: endIndex - 7 })
+  }
+
+  onNextPage() {
+    const { startIndex, endIndex } = this.state
+    this.setState({ startIndex: startIndex + 7, endIndex: endIndex + 7 })
+  }
+
   render() {
     const { products, isAdmin, loggedIn } = this.props
-    const { onChange } = this
+    const { onChange, onNextPage, onPrevPage } = this
     const { name, startIndex, endIndex } = this.state
     const matchingProducts = products.reduce((memo, product) => {
       if (product.name.toLowerCase().match(name.toLowerCase())) {
-        return memo.concat(product)
+        memo.push(product)
       }
       return memo
     }, [])
@@ -56,11 +68,11 @@ class Products extends React.Component {
           }
         </ul>
         <div className="product-buttons">
-          <button disabled={startIndex < 7 } className="btn btn-outline-info prev-btn" onClick={() => this.setState({ startIndex: startIndex - 7, endIndex: endIndex - 7 })}>
+          <button disabled={startIndex < 7 } className="btn btn-outline-info prev-btn" onClick={ onPrevPage }>
             &laquo; Previous
           </button>
-          <button disabled className="btn btn-info">Page { currentPage } / { lastPage }</button>
-          <button disabled={ endIndex >= matchingProducts.length } className="btn btn-outline-info next-btn" onClick={() => this.setState({ startIndex: startIndex + 7, endIndex: endIndex + 7})}>
+          <button disabled className="btn btn-info">Page { currentPage } / { lastPage < 1 ? 1 : lastPage }</button>
+          <button disabled={ endIndex >= matchingProducts.length } className="btn btn-outline-info next-btn" onClick={ onNextPage }>
             Next &raquo;
           </button>
         </div>
