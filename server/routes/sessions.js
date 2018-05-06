@@ -1,6 +1,6 @@
 const app = require('express').Router();
 const jwt = require('jwt-simple');
-const { User } = require('../db').models
+const { User, Order, LineItem } = require('../db').models
 const bcrypt = require('bcrypt');
 module.exports = app;
 const KEY = process.env.KEY
@@ -23,7 +23,11 @@ app.get('/:token', (req, res, next) => {
   // }
 })
 
+
 app.post('/', (req, res, next) => {
+  let _user;
+  let _items;
+  let _cart;
   User.findOne({ where: { username: req.body.username }})
     .then( user => {
       const hashPass = user.password
@@ -37,6 +41,21 @@ app.post('/', (req, res, next) => {
           User.authenticate({username, password})
             .then( token => res.send(token))
         })
+    })
+    .then(() => Order.getCartWithoutUser())
+    .then(cart => {
+      _cart = cart
+      return LineItem.getItemsFromCart(cart)
+    })
+    .then(items => {
+      _items = items;
+      return items;
+    })
+    .then(() => Order.getCartForUser(_user))
+    .then(cart => {
+      _items.forEach(item => {
+        item.updateCartOnItem(cart, _cart)
+      })
     })
     .catch(next)
   // const { username, password } = req.body

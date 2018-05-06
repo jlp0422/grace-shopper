@@ -1,6 +1,7 @@
 /* eslint-disable */
 import axios from 'axios';
 import { SET_USER } from './actionConstants';
+import { getOrdersFromServer } from './orders'
 
 const setUser = (user) => ({ type: SET_USER, user });
 
@@ -17,7 +18,9 @@ export const attemptLogin = (credentials) => {
   return (dispatch) => {
     return axios.post('/api/sessions', credentials)
       .then( res => window.localStorage.setItem('token', res.data))
-      .then( () => dispatch(getUserFromToken(window.localStorage.getItem('token'))))
+      .then( () => {
+        dispatch(getUserFromToken(window.localStorage.getItem('token')))
+      })
       .then( () => location.hash = '/')
   }
 }
@@ -31,7 +34,7 @@ export const logout = () => {
 }
 
 export const updateLoggedUser = (user) => {
-  return (dispatch) => dispatch(setUser(user));
+  return (dispatch) => dispatch(setUser(user))
 }
 
 const userReducer = (state = {}, action) => {

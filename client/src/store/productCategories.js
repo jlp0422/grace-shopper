@@ -4,9 +4,6 @@ import { GET_PRODUCT_CATEGORIES, UPDATE_PRODUCT_CATEGORIES } from './actionConst
 /*********** ACTION CREATORS ***********/
 
 const getProductCategories = (productCategories) => ({ type: GET_PRODUCT_CATEGORIES, productCategories });
-export const updateProductCategories = (pcArray) => ({ type: UPDATE_PRODUCT_CATEGORIES, pcArray });
-// const createProductCategory = (productCategory) => ({ type: CREATE_PRODUCT_CATEGORY, productCategory });
-
 
 /*********** THUNKS ***********/
 
@@ -19,19 +16,6 @@ export const getProductCategoriesFromServer = () => {
   }
 }
 
-// export const updateProductCategoryOnServer = (productCategory) => {
-//   console.log(productCategory)
-//   return (dispatch) => {
-//     return axios.post('/api/productCategories', productCategory)
-//       .then(res => res.data)
-//       .then(productCategory => {
-//         console.log(productCategory)
-//         dispatch(createProductCategory(productCategory))
-//       })
-//       .catch(err => console.error(err))
-//   }
-// }
-
 /*********** PRODUCT CATEGORIES REDUCER ***********/
 
 const productCategoriesReducer = ( state = [], action ) => {
@@ -41,9 +25,6 @@ const productCategoriesReducer = ( state = [], action ) => {
       state = action.productCategories;
       break;
 
-    case UPDATE_PRODUCT_CATEGORIES:
-      state = [...state, ...action.pcArray[0]]
-      break;
   }
   return state;
 }

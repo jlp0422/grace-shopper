@@ -1,8 +1,8 @@
 /* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
-import { attemptLogin, updateUserOnServer } from '../../store'
-import { Input, Progress } from 'mdbreact';
+import { attemptLogin, updateUserOnServer, getLineItemsFromServer } from '../../store'
+import { Input, Button, Progress } from 'mdbreact';
 import { emailRegex, passwordRegexMedium, passwordRegexStrong } from '../../const'
 import FacebookLogin from './FacebookLogin';
 
@@ -228,7 +228,7 @@ const mapState = ({ users }) => {
 const mapDispatch = (dispatch) => {
   return {
     attemptLogin: (credentials) => dispatch(attemptLogin(credentials)),
-    attemptSignup: (user, page) => dispatch(updateUserOnServer(user, page))
+    attemptSignup: (user, page) => dispatch(updateUserOnServer(user, page)),
   }
 }
 
