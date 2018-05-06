@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { attemptLogin, updateUserOnServer } from '../../store'
 import { Input, Progress } from 'mdbreact';
 import { emailRegex, passwordRegexMedium, passwordRegexStrong } from '../../const'
+import FacebookLogin from './FacebookLogin';
 
 class LoginForm extends React.Component {
   constructor(props) {
