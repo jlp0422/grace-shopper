@@ -58,10 +58,11 @@ class Orders extends React.Component {
     return (
       <div>
         <h2>Order history { user ? `for ${user.firstName} ${user.lastName}` : null }</h2>
+        <h5>Order status</h5>
         {
           statuses.map(status => (
             <div key={ status } className="form-check form-check-inline">
-              <input className="form-check-input" onChange={onCheck} type="radio" value={status} />
+              <input checked={ statusView === status } className="form-check-input" onChange={onCheck} type="radio" value={status} />
               <label className="form-check-label">{status}</label>
             </div>
           ))
@@ -80,7 +81,7 @@ class Orders extends React.Component {
         </ul>
         <div className="product-buttons">
           <button disabled={ startIndex < 20 } className="btn btn-outline-info prev-btn" onClick={ onPrevPage }>Previous</button>
-          <button disabled className="btn btn-info">Page { currentPage } / { lastPage }</button>
+          <button disabled className="btn btn-info">Page { currentPage } / { lastPage ? lastPage : 1 }</button>
           <button disabled={ endIndex >= ordersForStatus.length } className="btn btn-outline-info next-btn" onClick={ onNextPage }>Next</button>
         </div>
       </div>

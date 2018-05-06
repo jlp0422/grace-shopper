@@ -69,7 +69,7 @@ class Users extends React.Component {
         </ul>
         <div className="product-buttons">
           <button disabled={ startIndex < 15 } className="btn btn-outline-info prev-btn" onClick={ onPreviousPage }>Previous</button>
-          <button disabled className="btn btn-info">Page { currentPage } / { lastPage }</button>
+          <button disabled className="btn btn-info">Page { currentPage } / { lastPage ? lastPage : 1 }</button>
           <button disabled={ endIndex >= matchingUsers.length } className=" btn btn-outline-info next-btn" onClick={ onNextPage }>Next</button>
         </div>
       </div>
