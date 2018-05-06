@@ -45,11 +45,15 @@ class Orders extends React.Component {
   render() {
     const { orders, user } = this.props
     const { onChange, onCheck, onNextPage, onPrevPage } = this
-    const { statusView, endIndex, startIndex } = this.state
+    const { statusView, endIndex, startIndex, name } = this.state
     const statuses = [ 'cart', 'processed', 'shipped', 'complete', 'all' ]
     const allOrders = user ? orders.filter(order => order.userId === user.id) : orders
     const ordersForStatus = allOrders.filter(order => statusView === 'all' ? order : order.status === statusView)
-    const ordersToShow = ordersForStatus.reduce((memo, order, index) => {
+    const matchingOrders = ordersForStatus.reduce((memo, order) => {
+      if (order.id.toString().match(name)) memo.push(order)
+      return memo
+    }, [])
+    const ordersToShow = matchingOrders.reduce((memo, order, index) => {
       if (index < endIndex && index >= startIndex) memo.push(order)
       return memo
     }, [])
@@ -67,6 +71,7 @@ class Orders extends React.Component {
             </div>
           ))
         }
+        <input value={ name } onChange={ onChange } className="form-control margin-t-15 margin-b-10" placeholder="Search for an order number"/>
         <ul className="list-group">
           {
             ordersToShow.map(order => (

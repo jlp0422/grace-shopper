@@ -35,14 +35,10 @@ class Users extends React.Component {
     const { startIndex, endIndex, name } = this.state
     const { onChange, onNextPage, onPreviousPage } = this
     const matchingUsers = users.reduce((memo, user )=> {
-      if (user.firstName.toLowerCase().match(name.toLowerCase())) {
-        memo.push(user)
-        return memo
-      }
-      else if (user.lastName.toLowerCase().match(name.toLowerCase())) {
-        memo.push(user)
-        return memo
-      }
+      const lowerFirst = user.firstName.toLowerCase()
+      const lowerLast = user.lastName.toLowerCase()
+      const lowerName = name.toLowerCase()
+      if (lowerFirst.match(lowerName) || lowerLast.match(lowerName)) memo.push(user)
       return memo
     }, [])
     const usersToShow = matchingUsers.reduce((memo, user, index) => {
