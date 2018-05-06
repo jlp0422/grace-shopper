@@ -59,7 +59,7 @@ class Orders extends React.Component {
       return memo
     }, [])
     const currentPage = endIndex / 20
-    const lastPage = Math.ceil(ordersForStatus.length / 20)
+    const lastPage = Math.ceil(matchingOrders.length / 20)
     return (
       <div>
         <h2>Order history { user ? `for ${user.firstName} ${user.lastName}` : null }</h2>
@@ -88,7 +88,7 @@ class Orders extends React.Component {
         <div className="product-buttons">
           <button disabled={ startIndex < 20 } className="btn btn-outline-info prev-btn" onClick={ onPrevPage }>Previous</button>
           <button disabled className="btn btn-info">Page { currentPage } / { lastPage ? lastPage : 1 }</button>
-          <button disabled={ endIndex >= ordersForStatus.length } className="btn btn-outline-info next-btn" onClick={ onNextPage }>Next</button>
+          <button disabled={ endIndex >= matchingOrders.length } className="btn btn-outline-info next-btn" onClick={ onNextPage }>Next</button>
         </div>
       </div>
     )
