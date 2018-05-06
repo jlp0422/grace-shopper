@@ -6,7 +6,11 @@ class Home extends Component {
 
   componentWillMount() {
     const { reloadItems } = this.props;
-    reloadItems();
+
+    setTimeout(() => {
+      reloadItems();
+    }, 100)
+
   }
 
   render() {
