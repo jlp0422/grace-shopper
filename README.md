@@ -4,4 +4,4 @@
 
 ### This is our Grace Shopper project for FullStack Academy
 
-#### Live link coming soon
+#### Live link at [https://grace-shopper-j2a2.herokuapp.com/]

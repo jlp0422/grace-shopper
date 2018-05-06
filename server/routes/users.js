@@ -1,6 +1,9 @@
-const app = require('express').Router()
+const app = require('express').Router();
+const { User } = require('../db').models;
+const bcrypt = require('bcrypt');
 module.exports = app;
-const { User } = require('../db').models
+
+const saltRounds = 10;
 
 app.get('/', (req, res, next) => {
   User.findAll({
@@ -11,9 +14,17 @@ app.get('/', (req, res, next) => {
 });
 
 app.post('/', (req, res, next) => {
-  User.create(req.body)
-    .then(user => res.send(user))
-    .catch(next);
+  let newPass = req.body.password
+  bcrypt.hash(newPass, saltRounds)
+    .then(hashPass => {
+      req.body.password = hashPass
+      return req.body
+    })
+    .then(body => {
+      User.create(body)
+        .then( user => res.send(user))
+    })
+    .catch(next)
 });
 
 app.put('/:id', (req, res, next) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteProductFromServer } from '../../store';
+import { deleteProductFromServer, getProductCategoriesFromServer } from '../../store';
 import { starRating } from '../../store/reusableFunctions';
 import ProductForm from './ProductForm';
 import LineItemForm from './LineItemForm';
@@ -70,7 +70,7 @@ const mapState = ({ products, user, reviews, orders, lineItems }, { match }) => 
     return loggedIn ? order.userId === user.id && order.status === 'cart' : order.status === 'cart' && !order.userId
   })
   const orderItems = activeOrder && lineItems.filter(item => item.orderId === activeOrder.id)
-  const lineItemForProduct = orderItems && orderItems.find(item => item.productId === product.id)
+  const lineItemForProduct = product && orderItems && orderItems.find(item => item.productId === product.id)
 
   const itemId = lineItemForProduct ? lineItemForProduct.id : null;
 
@@ -88,7 +88,13 @@ const mapState = ({ products, user, reviews, orders, lineItems }, { match }) => 
 
 const mapDispatch = (dispatch) => {
   return {
-    deleteProduct: (productId) => dispatch(deleteProductFromServer(productId))
+    deleteProduct: (productId) => {
+      dispatch(deleteProductFromServer(productId))
+      setTimeout(() => {
+        dispatch(getProductCategoriesFromServer())
+      }, 100)
+
+    }
   }
 }
 

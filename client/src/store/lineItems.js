@@ -28,7 +28,7 @@ export const deleteLineItemFromServer = (id) => {
 };
 
 export const updateLineItemOnServer = (item) => {
-  console.log('check Line Item ID:', item)
+  // console.log('check Line Item ID:', item)
   const { id } = item;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/lineitems/${id}` : '/api/lineitems';
@@ -37,7 +37,7 @@ export const updateLineItemOnServer = (item) => {
     return axios[method](url, item)
       .then( res => res.data)
       .then( lineItem => {
-        console.log(lineItem)
+        // console.log(lineItem)
         dispatch(action(lineItem))
       })
       // .then(() => location.hash = '/lineitems' )

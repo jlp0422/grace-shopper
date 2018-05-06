@@ -1,13 +1,14 @@
 const { conn } = require('./conn');
 const { models } = require('./index');
 const { Category, LineItem, Order, Product, User, Address, Review, ProductCategory, CreditCard } = models;
-
 const faker = require('faker');
+const bcrypt = require('bcrypt')
+const saltRounds = 10;
 
 /*-------------HOW-MANY-D0-WE-WANT-TO-SEED?-------------*/
 
 const categoryCount = 8;
-const productCount = 20;
+const productCount = 40;
 const userCount = 100;
 const orderCount = 25;
 const lineItemCount = 70;
@@ -73,12 +74,14 @@ const createProduct = () => {
 const createUser = () => {
   const firstName = faker.name.firstName();
   const lastName = faker.name.lastName();
+  const salt = bcrypt.genSaltSync(saltRounds)
+  const hashPass = bcrypt.hashSync(faker.internet.password(), salt)
   return User.create({
     firstName: firstName,
     lastName: lastName,
     isAdmin: false,
     username: `${firstName.toLowerCase()}${lastName.toLowerCase()}`,
-    password: faker.internet.password(),
+    password: hashPass,
     email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@gmail.com`,
   });
 }
@@ -176,7 +179,7 @@ const seed = () => {
       lastName: 'Philipson',
       isAdmin: true,
       username: 'jphilipson',
-      password: 'JEREMY',
+      password: bcrypt.hashSync('JEREMY', bcrypt.genSaltSync(saltRounds)),
       email: 'jeremyphilipson@gmail.com',
     }),
     User.create({
@@ -184,7 +187,7 @@ const seed = () => {
       lastName: 'Grubard',
       isAdmin: true,
       username: 'jgrubard',
-      password: 'JEREMY',
+      password: bcrypt.hashSync('JEREMY', bcrypt.genSaltSync(saltRounds)),
       email: 'jgrubard@gmail.com',
     }),
     User.create({
@@ -192,7 +195,7 @@ const seed = () => {
       lastName: 'Levin',
       isAdmin: true,
       username: 'alevin',
-      password: 'ALEX',
+      password: bcrypt.hashSync('ALEX', bcrypt.genSaltSync(saltRounds)),
       email: 'alex@gmail.com',
     }),
     User.create({
@@ -200,7 +203,7 @@ const seed = () => {
       lastName: 'Doe',
       isAdmin: false,
       username: 'jdoe',
-      password: 'JOHN',
+      password: bcrypt.hashSync('JOHN', bcrypt.genSaltSync(saltRounds)),
       email: 'john@gmail.com',
     }),
   ])

@@ -1,6 +1,6 @@
 const { conn, Sequelize } = require('../conn');
 const jwt = require('jwt-simple');
-const KEY = process.env.KEY
+const { KEY } = require('../../../secret')
 
 const User = conn.define('user', {
   // id: {
@@ -40,10 +40,10 @@ const User = conn.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
-   /* allowNull: false,
+   allowNull: false,
     validate: {
       notEmpty: true
-    } */
+    }
   },
 }, {
   timestamps: false

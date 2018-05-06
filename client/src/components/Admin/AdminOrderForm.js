@@ -5,6 +5,7 @@ import { deleteOrderFromServer, updateOrderOnServer } from '../../store';
 import AddressForm from '../Address/AddressForm';
 import Dropdown from '../Checkout/Dropdown';
 import { sentenceCase } from '../../store/reusableFunctions';
+import AdminNav from './AdminNav';
 
 /*
 STILL NEEDS MORE WORK
@@ -46,6 +47,7 @@ class AdminOrderForm extends React.Component {
     if (!order) return null
     return (
       <div>
+        <AdminNav />
         <h3>Order #{order.id}</h3>
         <h3>User: {`${user.firstName} ${user.lastName}`}</h3>
         <h5>Status: {sentenceCase(order.status)} </h5>

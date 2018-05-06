@@ -31,6 +31,17 @@
   max-width: 450px;
 }
 
+.help-block {
+  font-size: 12px;
+  text-align: left;
+  color: red;
+  padding-bottom: 5px;
+}
+
+.progress-wrapper {
+  margin-bottom: 10px;
+}
+
 /* USER ACCOUNT */
 .account-nav {
   border-bottom:2px solid transparent;
@@ -57,6 +68,22 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1
+}
+
+/* PRODUCT PAGE */
+.product-buttons {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  /* grid-template-rows: 1 */
+}
+
+.prev-btn {
+  grid-column: 2
+}
+
+.next-btn {
+  grid-column: 4
 }
 
 /* FOOTER */
