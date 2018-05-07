@@ -104,31 +104,43 @@ class ProductForm extends Component {
       <div>
         <form onSubmit={onSave}>
           <input
-            className='form-control margin-b-10'
+            className={`form-control margin-b-10${ errors.name ? ' is-invalid' : null }`}
             placeholder='Product Name'
             name='name'
             value={name}
             onChange={handleChange}
           />
-          { errors.name }
+          {
+            errors.name && <div className='help-block'>
+              { errors.name }
+            </div>
+          }
           <input
             type='number'
-            className='form-control margin-b-10'
+            className={`form-control margin-b-10${ errors.price ? ' is-invalid' : null }`}
             placeholder='Price'
             name='price'
             value={price}
             onChange={handleChange}
           />
-          { errors.price }
+          {
+            errors.price && <div className='help-block'>
+              { errors.price }
+            </div>
+          }
           <input
             type='number'
-            className='form-control margin-b-10'
+            className={`form-control margin-b-10${ errors.quantity ? ' is-invalid' : null }`}
             placeholder='Quantity'
             name='quantity'
             value={quantity}
             onChange={handleChange}
           />
-          { errors.quantity }
+          {
+            errors.quantity && <div className='help-block'>
+              { errors.quantity }
+            </div>
+          }
           <input
             className='form-control margin-b-10'
             placeholder='Add Image URL'
@@ -137,13 +149,17 @@ class ProductForm extends Component {
             onChange={handleChange}
           />
           <textarea
-            className='form-control margin-b-10'
+            className={`form-control margin-b-10${ errors.description ? ' is-invalid' : null }`}
             placeholder='Description'
             name='description'
             value={description}
             onChange={handleChange}
           />
-          {errors.description}
+          {
+            errors.description && <div className='help-block'>
+              { errors.description }
+            </div>
+          }
           <h4>Select Categories</h4>
           {
             categories.map(category => (
