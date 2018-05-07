@@ -18,9 +18,32 @@ class ProductForm extends Component {
       imageUrl: product ? product.imageUrl : '',
       description: product ? product.description : '',
       categoryArray: product ? categoryArray : [],
+      errors: {}
     }
     this.handleChange = this.handleChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.validators = {
+      name: (value) => {
+        if(!value) {
+          return 'Must Enter Product Name'
+        }
+      },
+      price: (value) => {
+        if(!value) {
+          return 'Must Enter Price'
+        }
+      },
+      quantity: (value) => {
+        if(!value) {
+          return 'Must Enter Quantity'
+        }
+      },
+      description: (value) => {
+        if(!value) {
+          return 'Must Enter Product Description'
+        }
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -54,13 +77,27 @@ class ProductForm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
+
+    const errors = Object.keys(this.validators).reduce((memo, key) => {
+      const validator = this.validators[key]
+      const value = this.state[key]
+      const error = validator(value)
+      if(error) {
+        memo[key] = error
+      }
+      return memo;
+    }, {})
+    this.setState({ errors });
+    if(Object.keys(errors).length) {
+      return;
+    }
     const { id, name, price, quantity, description, categoryArray } = this.state;
     this.props.updateProduct({ id, name, price, quantity, description, categoryArray });
     this.setState({ name: '', price: '', quantity: '', description: '', categoryArray: [] });
   }
 
   render() {
-    const { name, price, quantity, description, imageUrl, categoryArray } = this.state;
+    const { name, price, quantity, description, imageUrl, categoryArray, errors } = this.state;
     const { categories } = this.props;
     const { handleChange, onSave } = this;
     return (
@@ -73,6 +110,7 @@ class ProductForm extends Component {
             value={name}
             onChange={handleChange}
           />
+          { errors.name }
           <input
             type='number'
             className='form-control margin-b-10'
@@ -81,6 +119,7 @@ class ProductForm extends Component {
             value={price}
             onChange={handleChange}
           />
+          { errors.price }
           <input
             type='number'
             className='form-control margin-b-10'
@@ -89,6 +128,7 @@ class ProductForm extends Component {
             value={quantity}
             onChange={handleChange}
           />
+          { errors.quantity }
           <input
             className='form-control margin-b-10'
             placeholder='Add Image URL'
@@ -103,6 +143,7 @@ class ProductForm extends Component {
             value={description}
             onChange={handleChange}
           />
+          {errors.description}
           <h4>Select Categories</h4>
           {
             categories.map(category => (
