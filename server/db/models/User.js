@@ -1,6 +1,7 @@
 const { conn, Sequelize } = require('../conn');
 const jwt = require('jwt-simple');
-const { KEY } = require('../../../secret')
+const { KEY } = require('../../../secret');
+const { Order } = './Order'
 
 const User = conn.define('user', {
   // id: {
@@ -35,12 +36,16 @@ const User = conn.define('user', {
     }
   },
   password: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   email: {
     type: Sequelize.STRING,
     unique: true,
-   allowNull: false,
+    allowNull: false,
     validate: {
       notEmpty: true
     }
@@ -48,6 +53,14 @@ const User = conn.define('user', {
 }, {
   timestamps: false
 })
+
+User.createUserAndCart = function(user) {
+  User.create(user)
+    .then( newUser => {
+      Order.create({ status: 'cart', date: null, userId: newUser.id })
+      res.send(newUser)
+    })
+}
 
 User.authenticate = function(credentials) {
   const { username, password } = credentials

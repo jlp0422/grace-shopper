@@ -6,7 +6,7 @@ import OrderCard from './OrderCard';
 // import LineItemForm from '../Product/LineItemForm.js'
 
 const ActiveOrder = ({ activeOrder, user, checkout }) => {
-  console.log(activeOrder)
+  // console.log(activeOrder)
   if (!activeOrder) return null
   return (
     <div>
@@ -18,6 +18,8 @@ const ActiveOrder = ({ activeOrder, user, checkout }) => {
 }
 
 const mapState = ({ orders, user }, { checkout }) => {
+  // console.log(user)
+  // console.log('order :', orders.filter(order => order.userId === user.id))
   const activeOrder = !!user.id ? (
       orders.find(order => order.userId === user.id && order.status === 'cart')
     ) : (

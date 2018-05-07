@@ -17,8 +17,9 @@ class CreditCardForm extends Component {
   }
 
   onChange(ev) {
+    const { name, value } = ev.target
     const change = {}
-    change[ev.target.name] = ev.target.value;
+    change[name] = value;
     this.setState(change);
   }
 
@@ -39,6 +40,7 @@ class CreditCardForm extends Component {
     }
     const { onSave, onChange, removeCard } = this;
     const { userId } = this.props;
+    const { ccType, ccNum, ccExp, ccSec } = this.state;
     return (
       <div>
         <h4>Add New Card</h4>
@@ -57,7 +59,7 @@ class CreditCardForm extends Component {
             ))
           }
         </div>
-        <button onClick={onSave} className="btn btn-success">Save</button>
+        <button disabled={!ccType || !ccNum || !ccExp || !ccSec} onClick={onSave} className="btn btn-success">Save</button>
       </div>
     );
   }

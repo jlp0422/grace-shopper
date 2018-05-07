@@ -37,7 +37,7 @@ export const updateProductOnServer = (product) => {
     return axios[method](url, product)
       .then(res => res.data)
       .then(prod => {
-        console.log(prod)
+        // console.log(prod)
         const { product, pcArray } = prod
         dispatch(action(product))
         // dispatch(updateProductCategories(pcArray))
