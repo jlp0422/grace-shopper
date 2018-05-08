@@ -45,8 +45,6 @@ class AdminOrderForm extends React.Component {
     const shippingAddress = userAddresses.find(address => address.id === order.shippingId)
     const billingAddress = userAddresses.find(address => address.id === order.billingId)
     const card = userCards.find(card => card.id === order.creditCardId)
-    // console.log(userAddresses)
-    // console.log(order)
     if (!order) return null
     return (
       <div>
@@ -57,17 +55,35 @@ class AdminOrderForm extends React.Component {
         <h5>Shipping Address: {shippingAddress && shippingAddress.nickname}</h5>
         { order.status === 'processed' || order.status === 'cart' ? (
           <Dropdown readOnly={ !isEditing } status={order.status} order={ order } items={userAddresses} title="Shipping Address" name="shippingId" handleChange={ onChange } />
-          ) : null }
+          ) : (
+            <p>{ shippingAddress && `
+              ${shippingAddress.street},
+              ${shippingAddress.city},
+              ${shippingAddress.state},
+              ${shippingAddress.zip}
+            `}</p>
+          ) }
 
         <h5>Billing Address: {billingAddress && billingAddress.nickname}</h5>
         { order.status === 'processed' || order.status === 'cart'  ? (
           <Dropdown readOnly={!isEditing} status={order.status} order={ order } items={userAddresses} title="Billing Address" name="billingId" handleChange={onChange} />
-          ) : null }
+          ) : (
+            <p>{billingAddress && `
+              ${billingAddress.street},
+              ${billingAddress.city},
+              ${billingAddress.state},
+              ${billingAddress.zip}
+            `}</p>
+          ) }
 
-        <h5>Payment method: {card && `${card.ccType} ${card.ccNum}`}</h5>
+        <h5>Payment method: {card && `${card.ccType}`}</h5>
         { order.status === 'processed' || order.status === 'cart'  ? (
           <Dropdown readOnly={!isEditing} status={order.status} order={ order } items={userCards} title="Credit Card" name="creditCardId" handleChange={onChange} />
-          ) : null }
+          ) : (
+            <p>{
+              card && `Credit Card: ${card.ccNum}, Exp date: ${card.ccExp}, Code: ${card.ccSec}`
+            }</p>
+          ) }
 
         { order.status === 'processed' || order.status === 'cart' ?
           isEditing ? (
