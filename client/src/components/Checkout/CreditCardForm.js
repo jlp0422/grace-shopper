@@ -11,9 +11,38 @@ class CreditCardForm extends Component {
       ccNum: '',
       ccExp: '',
       ccSec: '',
+      errors: {}
     }
     this.onChange = this.onChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.validators = {
+      ccType: (value) => {
+        if(!value) {
+          return 'Please enter the type of Credit Card you are using'
+        }
+      },
+      ccNum: (value) => {
+        if(value.length !== 16 && typeof value * 1 !== 'number') {
+          return 'Please enter a valid Credit Card Number'
+        }
+      },
+      ccExp: (value) => {
+        const msg = 'Please enter your cards expiration MM/YYYY';
+        if(value.indexOf('/') === -1) {
+          return msg;
+        }
+        const month = value.split('/')[0] * 1;
+        const year = value.split('/')[1] * 1;
+        if(month <= 0 || month > 12 || year <= 2017 || year > 2030) {
+          return msg;
+        }
+      },
+      ccSec: (value) => {
+        if(value * 1 < 100 || value * 1 > 999) {
+          return 'Please enter your security code'
+        }
+      },
+    }
   }
 
   onChange(ev) {
@@ -25,6 +54,19 @@ class CreditCardForm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
+    const errors = Object.keys(this.validators).reduce((memo, key) => {
+      const validator = this.validators[key];
+      const value = this.state[key];
+      const error = validator(value);
+      if(error) {
+        memo[key] = error
+      }
+      return memo;
+    }, {})
+    this.setState({ errors })
+    if(Object.keys(errors).length) {
+      return;
+    }
     const { onSave, userId } = this.props;
     const { ccType, ccNum, ccExp, ccSec } = this.state;
     onSave({ ccType, ccNum, ccExp, ccSec, userId });
@@ -35,31 +77,33 @@ class CreditCardForm extends Component {
     const fields = {
       ccType: 'Credit Card Type',
       ccNum: 'Credit Card Number',
-      ccExp: 'Expiration',
+      ccExp: 'Expiration MM/YYYY',
       ccSec: 'Security Code',
     }
     const { onSave, onChange, removeCard } = this;
     const { userId } = this.props;
-    const { ccType, ccNum, ccExp, ccSec } = this.state;
+    const { ccType, ccNum, ccExp, ccSec, errors } = this.state;
     return (
       <div>
         <h4>Add New Card</h4>
         <div>
           {
             Object.keys(fields).map(field => (
-              <input
-                key={field}
-                className='form-control margin-b-10'
-                placeholder={`${fields[field]}`}
-                name={field}
-                style={{ marginBottom: '10px' }}
-                value={this.state[field]}
-                onChange={onChange}
-              />
+              <div key={field}>
+                <input
+                  className={`form-control margin-b-10${errors[field] ? ' is-invalid' : null }`}
+                  placeholder={`${fields[field]}`}
+                  name={field}
+                  style={{ marginBottom: '10px' }}
+                  value={this.state[field]}
+                  onChange={onChange}
+                />
+                { errors[field] && <div className='help-block'>{errors[field]}</div>}
+              </div>
             ))
           }
         </div>
-        <button disabled={!ccType || !ccNum || !ccExp || !ccSec} onClick={onSave} className="btn btn-success">Save</button>
+        <button onClick={onSave} className="btn btn-success">Save</button>
       </div>
     );
   }
