@@ -12,14 +12,22 @@ const ProductCard = (props) => {
         </Link>
         <div>Price: ${product.price}</div>
         <div>Quantity: {product.quantity ? product.quantity : 'OUT OF STOCK'}</div>
-        <div>Categories:</div>
-        <ul>
+
         {
-          categories.map(category => (
-            <li key={category.id}>{category.name}</li>
-          ))
+          !categories.length ? <div>Categories: NONE</div> : (
+            <div>
+              <span>Categories:</span>
+              <ul>
+              {
+                categories.map(category => (
+                  <li key={category.id}>{category.name}</li>
+                ))
+              }
+              </ul>
+            </div>
+          )
         }
-        </ul>
+
       </div>
       <div className='col'>
         <img src={product.imageUrl} className='cardThumbnail'/>

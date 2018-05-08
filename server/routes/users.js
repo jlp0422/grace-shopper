@@ -16,6 +16,7 @@ app.get('/', (req, res, next) => {
 let _user;
 app.post('/', (req, res, next) => {
   let newPass = req.body.password
+  let user;
   bcrypt.hash(newPass, saltRounds)
     .then(hashPass => {
       req.body.password = hashPass
@@ -23,15 +24,15 @@ app.post('/', (req, res, next) => {
     })
     .then(body => {
       User.create(body)
-        .then( user => {
-          _user = user
-          res.send(user)
-        })
-        .then(() => {
+        .then( _user => {
+          user = _user
           Order.create({ status: 'cart', userId: _user.id })
-        })
-    })
-    .catch(next)
+            .then(order => {
+              res.send(user);
+            })
+          })
+      })
+      .catch(next)
 });
 
 app.put('/:id', (req, res, next) => {
