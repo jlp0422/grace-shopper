@@ -27,7 +27,7 @@ export const deleteAddressFromServer = (id) => {
   };
 };
 
-export const updateAddressOnServer = (address, page) => {
+export const updateAddressOnServer = (address, page, orderId) => {
   const { id } = address;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/addresses/${id}` : '/api/addresses';
@@ -40,7 +40,7 @@ export const updateAddressOnServer = (address, page) => {
         return _address
       })
       .then(() => {
-        if (page === 'checkout') location.hash = `/users/${address.userId}/checkout`
+        if (page === 'checkout') location.hash = `/users/${address.userId}/checkout/${orderId}`
       })
       // .then(_address => location.hash = `/users/${_address.userId}/addresses`)
       .catch(err => console.error(err))
