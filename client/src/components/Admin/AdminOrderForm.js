@@ -44,7 +44,9 @@ class AdminOrderForm extends React.Component {
     const { onUpdate, onChange } = this
     const shippingAddress = userAddresses.find(address => address.id === order.shippingId)
     const billingAddress = userAddresses.find(address => address.id === order.billingId)
-    console.log(userAddresses)
+    const card = userCards.find(card => card.id === order.creditCardId)
+    // console.log(userAddresses)
+    // console.log(order)
     if (!order) return null
     return (
       <div>
@@ -52,20 +54,20 @@ class AdminOrderForm extends React.Component {
         <h3>Order #{order.id}</h3>
         <h3>User: {`${user.firstName} ${user.lastName}`}</h3>
         <h5>Status: {sentenceCase(order.status)} </h5>
-        <h5>Shipping Address: </h5>
-        { order.status === 'processed' || order.status === 'cart'  ? (
-          <Dropdown readOnly={ !isEditing } items={userAddresses} title="Shipping Address" name="shippingId" handleChange={ onChange } />
-          ) : <p>{shippingAddress && shippingAddress.nickname}</p> }
+        <h5>Shipping Address: {shippingAddress && shippingAddress.nickname}</h5>
+        { order.status === 'processed' || order.status === 'cart' ? (
+          <Dropdown readOnly={ !isEditing } status={order.status} order={ order } items={userAddresses} title="Shipping Address" name="shippingId" handleChange={ onChange } />
+          ) : null }
 
-        <h5>Billing Address: </h5>
+        <h5>Billing Address: {billingAddress && billingAddress.nickname}</h5>
         { order.status === 'processed' || order.status === 'cart'  ? (
-          <Dropdown readOnly={ !isEditing } items={userAddresses} title="Billing Address" name="billingId" handleChange={onChange} />
-          ) : <p>{billingAddress && billingAddress.nickname}</p> }
+          <Dropdown readOnly={!isEditing} status={order.status} order={ order } items={userAddresses} title="Billing Address" name="billingId" handleChange={onChange} />
+          ) : null }
 
-        <h5>Payment method: </h5>
+        <h5>Payment method: {card && `${card.ccType} ${card.ccNum}`}</h5>
         { order.status === 'processed' || order.status === 'cart'  ? (
-          <Dropdown readOnly={ !isEditing } items={userCards} title="Credit Card" name="creditCardId" handleChange={onChange} />
-          ) : ('Credit Card') }
+          <Dropdown readOnly={!isEditing} status={order.status} order={ order } items={userCards} title="Credit Card" name="creditCardId" handleChange={onChange} />
+          ) : null }
 
         { order.status === 'processed' || order.status === 'cart' ?
           isEditing ? (
