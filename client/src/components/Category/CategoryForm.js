@@ -45,7 +45,7 @@ class CategoryForm extends Component {
       return memo;
     }, {})
     this.setState({ errors });
-    if(Object.keys(errors)) {
+    if(Object.keys(errors).length) {
       return;
     }
     this.props.updateCategory({ id, name });
@@ -63,10 +63,10 @@ class CategoryForm extends Component {
             placeholder='Category Name'
             name='name'
             value={name}
-            className={`form-control margin-b-10${ !name ? ' is-invalid' : name ? ' is-valid' : null }`}
+            className={`form-control margin-b-10${ errors.name ? ' is-invalid' : null }`}
             onChange={handleChange}
           />
-          { errors.name ? <div className='help-block'>{errors.name}</div> : null }
+          { errors.name && <div className='help-block'>{errors.name}</div>  }
           <button className='btn btn-primary'>Save</button>
         </form>
       </div>
