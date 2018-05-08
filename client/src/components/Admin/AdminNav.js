@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 const AdminNav = () => {
   const url = location.hash.substring(1)
-  console.log(url)
   return (
     <div>
       <h1>Admin Tools</h1>

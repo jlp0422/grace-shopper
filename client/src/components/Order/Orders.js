@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { sentenceCase } from '../../store/reusableFunctions';
+import AdminNav from '../Admin/AdminNav';
 
 /* THINGS TO ADD:
 - PAGINATION
@@ -61,6 +63,7 @@ class Orders extends React.Component {
     const lastPage = Math.ceil(matchingOrders.length / 20)
     return (
       <div>
+        <AdminNav />
         <h2>Order history { user ? `for ${user.firstName} ${user.lastName}` : null }</h2>
         <h5>Order status</h5>
         {

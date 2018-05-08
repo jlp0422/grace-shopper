@@ -1,7 +1,6 @@
 const app = require('express').Router();
 module.exports = app;
 const { User, Order, LineItem } = require('../db').models
-
 const jwt = require('jwt-simple');
 const bcrypt = require('bcrypt');
 const { KEY } = require('../../secret')
@@ -24,24 +23,23 @@ app.get('/:token', (req, res, next) => {
   // }
 })
 
-
 app.post('/', (req, res, next) => {
   let _user;
   let _items;
   let _cart;
-  User.findOne({ where: { username: req.body.username }})
-    .then( user => {
+  User.findOne({ where: { username: req.body.username } })
+    .then(user => {
       _user = user
       const hashPass = user.password
       bcrypt.compare(req.body.password, hashPass)
-        .then( res => {
+        .then(res => {
           if (res) return user
           throw { status: 401 }
         })
-        .then( user => {
+        .then(user => {
           const { username, password } = user
-          User.authenticate({username, password})
-            .then( token => res.send(token))
+          User.authenticate({ username, password })
+            .then(token => res.send(token))
         })
     })
     .then(() => Order.getCartWithoutUser())
@@ -63,7 +61,7 @@ app.post('/', (req, res, next) => {
   // const { username, password } = req.body
   // const hash = bcrypt.hash(password, saltRounds)
   // bcrypt.compare(password, hash)
-    // .then( res => console.log(res))
+  // .then( res => console.log(res))
   // User.findOne({ where: req.body })
   //   .then( user => {
   //     if (user) {

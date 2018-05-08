@@ -13,10 +13,10 @@ app.get('/', (req, res, next) => {
     .catch(next);
 });
 
+let _user;
 app.post('/', (req, res, next) => {
   let newPass = req.body.password
   let user;
-  // let data;
   bcrypt.hash(newPass, saltRounds)
     .then(hashPass => {
       req.body.password = hashPass
@@ -27,16 +27,12 @@ app.post('/', (req, res, next) => {
         .then( _user => {
           user = _user
           Order.create({ status: 'cart', userId: _user.id })
-          .then(order => {
-            // const data = { user, order };
-            res.send(user);
+            .then(order => {
+              res.send(user);
+            })
           })
-        })
-    })
-    .then(() => {
-
-    })
-    .catch(next)
+      })
+      .catch(next)
 });
 
 app.put('/:id', (req, res, next) => {

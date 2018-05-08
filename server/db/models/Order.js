@@ -1,5 +1,4 @@
 const { conn, Sequelize } = require('../conn');
-
 const { LineItem } = './LineItem';
 
 const Order = conn.define('order', {

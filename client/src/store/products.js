@@ -28,7 +28,7 @@ export const deleteProductFromServer = (id) => {
   }
 }
 
-export const updateProductOnServer = (product) => {
+export const updateProductOnServer = (product, page) => {
   const { id } = product;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/products/${id}` : '/api/products';
@@ -37,12 +37,14 @@ export const updateProductOnServer = (product) => {
     return axios[method](url, product)
       .then(res => res.data)
       .then(prod => {
-        console.log(prod)
+        // console.log(prod)
         const { product, pcArray } = prod
         dispatch(action(product))
         // dispatch(updateProductCategories(pcArray))
       })
-      .then(() => location.hash = '/products')
+      .then(() => {
+        if (!page) location.hash = '/products'
+      })
     // .catch(err) placeholder for error handling
   }
 }

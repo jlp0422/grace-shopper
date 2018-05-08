@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { attemptLogin, updateUserOnServer, getLineItemsFromServer } from '../../store'
 import { Input, Button, Progress } from 'mdbreact';
 import { emailRegex, passwordRegexMedium, passwordRegexStrong } from '../../const'
@@ -42,6 +43,10 @@ class LoginForm extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({})
+  }
+
   onChange(ev) {
     const change = {}
     change[ev.target.name] = ev.target.value
@@ -73,73 +78,129 @@ class LoginForm extends React.Component {
   render() {
     const url = location.hash.slice(1)
     const { onChange, onSubmit } = this
+    const { user } = this.props
     const { firstName, lastName, username, password, email, errors } = this.state
     const passwordTestStrong = passwordRegexStrong.test(password)
     const passwordTestMedium = passwordRegexMedium.test(password)
-    // const isEmail = emailRegex.test(email)
     return (
       <div className="login-form">
-        <h3>{ url === '/signup' ? ('Sign up for an account') : ('Log in to your account')}</h3>
+      { user.id ? (
         <div>
-        {
-          url === '/signup' ? (
-            <div>
-              <div className="form-group">
-                <Input
-                  label="First name"
-                  name="firstName"
-                  className="form-control"
-                  onChange={onChange}
-                  value={firstName}
-                  type="text"
-                />
-                { errors.firstName && <div className="help-block">
-                  {errors.firstName}
+          <h4>You are already logged in!</h4>
+          <Link to='/'><button className="btn btn-info">Back home</button></Link>
+          <Link to={`/users/${user.id}`}><button className="btn btn-secondary">My Account</button></Link>
+        </div>
+        ) :
+        (
+        <div>
+          <h3>{ url === '/signup' ? ('Sign up for an account') : ('Log in to your account')}</h3>
+          <div>
+          {
+            url === '/signup' ? (
+              <div>
+                <div className="form-group">
+                  <Input
+                    label="First name"
+                    name="firstName"
+                    className="form-control"
+                    onChange={onChange}
+                    value={firstName}
+                    type="text"
+                  />
+                  { errors.firstName && <div className="help-block">
+                    {errors.firstName}
+                  </div>
+                  }
                 </div>
-                }
-              </div>
-              <div className="form-group">
-                <Input
-                  label="Last name"
-                  name="lastName"
-                  className="form-control"
-                  onChange={onChange}
-                  value={lastName}
-                  type="text"
-                />
-                { errors.lastName && <div className="help-block">
-                  {errors.lastName}
+                <div className="form-group">
+                  <Input
+                    label="Last name"
+                    name="lastName"
+                    className="form-control"
+                    onChange={onChange}
+                    value={lastName}
+                    type="text"
+                  />
+                  { errors.lastName && <div className="help-block">
+                    {errors.lastName}
+                  </div>
+                  }
                 </div>
-                }
-              </div>
-              <div className="form-group">
-                <Input
-                  label="Email address"
-                  name="email"
-                  className="form-control"
-                  onChange={onChange}
-                  value={email}
-                  type='email'
-                />
-                { errors.email && <div className="help-block">
-                  {errors.email}
+                <div className="form-group">
+                  <Input
+                    label="Email address"
+                    name="email"
+                    className="form-control"
+                    onChange={onChange}
+                    value={email}
+                    type='email'
+                  />
+                  { errors.email && <div className="help-block">
+                    {errors.email}
+                  </div>
+                  }
                 </div>
-                }
-              </div>
-              <div className="form-group">
-                <Input
-                  label='Username'
-                  name="username"
-                  className="form-control"
-                  onChange={onChange}
-                  value={username}
-                />
-                { errors.username && <div className="help-block">
-                  {errors.username}
+                <div className="form-group">
+                  <Input
+                    label='Username'
+                    name="username"
+                    className="form-control"
+                    onChange={onChange}
+                    value={username}
+                  />
+                  { errors.username && <div className="help-block">
+                    {errors.username}
+                  </div>
+                  }
                 </div>
-                }
+                <div className="form-group">
+                  <Input
+                    label='Password'
+                    name="password"
+                    className="form-control"
+                    onChange={onChange}
+                    value={password}
+                    type="password"
+                  />
+                  { errors.password && <div className="help-block">
+                    {errors.password}
+                  </div>
+                  }
+                </div>
+                <div className="progress-wrapper">
+                  { passwordTestStrong ? (
+                    <Progress value={100} color={"success"} />
+                    ) : (
+                    passwordTestMedium ? (
+                      <Progress value={67} color={"warning"} />
+                    ) : (
+                    password.length > 3 ? (
+                      <Progress value={33} color={"danger"} />
+                    ) : (
+                      <Progress value={0} color={"danger"} />
+                      )
+                    ) )
+                  }
+                </div>
               </div>
-              <div className="form-group">
+            ) : (
+              <div>
+              {/* <label className="font-weight-bold">Username</label> */}
+                <div className="form-group">
+                  <Input
+                    label='Username'
+                    name="username"
+                    className="form-control"
+                    onChange={onChange}
+                    value={username}
+                  />
+                  {errors.username && <div className="help-block">
+                    {errors.username}
+                  </div>
+                  }
+                </div>
+
+              {/*  <label className="font-weight-bold">Password</label> */}
                 <Input
                   label='Password'
                   name="password"
@@ -148,72 +209,27 @@ class LoginForm extends React.Component {
                   value={password}
                   type="password"
                 />
-                { errors.password && <div className="help-block">
-                  {errors.password}
-                </div>
-                }
               </div>
-              <div className="progress-wrapper">
-                { passwordTestStrong ? (
-                  <Progress value={100} color={"success"} />
-                  ) : (
-                  passwordTestMedium ? (
-                    <Progress value={67} color={"warning"} />
-                  ) : (
-                  password.length > 3 ? (
-                    <Progress value={33} color={"danger"} />
-                  ) : (
-                    <Progress value={0} color={"danger"} />
-                    )
-                  ) )
-                }
-              </div>
-            </div>
-          ) : (
-            <div>
-             {/* <label className="font-weight-bold">Username</label> */}
-              <div className="form-group">
-                <Input
-                  label='Username'
-                  name="username"
-                  className="form-control"
-                  onChange={onChange}
-                  value={username}
-                />
-                {errors.username && <div className="help-block">
-                  {errors.username}
-                </div>
-                }
-              </div>
-
-            {/*  <label className="font-weight-bold">Password</label> */}
-              <Input
-                label='Password'
-                name="password"
-                className="form-control"
-                onChange={onChange}
-                value={password}
-                type="password"
-              />
-            </div>
-          )
-        }
-        </div>
-        <button onClick={ onSubmit } className="btn btn-success margin-t-15">
-          { url === '/signup' ? ('Create account') : ('Log in') }
-        </button>
-        { url === '/signup' ?
-          <p className="margin-t-15">Have an account? <a href='#/login'>Log in now &raquo;</a></p>
-          :
-          <p className="margin-t-15">Don't have an account? <a href='#/signup'>Create one now &raquo;</a></p>
-        }
-        {/*<div className="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>*/}
+            )
+          }
+          </div>
+          <button onClick={ onSubmit } className="btn btn-success margin-t-15">
+            { url === '/signup' ? ('Create account') : ('Log in') }
+          </button>
+          { url === '/signup' ?
+            <p className="margin-t-15">Have an account? <a href='#/login'>Log in now &raquo;</a></p>
+            :
+            <p className="margin-t-15">Don't have an account? <a href='#/signup'>Create one now &raquo;</a></p>
+          }
+          {/*<div className="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>*/}
+          </div>
+        ) }
       </div>
     )
   }
 }
 
-const mapState = ({ users }) => {
+const mapState = ({ users, user }) => {
   const usernames = users.reduce((memo, user) => {
     memo.push(user.username)
     return memo
@@ -222,7 +238,7 @@ const mapState = ({ users }) => {
     memo.push(user.email)
     return memo
   }, [])
-  return { usernames, emails }
+  return { usernames, emails, user }
 }
 
 const mapDispatch = (dispatch) => {
