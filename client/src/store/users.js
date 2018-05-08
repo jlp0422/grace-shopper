@@ -15,7 +15,7 @@ export const getUsersFromServer = () => {
     return axios.get('/api/users')
       .then( res => res.data)
       .then( users => dispatch(getUsers(users)))
-      // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   };
 };
 
@@ -24,7 +24,7 @@ export const deleteUserOnServer = (id) => {
     return axios.delete(`/api/users/${id}`)
       .then(() => dispatch(deleteUser(id)))
       .then(() => location.hash = '/admin/users')
-      // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   };
 };
 
@@ -42,7 +42,7 @@ export const updateUserOnServer = (user, page) => {
         if (page === 'signup') dispatch(attemptLogin({username, password}))
         if (page === 'admin') location.hash = '/admin/users'
       })
-      // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   };
 };
 

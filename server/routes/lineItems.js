@@ -3,9 +3,7 @@ module.exports = app;
 const { LineItem, Product } = require('../db').models;
 
 app.get('/', (req, res, next) => {
-  LineItem.findAll(/*{
-    include: [ Product ]
-  }*/)
+  LineItem.findAll()
     .then(lineItems => res.send(lineItems))
     .catch(next);
 });

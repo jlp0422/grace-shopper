@@ -1,7 +1,6 @@
 /* eslint-disable */
 import axios from 'axios';
 import { GET_PRODUCTS, CREATE_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT } from './actionConstants';
-// import { getProductCategoriesFromServer, updateProductCategories } from './productCategories';
 
 /*********** ACTION CREATORS ***********/
 const getProducts = (products) => ({ type: GET_PRODUCTS, products });
@@ -15,7 +14,7 @@ export const getProductsFromServer = () => {
     return axios.get('/api/products')
       .then( res => res.data)
       .then( products => dispatch(getProducts(products)))
-      // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   };
 };
 
@@ -24,7 +23,7 @@ export const deleteProductFromServer = (id) => {
     return axios.delete(`/api/products/${id}`)
       .then(() => dispatch(deleteProduct(id)))
       .then(() => location.hash = '/products')
-      // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   }
 }
 
@@ -37,15 +36,13 @@ export const updateProductOnServer = (product, page) => {
     return axios[method](url, product)
       .then(res => res.data)
       .then(prod => {
-        // console.log(prod)
         const { product, pcArray } = prod
         dispatch(action(product))
-        // dispatch(updateProductCategories(pcArray))
       })
       .then(() => {
         if (!page) location.hash = '/products'
       })
-    // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   }
 }
 

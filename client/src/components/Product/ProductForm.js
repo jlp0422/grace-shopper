@@ -195,7 +195,6 @@ const mapState = ({ categories, productCategories }, { product }) => {
   return {
     categories,
     productCategories
-    // product
   };
 };
 

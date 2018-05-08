@@ -22,7 +22,6 @@ export const deleteAddressFromServer = (id) => {
   return (dispatch) => {
     return axios.delete(`/api/addresses/${id}`)
       .then(() => dispatch(deleteAddress(id)))
-      // .then(() => location.hash = '/addresses')
       .catch(err => console.error(err))
   };
 };
@@ -42,7 +41,6 @@ export const updateAddressOnServer = (address, page, orderId) => {
       .then(() => {
         if (page === 'checkout') location.hash = `/users/${address.userId}/checkout/${orderId}`
       })
-      // .then(_address => location.hash = `/users/${_address.userId}/addresses`)
       .catch(err => console.error(err))
   }
 }

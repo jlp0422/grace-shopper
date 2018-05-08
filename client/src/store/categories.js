@@ -14,7 +14,7 @@ export const getCategoriesFromServer = () => {
     return axios.get('/api/categories')
       .then( res => res.data)
       .then( categories => dispatch(getCategories(categories)))
-      // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   };
 };
 
@@ -37,7 +37,7 @@ export const updateCategoryOnServer = (category) => {
       .then( res => res.data)
       .then( cat => dispatch(action(cat)))
       .then(() => location.hash = '/categories' )
-      // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   };
 };
 

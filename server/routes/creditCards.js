@@ -14,16 +14,6 @@ app.post('/', (req, res, next) => {
     .catch(next);
 });
 
-// app.put('/:id', (req, res, next) => {
-//   CreditCard.findById(req.params.id)
-//     .then(creditCard => {
-//       Object.assign(creditCard, req.body);
-//       return creditCard.save();
-//     })
-//     .then(creditCard => res.send(creditCard))
-//     .catch(next);
-// });
-
 app.delete('/:id', (req, res, next) => {
   CreditCard.findById(req.params.id)
     .then(creditCard => creditCard.destroy())
