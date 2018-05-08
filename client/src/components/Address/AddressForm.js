@@ -116,7 +116,6 @@ const mapState = (state, { userId }) => {
 }
 
 const mapDispatch = (dispatch, { location }) => {
-  console.log(location)
   const { page, orderId } = location
   return {
     updateAddress: (address) => dispatch(updateAddressOnServer(address, page, orderId)),

@@ -44,6 +44,7 @@ class AdminOrderForm extends React.Component {
     const { onUpdate, onChange } = this
     const shippingAddress = userAddresses.find(address => address.id === order.shippingId)
     const billingAddress = userAddresses.find(address => address.id === order.billingId)
+    console.log(userAddresses)
     if (!order) return null
     return (
       <div>
