@@ -29,18 +29,23 @@ class ProductForm extends Component {
         }
       },
       price: (value) => {
-        if(!value) {
+        if(!value || typeof value !== 'number') {
           return 'Must Enter Price'
         }
       },
       quantity: (value) => {
-        if(!value) {
+        if(!value || typeof value !== 'number') {
           return 'Must Enter Quantity'
         }
       },
       description: (value) => {
         if(!value) {
           return 'Must Enter Product Description'
+        }
+      },
+      categoryArray: (value) => {
+        if(!value.length) {
+          return 'Please select at least (1) Category'
         }
       }
     }
@@ -104,7 +109,7 @@ class ProductForm extends Component {
       <div>
         <form onSubmit={onSave}>
           <input
-            className={`form-control margin-b-10${ !name ? ' is-invalid' : name ? ' is-valid' : null }`}
+            className={`form-control margin-b-10${ errors.name ? ' is-invalid' : null }`}
             placeholder='Product Name'
             name='name'
             value={name}
@@ -117,7 +122,7 @@ class ProductForm extends Component {
           }
           <input
             type='number'
-            className={`form-control margin-b-10${ !price ? ' is-invalid' : price ? ' is-valid' : null }`}
+            className={`form-control margin-b-10${ errors.price ? ' is-invalid' : null }`}
             placeholder='Price'
             name='price'
             value={price}
@@ -130,7 +135,7 @@ class ProductForm extends Component {
           }
           <input
             type='number'
-            className={`form-control margin-b-10${ !quantity ? ' is-invalid' : quantity ? ' is-valid' : null }`}
+            className={`form-control margin-b-10${ errors.quantity ? ' is-invalid' : null }`}
             placeholder='Quantity'
             name='quantity'
             value={quantity}
@@ -149,7 +154,7 @@ class ProductForm extends Component {
             onChange={handleChange}
           />
           <textarea
-            className={`form-control margin-b-10${ !description ? ' is-invalid' : description ? ' is-valid' : null }`}
+            className={`form-control margin-b-10${ errors.description ? ' is-invalid' : null }`}
             placeholder='Description'
             name='description'
             value={description}
@@ -161,6 +166,10 @@ class ProductForm extends Component {
             </div>
           }
           <h4>Select Categories</h4>
+          { errors.categoryArray && <div className='help-block'>
+              {errors.categoryArray}
+            </div>
+          }
           {
             categories.map(category => (
               <div key={category.id}>
@@ -171,7 +180,7 @@ class ProductForm extends Component {
                   onChange={handleChange}
                   checked={categoryArray.includes(category.id * 1)}
                 />
-                <label>&nbsp;{category.name}</label>
+                <span>&nbsp;{category.name}</span>
               </div>
             ))
           }

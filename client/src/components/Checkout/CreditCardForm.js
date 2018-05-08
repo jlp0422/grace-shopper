@@ -27,12 +27,18 @@ class CreditCardForm extends Component {
         }
       },
       ccExp: (value) => {
-        if(!value) {
-          return 'Please enter your cards expiration MM/YYYY'
+        const msg = 'Please enter your cards expiration MM/YYYY';
+        if(value.indexOf('/') === -1) {
+          return msg;
+        }
+        const month = value.split('/')[0] * 1;
+        const year = value.split('/')[1] * 1;
+        if(month <= 0 || month > 12 || year <= 2017 || year > 2030) {
+          return msg;
         }
       },
       ccSec: (value) => {
-        if(!value) {
+        if(value * 1 < 100 || value * 1 > 999) {
           return 'Please enter your security code'
         }
       },
