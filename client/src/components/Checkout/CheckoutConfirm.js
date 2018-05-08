@@ -125,7 +125,8 @@ class CheckoutConfirm extends Component {
         </div>
         <Link to={{
           pathname: `/users/${user.id}/addresses`,
-          state: 'checkout',
+          page: 'checkout',
+          orderId: orderId
         }}>
           <button className='btn btn-primary'>Add New Address</button>
         </Link>
