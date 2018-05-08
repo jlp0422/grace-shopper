@@ -28,7 +28,7 @@ export const deleteProductFromServer = (id) => {
   }
 }
 
-export const updateProductOnServer = (product) => {
+export const updateProductOnServer = (product, page) => {
   const { id } = product;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/products/${id}` : '/api/products';
@@ -42,7 +42,9 @@ export const updateProductOnServer = (product) => {
         dispatch(action(product))
         // dispatch(updateProductCategories(pcArray))
       })
-      .then(() => location.hash = '/products')
+      .then(() => {
+        if (!page) location.hash = '/products'
+      })
     // .catch(err) placeholder for error handling
   }
 }

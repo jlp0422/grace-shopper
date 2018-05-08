@@ -6,7 +6,7 @@ import moment from 'moment';
 import { sentenceCase } from '../../store/reusableFunctions';
 
 const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => {
-  const orderDate = order.date ? moment(order.date).format("ddd, MMMM Do YYYY h:MMA") : null
+  const orderDate = order.date ? moment(order.date).format("ddd, MMMM Do YYYY") : null // h:MMA") : null
   return (
     <div>
       { order.date ? (

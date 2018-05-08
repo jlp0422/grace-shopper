@@ -101,7 +101,7 @@ class CheckoutConfirm extends Component {
       const stock = product.quantity - item.quantity;
       Object.assign(product, { quantity: stock })
       // console.log(product)
-      updateProduct(product)
+      updateProduct(product, 'checkout')
     })
     onUpdate({ status: 'cart', userId: user.id });
     this.sendEmail(this.getInfoForEmail());
@@ -174,7 +174,7 @@ const mapDispatch = (dispatch) => {
     //     dispatch(updateProductOnServer(product))
     //   })
     // },
-    updateProduct: (product) => dispatch(updateProductOnServer(product))
+    updateProduct: (product, page) => dispatch(updateProductOnServer(product, page))
   }
 }
 
