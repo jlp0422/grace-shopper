@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-const Dropdown = (props) => {
-  const { items, title, name, handleChange, readOnly } = props;
+const Dropdown = ({items, title, name, handleChange, readOnly, card, shipping, billing, status }) => {
+  // console.log(shipping)
   return (
     <div>
     {
-      readOnly ? <p>No { title } selected </p> :
+      readOnly ? <p>{status === 'cart' ? (`Select a ${title}`) : (`Click "Edit" to change ${title} `)}</p> :
         items.length ? (
           <select className='form-control' name={name} onChange={ handleChange }>
             <option>Select Your { title }</option>
@@ -26,13 +26,22 @@ const Dropdown = (props) => {
   );
 }
 
-const mapState = ( state, { items, title, name, handleChange, readOnly }) => {
+const mapState = ( { addresses, creditCards} , { items, title, name, handleChange, readOnly, order, status }) => {
+  const shipping = order && addresses.find(address => address.id === order.shippingId)
+  const billing = order && addresses.find(address => address.id === order.billingId)
+  const card = order && creditCards.find(card => card.id === order.creditCardId)
+  // console.log('addresses',userAddresses)
+  // console.log('cards', userCards)
   return {
     items,
     title,
     name,
     handleChange,
-    readOnly
+    readOnly,
+    shipping,
+    billing,
+    card,
+    status
   }
 }
 
