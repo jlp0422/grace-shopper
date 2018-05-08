@@ -104,7 +104,7 @@ class ProductForm extends Component {
       <div>
         <form onSubmit={onSave}>
           <input
-            className={`form-control margin-b-10${ errors.name ? ' is-invalid' : null }`}
+            className={`form-control margin-b-10${ !name ? ' is-invalid' : name ? ' is-valid' : null }`}
             placeholder='Product Name'
             name='name'
             value={name}
@@ -117,7 +117,7 @@ class ProductForm extends Component {
           }
           <input
             type='number'
-            className={`form-control margin-b-10${ errors.price ? ' is-invalid' : null }`}
+            className={`form-control margin-b-10${ !price ? ' is-invalid' : price ? ' is-valid' : null }`}
             placeholder='Price'
             name='price'
             value={price}
@@ -130,7 +130,7 @@ class ProductForm extends Component {
           }
           <input
             type='number'
-            className={`form-control margin-b-10${ errors.quantity ? ' is-invalid' : null }`}
+            className={`form-control margin-b-10${ !quantity ? ' is-invalid' : quantity ? ' is-valid' : null }`}
             placeholder='Quantity'
             name='quantity'
             value={quantity}
@@ -149,7 +149,7 @@ class ProductForm extends Component {
             onChange={handleChange}
           />
           <textarea
-            className={`form-control margin-b-10${ errors.description ? ' is-invalid' : null }`}
+            className={`form-control margin-b-10${ !description ? ' is-invalid' : description ? ' is-valid' : null }`}
             placeholder='Description'
             name='description'
             value={description}
