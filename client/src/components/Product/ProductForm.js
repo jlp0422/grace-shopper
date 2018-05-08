@@ -18,9 +18,32 @@ class ProductForm extends Component {
       imageUrl: product ? product.imageUrl : '',
       description: product ? product.description : '',
       categoryArray: product ? categoryArray : [],
+      errors: {}
     }
     this.handleChange = this.handleChange.bind(this);
     this.onSave = this.onSave.bind(this);
+    this.validators = {
+      name: (value) => {
+        if(!value) {
+          return 'Must Enter Product Name'
+        }
+      },
+      price: (value) => {
+        if(!value) {
+          return 'Must Enter Price'
+        }
+      },
+      quantity: (value) => {
+        if(!value) {
+          return 'Must Enter Quantity'
+        }
+      },
+      description: (value) => {
+        if(!value) {
+          return 'Must Enter Product Description'
+        }
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,7 +66,7 @@ class ProductForm extends Component {
         categoryArray:
           arr.includes(value) ? arr.filter(id => id !== value) : [ ...arr, value ]
         })
-    } else if(ev.target.name === 'name' || ev.target.name === 'imageUrl' || ev.target.name === 'description') {
+    } else if (ev.target.name === 'name' || ev.target.name === 'imageUrl' || ev.target.name === 'description') {
       value = ev.target.value;
     } else {
       value = ev.target.value * 1;
@@ -54,41 +77,70 @@ class ProductForm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
+
+    const errors = Object.keys(this.validators).reduce((memo, key) => {
+      const validator = this.validators[key]
+      const value = this.state[key]
+      const error = validator(value)
+      if(error) {
+        memo[key] = error
+      }
+      return memo;
+    }, {})
+    this.setState({ errors });
+    if(Object.keys(errors).length) {
+      return;
+    }
     const { id, name, price, quantity, description, categoryArray } = this.state;
     this.props.updateProduct({ id, name, price, quantity, description, categoryArray });
     this.setState({ name: '', price: '', quantity: '', description: '', categoryArray: [] });
   }
 
   render() {
-    const { name, price, quantity, description, imageUrl, categoryArray } = this.state;
+    const { name, price, quantity, description, imageUrl, categoryArray, errors } = this.state;
     const { categories } = this.props;
     const { handleChange, onSave } = this;
     return (
       <div>
         <form onSubmit={onSave}>
           <input
-            className='form-control margin-b-10'
+            className={`form-control margin-b-10${ !name ? ' is-invalid' : name ? ' is-valid' : null }`}
             placeholder='Product Name'
             name='name'
             value={name}
             onChange={handleChange}
           />
+          {
+            errors.name && <div className='help-block'>
+              { errors.name }
+            </div>
+          }
           <input
             type='number'
-            className='form-control margin-b-10'
+            className={`form-control margin-b-10${ !price ? ' is-invalid' : price ? ' is-valid' : null }`}
             placeholder='Price'
             name='price'
             value={price}
             onChange={handleChange}
           />
+          {
+            errors.price && <div className='help-block'>
+              { errors.price }
+            </div>
+          }
           <input
             type='number'
-            className='form-control margin-b-10'
+            className={`form-control margin-b-10${ !quantity ? ' is-invalid' : quantity ? ' is-valid' : null }`}
             placeholder='Quantity'
             name='quantity'
             value={quantity}
             onChange={handleChange}
           />
+          {
+            errors.quantity && <div className='help-block'>
+              { errors.quantity }
+            </div>
+          }
           <input
             className='form-control margin-b-10'
             placeholder='Add Image URL'
@@ -97,12 +149,17 @@ class ProductForm extends Component {
             onChange={handleChange}
           />
           <textarea
-            className='form-control margin-b-10'
+            className={`form-control margin-b-10${ !description ? ' is-invalid' : description ? ' is-valid' : null }`}
             placeholder='Description'
             name='description'
             value={description}
             onChange={handleChange}
           />
+          {
+            errors.description && <div className='help-block'>
+              { errors.description }
+            </div>
+          }
           <h4>Select Categories</h4>
           {
             categories.map(category => (

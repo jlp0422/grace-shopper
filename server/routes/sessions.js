@@ -31,6 +31,7 @@ app.post('/', (req, res, next) => {
   let _cart;
   User.findOne({ where: { username: req.body.username }})
     .then( user => {
+      _user = user
       const hashPass = user.password
       bcrypt.compare(req.body.password, hashPass)
         .then( res => {

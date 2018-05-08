@@ -1,5 +1,5 @@
 const app = require('express').Router();
-const { User } = require('../db').models;
+const { User, Order } = require('../db').models;
 const bcrypt = require('bcrypt');
 module.exports = app;
 
@@ -15,6 +15,8 @@ app.get('/', (req, res, next) => {
 
 app.post('/', (req, res, next) => {
   let newPass = req.body.password
+  let user;
+  // let data;
   bcrypt.hash(newPass, saltRounds)
     .then(hashPass => {
       req.body.password = hashPass
@@ -22,7 +24,17 @@ app.post('/', (req, res, next) => {
     })
     .then(body => {
       User.create(body)
-        .then( user => res.send(user))
+        .then( _user => {
+          user = _user
+          Order.create({ status: 'cart', userId: _user.id })
+          .then(order => {
+            // const data = { user, order };
+            res.send(user);
+          })
+        })
+    })
+    .then(() => {
+
     })
     .catch(next)
 });

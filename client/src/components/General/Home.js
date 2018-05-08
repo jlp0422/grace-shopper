@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getLineItemsFromServer } from '../../store';
+import { getLineItemsFromServer, getOrdersFromServer } from '../../store';
 
 class Home extends Component {
 
   componentWillMount() {
-    const { reloadItems } = this.props;
+    const { reloadItems, reloadOrders } = this.props;
     setTimeout(() => {
       reloadItems();
+      reloadOrders();
     }, 100)
   }
 
@@ -24,7 +25,8 @@ class Home extends Component {
 
 const mapDispatch = (dispatch) => {
   return {
-    reloadItems: () => dispatch(getLineItemsFromServer())
+    reloadItems: () => dispatch(getLineItemsFromServer()),
+    reloadOrders: () => dispatch(getOrdersFromServer())
   }
 }
 
