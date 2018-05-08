@@ -66,7 +66,7 @@ class ProductForm extends Component {
         categoryArray:
           arr.includes(value) ? arr.filter(id => id !== value) : [ ...arr, value ]
         })
-    } else if(ev.target.name === 'name' || ev.target.name === 'imageUrl' || ev.target.name === 'description') {
+    } else if (ev.target.name === 'name' || ev.target.name === 'imageUrl' || ev.target.name === 'description') {
       value = ev.target.value;
     } else {
       value = ev.target.value * 1;
