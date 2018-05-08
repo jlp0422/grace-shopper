@@ -49,7 +49,7 @@ class CategoryForm extends Component {
       return;
     }
     this.props.updateCategory({ id, name });
-    this.setState({ name: '' })
+    this.setState({ name: '' });
   }
 
   render() {
