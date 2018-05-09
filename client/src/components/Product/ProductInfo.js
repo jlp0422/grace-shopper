@@ -6,6 +6,7 @@ import { starRating } from '../../store/reusableFunctions';
 import ProductForm from './ProductForm';
 import LineItemForm from './LineItemForm';
 import ReviewForm from '../Review/ReviewForm';
+import { Helmet } from 'react-helmet';
 
 const ProductInfo = (props) => {
   const { product, deleteProduct, loggedIn, isAdmin, rating, reviewCount, makeSingular, activeOrder, itemId } = props;
@@ -14,6 +15,7 @@ const ProductInfo = (props) => {
   if (!activeOrder) return null;
   return (
     <div>
+      <Helmet><title>{product.name} | J²A</title></Helmet>
     <div className='row'>
       <h3>{product.name}</h3>
     </div>

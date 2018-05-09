@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { updateUserOnServer } from '../../store';
 import AdminNav from './AdminNav';
+import { Helmet } from 'react-helmet';
 
 class AdminUserForm extends React.Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class AdminUserForm extends React.Component {
     }
     return (
       <div>
+        <Helmet><title>Admin: User Edit | J²A</title></Helmet>
         <AdminNav />
         <h2>Editing: {`${user.firstName} ${user.lastName}`}</h2>
         { Object.keys(fields).map(field => (
