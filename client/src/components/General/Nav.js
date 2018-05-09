@@ -18,12 +18,7 @@ class NavBar extends React.Component {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
-  componentWillReceiveProps(nextProps) {
-    // console.log('****** NEXT PROPS; ', nextProps, '*******')
-  }
-
   render() {
-    // console.log('******* RENDER PROPS: ', this.props, '*******')
     window.scrollTo(0, 0)
     const { categories, user, loggedIn, logout, activeOrder, cartCount, isAdmin } = this.props;
     const { toggle } = this;

@@ -7,9 +7,7 @@ const CheckAdmin = (Component) => {
     render() {
       const { isAdmin } = this.props
       return (
-        <div>
-          { isAdmin ? <Component {...this.props } /> : <NotAdmin /> }
-        </div>
+        <div>{ isAdmin ? <Component {...this.props } /> : <NotAdmin /> }</div>
       )
     }
   }

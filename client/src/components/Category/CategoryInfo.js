@@ -21,13 +21,6 @@ class CategoryInfo extends React.Component {
     const { category, deleteCategory, loggedIn, isAdmin, productMap, products } = this.props
     const { onChange } = this
     const { name } = this.state
-    // won't work, productMap only has IDs
-    // const matchingProducts = productMap.reduce((memo, product) => {
-    //   if (product.name.toLowerCase().match(name.toLowerCase())) {
-    //     return memo.concat(product)
-    //   }
-    //   return memo
-    // }, [])
     if (!category) return null;
     return (
       <div>

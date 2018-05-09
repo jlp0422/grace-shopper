@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { starRating } from '../../store/reusableFunctions';
 import UserNav from '../User/UserNav';
 
-const Reviews = (props) => {
-  const { product, products, productReviews, userReviews, users, page, user } = props;
-  if(page === 'product') {
+const Reviews = ({ product, products, productReviews, userReviews, users, page, user }) => {
+  // User Reviews on product page
+  if (page === 'product') {
     if (!product) return null
     return (
       <div>
@@ -32,7 +32,8 @@ const Reviews = (props) => {
     );
   }
 
-  if(page === 'user') {
+  // Reviews user has submitted
+  if (page === 'user') {
     return (
       <div>
         <UserNav user={user} />

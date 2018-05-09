@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 const Dropdown = ({items, title, name, handleChange, readOnly, card, shipping, billing, status }) => {
-  // console.log(shipping)
   return (
     <div>
     {
@@ -30,8 +29,6 @@ const mapState = ( { addresses, creditCards} , { items, title, name, handleChang
   const shipping = order && addresses.find(address => address.id === order.shippingId)
   const billing = order && addresses.find(address => address.id === order.billingId)
   const card = order && creditCards.find(card => card.id === order.creditCardId)
-  // console.log('addresses',userAddresses)
-  // console.log('cards', userCards)
   return {
     items,
     title,

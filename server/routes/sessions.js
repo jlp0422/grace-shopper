@@ -9,18 +9,6 @@ app.get('/:token', (req, res, next) => {
   User.exchangeTokenForUser(req.params.token)
     .then( user => res.send(user))
     .catch(next)
-  // try {
-  //   const id = jwt.decode(req.params.token, KEY).id
-  //   User.findById(id)
-  //     .then( user => {
-  //       if (user) return res.send(user)
-  //       const error = {status: 401}
-  //       throw error
-  //     })
-  // }
-  // catch (ex) {
-  //   throw ex
-  // }
 })
 
 app.post('/', (req, res, next) => {
@@ -53,23 +41,7 @@ app.post('/', (req, res, next) => {
     })
     .then(() => Order.getCartForUser(_user))
     .then(cart => {
-      _items.forEach(item => {
-        item.updateCartOnItem(cart, _cart)
-      })
+      _items.forEach(item => item.updateCartOnItem(cart, _cart))
     })
     .catch(next)
-  // const { username, password } = req.body
-  // const hash = bcrypt.hash(password, saltRounds)
-  // bcrypt.compare(password, hash)
-  // .then( res => console.log(res))
-  // User.findOne({ where: req.body })
-  //   .then( user => {
-  //     if (user) {
-  //       const token = jwt.encode({ id: user.id }, KEY)
-  //       return res.send(token)
-  //     }
-  //     const error = { status: 401 };
-  //     throw error
-  //   })
-  //   .catch(next)
 })

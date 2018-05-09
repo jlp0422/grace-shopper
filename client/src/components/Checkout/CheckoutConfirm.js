@@ -167,14 +167,6 @@ const mapState = ({ user, addresses, creditCards, orders, lineItems, products },
 const mapDispatch = (dispatch) => {
   return {
     onUpdate: (order) => dispatch(updateOrderOnServer(order)),
-    // onUpdateProducts: (items, products) => {
-    //   items.forEach(item => {
-    //     const product = products.find(product => product.id === item.productId)
-    //     const stock = product.quantity - item.quantity;
-    //     Object.assign(product, { quantity: stock })
-    //     dispatch(updateProductOnServer(product))
-    //   })
-    // },
     updateProduct: (product, page) => dispatch(updateProductOnServer(product, page))
   }
 }

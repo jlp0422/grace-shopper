@@ -10,7 +10,6 @@ export const getUserFromToken = (token) => {
     return axios.get(`/api/sessions/${token}`)
       .then( res => res.data)
       .then( user => dispatch(setUser(user)))
-      // .then( user => location.hash = `/users/${user.id}`)
   }
 }
 
@@ -20,6 +19,7 @@ export const attemptLogin = (credentials) => {
       .then( res => window.localStorage.setItem('token', res.data))
       .then( () => dispatch(getUserFromToken(window.localStorage.getItem('token'))))
       .then( () => location.hash = '/')
+      .catch(err => console.error(err))
   }
 }
 

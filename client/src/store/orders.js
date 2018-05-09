@@ -14,7 +14,7 @@ export const getOrdersFromServer = () => {
     return axios.get('/api/orders')
       .then(res => res.data)
       .then(orders => dispatch(getOrders(orders)))
-    // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   };
 };
 
@@ -25,7 +25,7 @@ export const deleteOrderFromServer = (id, page) => {
       .then(() => {
         if (page === 'admin') return location.hash = '/admin/orders'
       })
-    // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   };
 };
 
@@ -42,7 +42,7 @@ export const updateOrderOnServer = (order, page) => {
         if (page === 'admin') return location.hash = '/admin/orders'
         if(!!order.id) return location.hash = `/users/${order.userId}/checkout/${id}/thankyou`;
       })
-    // .catch(err) placeholder for error handling
+      .catch(err => console.error(err))
   }
 }
 

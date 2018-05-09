@@ -44,7 +44,7 @@ class LoginForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({})
+    this.setState({ errors: {} })
   }
 
   onChange(ev) {
@@ -221,7 +221,6 @@ class LoginForm extends React.Component {
             :
             <p className="margin-t-15">Don't have an account? <a href='#/signup'>Create one now &raquo;</a></p>
           }
-          {/*<div className="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>*/}
           </div>
         ) }
       </div>

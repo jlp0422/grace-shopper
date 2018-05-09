@@ -65,11 +65,6 @@ class App extends React.Component {
           <Route path='/' component={ Nav } />
           <div className="container">
             <div id="body-elements">
-              {/*<Route path='/users/:id' render={({ match, history }) => (
-                <UserNavAuth history={ history } id={ match.params.id * 1 } />
-              )} />
-              <Route path='/admin' component={CheckAdmin(AdminNav)} />
-              */}
               <Switch>
                 <Route exact path='/' component={ Home } />
                 {/* CATEGORY ROUTES */}
@@ -89,7 +84,6 @@ class App extends React.Component {
                 <Route exact path='/users/:id' render={({ match }) => (
                   <UserAccountAuth id={ match.params.id * 1} />
                 )} />
-                {/*<Route exact path='/users/:id/cart' component={ ActiveOrder } />*/}
                 <Route exact path='/cart' component={ ActiveOrder } />
                 <Route exact path='/users/:id/cart' component={ CheckAuth(ActiveOrder) } />
                 <Route exact path='/users/:id/orders' component={ CheckAuth(PastOrders) } />

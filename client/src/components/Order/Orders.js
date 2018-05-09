@@ -4,12 +4,6 @@ import { Link } from 'react-router-dom';
 import { sentenceCase } from '../../store/reusableFunctions';
 import AdminNav from '../Admin/AdminNav';
 
-/* THINGS TO ADD:
-- PAGINATION
-- SEARCH
-- FILTER FOR ORDER STATUS
-*/
-
 class Orders extends React.Component {
   constructor() {
     super()

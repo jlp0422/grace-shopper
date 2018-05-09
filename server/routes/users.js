@@ -27,9 +27,7 @@ app.post('/', (req, res, next) => {
         .then( _user => {
           user = _user
           Order.create({ status: 'cart', userId: _user.id })
-            .then(order => {
-              res.send(user);
-            })
+            .then(order => res.send(user))
           })
       })
       .catch(next)

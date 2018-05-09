@@ -1,10 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-/*
-NEED TO ADD CALL TO ROUTE TO CHECK VALIDITY OF TOKEN AND USER
-*/
-
 const CheckAuth = (Component) => {
   class AuthComponent extends React.Component {
     componentDidMount() {
@@ -22,9 +18,7 @@ const CheckAuth = (Component) => {
     render() {
       const { isAuthenticated } = this.props
       return (
-        <div>
-          { isAuthenticated ? <Component {...this.props} /> : null }
-        </div>
+        <div>{ isAuthenticated ? <Component {...this.props} /> : null }</div>
       )
     }
   }
