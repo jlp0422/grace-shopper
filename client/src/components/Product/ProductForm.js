@@ -103,7 +103,6 @@ class ProductForm extends Component {
 
   render() {
     const url = location.hash.slice(1)
-    console.log(url)
     const { name, price, quantity, description, imageUrl, categoryArray, errors } = this.state;
     const { categories } = this.props;
     const { handleChange, onSave } = this;
@@ -129,6 +128,7 @@ class ProductForm extends Component {
             name='price'
             value={price}
             onChange={handleChange}
+            step="0.01"
           />
           {
             errors.price && <div className='help-block'>
