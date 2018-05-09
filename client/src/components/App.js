@@ -2,7 +2,7 @@
 import React from 'react';
 import { HashRouter as Router, Switch, Link, Route } from 'react-router-dom';
 import { connect} from 'react-redux';
-import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer, getProductCategoriesFromServer, getCreditCardsFromServer, updateOrderOnServer } from '../store';
+import { getCategoriesFromServer, getLineItemsFromServer, getOrdersFromServer, getProductsFromServer, getUsersFromServer, getUserFromToken, getAddressesFromServer, getReviewsFromServer, getProductCategoriesFromServer, getCreditCardsFromServer, updateOrderOnServer, getPromosFromServer } from '../store';
 
 import CheckAuth from './General/CheckAuth';
 import CheckAdmin from './General/CheckAdmin';
@@ -32,10 +32,11 @@ import AdminUserForm from './Admin/AdminUserForm';
 import AdminOrderForm from './Admin/AdminOrderForm';
 import AdminNav from './Admin/AdminNav';
 import CreditCards from './User/CreditCards';
+import Promos from './Promo/Promos';
 
 class App extends React.Component {
   componentDidMount() {
-    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews, getProductCategories, getCreditCards, hasUser, createOrder } = this.props;
+    const { getCategories, getProducts, getUsers, getOrders, getUser, getLineItems, getAddresses, getReviews, getProductCategories, getCreditCards, hasUser, createOrder, getPromos } = this.props;
     getCategories();
     getProducts();
     getUsers();
@@ -46,6 +47,7 @@ class App extends React.Component {
     getReviews();
     getProductCategories();
     getCreditCards();
+    getPromos();
     !hasUser ? createOrder({ status: 'cart' }) : null
   }
 
@@ -119,6 +121,7 @@ class App extends React.Component {
                 <Route exact path ='/admin/orders/:id' render={({ match }) => (
                   <AdminOrderFormAdmin id={ match.params.id * 1 } />
                 )} />
+                <Route exact path='/promos' component={ Promos } />
 
                 {/* 404 PAGE */}
                 <Route path='/:id' component={ FourOhFour } />
@@ -150,6 +153,7 @@ const mapDispatch = (dispatch) => {
     getReviews: () => dispatch(getReviewsFromServer()),
     getProductCategories: () => dispatch(getProductCategoriesFromServer()),
     getCreditCards: () => dispatch(getCreditCardsFromServer()),
+    getPromos: () => dispatch(getPromosFromServer()),
     getUser: () => {
       if (window.localStorage.getItem('token')) {
         dispatch(getUserFromToken(window.localStorage.getItem('token')))

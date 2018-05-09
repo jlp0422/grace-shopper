@@ -50,3 +50,9 @@ export const GET_CREDIT_CARDS = 'GET_CREDIT_CARDS';
 export const CREATE_CREDIT_CARD = 'CREATE_CREDIT_CARD';
 export const UPDATE_CREDIT_CARD = 'UPDATE_CREDIT_CARD';
 export const DELETE_CREDIT_CARD = 'DELETE_CREDIT_CARD';
+
+/*********** PROMOS ***********/
+export const GET_PROMOS = 'GET_PROMOS';
+export const CREATE_PROMO = 'CREATE_PROMO';
+export const UPDATE_PROMO = 'UPDATE_PROMO';
+export const DELETE_PROMO = 'DELETE_PROMO';
