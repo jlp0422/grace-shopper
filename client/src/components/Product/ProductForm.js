@@ -102,6 +102,8 @@ class ProductForm extends Component {
   }
 
   render() {
+    const url = location.hash.slice(1)
+    console.log(url)
     const { name, price, quantity, description, imageUrl, categoryArray, errors } = this.state;
     const { categories } = this.props;
     const { handleChange, onSave } = this;
@@ -109,7 +111,7 @@ class ProductForm extends Component {
       <div>
         <form onSubmit={onSave}>
           <input
-            className={`form-control margin-b-10${ errors.name ? ' is-invalid' : null }`}
+            className={`form-control margin-b-10 ${ errors.name ? ' is-invalid' : null }`}
             placeholder='Product Name'
             name='name'
             value={name}
@@ -122,7 +124,7 @@ class ProductForm extends Component {
           }
           <input
             type='number'
-            className={`form-control margin-b-10${ errors.price ? ' is-invalid' : null }`}
+            className={`form-control margin-b-10 ${ errors.price ? ' is-invalid' : null }`}
             placeholder='Price'
             name='price'
             value={price}
@@ -135,7 +137,7 @@ class ProductForm extends Component {
           }
           <input
             type='number'
-            className={`form-control margin-b-10${ errors.quantity ? ' is-invalid' : null }`}
+            className={`form-control margin-b-10 ${ errors.quantity ? ' is-invalid' : null }`}
             placeholder='Quantity'
             name='quantity'
             value={quantity}
@@ -184,7 +186,7 @@ class ProductForm extends Component {
               </div>
             ))
           }
-          <button className='btn btn-primary margin-b-10'>Create</button>
+          <button className='btn btn-primary margin-b-10'>{ url.match('create') ? 'Create' : 'Save'}</button>
         </form>
       </div>
     );
