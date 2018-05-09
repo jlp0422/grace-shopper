@@ -64,7 +64,7 @@ class NavBar extends React.Component {
                       { isAdmin ? (
                         <div>
                           <DropdownItem divider />
-                          <DropdownItem onClick={() => location.hash = '/admin'}>Admin Tools</DropdownItem>
+                          <DropdownItem onClick={() => location.hash = '/admin/users'}>Admin Tools</DropdownItem>
                         </div>) : null }
                       <DropdownItem divider />
                       <DropdownItem onClick={logout}>Log out</DropdownItem>
