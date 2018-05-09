@@ -64,7 +64,7 @@ class NavBar extends React.Component {
                       { isAdmin ? (
                         <div>
                           <DropdownItem divider />
-                          <DropdownItem onClick={() => location.hash = '/admin'}>Admin Tools</DropdownItem>
+                          <DropdownItem onClick={() => location.hash = '/admin/users'}>Admin Tools</DropdownItem>
                         </div>) : null }
                       <DropdownItem divider />
                       <DropdownItem onClick={logout}>Log out</DropdownItem>
@@ -101,18 +101,14 @@ const mapState = ({ categories, user, orders, lineItems }) => {
   ) : (
     orders.find(order => !order.userId && order.status === 'cart')
   );
-  // console.log('active order: ', activeOrder)
   const activeOrderItems = activeOrder ? lineItems.filter(item => item.orderId === activeOrder.id) : [];
-  // console.log('active order items :', activeOrderItems)
   const cartCount = activeOrderItems.length ? activeOrderItems.reduce((memo, lineItem) => memo + lineItem.quantity, 0) : '0'
-  // console.log('cart count: ', cartCount)
   return { categories, user, loggedIn, activeOrder, cartCount, isAdmin };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     logout: () => dispatch(logout()),
-    // getOrders: () => dispatch(getOrdersFromServer())
   }
 }
 

@@ -7,14 +7,9 @@ import Dropdown from '../Checkout/Dropdown';
 import { sentenceCase } from '../../store/reusableFunctions';
 import AdminNav from './AdminNav';
 
-/*
-STILL NEEDS MORE WORK
- */
-
 class AdminOrderForm extends React.Component {
   constructor(props) {
     super(props)
-    // console.log(props)
     this.state = {
       shippingId: '',
       billingId: '',

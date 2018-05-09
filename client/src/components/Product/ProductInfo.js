@@ -40,7 +40,7 @@ const ProductInfo = (props) => {
       }
       {
         loggedIn && isAdmin ? (
-        <div>
+        <div className="margin-b-10">
           <ProductForm product={product} />
           <button onClick={() => deleteProduct(product.id)} className='btn btn-danger'>Delete Product</button>
         </div>
