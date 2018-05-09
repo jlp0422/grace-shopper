@@ -1,4 +1,5 @@
 const app = require('express').Router();
+const { EMAILPASS } = require('../../secret')
 module.exports = app;
 
 const nodemailer = require('nodemailer')
@@ -11,7 +12,7 @@ app.post('/', (req, res, next) => {
     port: 25,
     auth: {
       user: 'j2awidgets@gmail.com',
-      pass: 'J2AallTHEway'
+      pass: EMAILPASS
     },
     tls:{
       rejectAuthorized: false
