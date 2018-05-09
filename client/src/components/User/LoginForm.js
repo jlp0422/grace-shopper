@@ -81,7 +81,7 @@ class LoginForm extends React.Component {
   sendEmail(info) {
     return axios.post('/api/email', info)
       .then(res => res.data)
-      .catch(err => console.error(err))
+      .catch(err => console.log({ err }))
   }
 
   render() {
