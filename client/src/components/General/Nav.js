@@ -101,18 +101,14 @@ const mapState = ({ categories, user, orders, lineItems }) => {
   ) : (
     orders.find(order => !order.userId && order.status === 'cart')
   );
-  // console.log('active order: ', activeOrder)
   const activeOrderItems = activeOrder ? lineItems.filter(item => item.orderId === activeOrder.id) : [];
-  // console.log('active order items :', activeOrderItems)
   const cartCount = activeOrderItems.length ? activeOrderItems.reduce((memo, lineItem) => memo + lineItem.quantity, 0) : '0'
-  // console.log('cart count: ', cartCount)
   return { categories, user, loggedIn, activeOrder, cartCount, isAdmin };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     logout: () => dispatch(logout()),
-    // getOrders: () => dispatch(getOrdersFromServer())
   }
 }
 
