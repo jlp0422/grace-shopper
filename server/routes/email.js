@@ -5,7 +5,7 @@ module.exports = app;
 const nodemailer = require('nodemailer')
 
 app.post('/', (req, res, next) => {
-  const { email, htmlForEmail, orderId } = req.body;
+  const { email, htmlForCheckout, orderId } = req.body;
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     secure: false,
@@ -24,7 +24,7 @@ app.post('/', (req, res, next) => {
     to: email,
     subject: `J²A - Re: Your Purchase - Order#${orderId}`,
     // text: 'Insert text', // use this for a simple single line of text
-    html: htmlForEmail // or add html (as a string)
+    html: htmlForCheckout // or add html (as a string)
   }
 
   transporter.sendMail(HelperOptions, (error, info) => {

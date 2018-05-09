@@ -7,6 +7,7 @@ import Dropdown from './Dropdown';
 import UserNav from '../User/UserNav';
 import axios from 'axios';
 import { updateOrderOnServer, updateProductOnServer } from '../../store';
+import { getInfoForCheckoutEmail } from '../../store/emailMethods';
 
 class CheckoutConfirm extends Component {
   constructor(props) {
@@ -24,62 +25,62 @@ class CheckoutConfirm extends Component {
     this.setState({ [ev.target.name]: ev.target.value * 1 })
   }
 
-  getInfoForEmail() {
-    const { user, ownAddresses, ownCards, orderId, items, products } = this.props;
-    const { shippingId, billingId, creditCardId } = this.state;
-    const { email, firstName, lastName } = user;
-    const shipping = ownAddresses.find(address => address.id === shippingId)
-    const { street, city, state, zip } = shipping;
-    const card = ownCards.find(card => card.id === creditCardId)
-    const { ccType, ccNum } = card;
-    const totalPrice = items.reduce((memo, item) => {
-      const product = products.find(product => item.productId === product.id)
-      memo += (product.price * item.quantity)
-      return memo;
-    }, 0);
-    const productMap = items.reduce((memo, item) => {
-      const product = products.find(product => item.productId === product.id)
-      const id = product.id;
-      memo[id] = {}
-      memo[id].name = product.name;
-      memo[id].quantity = item.quantity
-      memo[id].price = product.price
-      return memo;
-    }, {})
-    const listItems = items.reduce((memo, item) => {
-      const product = productMap[item.productId];
-      memo += (`
-        <li>
-          Product #${item.productId}: (${product.quantity}) ${product.name} --- $${product.price}/each
-        </li>
-      `)
-      return memo
-    }, '')
-    const htmlForEmail = (`
-      <html>
-        <head><title>Thank You!</title></head>
-        <body>
-          <h2>Hello ${firstName}!</h2>
-          <p>Thank you so much for your purchase!</p>
-          <p>You ordered the following:</p>
-          <ul>${listItems}</ul>
-          <h4>Total Price: $${totalPrice}.00</h4>
-          <p>Credit Card: ${ccType} ****${ccNum.slice(-4)}</p>
-          <p><b>Order#${orderId}</b> will be shipped to:</p>
-          <p>
-            ${firstName} ${lastName}
-            <br />
-            ${street}
-            <br />
-            ${city}, ${state} ${zip}
-          </p>
-          <h3>Thank You from the Team at J²A Widgets!</h3>
-        </body>
-      </html>
-    `);
-    const info = { email, orderId, htmlForEmail };
-    return info;
-  }
+  // getInfoForEmail() {
+  //   const { user, ownAddresses, ownCards, orderId, items, products } = this.props;
+  //   const { shippingId, billingId, creditCardId } = this.state;
+  //   const { email, firstName, lastName } = user;
+  //   const shipping = ownAddresses.find(address => address.id === shippingId)
+  //   const { street, city, state, zip } = shipping;
+  //   const card = ownCards.find(card => card.id === creditCardId)
+  //   const { ccType, ccNum } = card;
+  //   const totalPrice = items.reduce((memo, item) => {
+  //     const product = products.find(product => item.productId === product.id)
+  //     memo += (product.price * item.quantity)
+  //     return memo;
+  //   }, 0);
+  //   const productMap = items.reduce((memo, item) => {
+  //     const product = products.find(product => item.productId === product.id)
+  //     const id = product.id;
+  //     memo[id] = {}
+  //     memo[id].name = product.name;
+  //     memo[id].quantity = item.quantity
+  //     memo[id].price = product.price
+  //     return memo;
+  //   }, {})
+  //   const listItems = items.reduce((memo, item) => {
+  //     const product = productMap[item.productId];
+  //     memo += (`
+  //       <li>
+  //         Product #${item.productId}: (${product.quantity}) ${product.name} --- $${product.price}/each
+  //       </li>
+  //     `)
+  //     return memo
+  //   }, '')
+  //   const htmlForEmail = (`
+  //     <html>
+  //       <head><title>Thank You!</title></head>
+  //       <body>
+  //         <h2>Hello ${firstName}!</h2>
+  //         <p>Thank you so much for your purchase!</p>
+  //         <p>You ordered the following:</p>
+  //         <ul>${listItems}</ul>
+  //         <h4>Total Price: $${totalPrice}.00</h4>
+  //         <p>Credit Card: ${ccType} ****${ccNum.slice(-4)}</p>
+  //         <p><b>Order#${orderId}</b> will be shipped to:</p>
+  //         <p>
+  //           ${firstName} ${lastName}
+  //           <br />
+  //           ${street}
+  //           <br />
+  //           ${city}, ${state} ${zip}
+  //         </p>
+  //         <h3>Thank You from the Team at J²A Widgets!</h3>
+  //       </body>
+  //     </html>
+  //   `);
+  //   const info = { email, orderId, htmlForEmail };
+  //   return info;
+  // }
 
   sendEmail(info) {
     return axios.post('/api/email', info)
@@ -89,7 +90,7 @@ class CheckoutConfirm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { onUpdate, updateProduct, orderId, user, items, products } = this.props;
+    const { onUpdate, updateProduct, orderId, user, ownCards, ownAddresses, items, products } = this.props;
     const { creditCardId, shippingId, billingId } = this.state;
     onUpdate({ id: orderId, status: 'processed', date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     items.map(item => {
@@ -99,7 +100,7 @@ class CheckoutConfirm extends Component {
       updateProduct(product, 'checkout')
     })
     onUpdate({ status: 'cart', userId: user.id });
-    this.sendEmail(this.getInfoForEmail());
+    this.sendEmail(getInfoForCheckoutEmail({ user, ownAddresses, ownCards, orderId, items, products, shippingId, billingId, creditCardId }));
   }
 
   render() {
