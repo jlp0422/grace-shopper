@@ -1,6 +1,4 @@
 export const getInfoForCheckoutEmail = (data) => {
-  // const { user, ownAddresses, ownCards, orderId, items, products } = this.props;
-  // const { shippingId, billingId, creditCardId } = this.state;
   const { user, ownAddresses, ownCards, orderId, items, products, shippingId, billingId, creditCardId } = data;
   const { email, firstName, lastName } = user;
   const shipping = ownAddresses.find(address => address.id === shippingId)
@@ -30,7 +28,8 @@ export const getInfoForCheckoutEmail = (data) => {
     `)
     return memo
   }, '')
-  const htmlForCheckout = (`
+  const subject = `J²A - Re: Your Purchase - Order#${orderId}`;
+  const htmlForEmail = (`
     <html>
       <head><title>Thank You!</title></head>
       <body>
@@ -52,6 +51,24 @@ export const getInfoForCheckoutEmail = (data) => {
       </body>
     </html>
   `);
-  const info = { email, orderId, htmlForCheckout };
+  const info = { email, subject, htmlForEmail };
+  return info;
+}
+
+export const getInfoForSignUpEmail = (data) => {
+  const { firstName, email } = data;
+  const subject = `Welcome to J²A Widgets, ${firstName}!`
+  const htmlForEmail = (`
+    <html>
+      <head><title>Welcome!</title></head>
+      <body>
+        <h2>Hello ${firstName}!</h2>
+        <p>Thank you for creating an account with J²A Widgets!</p>
+        <p>We look forward to providing you with all of the random items you may need!</p>
+        <h3>Thank You from the Team at J²A Widgets!</h3>
+      </body>
+    </html>
+  `);
+  const info = { email, subject, htmlForEmail };
   return info;
 }
