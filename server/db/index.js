@@ -9,6 +9,7 @@ const ProductCategory = require('./models/ProductCategory');
 const Address = require('./models/Address');
 const Review = require('./models/Review');
 const CreditCard = require('./models/CreditCard');
+const Promo = require('./models/Promo');
 
 Product.belongsToMany(Category, { through: ProductCategory });
 Category.belongsToMany(Product, { through: ProductCategory });
@@ -32,6 +33,9 @@ Order.belongsTo(CreditCard);
 Order.belongsTo(Address, { as: 'shipping' })
 Order.belongsTo(Address, { as: 'billing' })
 
+Order.belongsTo(Promo);
+Promo.hasMany(Order);
+
 const sync = () => {
   return conn.sync({ force: true });
 };
@@ -47,6 +51,7 @@ module.exports = {
     Address,
     Review,
     ProductCategory,
-    CreditCard
+    CreditCard,
+    Promo
   }
 };

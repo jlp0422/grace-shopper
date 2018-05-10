@@ -90,7 +90,7 @@ class CheckoutConfirm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { onUpdate, updateProduct, orderId, user, items, products } = this.props;
+    const { onUpdate, updateProduct, orderId, user, items, products, promos } = this.props;
     const { creditCardId, shippingId, billingId } = this.state;
     onUpdate({ id: orderId, status: 'processed', date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     items.map(item => {
@@ -99,6 +99,12 @@ class CheckoutConfirm extends Component {
       Object.assign(product, { quantity: stock })
       updateProduct(product, 'checkout')
     })
+    /*
+      const pro = promos.find(promo => pro.id === promo.id )
+      const quant = promo.quantity - 1;
+      Object.assign(promo, { quantity: quant })
+      updatePromo(promo, 'checkout')
+      */
     onUpdate({ status: 'cart', userId: user.id });
     this.sendEmail(this.getInfoForEmail());
   }
@@ -140,6 +146,7 @@ class CheckoutConfirm extends Component {
             </Link>
           <ActiveOrder checkout={ true }/>
           <br />
+            {/* PROMO INPUT */}
           <button className='btn btn-success' onClick={ onSave }>Submit Payment</button>
       </div>
     );
@@ -147,7 +154,7 @@ class CheckoutConfirm extends Component {
 
 }
 
-const mapState = ({ user, addresses, creditCards, orders, lineItems, products }, { orderId }) => {
+const mapState = ({ user, addresses, creditCards, orders, lineItems, products, promos }, { orderId }) => {
   const ownAddresses = addresses.filter(address => user.id === address.userId)
   const ownCards = creditCards.filter(card => card.userId === user.id)
   const items = lineItems.filter(item => item.orderId === orderId)
@@ -157,7 +164,8 @@ const mapState = ({ user, addresses, creditCards, orders, lineItems, products },
     ownCards,
     orderId,
     items,
-    products
+    products,
+    promos
   }
 };
 
@@ -165,6 +173,7 @@ const mapDispatch = (dispatch) => {
   return {
     onUpdate: (order) => dispatch(updateOrderOnServer(order)),
     updateProduct: (product, page) => dispatch(updateProductOnServer(product, page))
+   // updatePromo: (promo) => dispatch(updatePromoOnServer(promo))
   }
 }
 
