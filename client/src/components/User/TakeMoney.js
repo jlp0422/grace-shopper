@@ -2,9 +2,11 @@ import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 import axios from 'axios';
 
-import { PAYMENT_SERVER_URL, STRIPE_PUBLISHABLE } from '../../const';
+import PAYMENT_SERVER_URL from '../constants/server';
+import STRIPE_PUBLISHABLE from '../constants/stripe';
 
 const CURRENCY = 'US';
+
 const fromDollarToCent = (amount) => amount * 100;
 
 const successPayment = data => alert('Payment Successful');

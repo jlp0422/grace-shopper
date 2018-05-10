@@ -1,6 +1,9 @@
 const app = require('express').Router();
+const cors = require('cors');
 module.export = app;
 
-app.post('/save-stripe-token', (req, res, next) => {
+// app.use(cors());
+
+app.post('/', cors(), (req, res, next) => {
 
 });

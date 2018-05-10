@@ -51,7 +51,7 @@ class CheckoutConfirm extends Component {
 
   render() {
     const { handleChange, onSave } = this;
-    const { ownAddresses, ownCards, user, orderId } = this.props;
+    const { ownAddresses, ownCards, user, orderId, orderTotal } = this.props;
     return (
       <div>
         <UserNav user={ user } />
@@ -86,7 +86,12 @@ class CheckoutConfirm extends Component {
           <ActiveOrder checkout={ true }/>
           <br />
           <button className='btn btn-success' onClick={ onSave }>Submit Payment</button>
-          <TakeMoney />
+
+          <TakeMoney
+            name={`${user.firstName} ${user.lastName}`}
+            amount={orderTotal}
+          />
+
       </div>
     );
   }
@@ -97,13 +102,19 @@ const mapState = ({ user, addresses, creditCards, orders, lineItems, products },
   const ownAddresses = addresses.filter(address => user.id === address.userId)
   const ownCards = creditCards.filter(card => card.userId === user.id)
   const items = lineItems.filter(item => item.orderId === orderId)
+  const orderTotal = items.reduce((memo, item) => {
+    const product = products.find(product => product.id === item.productId)
+    memo += product.price * item.quantity;
+    return memo
+  }, 0)
   return {
     user,
     ownAddresses,
     ownCards,
     orderId,
     items,
-    products
+    products,
+    orderTotal
   }
 };
 
