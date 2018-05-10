@@ -1,31 +1,34 @@
 const app = require('express').Router();
 module.exports = app;
 
-const cors = require('cors');
-const bodyParser = require('body-parser');
+// const cors = require('cors');
+// const bodyParser = require('body-parser');
 
-const CORS_WHITELIST = require('../constants/frontend');
+// app.get('/', (req, res, next) => {
 
-const corsOptions = {
-  origin: (origin, callback) => {
-    (CORS_WHITELIST.indexOf(origin) !== -1)
-      ? callback(null, true)
-      : callback(new Error('Not allowed by CORS'))
-  }
-};
+// })
 
-const configureServer = (app) => {
-  app.use(cors(corsOptions));
-  app.use(bodyParser.json());
-};
+const stripe = require('stripe')('sk_test_i1WQiMWphkAwtflNJjhTFNr4')
 
-module.exports = configureServer;
+app.post('/', (req, res, next) => {
+  let amount = 500;
+  stripe.customers.create({
+    // amount: req.body.amount,
+    email: req.body.email,
+    card: req.body.token
+  })
+  .then(customer =>
+    stripe.charges.create({
+      amount,
+      description: "Sample Charge",
+      currency: "USD",
+      customer: customer.id
+    }))
+  .then(charge => res.send(charge))
+  .catch(err => {
+    console.log("Error:", err);
+    res.status(500).send({error: "Purchase Failed"});
+  });
+});
 
-
-
-
-
-
-// app.post('/', cors(), (req, res, next) => {
-
-// });
+// app.listen(3000);

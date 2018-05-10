@@ -30,6 +30,8 @@ app.post('/', (req, res, next) => {
   transporter.sendMail(HelperOptions, (error, info) => {
     if (error) return console.log(error)
   })
+  // .then(email => res.send(email))
+  // .then(() => res.sendStatus(200))
 });
 
 

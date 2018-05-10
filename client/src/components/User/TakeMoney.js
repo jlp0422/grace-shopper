@@ -5,7 +5,7 @@ import axios from 'axios';
 import PAYMENT_SERVER_URL from '../../constants/server';
 import STRIPE_PUBLISHABLE from '../../constants/stripe';
 
-const CURRENCY = 'US';
+const CURRENCY = 'USD';
 
 const fromDollarToCent = (amount) => amount * 100;
 
@@ -14,7 +14,8 @@ const errorPayment = data => alert('Payment Error');
 
 const onToken = (amount) => {
   return (token) => {
-    axios.post(PAYMENT_SERVER_URL, {
+    // axios.post(PAYMENT_SERVER_URL, {
+    axios.post('/stripe', {
       source: token.id,
       currency: CURRENCY,
       amount: fromDollarToCent(amount)
@@ -24,13 +25,16 @@ const onToken = (amount) => {
   }
 }
 
-const TakeMoney = ({ name, amount }) => {
+const TakeMoney = ({ name, amount, email }) => {
   return (
     <StripeCheckout
       name={name}
       amount={fromDollarToCent(amount)}
       token={onToken(amount)}
-      stripeKey={STRIPE_PUBLISHABLE}
+      // stripeKey={STRIPE_PUBLISHABLE}
+      stripeKey={'pk_test_L5BNU52HtQupz1A0XX4pzElV'}
+      email={email}
+      card={'4242424242424242'}
     />
   );
 

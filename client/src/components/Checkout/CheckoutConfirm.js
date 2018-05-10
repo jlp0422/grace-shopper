@@ -90,6 +90,7 @@ class CheckoutConfirm extends Component {
           <TakeMoney
             name={`${user.firstName} ${user.lastName}`}
             amount={orderTotal}
+            email={user.email}
           />
 
       </div>

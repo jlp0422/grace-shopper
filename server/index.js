@@ -13,6 +13,11 @@ app.use(require('body-parser').urlencoded({ extended: true }));
 app.use('/api', require('./routes'));
 app.use('/stripe', require('./routes/stripe'));
 
+const keyPublishable = process.env.PUBLISHABLE_KEY;
+const keySecret = process.env.SECRET_KEY;
+
+const stripe = require('stripe')(keySecret)
+
 app.get('/', (req, res, next) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
 
 app.use((err, req, res, next) => {
