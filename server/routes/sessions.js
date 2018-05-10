@@ -3,7 +3,8 @@ module.exports = app;
 const { User, Order, LineItem } = require('../db').models
 const jwt = require('jwt-simple');
 const bcrypt = require('bcrypt');
-const { KEY } = require('../../secret')
+const KEY = process.env.KEY
+// const { KEY } = require('../../secret')
 
 app.get('/:token', (req, res, next) => {
   User.exchangeTokenForUser(req.params.token)
