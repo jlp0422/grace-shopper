@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import LineItemForm from '../Product/LineItemForm.js';
 import moment from 'moment';
 import { sentenceCase } from '../../store/reusableFunctions';
+import PromoEnter from '../Promo/PromoEnter';
 
 const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => {
   const orderDate = order.date ? moment(order.date).format("ddd, MMMM Do YYYY") : null // h:MMA") : null
@@ -33,10 +34,13 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
           );
         })
       }
+      
       <div className='row'>
         <div className='col'>
           <h3 id="cart-total-price">Total Price: ${totalPrice}.00</h3>
         </div>
+        <br />
+        <PromoEnter />
         {
           !equal && page !== 'past' ? (
           <div className='col'>
