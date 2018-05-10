@@ -1,9 +1,31 @@
 const app = require('express').Router();
+module.exports = app;
+
 const cors = require('cors');
-module.export = app;
+const bodyParser = require('body-parser');
 
-// app.use(cors());
+const CORS_WHITELIST = require('../constants/frontend');
 
-app.post('/', cors(), (req, res, next) => {
+const corsOptions = {
+  origin: (origin, callback) => {
+    (CORS_WHITELIST.indexOf(origin) !== -1)
+      ? callback(null, true)
+      : callback(new Error('Not allowed by CORS'))
+  }
+};
 
-});
+const configureServer = (app) => {
+  app.use(cors(corsOptions));
+  app.use(bodyParser.json());
+};
+
+module.exports = configureServer;
+
+
+
+
+
+
+// app.post('/', cors(), (req, res, next) => {
+
+// });

@@ -11,6 +11,7 @@ app.use(require('body-parser').json());
 app.use(require('body-parser').urlencoded({ extended: true }));
 
 app.use('/api', require('./routes'));
+app.use('/stripe', require('./routes/stripe'));
 
 app.get('/', (req, res, next) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
 
