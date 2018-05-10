@@ -1,6 +1,6 @@
 const app = require('express').Router();
-const EMAILPASS = require('../../../secret').EMAILPASS || process.env.EMAILPASS
-const { EMAILPASS } = require('../../secret')
+const EMAILPASS = process.env.EMAILPASS
+// const { EMAILPASS } = require('../../secret')
 module.exports = app;
 
 const nodemailer = require('nodemailer')

@@ -3,7 +3,7 @@ const db = require('../../server/db')
 const { conn, Sequelize } = require('../../server/db/conn')
 const { User } = db.models;
 const jwt = require('jwt-simple');
-const KEY = require('../../../secret').KEY || process.env.KEY
+const KEY = process.env.KEY
 // const { KEY } = require('../../secret')
 
 const seedUsers = () => {
