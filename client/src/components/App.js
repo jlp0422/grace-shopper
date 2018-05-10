@@ -61,6 +61,7 @@ class App extends React.Component {
     const AdminUserFormAdmin = CheckAdmin(AdminUserForm)
     const AdminOrderFormAdmin = CheckAdmin(AdminOrderForm)
     const OrdersAdmin = CheckAdmin(Orders)
+    const PromosAdmin = CheckAdmin(Promos)
     return (
       <Router>
         <div>
@@ -121,7 +122,7 @@ class App extends React.Component {
                 <Route exact path ='/admin/orders/:id' render={({ match }) => (
                   <AdminOrderFormAdmin id={ match.params.id * 1 } />
                 )} />
-                <Route exact path='/promos' component={ Promos } />
+                <Route exact path='/admin/promos' component={ CheckAdmin(Promos) } />
 
                 {/* 404 PAGE */}
                 <Route path='/:id' component={ FourOhFour } />
