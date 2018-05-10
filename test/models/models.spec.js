@@ -83,7 +83,7 @@ describe('User Model', () => {
 describe('User.authenticate', () => {
   it('returns a token with correct creds', () => {
     const jeremy = userMap.jphilipson
-    const _token = jwt.encode({ id: jeremy.id }, KEY)
+    const _token = jwt.encode({ id: jeremy.id }, KEY || process.env.KEY)
     const creds = {
       username: jeremy.username,
       password: jeremy.password
@@ -105,7 +105,7 @@ describe('User.authenticate', () => {
 describe('User.exchangeTokenForUser', () => {
   it('returns a user with valid token', () => {
     const jeremy = userMap.jphilipson
-    const _token = jwt.encode({ id: jeremy.id }, KEY)
+    const _token = jwt.encode({ id: jeremy.id }, KEY || process.env.KEY)
     const creds = {
       username: jeremy.username,
       password: jeremy.password
@@ -121,7 +121,7 @@ describe('User.exchangeTokenForUser', () => {
       .catch(ex => expect(ex.status).to.equal(401))
   })
   it('throws an error with a good token, no user', () => {
-    const _token = jwt.encode({ id: 99 }, KEY)
+    const _token = jwt.encode({ id: 99 }, KEY || process.env.KEY)
     return User.exchangeTokenForUser(_token)
       .then(() => {
         throw 'no user'

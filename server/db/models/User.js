@@ -66,14 +66,14 @@ User.authenticate = function(credentials) {
     }
   })
   .then( user => {
-    if (user) return jwt.encode({id: user.id}, KEY)
+    if (user) return jwt.encode({id: user.id}, KEY || process.env.KEY)
     throw { status: 401 }
   })
 }
 
 User.exchangeTokenForUser = function(token) {
   try {
-    const userId = jwt.decode(token, KEY).id
+    const userId = jwt.decode(token, KEY || process.env.KEY).id
     return this.findById(userId)
       .then( user => {
         if(user) return user
