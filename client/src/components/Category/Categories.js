@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CategoryCard from './CategoryCard';
 import CategoryForm from './CategoryForm';
+import { Helmet } from 'react-helmet';
 
 class Categories extends React.Component {
   constructor() {
@@ -29,6 +30,7 @@ class Categories extends React.Component {
     }, [])
     return (
       <div>
+        <Helmet><title>Categories | J²A</title></Helmet>
         <h2>Categories</h2>
         { loggedIn && isAdmin ? (
             <Link to='/categories/create'>

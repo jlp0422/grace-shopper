@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteUserOnServer } from '../../store';
 import AdminNav from '../Admin/AdminNav';
+import { Helmet } from 'react-helmet';
 
 class Users extends React.Component {
   constructor() {
@@ -50,6 +51,7 @@ class Users extends React.Component {
     const lastPage = Math.ceil(matchingUsers.length / 15)
     return (
       <div>
+        <Helmet><title>Admin: All Users | J²A</title></Helmet>
         <AdminNav />
         <h2>Users</h2>
         <input onChange={ onChange } value={ name } className="form-control margin-b-10" placeholder="Search for a user" />

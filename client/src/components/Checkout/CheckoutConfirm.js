@@ -7,6 +7,7 @@ import Dropdown from './Dropdown';
 import UserNav from '../User/UserNav';
 import axios from 'axios';
 import { updateOrderOnServer, updateProductOnServer } from '../../store';
+import { Helmet } from 'react-helmet';
 
 class CheckoutConfirm extends Component {
   constructor(props) {
@@ -107,6 +108,7 @@ class CheckoutConfirm extends Component {
     const { ownAddresses, ownCards, user, orderId } = this.props;
     return (
       <div>
+        <Helmet><title>Checkout | J²A</title></Helmet>
         <UserNav user={ user } />
         <div className='row'>
           <div className='col'>
