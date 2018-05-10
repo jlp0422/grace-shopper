@@ -1,6 +1,7 @@
 const { conn, Sequelize } = require('../conn');
 const jwt = require('jwt-simple');
-const { KEY } = require('../../../secret');
+const KEY = require('../../../secret').KEY || process.env.KEY
+// const { KEY } = require('../../../secret');
 const { Order } = './Order'
 
 const User = conn.define('user', {
@@ -66,14 +67,14 @@ User.authenticate = function(credentials) {
     }
   })
   .then( user => {
-    if (user) return jwt.encode({id: user.id}, KEY || process.env.KEY)
+    if (user) return jwt.encode({id: user.id}, KEY)
     throw { status: 401 }
   })
 }
 
 User.exchangeTokenForUser = function(token) {
   try {
-    const userId = jwt.decode(token, KEY || process.env.KEY).id
+    const userId = jwt.decode(token, KEY).id
     return this.findById(userId)
       .then( user => {
         if(user) return user
