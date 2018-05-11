@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import CreditCardForm from '../Checkout/CreditCardForm';
 import { deleteCreditCardOnServer } from '../../store';
 import UserNav from '../User/UserNav';
+import { Helmet } from 'react-helmet';
 
 const CreditCards = ({ userCards, user, deleteCard }) => {
   return (
     <div>
+      {user.firstName && <Helmet><title>{user.firstName}'s Credit Cards | J²A</title></Helmet>}
       <UserNav user={ user } />
       <h2>Credit Cards</h2>
       <ul className='list-group'>

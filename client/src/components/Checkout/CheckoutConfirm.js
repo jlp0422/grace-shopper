@@ -8,6 +8,7 @@ import UserNav from '../User/UserNav';
 import axios from 'axios';
 import { updateOrderOnServer, updateProductOnServer } from '../../store';
 import { getInfoForCheckoutEmail } from '../../store/emailMethods';
+import { Helmet } from 'react-helmet';
 
 class CheckoutConfirm extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class CheckoutConfirm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { onUpdate, updateProduct, orderId, user, ownCards, ownAddresses, items, products } = this.props;
+    const { onUpdate, updateProduct, orderId, user, ownCards, ownAddresses, items, products, promos } = this.props;
     const { creditCardId, shippingId, billingId } = this.state;
     onUpdate({ id: orderId, status: 'processed', date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     items.map(item => {
@@ -42,6 +43,12 @@ class CheckoutConfirm extends Component {
       Object.assign(product, { quantity: stock })
       updateProduct(product, 'checkout')
     })
+    /*
+      const pro = promos.find(promo => pro.id === promo.id )
+      const quant = promo.quantity - 1;
+      Object.assign(promo, { quantity: quant })
+      updatePromo(promo, 'checkout')
+      */
     onUpdate({ status: 'cart', userId: user.id });
     this.sendEmail(getInfoForCheckoutEmail({ user, ownAddresses, ownCards, orderId, items, products, shippingId, billingId, creditCardId }));
   }
@@ -51,6 +58,7 @@ class CheckoutConfirm extends Component {
     const { ownAddresses, ownCards, user, orderId } = this.props;
     return (
       <div>
+        <Helmet><title>Checkout | J²A</title></Helmet>
         <UserNav user={ user } />
         <div className='row'>
           <div className='col'>
@@ -82,6 +90,7 @@ class CheckoutConfirm extends Component {
             </Link>
           <ActiveOrder checkout={ true }/>
           <br />
+            {/* PROMO INPUT */}
           <button className='btn btn-success' onClick={ onSave }>Submit Payment</button>
       </div>
     );
@@ -89,7 +98,7 @@ class CheckoutConfirm extends Component {
 
 }
 
-const mapState = ({ user, addresses, creditCards, orders, lineItems, products }, { orderId }) => {
+const mapState = ({ user, addresses, creditCards, orders, lineItems, products, promos }, { orderId }) => {
   const ownAddresses = addresses.filter(address => user.id === address.userId)
   const ownCards = creditCards.filter(card => card.userId === user.id)
   const items = lineItems.filter(item => item.orderId === orderId)
@@ -99,7 +108,8 @@ const mapState = ({ user, addresses, creditCards, orders, lineItems, products },
     ownCards,
     orderId,
     items,
-    products
+    products,
+    promos
   }
 };
 
@@ -107,6 +117,7 @@ const mapDispatch = (dispatch) => {
   return {
     onUpdate: (order) => dispatch(updateOrderOnServer(order)),
     updateProduct: (product, page) => dispatch(updateProductOnServer(product, page))
+   // updatePromo: (promo) => dispatch(updatePromoOnServer(promo))
   }
 }
 

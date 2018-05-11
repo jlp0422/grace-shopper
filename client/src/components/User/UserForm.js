@@ -2,7 +2,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { updateUserOnServer, updateLoggedUser } from '../../store';
-import UserNav from './UserNav'
+import UserNav from './UserNav';
+import { Helmet } from 'react-helmet';
 
 class UserForm extends React.Component {
   constructor(props) {
@@ -57,6 +58,7 @@ class UserForm extends React.Component {
     }
     return (
       <div>
+        {user.firstName && <Helmet><title>Edit {user.firstName}'s Account | J²A</title></Helmet>}
         <UserNav user={ user } />
         <h2>Edit Account</h2>
         {

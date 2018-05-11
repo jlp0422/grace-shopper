@@ -11,6 +11,7 @@ import addressesReducer from './addresses';
 import reviewsReducer from './reviews';
 import productCategoriesReducer from './productCategories';
 import creditCardsReducer from './creditCards';
+import promosReducer from './promos';
 
 const reducer = combineReducers({
   categories: categoriesReducer,
@@ -22,7 +23,8 @@ const reducer = combineReducers({
   addresses: addressesReducer,
   reviews: reviewsReducer,
   productCategories: productCategoriesReducer,
-  creditCards: creditCardsReducer
+  creditCards: creditCardsReducer,
+  promos: promosReducer
 });
 
 const store = createStore(reducer, applyMiddleware(thunk))//, logger));
@@ -39,3 +41,4 @@ export * from './addresses';
 export * from './reviews';
 export * from './productCategories';
 export * from './creditCards';
+export * from './promos';

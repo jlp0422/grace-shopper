@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { starRating } from '../../store/reusableFunctions';
 import UserNav from '../User/UserNav';
+import { Helmet } from 'react-helmet';
 
 const Reviews = ({ product, products, productReviews, userReviews, users, page, user }) => {
   // User Reviews on product page
@@ -10,6 +11,7 @@ const Reviews = ({ product, products, productReviews, userReviews, users, page, 
     if (!product) return null
     return (
       <div>
+        <Helmet><title>{product.name} Reviews | J²A</title></Helmet>
         <Link to={`/products/${product.id}`}><h3>{product.name}: Reviews</h3></Link>
         {
           productReviews.map(review => {
@@ -34,8 +36,10 @@ const Reviews = ({ product, products, productReviews, userReviews, users, page, 
 
   // Reviews user has submitted
   if (page === 'user') {
+    console.log(user)
     return (
       <div>
+        {user.firstName && <Helmet><title>{user.firstName}'s Reviews | J²A</title></Helmet> }
         <UserNav user={user} />
         <h2>Reviews</h2>
         {
