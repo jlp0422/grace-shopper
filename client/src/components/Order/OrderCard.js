@@ -34,7 +34,6 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal, promo
           );
         })
       }
-
       <div className='row'>
         <div className='col'>
           <h3 id="cart-total-price">Total Price: ${finalPrice}.00</h3>
@@ -47,15 +46,6 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal, promo
             <div>
               <br />
               { order.status === 'cart' && <PromoEnter order={order}/> }
-
-              {
-                // !!promoPrice && order.status === 'cart' ? (
-                //   <div className='col'>
-                //     <h3 id="cart-total-price">Promo Applied: ${promo.value}.00</h3>
-                //     <h3 id="cart-total-price">New Total Price: ${promoPrice}.00</h3>
-                //   </div>
-                // ) : null
-              }
               </div>
             )
         }
