@@ -13,7 +13,7 @@ class StripePayment extends Component {
       source: token.id,
       amount: 500 * 100,
       currency: 'USD',
-      email: 'jgrubard@gmail.com'
+      receipt_email: 'jgrubard@gmail.com'
     })
     .then(res => res.data)
   }
