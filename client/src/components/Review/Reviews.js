@@ -36,7 +36,6 @@ const Reviews = ({ product, products, productReviews, userReviews, users, page, 
 
   // Reviews user has submitted
   if (page === 'user') {
-    console.log(user)
     return (
       <div>
         {user.firstName && <Helmet><title>{user.firstName}'s Reviews | J²A</title></Helmet> }

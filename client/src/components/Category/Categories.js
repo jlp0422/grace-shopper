@@ -37,8 +37,11 @@ class Categories extends React.Component {
               <button className="btn btn-primary">Create new category</button>
             </Link>
           ) : null }
-          <div style={{ margin: '10px 0px 15px' }}>
+          <div className="input-group mb-3 form-margin">
             <input placeholder={'Search for a category'} value={ name } onChange={ onChange } className="form-control" />
+            <div className="input-group-append">
+              <button onClick={() => this.setState({ name: '' })} className="input-group-text">Clear search</button>
+            </div>
           </div>
         <ul className='list-group'>
           {

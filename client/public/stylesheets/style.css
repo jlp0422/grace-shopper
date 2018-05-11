@@ -24,6 +24,11 @@
   width: auto;
 }
 
+.form-margin {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
 /* LOG IN AND SIGNUP FORM */
 .login-form {
   margin: 0 auto;
