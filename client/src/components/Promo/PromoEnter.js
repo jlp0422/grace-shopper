@@ -3,25 +3,13 @@ import { connect } from 'react-redux';
 import { updateOrderOnServer} from '../../store';
 
 class PromoEnter extends Component {
-  constructor(/*props*/) {
-    super(/*props*/);
-    // const { promo } = props;
+  constructor() {
+    super();
     this.state = {
       name: ''
-      // id: promo ? promo.id : '',
-      // name: promo ? promo.name : '',
-      // isEditing: false,
-      // errors: {}
     }
     this.handleChange = this.handleChange.bind(this);
     this.onApplyPromo = this.onApplyPromo.bind(this);
-    // this.validators = {
-    //   name: (value) => {
-    //     if (!value) {
-    //       return 'That is not a valid Promo Code'
-    //     }
-    //   }
-    // }
   }
 
   handleChange(ev) {
@@ -33,21 +21,22 @@ class PromoEnter extends Component {
 
   onApplyPromo(ev) {
     ev.preventDefault();
-    const { promos, order } = this.props;
+    const { promos, order, updateOrder } = this.props;
     const { id, status, date, userId, creditCardId, shippingId, billingId, promoId } = order;
     const { name } = this.state;
     const promo = promos.find(promo => promo.name === name)
     if(promo) {
-      this.props.updateOrder({ id, promoId: promo.id }, 'checkout')
+      updateOrder({ id, status, date, userId, creditCardId, shippingId, billingId, promoId: promo.id }, 'checkout')
     }
-    this.setState({ name: '' });
+    // this.setState({ name: '' });
   }
 
   render() {
-    const { isEditing, name } = this.state;
+    const { name } = this.state;
     const { order } = this.props;
     const { handleChange, onApplyPromo } = this;
     console.log(this.state)
+    if(!order.id) return null
     return (
       <div>
         <form onSubmit={onApplyPromo}>
@@ -64,9 +53,7 @@ class PromoEnter extends Component {
       </div>
     )
   }
-
 }
-
 
 const mapState = ({ promos }, { order }) => {
   return { promos, order }
@@ -74,8 +61,7 @@ const mapState = ({ promos }, { order }) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    // updatePromo: (promo) => dispatch(updatePromoOnServer(promo))
-      updateOrder: (order, page) => dispatch(updateOrderOnServer(order, page))
+    updateOrder: (order, page) => dispatch(updateOrderOnServer(order, page))
   }
 }
 
