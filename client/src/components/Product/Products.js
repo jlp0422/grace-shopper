@@ -59,9 +59,9 @@ class Products extends React.Component {
         ) : null }
         <div className="input-group mb-3 form-margin">
           <input placeholder={'Search for a product'} value={name} onChange={onChange} className="form-control" />
-          <div className="input-group-append">
-            <button onClick={() => this.setState({ name: '' })} className="input-group-text">Clear search</button>
-          </div>
+          <span className="input-group-append input-group-addon-btn bg-white">
+            <button onClick={() => this.setState({ name: '' })} className="fa fa-search" type="submit">Clear search</button>
+          </span>
         </div>
         <ul className='list-group'>
           {
