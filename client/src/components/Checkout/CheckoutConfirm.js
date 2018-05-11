@@ -5,6 +5,7 @@ import Addresses from '../Address/Addresses';
 import ActiveOrder from '../Order/ActiveOrder';
 import Dropdown from './Dropdown';
 import UserNav from '../User/UserNav';
+import StripePayment from './StripePayment';
 import axios from 'axios';
 import { updateOrderOnServer, updateProductOnServer } from '../../store';
 import { getInfoForCheckoutEmail } from '../../store/emailMethods';
@@ -83,6 +84,9 @@ class CheckoutConfirm extends Component {
           <ActiveOrder checkout={ true }/>
           <br />
           <button className='btn btn-success' onClick={ onSave }>Submit Payment</button>
+
+          <StripePayment />
+
       </div>
     );
   }
