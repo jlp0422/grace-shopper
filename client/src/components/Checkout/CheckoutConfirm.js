@@ -34,7 +34,7 @@ class CheckoutConfirm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { onUpdate, updateProduct, orderId, user, ownCards, ownAddresses, items, products } = this.props;
+    const { onUpdate, updateProduct, orderId, user, ownCards, ownAddresses, items, products, finalPrice } = this.props;
     const { creditCardId, shippingId, billingId } = this.state;
     onUpdate({ id: orderId, status: 'processed', date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     items.map(item => {
@@ -49,7 +49,7 @@ class CheckoutConfirm extends Component {
 
   render() {
     const { handleChange, onSave } = this;
-    const { ownAddresses, ownCards, user, orderId } = this.props;
+    const { ownAddresses, ownCards, user, orderId, totalPrice } = this.props;
     return (
       <div>
         <UserNav user={ user } />
@@ -85,7 +85,7 @@ class CheckoutConfirm extends Component {
           <br />
           <button className='btn btn-success' onClick={ onSave }>Submit Payment</button>
 
-          <StripePayment />
+          <StripePayment amount={totalPrice} name={`${user.firstName} ${user.lastName}`} email={user.email} orderId={orderId}/>
 
       </div>
     );
@@ -93,17 +93,27 @@ class CheckoutConfirm extends Component {
 
 }
 
-const mapState = ({ user, addresses, creditCards, orders, lineItems, products }, { orderId }) => {
+const mapState = ({ user, addresses, creditCards, orders, lineItems, products, promos }, { orderId }) => {
   const ownAddresses = addresses.filter(address => user.id === address.userId)
   const ownCards = creditCards.filter(card => card.userId === user.id)
   const items = lineItems.filter(item => item.orderId === orderId)
+  // const promo = promos.find(promo => promo.id === order.promoId)
+  const totalPrice = items.reduce((memo, item) => {
+    const product = products.find(product => product.id === item.productId)
+    memo += product.price * item.quantity;
+    return memo;
+  }, 0)
+  // const promoPrice = promo && total.price - promo.value;
+  // const finalPrice = promoPrice ? promoPrice : totalPrice;
   return {
     user,
     ownAddresses,
     ownCards,
     orderId,
     items,
-    products
+    products,
+    totalPrice,
+    // finalPrice
   }
 };
 
