@@ -23,13 +23,15 @@ app.post('/', (req, res, next) => {
     from: '"J²A Widgets" <j2awidgets@gmail.com>',
     to: email,
     subject: subject,
-    // text: 'Insert text', // use this for a simple single line of text
-    html: htmlForEmail // or add html (as a string)
+    html: htmlForEmail
   }
 
   transporter.sendMail(HelperOptions, (error, info) => {
     if (error) return console.log(error)
   })
+
+  res.sendStatus(200);
+
 });
 
 
