@@ -6,7 +6,7 @@ import moment from 'moment';
 import { sentenceCase } from '../../store/reusableFunctions';
 import PromoEnter from '../Promo/PromoEnter';
 
-const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => {
+const OrderCard = ({ orderItems, order, totalPrice, products, page, equal, promo, promoPrice }) => {
   const orderDate = order.date ? moment(order.date).format("ddd, MMMM Do YYYY") : null // h:MMA") : null
   return (
     <div>
@@ -43,9 +43,16 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
           !equal && page !== 'past' ? (
             null
           ) : (
-            <div> 
+            <div>
               <br />
-              <PromoEnter /> 
+              <PromoEnter order={order}/>
+              { !!promoPrice ? (
+                  <div className='col'>
+                    <h3 id="cart-total-price">Promo Applied: ${promo.value}.00</h3>
+                    <h3 id="cart-total-price">New Total Price: ${promoPrice}.00</h3>
+                  </div>
+                ) : null
+              }
               </div>
             )
         }
@@ -68,7 +75,7 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
   )
 }
 
-const mapState = ({ lineItems, products, user }, { order, page, location }) => {
+const mapState = ({ lineItems, products, user, promos }, { order, page, location }) => {
   const path = location.pathname;
   const currentPath = `/users/${user.id}/checkout/${order.id}`;
   const equal = path === currentPath;
@@ -78,7 +85,10 @@ const mapState = ({ lineItems, products, user }, { order, page, location }) => {
     memo += ((product ? product.price : 0) * 1) * item.quantity;
     return memo;
   }, 0)
-  return { orderItems, order, totalPrice, products, page, equal }
+  const promo = !!order.promoId && promos.find(promo => promo.id === order.promoId);
+  const promoPrice = !!promo.id && totalPrice - promo.value;
+
+  return { orderItems, order, totalPrice, products, page, equal, promo, promoPrice }
 }
 
 export default withRouter(connect(mapState)(OrderCard))

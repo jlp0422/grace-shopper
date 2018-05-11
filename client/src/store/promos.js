@@ -18,7 +18,7 @@ export const getPromosFromServer = () => {
   };
 };
 
-export const updatePromoOnServer = (promo) => {
+export const updatePromoOnServer = (promo, page) => {
   const { id } = promo;
   const method = id ? 'put' : 'post';
   const url = id ? `/api/promos/${id}` : '/api/promos';
@@ -27,7 +27,9 @@ export const updatePromoOnServer = (promo) => {
     return axios[method](url, promo)
       .then(res => res.data)
       .then(pro => dispatch(action(pro)))
-      .then(() => location.hash = '/promos')
+      // .then(() => {
+        // if (page) location.hash = '/admin/promos'
+      // })
       .catch(err => console.error(err))
   };
 };
@@ -36,7 +38,7 @@ export const deletePromoOnServer = (id) => {
   return (dispatch) => {
     return axios.delete(`/api/promos/${id}`)
       .then(() => dispatch(deletePromo(id)))
-      .then(() => location.hash = '/promos')
+      .then(() => location.hash = '/admin/promos')
       .catch(err => console.error(err))
   };
 };

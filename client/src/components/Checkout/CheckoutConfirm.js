@@ -6,7 +6,7 @@ import ActiveOrder from '../Order/ActiveOrder';
 import Dropdown from './Dropdown';
 import UserNav from '../User/UserNav';
 import axios from 'axios';
-import { updateOrderOnServer, updateProductOnServer } from '../../store';
+import { updateOrderOnServer, updateProductOnServer, updatePromoOnServer } from '../../store';
 import { Helmet } from 'react-helmet';
 
 class CheckoutConfirm extends Component {
@@ -90,7 +90,7 @@ class CheckoutConfirm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { onUpdate, updateProduct, orderId, user, items, products, promos } = this.props;
+    const { onUpdate, updateProduct, updatePromo, orderId, user, items, products, promos, order } = this.props;
     const { creditCardId, shippingId, billingId } = this.state;
     onUpdate({ id: orderId, status: 'processed', date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     items.map(item => {
@@ -99,12 +99,10 @@ class CheckoutConfirm extends Component {
       Object.assign(product, { quantity: stock })
       updateProduct(product, 'checkout')
     })
-    /*
-      const pro = promos.find(promo => pro.id === promo.id )
-      const quant = promo.quantity - 1;
-      Object.assign(promo, { quantity: quant })
-      updatePromo(promo, 'checkout')
-      */
+    const promo = promos.find(promo => promo.id === order.promoId )
+    const quant = promo.quantity - 1;
+    Object.assign(promo, { quantity: quant })
+    updatePromo(promo, 'no-refresh')
     onUpdate({ status: 'cart', userId: user.id });
     this.sendEmail(this.getInfoForEmail());
   }
@@ -158,6 +156,7 @@ const mapState = ({ user, addresses, creditCards, orders, lineItems, products, p
   const ownAddresses = addresses.filter(address => user.id === address.userId)
   const ownCards = creditCards.filter(card => card.userId === user.id)
   const items = lineItems.filter(item => item.orderId === orderId)
+  const order = orders.find(order => order.id === orderId);
   return {
     user,
     ownAddresses,
@@ -165,15 +164,16 @@ const mapState = ({ user, addresses, creditCards, orders, lineItems, products, p
     orderId,
     items,
     products,
-    promos
+    promos,
+    order
   }
 };
 
 const mapDispatch = (dispatch) => {
   return {
     onUpdate: (order) => dispatch(updateOrderOnServer(order)),
-    updateProduct: (product, page) => dispatch(updateProductOnServer(product, page))
-   // updatePromo: (promo) => dispatch(updatePromoOnServer(promo))
+    updateProduct: (product, page) => dispatch(updateProductOnServer(product, page)),
+    updatePromo: (promo, page) => dispatch(updatePromoOnServer(promo, page))
   }
 }
 
