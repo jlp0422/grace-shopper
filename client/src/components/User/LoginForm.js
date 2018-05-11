@@ -3,9 +3,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { attemptLogin, updateUserOnServer, getLineItemsFromServer } from '../../store'
+import { getInfoForSignUpEmail } from '../../store/emailMethods';
 import { Input, Button, Progress } from 'mdbreact';
 import { emailRegex, passwordRegexMedium, passwordRegexStrong } from '../../const'
 import FacebookLogin from './FacebookLogin';
+import axios from 'axios';
 import { Helmet } from 'react-helmet';
 
 class LoginForm extends React.Component {
@@ -70,10 +72,17 @@ class LoginForm extends React.Component {
       this.setState({ errors })
       if (Object.keys(errors).length) return;
       attemptSignup({ firstName, lastName, email, username, password}, 'signup')
+      this.sendEmail(getInfoForSignUpEmail({ firstName, email }))
     }
     else {
       attemptLogin({ username, password })
     }
+  }
+
+  sendEmail(info) {
+    return axios.post('/api/email', info)
+      .then(res => res.data)
+      .catch(err => console.log({ err }))
   }
 
   render() {
