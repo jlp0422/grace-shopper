@@ -6,7 +6,7 @@ import moment from 'moment';
 import { sentenceCase } from '../../store/reusableFunctions';
 import PromoEnter from '../Promo/PromoEnter';
 
-const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => {
+const OrderCard = ({ orderItems, order, totalPrice, products, page, equal, promo, promoPrice, finalPrice }) => {
   const orderDate = order.date ? moment(order.date).format("ddd, MMMM Do YYYY") : null // h:MMA") : null
   return (
     <div>
@@ -34,18 +34,18 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
           );
         })
       }
-
       <div className='row'>
         <div className='col'>
-          <h3 id="cart-total-price">Total Price: ${totalPrice}.00</h3>
+          <h3 id="cart-total-price">Total Price: ${finalPrice}.00</h3>
+          { promo && <p>Original Price: ${totalPrice}.00. Promo Code {promo.name} saved you ${promo.value}.00!</p> }
         </div>
         {
           !equal && page !== 'past' ? (
             null
           ) : (
-            <div> 
+            <div>
               <br />
-              <PromoEnter /> 
+              { order.status === 'cart' && <PromoEnter order={order}/> }
               </div>
             )
         }
@@ -57,8 +57,7 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
                   <button disabled={true} className="btn btn-success margin-t-15">Checkout</button>
                 ) : (
                     <Link to={`/users/${order.userId}/checkout/${order.id}`}><button className="btn btn-success margin-t-15">Checkout</button></Link>
-
-                  )
+                )
               }
             </div>
           ) : null
@@ -68,7 +67,7 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal }) => 
   )
 }
 
-const mapState = ({ lineItems, products, user }, { order, page, location }) => {
+const mapState = ({ lineItems, products, user, promos }, { order, page, location }) => {
   const path = location.pathname;
   const currentPath = `/users/${user.id}/checkout/${order.id}`;
   const equal = path === currentPath;
@@ -78,7 +77,11 @@ const mapState = ({ lineItems, products, user }, { order, page, location }) => {
     memo += ((product ? product.price : 0) * 1) * item.quantity;
     return memo;
   }, 0)
-  return { orderItems, order, totalPrice, products, page, equal }
+  const promo = !!order.promoId && promos.find(promo => promo.id === order.promoId);
+  const promoPrice = promo && totalPrice - promo.value;
+  const finalPrice = promo ? promoPrice : totalPrice;
+
+  return { orderItems, order, totalPrice, products, page, equal, promo, promoPrice, finalPrice }
 }
 
 export default withRouter(connect(mapState)(OrderCard))
