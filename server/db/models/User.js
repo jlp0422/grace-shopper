@@ -1,6 +1,6 @@
 const { conn, Sequelize } = require('../conn');
 const jwt = require('jwt-simple');
-const { KEY } = require('../../../secret');
+const KEY = process.env.KEY
 const { Order } = './Order'
 
 const User = conn.define('user', {

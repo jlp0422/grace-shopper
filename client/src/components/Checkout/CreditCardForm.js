@@ -75,11 +75,11 @@ class CreditCardForm extends Component {
 
   render() {
     const fields = {
-      ccType: 'Credit Card Type',
       ccNum: 'Credit Card Number',
       ccExp: 'Expiration MM/YYYY',
       ccSec: 'Security Code',
     }
+    const cardTypes = ['VISA', 'DISCOVER', 'MASTERCARD', 'AMEX'];
     const { onSave, onChange, removeCard } = this;
     const { userId } = this.props;
     const { ccType, ccNum, ccExp, ccSec, errors } = this.state;
@@ -87,6 +87,17 @@ class CreditCardForm extends Component {
       <div>
         <h4>Add New Card</h4>
         <div>
+          <select className={`form-control margin-b-10${errors.ccType ? ' is-invalid' : null }`} onChange={onChange} name='ccType'>
+            <option>Select Card Type</option>
+            {
+              cardTypes.map((type, index) => (
+                <option key={index} value={type}>
+                  {type}
+                </option>
+              ))
+            }
+          </select>
+          { errors.ccType && <div className='help-block'>{errors.ccType}</div>}
           {
             Object.keys(fields).map(field => (
               <div key={field}>
