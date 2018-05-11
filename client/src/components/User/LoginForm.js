@@ -29,23 +29,34 @@ class LoginForm extends React.Component {
         if (!value) return 'Last name is required!'
       },
       email: (value) => {
-        if (!value) return 'Email is required'
+        if (!value) return 'Email is required!'
         if (this.props.emails.includes(value)) return 'Email already exists!'
         if (!emailRegex.test(value)) return 'Email is not valid'
       },
-      username: (value) => {
-        if (!value) return 'Username is required'
-        if (this.props.usernames.includes(value)) return 'Username already exists!'
+      username: (value, route) => {
+        if (route) {
+          if (!value) return 'Please enter your username'
+          if (!this.props.usernames.includes(value)) return 'Username does not exist!'
+        }
+        else {
+          if (!value) return 'Username is required!'
+          if (this.props.usernames.includes(value)) return 'Username already exists!'
+        }
       },
-      password: (value) => {
-        if (!value) return 'Password is required'
-        if (value.length < 4) return 'Password must be at least 4 characters'
+      password: (value, route) => {
+        if (route) {
+          if (!value) return 'Please enter your password'
+        }
+        else {
+          if (!value) return 'Password is required!'
+          if (value.length < 4) return 'Password must be at least 4 characters'
+        }
       }
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ errors: {} })
+    this.setState({ firstName: '', lastName: '', email: '', username: '', password: '', errors: {} })
   }
 
   onChange(ev) {
@@ -72,6 +83,15 @@ class LoginForm extends React.Component {
       attemptSignup({ firstName, lastName, email, username, password}, 'signup')
     }
     else {
+      const errors = ['username', 'password'].reduce((memo, key) => {
+        const validator = this.validators[key]
+        const value = this.state[key]
+        const error = validator(value, 'login')
+        if (error) memo[key] = error
+        return memo
+      }, {})
+      this.setState({ errors })
+      if (Object.keys(errors).length) return;
       attemptLogin({ username, password })
     }
   }
@@ -84,7 +104,7 @@ class LoginForm extends React.Component {
     const passwordTestStrong = passwordRegexStrong.test(password)
     const passwordTestMedium = passwordRegexMedium.test(password)
     return (
-      <div className="login-form">
+      <div className="login-form margin-b-10">
         {url === '/signup' ?
           <Helmet><title>Sign up | J²A</title></Helmet>
           :
@@ -105,7 +125,8 @@ class LoginForm extends React.Component {
             url === '/signup' ? (
               <div>
                 <div className="form-group">
-                  <Input
+                  <label className="font-weight-bold">First Name</label>
+                  <input
                     label="First name"
                     name="firstName"
                     className="form-control"
@@ -119,7 +140,8 @@ class LoginForm extends React.Component {
                   }
                 </div>
                 <div className="form-group">
-                  <Input
+                  <label className="font-weight-bold">Last Name</label>
+                  <input
                     label="Last name"
                     name="lastName"
                     className="form-control"
@@ -133,7 +155,8 @@ class LoginForm extends React.Component {
                   }
                 </div>
                 <div className="form-group">
-                  <Input
+                  <label className="font-weight-bold">Email Address</label>
+                  <input
                     label="Email address"
                     name="email"
                     className="form-control"
@@ -147,7 +170,8 @@ class LoginForm extends React.Component {
                   }
                 </div>
                 <div className="form-group">
-                  <Input
+                  <label className="font-weight-bold">Username</label>
+                  <input
                     label='Username'
                     name="username"
                     className="form-control"
@@ -160,7 +184,8 @@ class LoginForm extends React.Component {
                   }
                 </div>
                 <div className="form-group">
-                  <Input
+                  <label className="font-weight-bold">Password</label>
+                  <input
                     label='Password'
                     name="password"
                     className="form-control"
@@ -191,9 +216,9 @@ class LoginForm extends React.Component {
               </div>
             ) : (
               <div>
-              {/* <label className="font-weight-bold">Username</label> */}
+              <label className="font-weight-bold">Username</label>
                 <div className="form-group">
-                  <Input
+                  <input
                     label='Username'
                     name="username"
                     className="form-control"
@@ -206,8 +231,8 @@ class LoginForm extends React.Component {
                   }
                 </div>
 
-              {/*  <label className="font-weight-bold">Password</label> */}
-                <Input
+              <label className="font-weight-bold">Password</label>
+                <input
                   label='Password'
                   name="password"
                   className="form-control"
@@ -215,6 +240,10 @@ class LoginForm extends React.Component {
                   value={password}
                   type="password"
                 />
+                {errors.password && <div className="help-block">
+                  {errors.password}
+                </div>
+                }
               </div>
             )
           }
