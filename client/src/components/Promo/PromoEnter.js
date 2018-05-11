@@ -28,7 +28,7 @@ class PromoEnter extends Component {
     if(promo) {
       updateOrder({ id, status, date, userId, creditCardId, shippingId, billingId, promoId: promo.id }, 'checkout')
     }
-    // this.setState({ name: '' });
+    this.setState({ name: '' });
   }
 
   render() {
