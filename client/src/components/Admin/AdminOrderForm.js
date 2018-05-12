@@ -6,6 +6,7 @@ import AddressForm from '../Address/AddressForm';
 import Dropdown from '../Checkout/Dropdown';
 import { sentenceCase } from '../../store/reusableFunctions';
 import AdminNav from './AdminNav';
+import { Helmet } from 'react-helmet';
 
 class AdminOrderForm extends React.Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class AdminOrderForm extends React.Component {
     if (!order) return null
     return (
       <div>
+        {order.id && <Helmet><title>Admin: View Order | J²A</title></Helmet> }
         <AdminNav />
         <h3>Order #{order.id}</h3>
         <h3>User: {`${user.firstName} ${user.lastName}`}</h3>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import { updateCategoryOnServer } from '../../store';
+import { Helmet } from 'react-helmet';
 
 class CategoryForm extends Component {
   constructor(props) {
@@ -55,10 +55,12 @@ class CategoryForm extends Component {
   render() {
     const { name, errors } = this.state;
     const { handleChange, onSave } = this;
+    const url = location.hash.slice(1)
     return (
       <div>
+        {url.match('create') && <Helmet><title>Create Category | J²A</title></Helmet> }
         <form onSubmit={onSave}>
-          <label className="font-weight-bold">Edit Category name:</label>
+          <label className="font-weight-bold">{url.match('create') ? null : ('Edit')} Category name:</label>
           <input
             placeholder='Category Name'
             name='name'

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getLineItemsFromServer, getOrdersFromServer } from '../../store';
+import { Helmet } from 'react-helmet';
 
 class Home extends Component {
 
@@ -15,6 +16,7 @@ class Home extends Component {
   render() {
     return (
       <div className='jumbotron'>
+        <Helmet><title>Home | J²A</title></Helmet>
         <h1>J²A Widgets</h1>
         <br />
         <p>Come buy our <s>sh*t</s> stuff.</p>

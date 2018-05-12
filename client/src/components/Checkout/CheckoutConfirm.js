@@ -7,8 +7,9 @@ import Dropdown from './Dropdown';
 import UserNav from '../User/UserNav';
 import StripePayment from './StripePayment';
 import axios from 'axios';
-import { updateOrderOnServer, updateProductOnServer } from '../../store';
+import { updateOrderOnServer, updateProductOnServer, updatePromoOnServer } from '../../store';
 import { getInfoForCheckoutEmail } from '../../store/emailMethods';
+import { Helmet } from 'react-helmet';
 
 class CheckoutConfirm extends Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class CheckoutConfirm extends Component {
 
   onSave(ev) {
     ev.preventDefault();
-    const { onUpdate, updateProduct, orderId, user, ownCards, ownAddresses, items, products, finalPrice } = this.props;
+    const { onUpdate, updateProduct, orderId, user, updatePromo, ownCards, ownAddresses, items, products, promos, order } = this.props;
     const { creditCardId, shippingId, billingId } = this.state;
     onUpdate({ id: orderId, status: 'processed', date: Date.now(), userId: user.id, creditCardId, shippingId, billingId })
     items.map(item => {
@@ -43,20 +44,20 @@ class CheckoutConfirm extends Component {
       Object.assign(product, { quantity: stock })
       updateProduct(product, 'checkout')
     })
+    const promo = promos.find(promo => promo.id === order.promoId )
+    const quant = promo.quantity - 1;
+    Object.assign(promo, { quantity: quant })
+    updatePromo(promo, 'no-refresh')
     onUpdate({ status: 'cart', userId: user.id });
     this.sendEmail(getInfoForCheckoutEmail({ user, ownAddresses, ownCards, orderId, items, products, shippingId, billingId, creditCardId }));
   }
 
   render() {
     const { handleChange, onSave } = this;
-    const { ownAddresses, ownCards, user, orderId, totalPrice } = this.props;
-    // window.localStorage.setItem('name', 'jeremy');
-    console.log(window.localStorage)
-
-    window.localStorage.removeItem('name', 'jeremy')
-
+    const { ownAddresses, ownCards, user, orderId, finalPrice } = this.props;
     return (
       <div>
+        <Helmet><title>Checkout | J²A</title></Helmet>
         <UserNav user={ user } />
         <div className='row'>
           <div className='col'>
@@ -88,9 +89,10 @@ class CheckoutConfirm extends Component {
             </Link>
           <ActiveOrder checkout={ true }/>
           <br />
+            {/* PROMO INPUT */}
           <button className='btn btn-success' onClick={ onSave }>Submit Payment</button>
 
-          <StripePayment amount={totalPrice} name={`${user.firstName} ${user.lastName}`} email={user.email} orderId={orderId}/>
+          <StripePayment amount={finalPrice} name={`${user.firstName} ${user.lastName}`} email={user.email} orderId={orderId}/>
 
       </div>
     );
@@ -102,14 +104,15 @@ const mapState = ({ user, addresses, creditCards, orders, lineItems, products, p
   const ownAddresses = addresses.filter(address => user.id === address.userId)
   const ownCards = creditCards.filter(card => card.userId === user.id)
   const items = lineItems.filter(item => item.orderId === orderId)
-  // const promo = promos.find(promo => promo.id === order.promoId)
+  const promo = promos.find(promo => promo.id === order.promoId)
   const totalPrice = items.reduce((memo, item) => {
     const product = products.find(product => product.id === item.productId)
     memo += product.price * item.quantity;
     return memo;
   }, 0)
-  // const promoPrice = promo && total.price - promo.value;
-  // const finalPrice = promoPrice ? promoPrice : totalPrice;
+  const promoPrice = promo && total.price - promo.value;
+  const finalPrice = promoPrice ? promoPrice : totalPrice;
+  const order = orders.find(order => order.id === orderId);
   return {
     user,
     ownAddresses,
@@ -117,15 +120,17 @@ const mapState = ({ user, addresses, creditCards, orders, lineItems, products, p
     orderId,
     items,
     products,
-    totalPrice,
-    // finalPrice
+    finalPrice
+    promos,
+    order
   }
 };
 
 const mapDispatch = (dispatch) => {
   return {
     onUpdate: (order) => dispatch(updateOrderOnServer(order)),
-    updateProduct: (product, page) => dispatch(updateProductOnServer(product, page))
+    updateProduct: (product, page) => dispatch(updateProductOnServer(product, page)),
+    updatePromo: (promo, page) => dispatch(updatePromoOnServer(promo, page))
   }
 }
 

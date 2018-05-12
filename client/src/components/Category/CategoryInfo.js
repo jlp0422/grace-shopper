@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { deleteCategoryOnServer } from '../../store';
 import ProductCard from '../Product/ProductCard';
 import CategoryForm from './CategoryForm';
+import { Helmet } from 'react-helmet';
 
 class CategoryInfo extends React.Component {
   constructor() {
@@ -24,6 +25,7 @@ class CategoryInfo extends React.Component {
     if (!category) return null;
     return (
       <div>
+        <Helmet><title>{category.name} | J²A</title></Helmet>
         <h3>Category: {category.name}</h3>
         {
           loggedIn && isAdmin ? (
