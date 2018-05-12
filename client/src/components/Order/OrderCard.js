@@ -80,7 +80,6 @@ const mapState = ({ lineItems, products, user, promos }, { order, page, location
   const promo = !!order.promoId && promos.find(promo => promo.id === order.promoId);
   const promoPrice = promo && totalPrice - promo.value;
   const finalPrice = promo ? promoPrice : totalPrice;
-
   return { orderItems, order, totalPrice, products, page, equal, promo, promoPrice, finalPrice }
 }
 

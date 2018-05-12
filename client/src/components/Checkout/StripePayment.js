@@ -28,4 +28,3 @@ const StripePayment = ({ amount, name, email, orderId }) => {
 }
 
 export default StripePayment;
-
