@@ -12,4 +12,5 @@ app.use('/reviews', require('./reviews'));
 app.use('/productCategories', require('./productCategories'));
 app.use('/creditCards', require('./creditCards'));
 app.use('/email', require('./email'));
+app.use('/stripe', require('./stripe'));
 app.use('/promos', require('./promos'));
