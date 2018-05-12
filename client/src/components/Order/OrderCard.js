@@ -34,6 +34,13 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal, promo
           );
         })
       }
+      {
+        !equal && page !== 'past' ? (
+          null
+        ) : (
+          <div>{ order.status === 'cart' && <PromoEnter order={order}/> }</div>
+        )
+      }
       <div className='row'>
         <div className='col'>
           <h3 id="cart-total-price">Total Price: ${finalPrice}.00</h3>
@@ -41,22 +48,12 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal, promo
         </div>
         {
           !equal && page !== 'past' ? (
-            null
-          ) : (
-            <div>
-              <br />
-              { order.status === 'cart' && <PromoEnter order={order}/> }
-              </div>
-            )
-        }
-        {
-          !equal && page !== 'past' ? (
             <div className='col'>
               {
                 orderItems.length === 0 ? (
                   <button disabled={true} className="btn btn-success margin-t-15">Checkout</button>
                 ) : (
-                    <Link to={`/users/${order.userId}/checkout/${order.id}`}><button className="btn btn-success margin-t-15">Checkout</button></Link>
+                  <Link to={`/users/${order.userId}/checkout/${order.id}`}><button className="btn btn-success margin-t-15">Checkout</button></Link>
                 )
               }
             </div>
@@ -80,7 +77,6 @@ const mapState = ({ lineItems, products, user, promos }, { order, page, location
   const promo = !!order.promoId && promos.find(promo => promo.id === order.promoId);
   const promoPrice = promo && totalPrice - promo.value;
   const finalPrice = promo ? promoPrice : totalPrice;
-
   return { orderItems, order, totalPrice, products, page, equal, promo, promoPrice, finalPrice }
 }
 

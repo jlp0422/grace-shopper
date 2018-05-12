@@ -39,7 +39,7 @@ class PromoEnter extends Component {
     if(!order.id) return null
     return (
       <div>
-        <form onSubmit={onApplyPromo}>
+        <div>
           <label className="font-weight-bold">Enter a Promo Code:</label>
           <input
             placeholder='Promo Code'
@@ -48,8 +48,8 @@ class PromoEnter extends Component {
             className='form-control margin-b-10'
             onChange={handleChange}
           />
-          <button className='btn btn-primary' disabled={!!order.promoId}>Apply Promo Code</button>
-        </form>
+          <button className='btn btn-primary' disabled={!!order.promoId} onClick={onApplyPromo}>Apply Promo Code</button>
+        </div>
       </div>
     )
   }
