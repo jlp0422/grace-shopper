@@ -46,35 +46,29 @@ class CheckoutConfirm extends Component {
       .catch(err => console.error(err))
   }
 
-  onSave(/*ev*/) {
-    // ev.preventDefault();
-    const { onUpdate, updateProduct, orderId, user, updatePromo, /*ownCards,*/ ownAddresses, items, products, promo, order } = this.props;
-    const { /*creditCardId,*/ shippingId, billingId } = this.state;
-    onUpdate({ id: orderId, status: 'processed', date: Date.now(), userId: user.id, /*creditCardId,*/ shippingId, billingId })
+  onSave() {
+    const { onUpdate, updateProduct, orderId, user, updatePromo, ownAddresses, items, products, promo, order, finalPrice } = this.props;
+    const { shippingId, billingId } = this.state;
+    onUpdate({ id: orderId, status: 'processed', date: Date.now(), userId: user.id, shippingId, billingId })
     items.map(item => {
       const product = products.find(product => product.id === item.productId)
       const stock = product.quantity - item.quantity;
       Object.assign(product, { quantity: stock })
       updateProduct(product, 'checkout')
     })
-    // const promo = promos.find(promo => promo.id === order.promoId )
     if(promo) {
       const quant = promo && promo.quantity - 1;
       Object.assign(promo, { quantity: quant })
       updatePromo(promo, 'no-refresh')
     }
     onUpdate({ status: 'cart', userId: user.id });
-    this.sendEmail(getInfoForCheckoutEmail({ user, ownAddresses, /*ownCards,*/ orderId, items, products, shippingId, billingId/*, creditCardId*/ }));
+    this.sendEmail(getInfoForCheckoutEmail({ user, ownAddresses, orderId, items, products, shippingId, billingId, finalPrice }));
   }
-
-  // checkErrors() {
-  //   if()
-  // }
 
   render() {
     const { handleChange, onSave } = this;
     const { shippingId, billingId} = this.state;
-    const { ownAddresses, /*ownCards,*/ user, orderId, finalPrice } = this.props;
+    const { ownAddresses, user, orderId, finalPrice } = this.props;
     return (
       <div>
         <Helmet><title>Checkout | J²A</title></Helmet>

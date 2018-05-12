@@ -1,15 +1,8 @@
 export const getInfoForCheckoutEmail = (data) => {
-  const { user, ownAddresses, /*ownCards,*/ orderId, items, products, shippingId, billingId, /*creditCardId*/ } = data;
+  const { user, ownAddresses, orderId, items, products, shippingId, billingId, finalPrice } = data;
   const { email, firstName, lastName } = user;
   const shipping = ownAddresses.find(address => address.id === shippingId)
   const { street, city, state, zip } = shipping;
-  // const card = ownCards.find(card => card.id === creditCardId)
-  // const { ccType, ccNum } = card;
-  const totalPrice = items.reduce((memo, item) => {
-    const product = products.find(product => item.productId === product.id)
-    memo += (product.price * item.quantity)
-    return memo;
-  }, 0);
   const productMap = items.reduce((memo, item) => {
     const product = products.find(product => item.productId === product.id)
     const id = product.id;
@@ -37,10 +30,7 @@ export const getInfoForCheckoutEmail = (data) => {
         <p>Thank you so much for your purchase!</p>
         <p>You ordered the following:</p>
         <ul>${listItems}</ul>
-        <h4>Total Price: $${totalPrice}.00</h4>
-
-
-
+        <h4>Total Price: $${finalPrice}.00</h4>
         <p><b>Order#${orderId}</b> will be shipped to:</p>
         <p>
           ${firstName} ${lastName}

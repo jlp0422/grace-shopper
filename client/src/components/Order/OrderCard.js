@@ -34,21 +34,18 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal, promo
           );
         })
       }
+      {
+        !equal && page !== 'past' ? (
+          null
+        ) : (
+          <div>{ order.status === 'cart' && <PromoEnter order={order}/> }</div>
+        )
+      }
       <div className='row'>
         <div className='col'>
           <h3 id="cart-total-price">Total Price: ${finalPrice}.00</h3>
           { promo && <p>Original Price: ${totalPrice}.00. Promo Code {promo.name} saved you ${promo.value}.00!</p> }
         </div>
-        {
-          !equal && page !== 'past' ? (
-            null
-          ) : (
-            <div>
-              <br />
-              { order.status === 'cart' && <PromoEnter order={order}/> }
-            </div>
-          )
-        }
         {
           !equal && page !== 'past' ? (
             <div className='col'>

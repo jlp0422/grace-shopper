@@ -26,12 +26,10 @@ const StripePayment = ({ amount, name, email, orderId, onSave, checkErrors, ship
       email={email}
       disabled={!shippingId || !billingId}
       closed={onSave}
-    >
-      <button className='btn btn-success'>Submit Payment</button>
-    </StripeCheckout>
+    />
     {
       !shippingId || !billingId ? (
-        <div className='help-block'>Please select Shipping and Billing Addresses to Submit Payment</div>
+        <span className='help-block'>Please select Shipping and Billing Addresses to Submit Payment</span>
       ) : null
     }
     </div>
