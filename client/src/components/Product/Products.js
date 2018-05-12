@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ProductCard from './ProductCard';
 import ProductForm from './ProductForm';
+import { Helmet } from 'react-helmet';
 
 class Products extends React.Component {
   constructor() {
@@ -49,6 +50,7 @@ class Products extends React.Component {
     const lastPage = Math.ceil(matchingProducts.length / 7)
     return (
       <div>
+        <Helmet><title>Products | J²A</title></Helmet>
         <h2>Products</h2>
         { loggedIn && isAdmin ? (
             <Link to='/products/create'>

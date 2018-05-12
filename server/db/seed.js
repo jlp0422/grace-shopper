@@ -1,6 +1,6 @@
 const { conn } = require('./conn');
 const { models } = require('./index');
-const { Category, LineItem, Order, Product, User, Address, Review, ProductCategory, CreditCard } = models;
+const { Category, LineItem, Order, Product, User, Address, Review, ProductCategory, CreditCard, Promo } = models;
 const faker = require('faker');
 const bcrypt = require('bcrypt')
 const saltRounds = 10;
@@ -224,6 +224,13 @@ const seed = () => {
       Category.create({ name: 'Hardware'}),
       ...populateProducts(),
     ])
+    .then(() => {
+      return Promise.all([
+        Promo.create({ name: 'WIDGET', value: 10, quantity: 200}),
+        Promo.create({ name: 'FUN', value: 50, quantity: 100}),
+        Promo.create({ name: 'HAPPY', value: 35, quantity: 50})
+      ])
+    })
     .then(() => {
       return Promise.all([
         ProductCategory.create({ productId: 3, categoryId: 1 }),

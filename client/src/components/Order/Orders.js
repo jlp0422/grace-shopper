@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { sentenceCase } from '../../store/reusableFunctions';
 import AdminNav from '../Admin/AdminNav';
+import { Helmet } from 'react-helmet';
 
 class Orders extends React.Component {
   constructor() {
@@ -57,6 +58,7 @@ class Orders extends React.Component {
     const lastPage = Math.ceil(matchingOrders.length / 20)
     return (
       <div>
+        <Helmet><title>Admin: { user ? 'User' : ''} Order History | J²A</title></Helmet>
         <AdminNav />
         <h2>Order history { user ? `for ${user.firstName} ${user.lastName}` : null }</h2>
         <h5>Order status</h5>

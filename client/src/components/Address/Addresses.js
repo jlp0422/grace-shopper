@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AddressForm from './AddressForm';
 import UserNav from '../User/UserNav';
+import { Helmet } from 'react-helmet';
 
 const Addresses = ({ userAddresses, userId, page, user }) => {
   return (
     <div>
+      {user.firstName && <Helmet><title>{user.firstName}'s Addresses | J²A</title></Helmet> }
       <UserNav user={ user } />
       <h2>Addresses</h2>
       <ul className='list-group'>

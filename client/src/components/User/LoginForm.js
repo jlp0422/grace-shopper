@@ -8,6 +8,7 @@ import { Input, Button, Progress } from 'mdbreact';
 import { emailRegex, passwordRegexMedium, passwordRegexStrong } from '../../const'
 import FacebookLogin from './FacebookLogin';
 import axios from 'axios';
+import { Helmet } from 'react-helmet';
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -93,6 +94,11 @@ class LoginForm extends React.Component {
     const passwordTestMedium = passwordRegexMedium.test(password)
     return (
       <div className="login-form">
+        {url === '/signup' ?
+          <Helmet><title>Sign up | J²A</title></Helmet>
+          :
+          <Helmet><title>Log in | J²A</title></Helmet>
+        }
       { user.id ? (
         <div>
           <h4>You are already logged in!</h4>

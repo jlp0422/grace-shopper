@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateProductOnServer, updateProductCategoryOnServer, getProductCategoriesFromServer } from '../../store';
+import { Helmet } from 'react-helmet';
 
 class ProductForm extends Component {
   constructor(props) {
@@ -108,6 +109,7 @@ class ProductForm extends Component {
     const { handleChange, onSave } = this;
     return (
       <div>
+        {url.match('create') && <Helmet><title>Create Product | J²A</title></Helmet>}
         <form onSubmit={onSave}>
           <input
             className={`form-control margin-b-10 ${ errors.name ? ' is-invalid' : null }`}

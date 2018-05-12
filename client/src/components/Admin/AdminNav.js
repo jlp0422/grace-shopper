@@ -13,6 +13,9 @@ const AdminNav = () => {
         <Link className={`user-nav${url === '/admin/orders' ? ('-active') : ''}`} to='/admin/orders'>
           View all orders
         </Link>
+        <Link className={`user-nav${url === '/admin/promos' ? ('-active') : ''}`} to='/admin/promos'>
+          View all Promo Codes
+        </Link>
       </div>
     </div>
   )
