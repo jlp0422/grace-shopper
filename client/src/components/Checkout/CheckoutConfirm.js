@@ -50,6 +50,11 @@ class CheckoutConfirm extends Component {
   render() {
     const { handleChange, onSave } = this;
     const { ownAddresses, ownCards, user, orderId, totalPrice } = this.props;
+    // window.localStorage.setItem('name', 'jeremy');
+    console.log(window.localStorage)
+
+    window.localStorage.removeItem('name', 'jeremy')
+
     return (
       <div>
         <UserNav user={ user } />
