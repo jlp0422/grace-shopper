@@ -1,10 +1,10 @@
 export const getInfoForCheckoutEmail = (data) => {
-  const { user, ownAddresses, ownCards, orderId, items, products, shippingId, billingId, creditCardId } = data;
+  const { user, ownAddresses, /*ownCards,*/ orderId, items, products, shippingId, billingId, /*creditCardId*/ } = data;
   const { email, firstName, lastName } = user;
   const shipping = ownAddresses.find(address => address.id === shippingId)
   const { street, city, state, zip } = shipping;
-  const card = ownCards.find(card => card.id === creditCardId)
-  const { ccType, ccNum } = card;
+  // const card = ownCards.find(card => card.id === creditCardId)
+  // const { ccType, ccNum } = card;
   const totalPrice = items.reduce((memo, item) => {
     const product = products.find(product => item.productId === product.id)
     memo += (product.price * item.quantity)
@@ -38,7 +38,9 @@ export const getInfoForCheckoutEmail = (data) => {
         <p>You ordered the following:</p>
         <ul>${listItems}</ul>
         <h4>Total Price: $${totalPrice}.00</h4>
-        <p>Credit Card: ${ccType} ****${ccNum.slice(-4)}</p>
+
+
+
         <p><b>Order#${orderId}</b> will be shipped to:</p>
         <p>
           ${firstName} ${lastName}

@@ -46,8 +46,8 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal, promo
             <div>
               <br />
               { order.status === 'cart' && <PromoEnter order={order}/> }
-              </div>
-            )
+            </div>
+          )
         }
         {
           !equal && page !== 'past' ? (
@@ -56,7 +56,7 @@ const OrderCard = ({ orderItems, order, totalPrice, products, page, equal, promo
                 orderItems.length === 0 ? (
                   <button disabled={true} className="btn btn-success margin-t-15">Checkout</button>
                 ) : (
-                    <Link to={`/users/${order.userId}/checkout/${order.id}`}><button className="btn btn-success margin-t-15">Checkout</button></Link>
+                  <Link to={`/users/${order.userId}/checkout/${order.id}`}><button className="btn btn-success margin-t-15">Checkout</button></Link>
                 )
               }
             </div>
