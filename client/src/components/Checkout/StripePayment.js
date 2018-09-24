@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import StripeCheckout from 'react-stripe-checkout';
 
-const onToken = (amount, email, orderId) => {
+const onToken = (amount, email, orderId, onSave) => {
   return (token) => {
     axios.post('/api/stripe', {
       source: token.id,
@@ -12,20 +12,22 @@ const onToken = (amount, email, orderId) => {
       description: `Order# ${orderId}`
     })
     .then(res => res.data)
+    .then(token => {
+      if(token) onSave();
+    })
   }
 }
 
-const StripePayment = ({ amount, name, email, orderId, onSave, checkErrors, shippingId, billingId }) => {
+const StripePayment = ({ amount, name, email, orderId, onSave, shippingId, billingId }) => {
   return (
     <div>
     <StripeCheckout
       name={name}
       stripeKey='pk_test_L5BNU52HtQupz1A0XX4pzElV'
-      token={onToken(amount, email, orderId)}
+      token={onToken(amount, email, orderId, onSave)}
       amount={amount * 100}
       email={email}
       disabled={!shippingId || !billingId}
-      closed={onSave}
     />
     {
       !shippingId || !billingId ? (
@@ -33,7 +35,6 @@ const StripePayment = ({ amount, name, email, orderId, onSave, checkErrors, ship
       ) : null
     }
     </div>
-
   );
 }
 

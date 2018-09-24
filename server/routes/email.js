@@ -1,3 +1,4 @@
+require('dotenv').config();
 const app = require('express').Router();
 const EMAILPASS = process.env.EMAILPASS
 const nodemailer = require('nodemailer')
@@ -26,7 +27,7 @@ app.post('/', (req, res, next) => {
   }
 
   transporter.sendMail(HelperOptions, (error, info) => {
-    if (error) return console.log(error)
+    if (error) return console.log('EMAIL ERROR', error);
   })
   
   res.sendStatus(200);
