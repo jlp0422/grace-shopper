@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "10.2.0"
+  },
   "scripts": {
     "seed": "node ./server/db/seed",
     "postinstall": "npm run webpack",
