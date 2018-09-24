@@ -1,3 +1,4 @@
+require('dotenv').config();
 const app = require('express').Router();
 const EMAILPASS = process.env.EMAILPASS
 const nodemailer = require('nodemailer')

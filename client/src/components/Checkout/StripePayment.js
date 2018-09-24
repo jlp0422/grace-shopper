@@ -1,9 +1,6 @@
-// require('dotenv').config();
 import React, { Component } from 'react';
 import axios from 'axios';
 import StripeCheckout from 'react-stripe-checkout';
-
-// console.log(process.env.STRIPE_PUBLISHABLE_KEY);
 
 const onToken = (amount, email, orderId) => {
   return (token) => {
