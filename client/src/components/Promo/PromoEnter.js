@@ -35,7 +35,6 @@ class PromoEnter extends Component {
     const { name } = this.state;
     const { order } = this.props;
     const { handleChange, onApplyPromo } = this;
-    console.log(this.state)
     if(!order.id) return null
     return (
       <div>
