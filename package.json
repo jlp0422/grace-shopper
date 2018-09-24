@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "engines": {
-    "node": "10.2.0"
+    "node": "10.2.0",
+    "npm": "6.1.0"
   },
   "scripts": {
     "seed": "node ./server/db/seed",
