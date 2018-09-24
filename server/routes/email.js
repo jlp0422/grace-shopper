@@ -26,7 +26,7 @@ app.post('/', (req, res, next) => {
   }
 
   transporter.sendMail(HelperOptions, (error, info) => {
-    if (error) return console.log(error)
+    if (error) return console.log('EMAIL ERROR', error);
   })
   
   res.sendStatus(200);

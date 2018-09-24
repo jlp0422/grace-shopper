@@ -8,4 +8,4 @@ const stripe = require('stripe')(STRIPE_SECRET_KEY);
 app.post('/', (req, res, next) => {
   stripe.charges.create(req.body)
     .then(() => res.sendStatus(200))
-})
+});
