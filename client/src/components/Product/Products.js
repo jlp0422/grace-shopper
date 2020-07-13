@@ -57,8 +57,11 @@ class Products extends React.Component {
               <button className="btn btn-primary">Create new product</button>
             </Link>
         ) : null }
-        <div style={{ margin: '10px 0px 15px'}}>
+        <div className="input-group mb-3 form-margin">
           <input placeholder={'Search for a product'} value={name} onChange={onChange} className="form-control" />
+          <span className="input-group-append input-group-addon-btn bg-white">
+            <button onClick={() => this.setState({ name: '' })} className="fa fa-search" type="submit">Clear search</button>
+          </span>
         </div>
         <ul className='list-group'>
           {
